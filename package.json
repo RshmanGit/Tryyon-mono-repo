@@ -7,12 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install ./.husky"
+    "prepare": "husky install",
+    "format": "yarn prettier --write ."
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx pretty-quick --staged ng lint ng test",
-      "pre-push": "ng build --aot true"
+      "pre-commit": "npx pretty-quick --staged next lint",
+      "pre-push": "next build"
     }
   },
   "dependencies": {
