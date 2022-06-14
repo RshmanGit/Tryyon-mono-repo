@@ -10,9 +10,17 @@ export const createAdmin = async (data) => {
 };
 
 // Read Admin
-export const getAdmin = async (id) => {
+export const getAdminByID = async (id) => {
   const admin = await prisma.admin.findUnique({
     where: { id }
+  });
+
+  return admin;
+};
+
+export const getAdminByEmail = async (email) => {
+  const admin = await prisma.admin.findUnique({
+    where: { email }
   });
 
   return admin;
