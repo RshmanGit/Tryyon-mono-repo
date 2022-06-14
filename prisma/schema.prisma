@@ -10,12 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model admin {
+model Admin {
   id           String  @id @default(auto()) @map("_id") @db.ObjectId
   username     String  @unique
   firstname    String
   lastname     String
-  phone        String  @unique
+  phone        Int     @unique
   email        String  @unique
   passwordHash String
   token        String?
