@@ -18,7 +18,8 @@ const schema = {
     lastname: Joi.string().required(),
     phone: Joi.number().min(1000000000).max(9999999999).required(),
     email: Joi.string().email().required(),
-    password: Joi.string().required()
+    password: Joi.string().required(),
+    role: Joi.string()
   })
 };
 
@@ -64,7 +65,11 @@ const handler = async (req, res) => {
                 { expiresIn: '2h' }
               );
               const adminToken = jwt.sign(
-                { id: createdAdmin.id, email: createdAdmin.email },
+                {
+                  id: createdAdmin.id,
+                  email: createdAdmin.email,
+                  role: createdAdmin.role
+                },
                 process.env.ADMIN_TOKEN_KEY,
                 { expiresIn: '2h' }
               );
