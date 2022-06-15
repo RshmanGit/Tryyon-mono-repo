@@ -20,4 +20,12 @@ model Admin {
   passwordHash String
   token        String?
   adminToken   String?
+  role         Role?   @relation(fields: [roleId], references: [id])
+  roleId       String? @db.ObjectId
+}
+
+model Role {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  title  String  @unique
+  admins Admin[]
 }
