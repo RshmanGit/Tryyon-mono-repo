@@ -1,10 +1,10 @@
 import async from 'async';
 import Joi from 'joi';
 
-import validate from '../../../../utils/middlewares/validation';
-import handleResponse from '../../../../utils/helpers/handleResponse';
-import runMiddleware from '../../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../../utils/middlewares/user-master/adminAuth';
+import validate from '../../../utils/middlewares/validation';
+import handleResponse from '../../../utils/helpers/handleResponse';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
+import verifyToken from '../../../utils/middlewares/adminAuth';
 
 const schema = {
   body: Joi.object({})

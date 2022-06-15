@@ -7,9 +7,9 @@ import {
   checkAdmin,
   createAdmin,
   updateAdmin
-} from '../../../../prisma/user-master/admin';
-import validate from '../../../../utils/middlewares/validation';
-import handleResponse from '../../../../utils/helpers/handleResponse';
+} from '../../../prisma/admin/admin';
+import validate from '../../../utils/middlewares/validation';
+import handleResponse from '../../../utils/helpers/handleResponse';
 
 const schema = {
   body: Joi.object({

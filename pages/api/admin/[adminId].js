@@ -1,12 +1,12 @@
 import async from 'async';
 import Joi from 'joi';
 
-import validate from '../../../../utils/middlewares/validation';
-import handleResponse from '../../../../utils/helpers/handleResponse';
-import runMiddleware from '../../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../../utils/middlewares/user-master/adminAuth';
+import validate from '../../../utils/middlewares/validation';
+import handleResponse from '../../../utils/helpers/handleResponse';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
+import verifyToken from '../../../utils/middlewares/adminAuth';
 
-import { getAdminByID } from '../../../../prisma/user-master/admin';
+import { getAdminByID } from '../../../prisma/admin/admin';
 
 const schema = {
   body: Joi.object({})

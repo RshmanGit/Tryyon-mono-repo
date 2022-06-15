@@ -3,12 +3,9 @@ import jwt from 'jsonwebtoken';
 import async from 'async';
 import Joi from 'joi';
 
-import {
-  getAdminByEmail,
-  updateAdmin
-} from '../../../../prisma/user-master/admin';
-import validate from '../../../../utils/middlewares/validation';
-import handleResponse from '../../../../utils/helpers/handleResponse';
+import { getAdminByEmail, updateAdmin } from '../../../prisma/admin/admin';
+import validate from '../../../utils/middlewares/validation';
+import handleResponse from '../../../utils/helpers/handleResponse';
 
 const schema = {
   body: Joi.object({
