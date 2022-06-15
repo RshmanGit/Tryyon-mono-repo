@@ -56,3 +56,26 @@ export const updateAdmin = async (id, updateData) => {
 
   return admin;
 };
+
+// Delete Admin
+export const deleteAdmin = async ({ id, email, username, phone }) => {
+  let deletedUser;
+  if (id)
+    deletedUser = await prisma.admin.delete({
+      where: { id }
+    });
+  else if (email)
+    deletedUser = await prisma.admin.delete({
+      where: { email }
+    });
+  else if (username)
+    deletedUser = await prisma.admin.delete({
+      where: { username }
+    });
+  else if (phone)
+    deletedUser = await prisma.admin.delete({
+      where: { phone }
+    });
+
+  return deletedUser;
+};
