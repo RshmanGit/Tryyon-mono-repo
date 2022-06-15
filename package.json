@@ -10,12 +10,6 @@
     "prepare": "husky install",
     "format": "yarn prettier --write ."
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx pretty-quick --staged next lint",
-      "pre-push": "next build"
-    }
-  },
   "dependencies": {
     "@prisma/client": "^3.15.1",
     "async": "^3.2.4",
