@@ -1,0 +1,478 @@
+{
+  "info": {
+    "_postman_id": "a530768b-6dd1-40c1-b196-26cd6a22bfb0",
+    "name": "tryyon",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin routes",
+      "item": [
+        {
+          "name": "Protected routes",
+          "item": [
+            {
+              "name": "/api/admin/check",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/check",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "check"]
+                }
+              },
+              "response": [
+                {
+                  "name": "/api/admin/check",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:3000/api/admin/check",
+                      "protocol": "http",
+                      "host": ["localhost"],
+                      "port": "3000",
+                      "path": ["api", "admin", "check"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    },
+                    {
+                      "key": "ETag",
+                      "value": "\"88-U1q6NTb0/Fvnq+dmEzfDn7gvn38\""
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "136"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Accept-Encoding"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 15 Jun 2022 05:38:40 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=5"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"message\": \"Admin Authenticated\",\n    \"admin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"email\": \"admin@alphabi.co\",\n        \"iat\": 1655271490,\n        \"exp\": 1655278690\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/admin/adminId",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/{{adminId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "{{adminId}}"]
+                }
+              },
+              "response": [
+                {
+                  "name": "/api/admin/adminId",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:3000/api/admin/{{adminId}}",
+                      "protocol": "http",
+                      "host": ["localhost"],
+                      "port": "3000",
+                      "path": ["api", "admin", "{{adminId}}"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    },
+                    {
+                      "key": "ETag",
+                      "value": "\"2b7-Vn2HNsI6e95EH7/4qK/LtH7b6CQ\""
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "695"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Accept-Encoding"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 15 Jun 2022 05:41:51 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=5"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"message\": \"Admin found\",\n    \"admin\": {\n        \"id\": \"62a81d24f0a2aea710bb6e1e\",\n        \"username\": \"ankitgdes\",\n        \"firstname\": \"Ankit\",\n        \"lastname\": \"Rawani\",\n        \"phone\": 7004603991,\n        \"email\": \"ankit@alphabi.co\",\n        \"passwordHash\": \"$2a$10$rl4/1WcrF8Pgv9xk3rKxeu3HkptOWvYgZa7dlLLYS6clvX1/8FtFG\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTgxZDI0ZjBhMmFlYTcxMGJiNmUxZSIsImVtYWlsIjoiYW5raXRAYWxwaGFiaS5jbyIsImlhdCI6MTY1NTE5MDU3MiwiZXhwIjoxNjU1MTk3NzcyfQ.3v43XUHouOba8f3FxJBaVL0CNiEeWSEFsxXKeann9gI\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTgxZDI0ZjBhMmFlYTcxMGJiNmUxZSIsImVtYWlsIjoiYW5raXRAYWxwaGFiaS5jbyIsImlhdCI6MTY1NTE5MDU3MiwiZXhwIjoxNjU1MTk3NzcyfQ.9Wi41xGCRVplDle5rSXByY_xYAK8sryCtNCaC1qREWg\"\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/admin/delete",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"{{email}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/delete",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "delete"]
+                }
+              },
+              "response": [
+                {
+                  "name": "/api/admin/delete",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"email\": \"{{email}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:3000/api/admin/delete",
+                      "protocol": "http",
+                      "host": ["localhost"],
+                      "port": "3000",
+                      "path": ["api", "admin", "delete"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    },
+                    {
+                      "key": "ETag",
+                      "value": "\"2b4-h7XbktHrci6oCS7tvgCxz6VcjFA\""
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "692"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Accept-Encoding"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 15 Jun 2022 05:43:58 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=5"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"message\": \"Admin deleted\",\n    \"admin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MTYzMSwiZXhwIjoxNjU1Mjc4ODMxfQ.cuTpk6NnXdccy6KiXuOjI6C1jVTM9oaMXR2rfbdutzA\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MTYzMSwiZXhwIjoxNjU1Mjc4ODMxfQ.mjngHu18bFrIuRpPEXveo-X7_AsCvt4MqtI2neNM4ms\"\n    }\n}"
+                }
+              ]
+            }
+          ],
+          "auth": {
+            "type": "apikey",
+            "apikey": [
+              {
+                "key": "key",
+                "value": "adminkey",
+                "type": "string"
+              },
+              {
+                "key": "value",
+                "value": "{{adminToken}}",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [""]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [""]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Unprotected routes",
+          "item": [
+            {
+              "name": "/api/admin/register",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/register",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "register"]
+                },
+                "description": "Endpoint to register a new admin user.\n\nPOST body (as JSON) - \nusername: String\nfirstname: String\nlastname: String\nemail: String (properly formatted)\nphone: Int (between 1000000000 and 9999999999)\npassword: String\n\nResponse (on successful registration) - \n```\n{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"___id____\",\n        \"username\": \"___username____\",\n        \"firstname\": \"___first_name____\",\n        \"lastname\": \"___last_name____\",\n        \"email\": \"___email____\",\n        \"phone\": \"___phone____\",\n        \"passwordHash\": \"___password_hash____\",\n        \"token\": \"___token____\",\n        \"adminToken\": \"___admin_token____\"\n    }\n}\n```"
+              },
+              "response": [
+                {
+                  "name": "/api/admin/register",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:3000/api/admin/register",
+                      "protocol": "http",
+                      "host": ["localhost"],
+                      "port": "3000",
+                      "path": ["api", "admin", "register"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    },
+                    {
+                      "key": "ETag",
+                      "value": "\"2bb-bhriKiZQl1OxQAbz61FKBWEfjmA\""
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "699"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Accept-Encoding"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 15 Jun 2022 05:23:24 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=5"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDYwNCwiZXhwIjoxNjU1Mjc3ODA0fQ.tWfxmKSGyT6lZUAXdDTrNgn4km-h5dgppi5qL3zU7Ms\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDYwNCwiZXhwIjoxNjU1Mjc3ODA0fQ.u-sp6tp9rZEgZZ9el-eApv1URB2ARlodTrhG5uIMMqA\"\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/admin/login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/login",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "login"]
+                },
+                "description": "Endpoint for admin user to login.\n\nPOST body (as JSON) - \nemail: String (properly formatted)\npassword: String\n\nResponse (on successful login) - \n```\n{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"___id____\",\n        \"username\": \"___username____\",\n        \"firstname\": \"___first_name____\",\n        \"lastname\": \"___last_name____\",\n        \"email\": \"___email____\",\n        \"phone\": \"___phone____\",\n        \"passwordHash\": \"___password_hash____\",\n        \"token\": \"___token____\",\n        \"adminToken\": \"___admin_token____\"\n    }\n}\n```"
+              },
+              "response": [
+                {
+                  "name": "/api/admin/login",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:3000/api/admin/login",
+                      "protocol": "http",
+                      "host": ["localhost"],
+                      "port": "3000",
+                      "path": ["api", "admin", "login"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    },
+                    {
+                      "key": "ETag",
+                      "value": "\"2c1-vXIkkvvqoEGBqMGo6yJ+VeNKKjk\""
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "705"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Accept-Encoding"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 15 Jun 2022 05:26:46 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=5"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"message\": \"admin Authenticated\",\n    \"updatedAdmin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDgwNSwiZXhwIjoxNjU1Mjc4MDA1fQ.g1HUxFYkFJzzs5BslWqDNp5C5EOgONXS5oLHwhMK2lY\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDgwNSwiZXhwIjoxNjU1Mjc4MDA1fQ.r8I0z2QaYco7J-ilZPmv-B6npgHcFf6bjk4SJm2PNsk\"\n    }\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
