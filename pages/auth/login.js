@@ -35,6 +35,8 @@ function Login() {
   const brandStars = useColorModeValue('brand.500', 'brand.400');
 
   const [show, setShow] = React.useState(false);
+  const [buttonText, setButtonText] = React.useState('Sign in');
+
   const handleClick = () => setShow(!show);
   return (
     <DefaultAuth illustrationBackground={'/auth.png'} image={'/auth.png'}>
@@ -79,11 +81,38 @@ function Login() {
           <Formik
             initialValues={{
               email: '',
-              password: '',
-              rememberMe: false
+              password: ''
             }}
             onSubmit={(values) => {
-              alert(JSON.stringify(values, null, 2));
+              //   alert(JSON.stringify(values, null, 2));
+              setButtonText('Submitting...');
+              fetch('/api/admin/login', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values, null, 2)
+              })
+                .then((res) => res.json())
+                .then((res) => {
+                  if (res.status == 200) {
+                    setButtonText('Submitted!');
+                    return res;
+                  } else {
+                    alert(res.message);
+                    setButtonText('Retry');
+                    throw new Error(
+                      JSON.stringify({
+                        message: res.message,
+                        status: res.status
+                      })
+                    );
+                  }
+                })
+                .then((res) => alert(res.message))
+                .catch((err) => {
+                  console.error(JSON.parse(err.message));
+                });
             }}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -118,7 +147,7 @@ function Login() {
                     validate={(value) => {
                       let error;
                       let mailformat =
-                        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
                       if (!value.match(mailformat)) {
                         error = 'Please enter a valid email';
@@ -194,7 +223,7 @@ function Login() {
                     mb="24px"
                     onClick={handleSubmit}
                   >
-                    Sign In
+                    {buttonText}
                   </Button>
                 </FormControl>
               </form>
