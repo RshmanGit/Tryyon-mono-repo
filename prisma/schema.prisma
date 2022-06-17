@@ -29,3 +29,16 @@ model Role {
   title  String  @unique
   admins Admin[]
 }
+
+model Product {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String?
+  shortDescriptions String?
+  slug String
+  quantity Int @default(0)
+  approved Boolean @default(false)
+  published Boolean @default(false)
+  price Int
+  discountedPrice Int?
+}
