@@ -1045,70 +1045,6 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "http://localhost:3000/api/admin/register",
-											"protocol": "http",
-											"host": [
-												"localhost"
-											],
-											"port": "3000",
-											"path": [
-												"api",
-												"admin",
-												"register"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json; charset=utf-8"
-										},
-										{
-											"key": "ETag",
-											"value": "\"330-kEhJ95/EnrKwP3jyAAMJFiRwYCo\""
-										},
-										{
-											"key": "Content-Length",
-											"value": "816"
-										},
-										{
-											"key": "Vary",
-											"value": "Accept-Encoding"
-										},
-										{
-											"key": "Date",
-											"value": "Wed, 15 Jun 2022 08:56:36 GMT"
-										},
-										{
-											"key": "Connection",
-											"value": "keep-alive"
-										},
-										{
-											"key": "Keep-Alive",
-											"value": "timeout=5"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzM5NSwiZXhwIjoxNjU1MjkwNTk1fQ.KlTMflcHHB8U4U5Q-vzOE6BM_egRrHlNxp0btSc50T0\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODMzOTUsImV4cCI6MTY1NTI5MDU5NX0.0367FVbA4QdwqyPIbzM88k4DwSI6s6Z3OqC_0gZuegQ\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\"\n    }\n}"
-								},
-								{
-									"name": "/api/admin/register",
-									"originalRequest": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
 											"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\"\n}",
 											"options": {
 												"raw": {
@@ -1165,6 +1101,70 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDYwNCwiZXhwIjoxNjU1Mjc3ODA0fQ.tWfxmKSGyT6lZUAXdDTrNgn4km-h5dgppi5qL3zU7Ms\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDYwNCwiZXhwIjoxNjU1Mjc3ODA0fQ.u-sp6tp9rZEgZZ9el-eApv1URB2ARlodTrhG5uIMMqA\"\n    }\n}"
+								},
+								{
+									"name": "/api/admin/register",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"register"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"330-kEhJ95/EnrKwP3jyAAMJFiRwYCo\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "816"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 08:56:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzM5NSwiZXhwIjoxNjU1MjkwNTk1fQ.KlTMflcHHB8U4U5Q-vzOE6BM_egRrHlNxp0btSc50T0\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODMzOTUsImV4cCI6MTY1NTI5MDU5NX0.0367FVbA4QdwqyPIbzM88k4DwSI6s6Z3OqC_0gZuegQ\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\"\n    }\n}"
 								}
 							]
 						},
@@ -1372,7 +1372,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=1",
+							"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1394,7 +1394,39 @@
 								},
 								{
 									"key": "offset",
-									"value": "1"
+									"value": "0"
+								},
+								{
+									"key": "query",
+									"value": "some"
+								},
+								{
+									"key": "inStock",
+									"value": "true"
+								},
+								{
+									"key": "priceFrom",
+									"value": "10"
+								},
+								{
+									"key": "priceTo",
+									"value": "1000"
+								},
+								{
+									"key": "sortBy",
+									"value": "name"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "approved",
+									"value": "true"
+								},
+								{
+									"key": "published",
+									"value": "false"
 								}
 							]
 						},
@@ -1531,6 +1563,208 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 1,\n            \"count\": 1,\n            \"total_count\": 2\n        }\n    }\n}"
+						},
+						{
+							"name": "/api/products with queries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=lol&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "query",
+											"value": "lol"
+										},
+										{
+											"key": "inStock",
+											"value": "true"
+										},
+										{
+											"key": "priceFrom",
+											"value": "10"
+										},
+										{
+											"key": "priceTo",
+											"value": "1000"
+										},
+										{
+											"key": "sortBy",
+											"value": "name"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "approved",
+											"value": "true"
+										},
+										{
+											"key": "published",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"78-UJhSCDBecaj5bBp45yMJ5yiu5gM\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 12:39:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 1\n        }\n    }\n}"
+						},
+						{
+							"name": "/api/products with queries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "query",
+											"value": "some"
+										},
+										{
+											"key": "inStock",
+											"value": "true"
+										},
+										{
+											"key": "priceFrom",
+											"value": "10"
+										},
+										{
+											"key": "priceTo",
+											"value": "1000"
+										},
+										{
+											"key": "sortBy",
+											"value": "name"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "approved",
+											"value": "true"
+										},
+										{
+											"key": "published",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"19d-H8WULcV14ZJiINb8ZFf2WBveR8E\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "413"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 12:41:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac3885a684fef892c4261e\",\n                \"name\": \"Some stuff\",\n                \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some stuff\",\n                \"slug\": \"some-stuff\",\n                \"quantity\": 6,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 150,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 1\n        }\n    }\n}"
 						}
 					]
 				},
