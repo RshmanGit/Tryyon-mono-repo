@@ -1,0 +1,9 @@
+package.json
+package-lock.json
+yarn.lock
+dist
+.next
+out
+node_modules
+.env
+postman
