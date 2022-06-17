@@ -1,7 +1,7 @@
 const method = (req, res, resultKey) => (err, results) => {
-  console.log(results);
   if (err) {
-    err = JSON.parse(err.message);
+    console.log(err);
+    if (err.message) err = JSON.parse(err.message);
     const status = err.body.status ? err.body.status : 500;
     const data = err.body.data
       ? err.body.data
