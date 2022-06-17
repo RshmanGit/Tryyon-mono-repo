@@ -45,6 +45,99 @@ export const getProduct = async (id) => {
   return product;
 };
 
+export const searchProducts = async ({
+  query,
+  inStock,
+  approved,
+  published,
+  priceFrom,
+  priceTo,
+  sortBy,
+  order
+}) => {
+  const condition = {},
+    sortProducts = {};
+  const productProperties = [
+    'name',
+    'description',
+    'price',
+    'discountedPrice',
+    'quantity'
+  ];
+
+  if (query) condition.name = { contains: query, mode: 'insensitive' };
+  if (inStock == 'true') condition.quantity = { gt: 0 };
+  if (approved != undefined) condition.approved = approved == 'true';
+  if (published != undefined) condition.published = published == 'true';
+  if (priceFrom) condition.price = { gt: parseInt(priceFrom, 10) };
+  if (priceTo) condition.price = { lt: parseInt(priceTo, 10) };
+
+  if (sortBy) {
+    if (!(sortBy in productProperties)) sortBy = 'price';
+    sortProducts[sortBy] = order ? order : 'asc';
+  }
+
+  const products = await prisma.product.findMany({
+    where: condition,
+    orderBy: sortProducts
+  });
+
+  return products;
+};
+
+export const searchProductsPaginated = async ({
+  query,
+  inStock,
+  approved,
+  published,
+  priceFrom,
+  priceTo,
+  sortBy,
+  order,
+  count,
+  offset
+}) => {
+  const condition = {},
+    sortProducts = {};
+  const productProperties = [
+    'name',
+    'description',
+    'price',
+    'discountedPrice',
+    'quantity'
+  ];
+
+  if (query) condition.name = { contains: query, mode: 'insensitive' };
+  if (inStock == 'true') condition.quantity = { gt: 0 };
+  if (approved != undefined) condition.approved = approved == 'true';
+  if (published != undefined) condition.published = published == 'true';
+  if (priceFrom) condition.price = { gt: parseInt(priceFrom, 10) };
+  if (priceTo) condition.price = { lt: parseInt(priceTo, 10) };
+
+  if (sortBy) {
+    if (!(sortBy in productProperties)) sortBy = 'price';
+    sortProducts[sortBy] = order ? order : 'asc';
+  }
+
+  const [products, total_count] = await prisma.$transaction([
+    prisma.product.findMany({
+      skip: offset,
+      take: count,
+      where: condition,
+      orderBy: sortProducts
+    }),
+    prisma.product.count()
+  ]);
+
+  const pagination = {
+    offset,
+    count,
+    total_count
+  };
+
+  return { products, pagination };
+};
+
 // Update Product
 export const updateProduct = async (id, updateData) => {
   const product = await prisma.product.update({

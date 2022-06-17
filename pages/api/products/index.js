@@ -2,7 +2,9 @@ import async from 'async';
 
 import {
   getAllProducts,
-  getAllProductsPaginated
+  getAllProductsPaginated,
+  searchProducts,
+  searchProductsPaginated
 } from '../../../prisma/products/products';
 import handleResponse from '../../../utils/helpers/handleResponse';
 
@@ -12,7 +14,7 @@ const handler = async (req, res) => {
       {
         read: [
           async () => {
-            const { paginated, count, offset } = req.query;
+            const { paginated, count, offset, ...rest } = req.query;
 
             if (paginated == 'true' && (!count || !offset)) {
               throw new Error(
@@ -30,12 +32,23 @@ const handler = async (req, res) => {
             }
 
             let products;
-            if (paginated)
-              products = await getAllProductsPaginated(
-                Number(offset),
-                Number(count)
-              );
-            else products = await getAllProducts();
+
+            if (Object.keys(rest).length == 0) {
+              if (paginated)
+                products = await getAllProductsPaginated(
+                  Number(offset),
+                  Number(count)
+                );
+              else products = await getAllProducts();
+            } else {
+              if (paginated) {
+                products = await searchProductsPaginated({
+                  offset: Number(offset),
+                  count: Number(count),
+                  ...rest
+                });
+              } else products = await searchProducts(rest);
+            }
 
             if (products) {
               return {
