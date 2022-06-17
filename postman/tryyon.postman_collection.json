@@ -1267,6 +1267,541 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "/api/products/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{productName}}\",\n    \"description\": \"{{productDescription}}\",\n    \"shortDescriptions\": \"{{productShortDescription}}\",\n    \"slug\": \"{{productSlug}}\",\n    \"quantity\": {{productQuantity}},\n    \"approved\": {{productApproved}},\n    \"published\": {{productPublished}},\n    \"price\": {{productPrice}},\n    \"discountedPrice\": {{productDiscountedPrice}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/products/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{productName}}\",\n    \"description\": \"{{productDescription}}\",\n    \"shortDescriptions\": \"{{productShortDescription}}\",\n    \"slug\": \"{{productSlug}}\",\n    \"quantity\": {{productQuantity}},\n    \"approved\": {{productApproved}},\n    \"published\": {{productPublished}},\n    \"price\": {{productPrice}},\n    \"discountedPrice\": {{productDiscountedPrice}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"15e-3dOqAyma9Bs86z/yjZHjJjkXTpw\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "350"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:17:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62ac3885a684fef892c4261e\",\n        \"name\": \"Some stuff\",\n        \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some stuff\",\n        \"slug\": \"some-stuff\",\n        \"quantity\": 6,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 150,\n        \"discountedPrice\": 149\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "paginated",
+									"value": "true"
+								},
+								{
+									"key": "count",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Query params: paginated, count, offset"
+					},
+					"response": [
+						{
+							"name": "/api/products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "false",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"2b9-JOkUANpP0yo32NluDTTIx+o6v4c\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "697"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:24:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac3885a684fef892c4261e\",\n                \"name\": \"Some stuff\",\n                \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some stuff\",\n                \"slug\": \"some-stuff\",\n                \"quantity\": 6,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 150,\n                \"discountedPrice\": 149\n            },\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"total_count\": 2\n    }\n}"
+						},
+						{
+							"name": "/api/products/?paginated=true&count=1&offset=1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"1b7-vjhvtR+WeHznJQEgDPniMXx2eXU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "439"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:26:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 1,\n            \"count\": 1,\n            \"total_count\": 2\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/product/productId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/products/{{productId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/product/productId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/{{productId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"172-8RBDof6CR6Uq+HJ9+P5ypd7xzcQ\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "370"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:29:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product found\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 149\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/product/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{productName}}\",\n        \"discountedPrice\": {{productDiscountedPrice}}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/product/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{productName}}\",\n        \"discountedPrice\": {{productDiscountedPrice}}\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"179-cDtDid3k0rewHYnsLAfnF5NxaQk\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "377"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:32:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/products/delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/products/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"179-ZHTIkUem9uhIfKx79/Qvx9YDIME\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "377"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:34:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
+						}
+					]
+				}
+			]
 		}
 	]
 }
