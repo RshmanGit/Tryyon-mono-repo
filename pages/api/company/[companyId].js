@@ -8,7 +8,7 @@ const handler = async (req, res) => {
     async.auto(
       {
         verification: async () => {
-          const { companyId } = req.body;
+          const { companyId } = req.query;
           const companyCheck = await checkCompany({ id: companyId });
 
           if (companyCheck.length == 0) {

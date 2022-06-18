@@ -18,8 +18,8 @@ const handler = async (req, res) => {
     async.auto(
       {
         verification: async () => {
-          const { email } = req.body;
-          const adminCheck = await checkAdmin({ email });
+          const { adminId } = req.query;
+          const adminCheck = await checkAdmin({ id: adminId });
 
           if (adminCheck.length == 0) {
             throw new Error(
