@@ -1,7 +1,8 @@
 import async from 'async';
 import Joi from 'joi';
 
-import { createProduct } from '../../../prisma/products/products';
+import { createTenant } from '../../../prisma/tenant/tenant';
+import { checkCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 
@@ -9,13 +10,8 @@ const schema = {
   body: Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
-    shortDescriptions: Joi.string().required(),
-    slug: Joi.string().required(),
-    quantity: Joi.number(),
-    approved: Joi.boolean().default(false),
-    published: Joi.boolean().default(false),
-    price: Joi.number().required(),
-    discountedPrice: Joi.number().required()
+    companyId: Joi.string().required(),
+    ownerId: Joi.string().required()
   })
 };
 
@@ -23,16 +19,39 @@ const handler = async (req, res) => {
   if (req.method == 'POST') {
     async.auto(
       {
+        verification: async () => {
+          const { companyId } = req.body;
+          const companyCheck = await checkCompany({ id: companyId });
+
+          if (companyCheck.length == 0) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'No company with given companyId found'
+                  }
+                }
+              })
+            );
+          }
+
+          return {
+            message: 'Company found'
+          };
+        },
         create: [
+          'verification',
           async () => {
             const { body } = req;
 
-            const res = await createProduct(body);
+            const res = await createTenant(body);
 
             if (res) {
               return {
-                message: 'New Product Created',
-                product: res
+                message: 'New Tenant Created',
+                tenant: res
               };
             }
 

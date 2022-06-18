@@ -2159,6 +2159,890 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "/api/company",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/company",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"1b7-Df92WqVRBkJ2TqSjIA4TpuCiMQE\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "439"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:21:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Companys found\",\n    \"companies\": {\n        \"companies\": [\n            {\n                \"id\": \"62adb5297df5fff0b5154dca\",\n                \"name\": \"New company\",\n                \"description\": \"New description\",\n                \"gstNumber\": \"1325fasghcvd26183\",\n                \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n                \"panNumber\": \"efjbkb476375\",\n                \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n                \"aadharNumber\": \"956456489632\",\n                \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n                \"adminApproval\": true,\n                \"tenants\": []\n            }\n        ],\n        \"total_count\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New company\",\n    \"description\": \"New description\",\n    \"gstNumber\": \"1325fasghcvd26183\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"efjbkb476375\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"956456489632\",\n    \"aadharCard\": \"{{$guid}}\",\n    \"adminApproval\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New company\",\n    \"description\": \"New description\",\n    \"gstNumber\": \"1325fasghcvd26183\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"efjbkb476375\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"956456489632\",\n    \"aadharCard\": \"{{$guid}}\",\n    \"adminApproval\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"18d-bBLfxLnH1pvaYf8Jo/MZM+4rSLg\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "397"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:21:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"New Company Created\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"New description\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/companyId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/company/{{companyId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/companyId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company/{{companyId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"{{companyId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-Uks6DUoQS0/OyEO52EbKv7kZLm8\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:25:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company found\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"New description\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{companyId}}\",\n    \"updateData\": {\n        \"description\": \"something new\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{companyId}}\",\n    \"updateData\": {\n        \"description\": \"something new\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-iLrsaUKtBrD9r2/rescSU+T1RKU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:28:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company updated\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"something new\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{companyId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{companyId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-jtZ+rFMm+77ErQ+2nMtB8sG0Q6o\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:35:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company deleted\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"something new\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tenant",
+			"item": [
+				{
+					"name": "/api/tenant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tenant",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tenant",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"d3-wrcyzYdpfFJeeDEH5Dv7jr6DNKk\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "211"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:33:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenants found\",\n    \"tenants\": {\n        \"tenants\": [\n            {\n                \"id\": \"62adc5db7df5fff0b5154dcd\",\n                \"name\": \"tenant 1\",\n                \"description\": \"tenant 1 rocks\",\n                \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n                \"ownerId\": \"123456789\"\n            }\n        ],\n        \"total_count\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"tenant 1\",\n    \"description\": \"tenant 1 rocks\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"tenant 1\",\n    \"description\": \"tenant 1 rocks\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"123456789\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b9-dhK194FtAsJp2XHF2R5zb/etZsU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "185"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:32:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"New Tenant Created\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/tenantId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/{{tenantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"{{tenantId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/tenantId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/{{tenantId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"{{tenantId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b3-w5ZK6YBn0z0dDvcBinfloWZjM28\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "179"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:44:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant found\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"tenant 2\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"tenant 2\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b5-pLO+OT0QABEQw0P/gu4dfBLXHaI\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:47:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant updated\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{tenantId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{tenantId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b5-0cIwJmjllmNtmoV9aukQu6hjEIw\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:48:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant deleted\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				}
+			]
 		}
 	]
 }

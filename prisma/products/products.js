@@ -45,6 +45,14 @@ export const getProduct = async (id) => {
   return product;
 };
 
+export const checkProduct = async (id) => {
+  const products = await prisma.product.findMany({
+    where: { id }
+  });
+
+  return products;
+};
+
 export const searchProducts = async ({
   query,
   inStock,

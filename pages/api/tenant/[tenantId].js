@@ -1,24 +1,21 @@
 import async from 'async';
 
-import { checkRole } from '../../../../prisma/admin/roles';
-import handleResponse from '../../../../utils/helpers/handleResponse';
-import runMiddleware from '../../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../../utils/middlewares/adminAuth';
+import { getTenant, checkTenant } from '../../../prisma/tenant/tenant';
+import handleResponse from '../../../utils/helpers/handleResponse';
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
   if (req.method == 'GET') {
     async.auto(
       {
         main: [
           async () => {
-            const { roleId } = req.query;
-            const role = await checkRole({ id: roleId });
+            const { tenantId } = req.query;
+            const tenant = await checkTenant(tenantId);
 
-            if (role.length != 0) {
+            if (tenant.length != 0) {
               return {
-                message: 'Role found',
-                role: role[0]
+                message: 'Tenant found',
+                tenant: tenant[0]
               };
             }
 
@@ -28,7 +25,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such Role found'
+                    message: 'No such tenant found'
                   }
                 }
               })

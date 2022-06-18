@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import async from 'async';
 
-import { deleteRole } from '../../../../prisma/admin/roles';
+import { deleteRole, checkRole } from '../../../../prisma/admin/roles';
 import handleResponse from '../../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../../utils/helpers/runMiddleware';
 import verifyToken from '../../../../utils/middlewares/adminAuth';
@@ -18,7 +18,30 @@ const handler = async (req, res) => {
   if (req.method == 'DELETE') {
     async.auto(
       {
+        verify: async () => {
+          const { id } = req.body;
+          const roleCheck = await checkRole({ id });
+
+          if (roleCheck.length == 0) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verify',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'Role does not exist'
+                  }
+                }
+              })
+            );
+          }
+
+          return {
+            message: 'New Role Validated'
+          };
+        },
         removeRole: [
+          'verify',
           async () => {
             const { id } = req.body;
 
@@ -48,7 +71,7 @@ const handler = async (req, res) => {
       handleResponse(req, res, 'removeRole')
     );
   } else {
-    res.send(405).json({ message: 'Method Not Allowed' });
+    res.status(405).json({ message: 'Method Not Allowed' });
   }
 };
 

@@ -31,6 +31,21 @@ export const getRole = async ({ id, title }) => {
   return role;
 };
 
+export const checkRole = async ({ id, title }) => {
+  let role;
+
+  if (id)
+    role = await prisma.role.findMany({
+      where: { id }
+    });
+  else if (title)
+    role = await prisma.role.findMany({
+      where: { title }
+    });
+
+  return role;
+};
+
 export const getRoleWithAdmins = async ({ id, title }) => {
   let role;
 

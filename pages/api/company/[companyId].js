@@ -1,34 +1,24 @@
 import async from 'async';
-import Joi from 'joi';
 
-import validate from '../../../utils/middlewares/validation';
+import { checkCompany, getCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
-import runMiddleware from '../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../utils/middlewares/adminAuth';
-
-import { getAdminByID, checkAdmin } from '../../../prisma/admin/admin';
-
-const schema = {
-  body: Joi.object({})
-};
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
   if (req.method == 'GET') {
     async.auto(
       {
         verification: async () => {
-          const { adminId } = req.query;
-          const adminCheck = await checkAdmin({ id: adminId });
+          const { companyId } = req.query;
+          const companyCheck = await checkCompany({ id: companyId });
 
-          if (adminCheck.length == 0) {
+          if (companyCheck.length == 0) {
             throw new Error(
               JSON.stringify({
                 errorkey: 'verification',
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such admin found'
+                    message: 'No such company found'
                   }
                 }
               })
@@ -36,20 +26,19 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'Admin Validated'
+            message: 'Company found'
           };
         },
         main: [
           'verification',
           async () => {
-            const { adminId } = req.query;
+            const { companyId } = req.query;
+            const company = await getCompany(companyId);
 
-            const admin = await getAdminByID(adminId);
-
-            if (admin) {
+            if (company) {
               return {
-                message: 'Admin found',
-                admin
+                message: 'Company found',
+                company
               };
             }
 
@@ -59,7 +48,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such Admin found'
+                    message: 'No such company found'
                   }
                 }
               })
@@ -74,4 +63,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default validate(schema, handler);
+export default handler;

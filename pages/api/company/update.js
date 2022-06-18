@@ -1,14 +1,24 @@
 import Joi from 'joi';
 import async from 'async';
 
-import { updateProduct } from '../../../prisma/products/products';
+import { updateCompany, checkCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 
 const schema = {
   body: Joi.object({
     id: Joi.string().required(),
-    updateData: Joi.object()
+    updateData: Joi.object({
+      name: Joi.string().optional(),
+      description: Joi.string().optional(),
+      gstNumber: Joi.string().optional(),
+      gstCertificate: Joi.string().guid({ version: 'uuidv4' }).optional(),
+      panNumber: Joi.string().optional(),
+      panCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
+      aadharNumber: Joi.string().optional(),
+      aadharCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
+      adminApproval: Joi.boolean().optional()
+    })
   })
 };
 
@@ -18,16 +28,16 @@ const handler = async (req, res) => {
       {
         verification: async () => {
           const { id } = req.body;
-          const productCheck = await checkProduct(id);
+          const companyCheck = await checkCompany({ id });
 
-          if (productCheck.length == 0) {
+          if (companyCheck.length == 0) {
             throw new Error(
               JSON.stringify({
                 errorkey: 'verification',
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such product found'
+                    message: 'No such company found'
                   }
                 }
               })
@@ -35,30 +45,30 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'Product found'
+            message: 'Company found'
           };
         },
-        updateProduct: [
+        updateCompany: [
           'verification',
           async () => {
             const { id, updateData } = req.body;
 
-            const product = await updateProduct(id, updateData);
+            const company = await updateCompany(id, updateData);
 
-            if (product) {
+            if (company) {
               return {
-                message: 'Product updated',
-                product
+                message: 'Company updated',
+                company
               };
             }
 
             throw new Error(
               JSON.stringify({
-                errorKey: 'updateProduct',
+                errorKey: 'updateCompany',
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such Product found'
+                    message: 'No such Company found'
                   }
                 }
               })
@@ -66,7 +76,7 @@ const handler = async (req, res) => {
           }
         ]
       },
-      handleResponse(req, res, 'updateProduct')
+      handleResponse(req, res, 'updateCompany')
     );
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });

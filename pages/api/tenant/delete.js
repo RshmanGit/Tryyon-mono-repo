@@ -1,36 +1,32 @@
-import async from 'async';
 import Joi from 'joi';
+import async from 'async';
 
-import validate from '../../../utils/middlewares/validation';
+import { deleteTenant, checkTenant } from '../../../prisma/tenant/tenant';
 import handleResponse from '../../../utils/helpers/handleResponse';
-import runMiddleware from '../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../utils/middlewares/adminAuth';
-
-import { deleteAdmin, checkAdmin } from '../../../prisma/admin/admin';
+import validate from '../../../utils/middlewares/validation';
 
 const schema = {
   body: Joi.object({
-    email: Joi.string().email().required()
+    id: Joi.string().required()
   })
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
   if (req.method == 'DELETE') {
     async.auto(
       {
         verification: async () => {
-          const { email } = req.body;
-          const adminCheck = await checkAdmin({ email });
+          const { id } = req.body;
+          const tenantCheck = await checkTenant(id);
 
-          if (adminCheck.length == 0) {
+          if (tenantCheck.length == 0) {
             throw new Error(
               JSON.stringify({
                 errorkey: 'verification',
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such admin found'
+                    message: 'No such tenant found'
                   }
                 }
               })
@@ -38,30 +34,30 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'Admin Validated'
+            message: 'Tenant found'
           };
         },
-        removeAdmin: [
+        removeTenant: [
           'verification',
           async () => {
-            const { email } = req.body;
+            const { id } = req.body;
 
-            const admin = await deleteAdmin({ email });
+            const res = await deleteTenant(id);
 
-            if (admin) {
+            if (res) {
               return {
-                message: 'Admin deleted',
-                admin
+                message: 'Tenant deleted',
+                tenant: res
               };
             }
 
             throw new Error(
               JSON.stringify({
-                errorKey: 'removeAdmin',
+                errorKey: 'removeTenant',
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such Admin found'
+                    message: 'No such Tenant found'
                   }
                 }
               })
@@ -69,7 +65,7 @@ const handler = async (req, res) => {
           }
         ]
       },
-      handleResponse(req, res, 'removeAdmin')
+      handleResponse(req, res, 'removeTenant')
     );
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });

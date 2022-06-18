@@ -1,11 +1,11 @@
 import async from 'async';
 
 import {
-  getAllProducts,
-  getAllProductsPaginated,
-  searchProducts,
-  searchProductsPaginated
-} from '../../../prisma/products/products';
+  getAllTenants,
+  getAllTenantsPaginated,
+  searchTenants,
+  searchTenantsPaginated
+} from '../../../prisma/tenant/tenant';
 import handleResponse from '../../../utils/helpers/handleResponse';
 
 const handler = async (req, res) => {
@@ -31,29 +31,29 @@ const handler = async (req, res) => {
               );
             }
 
-            let products;
+            let tenants;
 
             if (Object.keys(rest).length == 0) {
               if (paginated)
-                products = await getAllProductsPaginated(
+                tenants = await getAllTenantsPaginated(
                   Number(offset),
                   Number(count)
                 );
-              else products = await getAllProducts();
+              else tenants = await getAllTenants();
             } else {
               if (paginated) {
-                products = await searchProductsPaginated({
+                tenants = await searchTenantsPaginated({
                   offset: Number(offset),
                   count: Number(count),
                   ...rest
                 });
-              } else products = await searchProducts(rest);
+              } else tenants = await searchTenants(rest);
             }
 
-            if (products) {
+            if (tenants) {
               return {
-                message: 'Products found',
-                products
+                message: 'Tenants found',
+                tenants
               };
             }
 
@@ -63,7 +63,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No Product found'
+                    message: 'No Tenant found'
                   }
                 }
               })
