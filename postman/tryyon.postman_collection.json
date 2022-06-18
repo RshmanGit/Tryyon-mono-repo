@@ -644,6 +644,70 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"Admin Authenticated\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"email\": \"admin@alphabi.co\",\n        \"role\": {\n            \"id\": \"62a99ec34c8636475df85bfb\",\n            \"title\": \"moderator\"\n        },\n        \"iat\": 1655283827,\n        \"exp\": 1655291027\n    }\n}"
+								},
+								{
+									"name": "/api/admin/check",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/check",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"check"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"d1-8QTIodeyNQb/M35Hh9XTR7OUQCg\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "209"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Jun 2022 06:44:10 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Admin Authenticated\",\n    \"admin\": {\n        \"id\": \"62ad6fae3f991e1d47689455\",\n        \"email\": \"manager@alphabi.co\",\n        \"role\": {\n            \"id\": \"62a9a178733246c5ef3752ca\",\n            \"title\": \"master\"\n        },\n        \"iat\": 1655534601,\n        \"exp\": 1655541801\n    }\n}"
 								}
 							]
 						},
@@ -965,20 +1029,79 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"Admin deleted\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzgyNywiZXhwIjoxNjU1MjkxMDI3fQ.sHCVTf8nNrgsEqnXDjZshFN61q4W4fI55gslZ8O16Zc\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODM4MjcsImV4cCI6MTY1NTI5MTAyN30.ZYsxsVytkk2h39nkzIZfITe3_kiYpkRUuSyoaSIEL-s\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\",\n        \"role\": {\n            \"id\": \"62a99ec34c8636475df85bfb\",\n            \"title\": \"moderator\"\n        }\n    }\n}"
+								},
+								{
+									"name": "/api/admin/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"{{email}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"377-ssI7f2bkTkYsmd80usa7Ysu3CHw\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "887"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Jun 2022 06:44:18 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Admin deleted\",\n    \"admin\": {\n        \"id\": \"62ad6fae3f991e1d47689455\",\n        \"username\": \"manager\",\n        \"firstname\": \"manager\",\n        \"lastname\": \"admin\",\n        \"phone\": 1234567891,\n        \"email\": \"manager@alphabi.co\",\n        \"passwordHash\": \"$2a$10$5FaNu7sCSZFiv4VN7ZTB0uVorabyNQ3sy8/jg86pWxrO3dIUwfhTe\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWQ2ZmFlM2Y5OTFlMWQ0NzY4OTQ1NSIsImVtYWlsIjoibWFuYWdlckBhbHBoYWJpLmNvIiwiaWF0IjoxNjU1NTM0NjAxLCJleHAiOjE2NTU1NDE4MDF9.bng8ykfQgb0l-vrYy3AE2wj_Dy8s1GgVw7mqG1NEqjI\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWQ2ZmFlM2Y5OTFlMWQ0NzY4OTQ1NSIsImVtYWlsIjoibWFuYWdlckBhbHBoYWJpLmNvIiwicm9sZSI6eyJpZCI6IjYyYTlhMTc4NzMzMjQ2YzVlZjM3NTJjYSIsInRpdGxlIjoibWFzdGVyIn0sImlhdCI6MTY1NTUzNDYwMSwiZXhwIjoxNjU1NTQxODAxfQ.ajaexTx7N13yJ-tNWzV9pOdJuYh6GtNZIlCP9obybbI\",\n        \"roleId\": \"62a9a178733246c5ef3752ca\",\n        \"role\": {\n            \"id\": \"62a9a178733246c5ef3752ca\",\n            \"title\": \"master\"\n        }\n    }\n}"
 								}
 							]
 						}
 					],
 					"auth": {
-						"type": "apikey",
-						"apikey": [
+						"type": "bearer",
+						"bearer": [
 							{
-								"key": "key",
-								"value": "adminkey",
-								"type": "string"
-							},
-							{
-								"key": "value",
+								"key": "token",
 								"value": "{{adminToken}}",
 								"type": "string"
 							}
@@ -1045,70 +1168,6 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "http://localhost:3000/api/admin/register",
-											"protocol": "http",
-											"host": [
-												"localhost"
-											],
-											"port": "3000",
-											"path": [
-												"api",
-												"admin",
-												"register"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json; charset=utf-8"
-										},
-										{
-											"key": "ETag",
-											"value": "\"330-kEhJ95/EnrKwP3jyAAMJFiRwYCo\""
-										},
-										{
-											"key": "Content-Length",
-											"value": "816"
-										},
-										{
-											"key": "Vary",
-											"value": "Accept-Encoding"
-										},
-										{
-											"key": "Date",
-											"value": "Wed, 15 Jun 2022 08:56:36 GMT"
-										},
-										{
-											"key": "Connection",
-											"value": "keep-alive"
-										},
-										{
-											"key": "Keep-Alive",
-											"value": "timeout=5"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzM5NSwiZXhwIjoxNjU1MjkwNTk1fQ.KlTMflcHHB8U4U5Q-vzOE6BM_egRrHlNxp0btSc50T0\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODMzOTUsImV4cCI6MTY1NTI5MDU5NX0.0367FVbA4QdwqyPIbzM88k4DwSI6s6Z3OqC_0gZuegQ\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\"\n    }\n}"
-								},
-								{
-									"name": "/api/admin/register",
-									"originalRequest": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
 											"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\"\n}",
 											"options": {
 												"raw": {
@@ -1165,6 +1224,70 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDYwNCwiZXhwIjoxNjU1Mjc3ODA0fQ.tWfxmKSGyT6lZUAXdDTrNgn4km-h5dgppi5qL3zU7Ms\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDYwNCwiZXhwIjoxNjU1Mjc3ODA0fQ.u-sp6tp9rZEgZZ9el-eApv1URB2ARlodTrhG5uIMMqA\"\n    }\n}"
+								},
+								{
+									"name": "/api/admin/register",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"register"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"330-kEhJ95/EnrKwP3jyAAMJFiRwYCo\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "816"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 08:56:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzM5NSwiZXhwIjoxNjU1MjkwNTk1fQ.KlTMflcHHB8U4U5Q-vzOE6BM_egRrHlNxp0btSc50T0\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODMzOTUsImV4cCI6MTY1NTI5MDU5NX0.0367FVbA4QdwqyPIbzM88k4DwSI6s6Z3OqC_0gZuegQ\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\"\n    }\n}"
 								}
 							]
 						},
@@ -1263,6 +1386,775 @@
 									"body": "{\n    \"message\": \"admin Authenticated\",\n    \"updatedAdmin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDgwNSwiZXhwIjoxNjU1Mjc4MDA1fQ.g1HUxFYkFJzzs5BslWqDNp5C5EOgONXS5oLHwhMK2lY\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDgwNSwiZXhwIjoxNjU1Mjc4MDA1fQ.r8I0z2QaYco7J-ilZPmv-B6npgHcFf6bjk4SJm2PNsk\"\n    }\n}"
 								}
 							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "/api/products/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{productName}}\",\n    \"description\": \"{{productDescription}}\",\n    \"shortDescriptions\": \"{{productShortDescription}}\",\n    \"slug\": \"{{productSlug}}\",\n    \"quantity\": {{productQuantity}},\n    \"approved\": {{productApproved}},\n    \"published\": {{productPublished}},\n    \"price\": {{productPrice}},\n    \"discountedPrice\": {{productDiscountedPrice}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/products/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{productName}}\",\n    \"description\": \"{{productDescription}}\",\n    \"shortDescriptions\": \"{{productShortDescription}}\",\n    \"slug\": \"{{productSlug}}\",\n    \"quantity\": {{productQuantity}},\n    \"approved\": {{productApproved}},\n    \"published\": {{productPublished}},\n    \"price\": {{productPrice}},\n    \"discountedPrice\": {{productDiscountedPrice}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"15e-3dOqAyma9Bs86z/yjZHjJjkXTpw\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "350"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:17:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62ac3885a684fef892c4261e\",\n        \"name\": \"Some stuff\",\n        \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some stuff\",\n        \"slug\": \"some-stuff\",\n        \"quantity\": 6,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 150,\n        \"discountedPrice\": 149\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "paginated",
+									"value": "true"
+								},
+								{
+									"key": "count",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "query",
+									"value": "some"
+								},
+								{
+									"key": "inStock",
+									"value": "true"
+								},
+								{
+									"key": "priceFrom",
+									"value": "10"
+								},
+								{
+									"key": "priceTo",
+									"value": "1000"
+								},
+								{
+									"key": "sortBy",
+									"value": "name"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "approved",
+									"value": "true"
+								},
+								{
+									"key": "published",
+									"value": "false"
+								}
+							]
+						},
+						"description": "Query params: paginated, count, offset"
+					},
+					"response": [
+						{
+							"name": "/api/products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "false",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"2b9-JOkUANpP0yo32NluDTTIx+o6v4c\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "697"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:24:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac3885a684fef892c4261e\",\n                \"name\": \"Some stuff\",\n                \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some stuff\",\n                \"slug\": \"some-stuff\",\n                \"quantity\": 6,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 150,\n                \"discountedPrice\": 149\n            },\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"total_count\": 2\n    }\n}"
+						},
+						{
+							"name": "/api/products/?paginated=true&count=1&offset=1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"1b7-vjhvtR+WeHznJQEgDPniMXx2eXU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "439"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:26:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 1,\n            \"count\": 1,\n            \"total_count\": 2\n        }\n    }\n}"
+						},
+						{
+							"name": "/api/products with queries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=lol&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "query",
+											"value": "lol"
+										},
+										{
+											"key": "inStock",
+											"value": "true"
+										},
+										{
+											"key": "priceFrom",
+											"value": "10"
+										},
+										{
+											"key": "priceTo",
+											"value": "1000"
+										},
+										{
+											"key": "sortBy",
+											"value": "name"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "approved",
+											"value": "true"
+										},
+										{
+											"key": "published",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"78-UJhSCDBecaj5bBp45yMJ5yiu5gM\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 12:39:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 1\n        }\n    }\n}"
+						},
+						{
+							"name": "/api/products with queries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "query",
+											"value": "some"
+										},
+										{
+											"key": "inStock",
+											"value": "true"
+										},
+										{
+											"key": "priceFrom",
+											"value": "10"
+										},
+										{
+											"key": "priceTo",
+											"value": "1000"
+										},
+										{
+											"key": "sortBy",
+											"value": "name"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "approved",
+											"value": "true"
+										},
+										{
+											"key": "published",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"19d-H8WULcV14ZJiINb8ZFf2WBveR8E\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "413"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 12:41:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac3885a684fef892c4261e\",\n                \"name\": \"Some stuff\",\n                \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some stuff\",\n                \"slug\": \"some-stuff\",\n                \"quantity\": 6,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 150,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 1\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/product/productId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/products/{{productId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/product/productId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/{{productId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"172-8RBDof6CR6Uq+HJ9+P5ypd7xzcQ\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "370"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:29:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product found\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 149\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/product/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{productName}}\",\n        \"discountedPrice\": {{productDiscountedPrice}}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/product/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{productName}}\",\n        \"discountedPrice\": {{productDiscountedPrice}}\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"179-cDtDid3k0rewHYnsLAfnF5NxaQk\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "377"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:32:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/products/delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/products/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"179-ZHTIkUem9uhIfKx79/Qvx9YDIME\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "377"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:34:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
 						}
 					]
 				}

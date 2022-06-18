@@ -50,7 +50,7 @@ function Login() {
         justifyContent="center"
         mb={{ base: '30px', md: '60px' }}
         px={{ base: '25px', md: '0px' }}
-        mt={{ base: '20px', md: '6vh' }}
+        mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
       >
         <Box me="auto">
