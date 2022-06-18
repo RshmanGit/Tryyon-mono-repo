@@ -3,7 +3,11 @@ import jwt from 'jsonwebtoken';
 import async from 'async';
 import Joi from 'joi';
 
-import { getAdminByEmail, updateAdmin } from '../../../prisma/admin/admin';
+import {
+  getAdminByEmail,
+  updateAdmin,
+  checkAdmin
+} from '../../../prisma/admin/admin';
 import validate from '../../../utils/middlewares/validation';
 import handleResponse from '../../../utils/helpers/handleResponse';
 
@@ -18,7 +22,30 @@ const handler = async (req, res) => {
   if (req.method == 'POST') {
     async.auto(
       {
+        verification: async () => {
+          const { email } = req.body;
+          const adminCheck = await checkAdmin({ email });
+
+          if (adminCheck.length == 0) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'No such admin found'
+                  }
+                }
+              })
+            );
+          }
+
+          return {
+            message: 'Admin Validated'
+          };
+        },
         login: [
+          'verification',
           async () => {
             const { email, password } = req.body;
             const admin = await getAdminByEmail(email);

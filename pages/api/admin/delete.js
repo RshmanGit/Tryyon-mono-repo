@@ -6,7 +6,7 @@ import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 import verifyToken from '../../../utils/middlewares/adminAuth';
 
-import { deleteAdmin } from '../../../prisma/admin/admin';
+import { deleteAdmin, checkAdmin } from '../../../prisma/admin/admin';
 
 const schema = {
   body: Joi.object({
@@ -19,7 +19,30 @@ const handler = async (req, res) => {
   if (req.method == 'DELETE') {
     async.auto(
       {
+        verification: async () => {
+          const { email } = req.body;
+          const adminCheck = await checkAdmin({ email });
+
+          if (adminCheck.length == 0) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'No such admin found'
+                  }
+                }
+              })
+            );
+          }
+
+          return {
+            message: 'Admin Validated'
+          };
+        },
         removeAdmin: [
+          'verification',
           async () => {
             const { email } = req.body;
 
@@ -38,7 +61,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such Amin found'
+                    message: 'No such Admin found'
                   }
                 }
               })

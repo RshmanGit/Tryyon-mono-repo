@@ -7,11 +7,9 @@ const method = (req, res, resultKey) => (err, results) => {
       ? err.body.data
       : { message: 'Some error occurred in Api' };
     console.error(`${data.message} ${status}`);
-    res.json({ status, message: data.message });
-    res.status(status).end();
+    res.status(status).json({ message: data.message });
   } else {
-    res.json({ status: 200, ...results[resultKey] });
-    res.status(200).end();
+    res.status(200).json({ ...results[resultKey] });
   }
 };
 
