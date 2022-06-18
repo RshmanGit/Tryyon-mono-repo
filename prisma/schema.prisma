@@ -31,14 +31,37 @@ model Role {
 }
 
 model Product {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  description String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  description       String?
   shortDescriptions String?
-  slug String
-  quantity Int @default(0)
-  approved Boolean @default(false)
-  published Boolean @default(false)
-  price Int
-  discountedPrice Int?
+  slug              String
+  quantity          Int     @default(0)
+  approved          Boolean @default(false)
+  published         Boolean @default(false)
+  price             Int
+  discountedPrice   Int?
+}
+
+model Tenant {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  company     Company @relation(fields: [companyId], references: [id])
+  companyId   String  @db.ObjectId
+  ownerId     String?
+}
+
+model Company {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  description    String?
+  gstNumber      String   @unique
+  gstCertificate String?
+  panNumber      String   @unique
+  panCard        String?
+  aadharNumber   String   @unique
+  aadharCard     String?
+  adminApproval  Boolean  @default(false)
+  tenants        Tenant[]
 }
