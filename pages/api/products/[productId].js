@@ -25,7 +25,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such Amin found'
+                    message: 'No such product found'
                   }
                 }
               })
