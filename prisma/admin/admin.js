@@ -53,12 +53,13 @@ export const getAdminByEmail = async (email) => {
 };
 
 // Check Admin
-export const checkAdmin = async ({ username, email, phone }) => {
-  if (!username && !email && !phone) return [];
+export const checkAdmin = async ({ username, email, phone, id }) => {
+  if (!username && !email && !phone && !id) return [];
 
   const query = { OR: [] };
 
   if (username) query.OR.push({ username });
+  if (id) query.OR.push({ id });
   if (email) query.OR.push({ email });
   if (phone) query.OR.push({ phone });
 
