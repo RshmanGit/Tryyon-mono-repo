@@ -48,7 +48,7 @@ const handler = async (req, res) => {
       handleResponse(req, res, 'removeRole')
     );
   } else {
-    res.send(405).json({ message: 'Method Not Allowed' });
+    res.status(405).json({ message: 'Method Not Allowed' });
   }
 };
 
