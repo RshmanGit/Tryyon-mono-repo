@@ -16,7 +16,30 @@ const handler = async (req, res) => {
   if (req.method == 'POST') {
     async.auto(
       {
+        verification: async () => {
+          const { id } = req.body;
+          const productCheck = await checkProduct(id);
+
+          if (productCheck.length == 0) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'No such product found'
+                  }
+                }
+              })
+            );
+          }
+
+          return {
+            message: 'Product found'
+          };
+        },
         updateProduct: [
+          'verification',
           async () => {
             const { id, updateData } = req.body;
 
