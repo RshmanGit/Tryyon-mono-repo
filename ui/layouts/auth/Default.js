@@ -2,7 +2,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import React from 'react';
-// import Footer from '../../components/footer/FooterAuth';
+import Footer from '../../components/footer/FooterAuth';
 import FixedPlugin from '../../components/fixedPlugin/FixedPlugin';
 
 function AuthIllustration(props) {
@@ -47,7 +47,7 @@ function AuthIllustration(props) {
             borderBottomLeftRadius={{ lg: '120px', xl: '200px' }}
           ></Flex>
         </Box>
-        {/* <Footer /> */}
+        <Footer />
       </Flex>
       <FixedPlugin />
     </Flex>

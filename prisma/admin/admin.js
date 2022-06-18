@@ -53,21 +53,31 @@ export const getAdminByEmail = async (email) => {
 };
 
 // Check Admin
-export const checkAdmin = async ({ username, email, phone }) => {
-  if (!username && !email && !phone) return [];
+export const checkAdmin = async (username, email, phone) => {
+  console.log(username);
 
-  const query = { OR: [] };
-
-  if (username) query.OR.push({ username });
-  if (email) query.OR.push({ email });
-  if (phone) query.OR.push({ phone });
-
-  const admin = await prisma.admin.findMany({
-    where: query,
+  let admin = await prisma.admin.findUnique({
+    where: { username },
     include: {
       role: true
     }
   });
+
+  if (!admin)
+    admin = await prisma.admin.findUnique({
+      where: { email },
+      include: {
+        role: true
+      }
+    });
+
+  if (!admin)
+    admin = await prisma.admin.findUnique({
+      where: { phone },
+      include: {
+        role: true
+      }
+    });
 
   return admin;
 };

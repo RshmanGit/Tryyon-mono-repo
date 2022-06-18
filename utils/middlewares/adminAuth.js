@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'].replace('Bearer ', '');
+  const token = req.headers.adminkey;
 
   if (!token) {
     return res
