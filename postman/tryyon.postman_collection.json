@@ -644,6 +644,70 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"Admin Authenticated\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"email\": \"admin@alphabi.co\",\n        \"role\": {\n            \"id\": \"62a99ec34c8636475df85bfb\",\n            \"title\": \"moderator\"\n        },\n        \"iat\": 1655283827,\n        \"exp\": 1655291027\n    }\n}"
+								},
+								{
+									"name": "/api/admin/check",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/check",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"check"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"d1-8QTIodeyNQb/M35Hh9XTR7OUQCg\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "209"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Jun 2022 06:44:10 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Admin Authenticated\",\n    \"admin\": {\n        \"id\": \"62ad6fae3f991e1d47689455\",\n        \"email\": \"manager@alphabi.co\",\n        \"role\": {\n            \"id\": \"62a9a178733246c5ef3752ca\",\n            \"title\": \"master\"\n        },\n        \"iat\": 1655534601,\n        \"exp\": 1655541801\n    }\n}"
 								}
 							]
 						},
@@ -965,20 +1029,79 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"Admin deleted\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzgyNywiZXhwIjoxNjU1MjkxMDI3fQ.sHCVTf8nNrgsEqnXDjZshFN61q4W4fI55gslZ8O16Zc\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODM4MjcsImV4cCI6MTY1NTI5MTAyN30.ZYsxsVytkk2h39nkzIZfITe3_kiYpkRUuSyoaSIEL-s\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\",\n        \"role\": {\n            \"id\": \"62a99ec34c8636475df85bfb\",\n            \"title\": \"moderator\"\n        }\n    }\n}"
+								},
+								{
+									"name": "/api/admin/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"{{email}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"377-ssI7f2bkTkYsmd80usa7Ysu3CHw\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "887"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Jun 2022 06:44:18 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Admin deleted\",\n    \"admin\": {\n        \"id\": \"62ad6fae3f991e1d47689455\",\n        \"username\": \"manager\",\n        \"firstname\": \"manager\",\n        \"lastname\": \"admin\",\n        \"phone\": 1234567891,\n        \"email\": \"manager@alphabi.co\",\n        \"passwordHash\": \"$2a$10$5FaNu7sCSZFiv4VN7ZTB0uVorabyNQ3sy8/jg86pWxrO3dIUwfhTe\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWQ2ZmFlM2Y5OTFlMWQ0NzY4OTQ1NSIsImVtYWlsIjoibWFuYWdlckBhbHBoYWJpLmNvIiwiaWF0IjoxNjU1NTM0NjAxLCJleHAiOjE2NTU1NDE4MDF9.bng8ykfQgb0l-vrYy3AE2wj_Dy8s1GgVw7mqG1NEqjI\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWQ2ZmFlM2Y5OTFlMWQ0NzY4OTQ1NSIsImVtYWlsIjoibWFuYWdlckBhbHBoYWJpLmNvIiwicm9sZSI6eyJpZCI6IjYyYTlhMTc4NzMzMjQ2YzVlZjM3NTJjYSIsInRpdGxlIjoibWFzdGVyIn0sImlhdCI6MTY1NTUzNDYwMSwiZXhwIjoxNjU1NTQxODAxfQ.ajaexTx7N13yJ-tNWzV9pOdJuYh6GtNZIlCP9obybbI\",\n        \"roleId\": \"62a9a178733246c5ef3752ca\",\n        \"role\": {\n            \"id\": \"62a9a178733246c5ef3752ca\",\n            \"title\": \"master\"\n        }\n    }\n}"
 								}
 							]
 						}
 					],
 					"auth": {
-						"type": "apikey",
-						"apikey": [
+						"type": "bearer",
+						"bearer": [
 							{
-								"key": "key",
-								"value": "adminkey",
-								"type": "string"
-							},
-							{
-								"key": "value",
+								"key": "token",
 								"value": "{{adminToken}}",
 								"type": "string"
 							}
