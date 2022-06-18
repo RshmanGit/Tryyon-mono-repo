@@ -1,7 +1,7 @@
 import async from 'async';
 import Joi from 'joi';
 
-import { getRole, createRole } from '../../../../prisma/admin/roles';
+import { checkRole, createRole } from '../../../../prisma/admin/roles';
 import handleResponse from '../../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../../utils/helpers/runMiddleware';
 import verifyToken from '../../../../utils/middlewares/adminAuth';
@@ -20,9 +20,9 @@ const handler = async (req, res) => {
       {
         verify: async () => {
           const { title } = req.body;
-          const roleCheck = await getRole({ title });
+          const roleCheck = await checkRole({ title });
 
-          if (roleCheck) {
+          if (roleCheck.length != 0) {
             throw new Error(
               JSON.stringify({
                 errorkey: 'verify',

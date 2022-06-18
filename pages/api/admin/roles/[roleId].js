@@ -1,6 +1,6 @@
 import async from 'async';
 
-import { getRole } from '../../../../prisma/admin/roles';
+import { checkRole } from '../../../../prisma/admin/roles';
 import handleResponse from '../../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../../utils/helpers/runMiddleware';
 import verifyToken from '../../../../utils/middlewares/adminAuth';
@@ -13,12 +13,12 @@ const handler = async (req, res) => {
         main: [
           async () => {
             const { roleId } = req.query;
-            const role = await getRole({ id: roleId });
+            const role = await checkRole({ id: roleId });
 
-            if (role) {
+            if (role.length != 0) {
               return {
                 message: 'Role found',
-                role
+                role: role[0]
               };
             }
 
@@ -28,7 +28,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such Amin found'
+                    message: 'No such Role found'
                   }
                 }
               })
