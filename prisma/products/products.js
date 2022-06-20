@@ -134,7 +134,9 @@ export const searchProductsPaginated = async ({
       where: condition,
       orderBy: sortProducts
     }),
-    prisma.product.count()
+    prisma.product.count({
+      where: condition
+    })
   ]);
 
   const pagination = {

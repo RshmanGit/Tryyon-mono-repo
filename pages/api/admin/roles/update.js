@@ -30,7 +30,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'Role does not exist'
+                    message: 'Invalid Role ID'
                   }
                 }
               })
@@ -58,7 +58,7 @@ const handler = async (req, res) => {
                     body: {
                       status: 409,
                       data: {
-                        message: 'Role already exists'
+                        message: 'Role with that title already exists'
                       }
                     }
                   })

@@ -36,7 +36,7 @@ const handler = async (req, res) => {
               JSON.stringify({
                 errorkey: 'verification',
                 body: {
-                  status: 404,
+                  status: 409,
                   data: {
                     message:
                       'Company with same GST Number or Aadhar Number or PAN Number already exists'

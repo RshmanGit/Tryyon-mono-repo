@@ -14,7 +14,7 @@ export const getAllCompanies = async () => {
   const [companies, total_count] = await prisma.$transaction([
     prisma.company.findMany({
       include: {
-        tenants: true
+        tenant: true
       }
     }),
     prisma.company.count()
@@ -29,7 +29,7 @@ export const getAllCompaniesPaginated = async (offset, count) => {
       skip: offset,
       take: count,
       include: {
-        tenants: true
+        tenant: true
       }
     }),
     prisma.company.count()
@@ -48,7 +48,7 @@ export const getCompany = async (id) => {
   const company = await prisma.company.findUnique({
     where: { id },
     include: {
-      tenants: true
+      tenant: true
     }
   });
 
@@ -61,6 +61,7 @@ export const checkCompany = async ({
   panNumber,
   aadharNumber
 }) => {
+  if (!id && !gstNumber && !panNumber && !aadharNumber) return [];
   const query = { OR: [] };
 
   if (id) query.OR.push({ id });
@@ -69,9 +70,9 @@ export const checkCompany = async ({
   if (aadharNumber) query.OR.push({ aadharNumber });
 
   const company = await prisma.company.findMany({
-    where: { id },
+    where: query,
     include: {
-      tenants: true
+      tenant: true
     }
   });
 
@@ -82,12 +83,13 @@ export const searchCompanies = async ({ query, adminApproval }) => {
   const condition = {};
 
   if (query) condition.name = { contains: query, mode: 'insensitive' };
-  if (adminApproval != undefined) condition.approved = approved == 'true';
+  if (adminApproval != undefined)
+    condition.adminApproval = adminApproval == 'true';
 
   const companies = await prisma.company.findMany({
     where: condition,
     include: {
-      tenants: true
+      tenant: true
     }
   });
 
@@ -103,7 +105,8 @@ export const searchCompaniesPaginated = async ({
   const condition = {};
 
   if (query) condition.name = { contains: query, mode: 'insensitive' };
-  if (adminApproval != undefined) condition.approved = approved == 'true';
+  if (adminApproval != undefined)
+    condition.adminApproval = adminApproval == 'true';
 
   const [companies, total_count] = await prisma.$transaction([
     prisma.company.findMany({
@@ -111,10 +114,12 @@ export const searchCompaniesPaginated = async ({
       take: count,
       where: condition,
       include: {
-        tenants: true
+        tenant: true
       }
     }),
-    prisma.company.count()
+    prisma.company.count({
+      where: condition
+    })
   ]);
 
   const pagination = {
@@ -132,7 +137,7 @@ export const updateCompany = async (id, updateData) => {
     where: { id },
     data: { ...updateData },
     include: {
-      tenants: true
+      tenant: true
     }
   });
 
@@ -144,7 +149,7 @@ export const deleteCompany = async (id) => {
   const deletedCompany = await prisma.company.delete({
     where: { id },
     include: {
-      tenants: true
+      tenant: true
     }
   });
 

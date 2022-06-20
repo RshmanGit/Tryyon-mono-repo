@@ -98,7 +98,9 @@ export const searchTenantsPaginated = async ({
       take: count,
       where: condition
     }),
-    prisma.tenant.count()
+    prisma.tenant.count({
+      where: condition
+    })
   ]);
 
   const pagination = {

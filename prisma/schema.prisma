@@ -39,8 +39,8 @@ model Product {
   quantity          Int     @default(0)
   approved          Boolean @default(false)
   published         Boolean @default(false)
-  price             Int
-  discountedPrice   Int?
+  price             Float
+  discountedPrice   Float?
 }
 
 model Tenant {
@@ -48,20 +48,20 @@ model Tenant {
   name        String
   description String?
   company     Company @relation(fields: [companyId], references: [id])
-  companyId   String  @db.ObjectId
+  companyId   String  @db.ObjectId @unique
   ownerId     String?
 }
 
 model Company {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
   name           String
   description    String?
-  gstNumber      String   @unique
+  gstNumber      String  @unique
   gstCertificate String?
-  panNumber      String   @unique
+  panNumber      String  @unique
   panCard        String?
-  aadharNumber   String   @unique
+  aadharNumber   String  @unique
   aadharCard     String?
-  adminApproval  Boolean  @default(false)
-  tenants        Tenant[]
+  adminApproval  Boolean @default(false)
+  tenant         Tenant?
 }

@@ -37,6 +37,20 @@ const handler = async (req, res) => {
             );
           }
 
+          if (companyCheck[0].tenant) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 409,
+                  data: {
+                    message: 'Company with given companyId already has a tenant'
+                  }
+                }
+              })
+            );
+          }
+
           return {
             message: 'Company found'
           };
