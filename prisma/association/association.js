@@ -30,6 +30,11 @@ export const getAssociation = async ({ id, userId, tenantId, approval }) => {
 
 // Update Association
 export const updateAssociation = async (id, updateData) => {
+  const { userId, tenantId, ...rest } = updateData;
+
+  if (userId) rest.user = { connect: { id: userId } };
+  if (tenantId) rest.tenant = { connect: { id: tenantId } };
+
   const association = await prisma.associations.update({
     where: { id },
     data: updateData
