@@ -39,8 +39,8 @@ model Product {
   quantity          Int     @default(0)
   approved          Boolean @default(false)
   published         Boolean @default(false)
-  price             Int
-  discountedPrice   Int?
+  price             Float
+  discountedPrice   Float?
 }
 
 model Tenant {
