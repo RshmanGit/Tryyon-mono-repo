@@ -61,6 +61,7 @@ export const checkCompany = async ({
   panNumber,
   aadharNumber
 }) => {
+  if (!id && !gstNumber && !panNumber && !aadharNumber) return [];
   const query = { OR: [] };
 
   if (id) query.OR.push({ id });
@@ -69,7 +70,7 @@ export const checkCompany = async ({
   if (aadharNumber) query.OR.push({ aadharNumber });
 
   const company = await prisma.company.findMany({
-    where: { id },
+    where: query,
     include: {
       tenants: true
     }
