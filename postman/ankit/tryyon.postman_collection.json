@@ -3401,6 +3401,70 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"message\": \"New Tenant Created\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						},
+						{
+							"name": "/api/tenant/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"{{$randomWord}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"create"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"3f-0GsRaZvuxiMjVHEWfUQg1w/re9o\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 20 Jun 2022 07:53:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company with given companyId already has a tenant\"\n}"
 						}
 					]
 				},
@@ -3535,7 +3599,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\"\n    }\n}",
+							"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\",\n        \"companyId\": \"{{companyId}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3620,6 +3684,70 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"message\": \"Tenant updated\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						},
+						{
+							"name": "/api/tenant/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\",\n        \"companyId\": \"{{companyId}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"update"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"3f-0GsRaZvuxiMjVHEWfUQg1w/re9o\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 20 Jun 2022 07:59:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company with given companyId already has a tenant\"\n}"
 						}
 					]
 				},
