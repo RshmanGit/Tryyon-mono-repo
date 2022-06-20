@@ -1,0 +1,3745 @@
+{
+	"info": {
+		"_postman_id": "08b070fb-8338-4273-adcc-fc7cb885b7a9",
+		"name": "tryyon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin routes",
+			"item": [
+				{
+					"name": "Unprotected routes",
+					"item": [
+						{
+							"name": "/api/admin/register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);\r",
+											"if(res.message === \"Admin User Already Exists\") { \r",
+											"    tests[\"Duplicate entry found! Register with different Email-Id or try changing your username TEST FAILED - Expected response status: 200 ... response status received: 409\"] = res.message == null;\r",
+											"    return;\r",
+											"}\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 2000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/admin/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"admin",
+										"register"
+									]
+								},
+								"description": "Endpoint to register a new admin user.\n\nPOST body (as JSON) - \nusername: String\nfirstname: String\nlastname: String\nemail: String (properly formatted)\nphone: Int (between 1000000000 and 9999999999)\npassword: String\n\nResponse (on successful registration) - \n```\n{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"___id____\",\n        \"username\": \"___username____\",\n        \"firstname\": \"___first_name____\",\n        \"lastname\": \"___last_name____\",\n        \"email\": \"___email____\",\n        \"phone\": \"___phone____\",\n        \"passwordHash\": \"___password_hash____\",\n        \"token\": \"___token____\",\n        \"adminToken\": \"___admin_token____\"\n    }\n}\n```"
+							},
+							"response": [
+								{
+									"name": "/api/admin/register",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"register"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"2bb-bhriKiZQl1OxQAbz61FKBWEfjmA\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "699"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 05:23:24 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDYwNCwiZXhwIjoxNjU1Mjc3ODA0fQ.tWfxmKSGyT6lZUAXdDTrNgn4km-h5dgppi5qL3zU7Ms\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDYwNCwiZXhwIjoxNjU1Mjc3ODA0fQ.u-sp6tp9rZEgZZ9el-eApv1URB2ARlodTrhG5uIMMqA\"\n    }\n}"
+								},
+								{
+									"name": "/api/admin/register",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"{{username}}\",\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": {{phone}},\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"register"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"330-kEhJ95/EnrKwP3jyAAMJFiRwYCo\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "816"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 08:56:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzM5NSwiZXhwIjoxNjU1MjkwNTk1fQ.KlTMflcHHB8U4U5Q-vzOE6BM_egRrHlNxp0btSc50T0\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODMzOTUsImV4cCI6MTY1NTI5MDU5NX0.0367FVbA4QdwqyPIbzM88k4DwSI6s6Z3OqC_0gZuegQ\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/admin/login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);\r",
+											"if(res.message === \"No such admin found\") { \r",
+											"    tests[\"(Invalid Credentials) TEST FAILED\"] = res.message == null;\r",
+											"    return;\r",
+											"}\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 2000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"username\",res.updatedAdmin.username);\r",
+											"pm.environment.set(\"firstname\",res.updatedAdmin.firstname);\r",
+											"pm.environment.set(\"lastname\",res.updatedAdmin.lastname);\r",
+											"pm.environment.set(\"phone\",res.updatedAdmin.phone);\r",
+											"pm.environment.set(\"email\",res.updatedAdmin.email);\r",
+											"pm.environment.set(\"password\",res.updatedAdmin.password);\r",
+											"pm.environment.set(\"token\",res.updatedAdmin.token);\r",
+											"pm.environment.set(\"adminToken\",res.updatedAdmin.adminToken);\r",
+											"pm.environment.set(\"adminId\",res.updatedAdmin.id);\r",
+											"pm.environment.set(\"roleId\",res.updatedAdmin.roleId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/admin/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"admin",
+										"login"
+									]
+								},
+								"description": "Endpoint for admin user to login.\n\nPOST body (as JSON) - \nemail: String (properly formatted)\npassword: String\n\nResponse (on successful login) - \n```\n{\n    \"message\": \"New admin registered\",\n    \"admin\": {\n        \"id\": \"___id____\",\n        \"username\": \"___username____\",\n        \"firstname\": \"___first_name____\",\n        \"lastname\": \"___last_name____\",\n        \"email\": \"___email____\",\n        \"phone\": \"___phone____\",\n        \"passwordHash\": \"___password_hash____\",\n        \"token\": \"___token____\",\n        \"adminToken\": \"___admin_token____\"\n    }\n}\n```"
+							},
+							"response": [
+								{
+									"name": "/api/admin/login",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"2c1-vXIkkvvqoEGBqMGo6yJ+VeNKKjk\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "705"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 05:26:46 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"admin Authenticated\",\n    \"updatedAdmin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDgwNSwiZXhwIjoxNjU1Mjc4MDA1fQ.g1HUxFYkFJzzs5BslWqDNp5C5EOgONXS5oLHwhMK2lY\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MDgwNSwiZXhwIjoxNjU1Mjc4MDA1fQ.r8I0z2QaYco7J-ilZPmv-B6npgHcFf6bjk4SJm2PNsk\"\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Protected routes",
+					"item": [
+						{
+							"name": "Roles",
+							"item": [
+								{
+									"name": "/api/admin/roles",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);\r",
+													"if(res.message !== \"Roles found\") { \r",
+													"    tests[\"No roles found | TEST FAILED\"] = res.message === null;\r",
+													"    return;\r",
+													"}\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response time is less than 2000ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{adminToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/admin/roles",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"roles"
+											]
+										},
+										"description": "To get all the roles"
+									},
+									"response": [
+										{
+											"name": "/api/admin/roles",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:3000/api/admin/roles",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"admin",
+														"roles"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"8c-dMgbgBiaO2aaJR+8P+oU2tjnGEs\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "140"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 15 Jun 2022 09:10:49 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Roles found\",\n    \"roles\": [\n        {\n            \"id\": \"62a99ec34c8636475df85bfb\",\n            \"title\": \"moderator\"\n        },\n        {\n            \"id\": \"62a9a178733246c5ef3752ca\",\n            \"title\": \"master\"\n        }\n    ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/admin/roles/roleId",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);\r",
+													"if(res.message !== \"Role found\") { \r",
+													"    tests[\"RoleId not found | TEST FAILED\"] = res.message === null;\r",
+													"    return;\r",
+													"}\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response time is less than 2000ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{adminToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/admin/roles/{{roleId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"roles",
+												"{{roleId}}"
+											]
+										},
+										"description": "To retrieve a specific role"
+									},
+									"response": [
+										{
+											"name": "/api/admin/roles/roleId",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:3000/api/admin/roles/{{roleId}}",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"admin",
+														"roles",
+														"{{roleId}}"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"55-+GzbO2npyPGUa54hI1Qnv+n1okw\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "85"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 15 Jun 2022 09:18:52 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Role found\",\n    \"role\": {\n        \"id\": \"62a99ec34c8636475df85bfb\",\n        \"title\": \"moderator\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/admin/roles/create",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);\r",
+													"if(res.message === \"Role Already Exists\") { \r",
+													"    tests[\"Role already exists | TEST FAILED\"] = res.message === null;\r",
+													"    return;\r",
+													"}\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response time is less than 2000ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+													"});\r",
+													"\r",
+													"pm.environment.set(\"roleTitle\",res.createdRole.title);\r",
+													"pm.environment.set(\"role\",res.createdRole.title);\r",
+													"pm.environment.set(\"roleId\",res.createdRole.id);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{adminToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"{{roleTitle}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/roles/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"roles",
+												"create"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/admin/roles/create",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"{{roleTitle}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/admin/roles/create",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"admin",
+														"roles",
+														"create"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"60-l2OCrNGkgvOgyuDKhTYdUoizxwc\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "96"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 15 Jun 2022 09:21:57 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"New Role Created\",\n    \"createdRole\": {\n        \"id\": \"62a9a4b4733246c5ef3752cc\",\n        \"title\": \"manager\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/admin/roles/delete",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message === \"Role does not exist\") { ",
+													"    tests[\"Role does not exist | TEST FAILED\"] = res.message === null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{roleId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/roles/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"roles",
+												"delete"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/admin/roles/delete",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{roleId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/admin/roles/delete",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"admin",
+														"roles",
+														"delete"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"55-sE/iRqSTYg3fJK+y3gsVJuG0Vvo\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "85"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 15 Jun 2022 09:57:05 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Role deleted\",\n    \"role\": {\n        \"id\": \"62a9a4b4733246c5ef3752cc\",\n        \"title\": \"manager\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/admin/roles/update",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{roleId}}\",\n    \"updateData\": {\n        \"title\": \"{{$randomJobType}}\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/roles/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"roles",
+												"update"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/admin/roles/update",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{roleId}}\",\n    \"updateData\": {\n        \"title\": \"root\"\n    }\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/admin/roles/update",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"admin",
+														"roles",
+														"update"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"52-pj3Hf37bYBAsjhC2iEMkfgvL5IM\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "82"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 15 Jun 2022 09:28:49 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Role updated\",\n    \"role\": {\n        \"id\": \"62a99ec34c8636475df85bfb\",\n        \"title\": \"root\"\n    }\n}"
+										}
+									]
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "/api/admin/check",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);\r",
+											"if(res.message !== \"Admin Authenticated\") { \r",
+											"    tests[\"Invalid check | TEST FAILED\"] = res.message === null;\r",
+											"    return;\r",
+											"}\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 2000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/admin/check",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"admin",
+										"check"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/admin/check",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/admin/check",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"check"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"88-U1q6NTb0/Fvnq+dmEzfDn7gvn38\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "136"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 05:38:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Admin Authenticated\",\n    \"admin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"email\": \"admin@alphabi.co\",\n        \"iat\": 1655271490,\n        \"exp\": 1655278690\n    }\n}"
+								},
+								{
+									"name": "/api/admin/check",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/admin/check",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"check"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"c5-AEuKx7JzRWqy6JvHm5C3dA0Bc9w\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "197"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 09:04:16 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Admin Authenticated\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"email\": \"admin@alphabi.co\",\n        \"role\": {\n            \"id\": \"62a99ec34c8636475df85bfb\",\n            \"title\": \"moderator\"\n        },\n        \"iat\": 1655283827,\n        \"exp\": 1655291027\n    }\n}"
+								},
+								{
+									"name": "/api/admin/check",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/admin/check",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"check"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"d1-8QTIodeyNQb/M35Hh9XTR7OUQCg\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "209"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Jun 2022 06:44:10 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Admin Authenticated\",\n    \"admin\": {\n        \"id\": \"62ad6fae3f991e1d47689455\",\n        \"email\": \"manager@alphabi.co\",\n        \"role\": {\n            \"id\": \"62a9a178733246c5ef3752ca\",\n            \"title\": \"master\"\n        },\n        \"iat\": 1655534601,\n        \"exp\": 1655541801\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/admin/adminId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);\r",
+											"if(res.message !== \"Admin found\") { \r",
+											"    tests[\"Admin not found ! TEST FAILED\"] = res.message === null;\r",
+											"    return;\r",
+											"}\r",
+											"pm.test(\"Status code is 200 | AdminId found\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 2000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/admin/{{adminId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"admin",
+										"{{adminId}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/admin/adminId",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/admin/{{adminId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"{{adminId}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"2b7-Vn2HNsI6e95EH7/4qK/LtH7b6CQ\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "695"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 05:41:51 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Admin found\",\n    \"admin\": {\n        \"id\": \"62a81d24f0a2aea710bb6e1e\",\n        \"username\": \"ankitgdes\",\n        \"firstname\": \"Ankit\",\n        \"lastname\": \"Rawani\",\n        \"phone\": 7004603991,\n        \"email\": \"ankit@alphabi.co\",\n        \"passwordHash\": \"$2a$10$rl4/1WcrF8Pgv9xk3rKxeu3HkptOWvYgZa7dlLLYS6clvX1/8FtFG\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTgxZDI0ZjBhMmFlYTcxMGJiNmUxZSIsImVtYWlsIjoiYW5raXRAYWxwaGFiaS5jbyIsImlhdCI6MTY1NTE5MDU3MiwiZXhwIjoxNjU1MTk3NzcyfQ.3v43XUHouOba8f3FxJBaVL0CNiEeWSEFsxXKeann9gI\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTgxZDI0ZjBhMmFlYTcxMGJiNmUxZSIsImVtYWlsIjoiYW5raXRAYWxwaGFiaS5jbyIsImlhdCI6MTY1NTE5MDU3MiwiZXhwIjoxNjU1MTk3NzcyfQ.9Wi41xGCRVplDle5rSXByY_xYAK8sryCtNCaC1qREWg\"\n    }\n}"
+								},
+								{
+									"name": "/api/admin/adminId",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/admin/{{adminId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"{{adminId}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"364-HxR9vw03Yo0dFaQdmPgK1GOxZwo\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "868"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 09:05:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Admin found\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzgyNywiZXhwIjoxNjU1MjkxMDI3fQ.sHCVTf8nNrgsEqnXDjZshFN61q4W4fI55gslZ8O16Zc\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODM4MjcsImV4cCI6MTY1NTI5MTAyN30.ZYsxsVytkk2h39nkzIZfITe3_kiYpkRUuSyoaSIEL-s\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\",\n        \"role\": {\n            \"id\": \"62a99ec34c8636475df85bfb\",\n            \"title\": \"moderator\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/admin/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);\r",
+											"if(res.message === \"No such admin found\") { \r",
+											"    tests[\"No record found | TEST FAILED\"] = res.message === null;\r",
+											"    return;\r",
+											"}\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 2000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{email}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/admin/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"admin",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/admin/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"{{email}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"2b4-h7XbktHrci6oCS7tvgCxz6VcjFA\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "692"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 05:43:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Admin deleted\",\n    \"admin\": {\n        \"id\": \"62a96ccb2a3ac8c17aac5887\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$l5TeeYtmimqEdPUpk3YtSuU/zGThKhYUkIey4OnnsE0pmOUwyIFkS\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MTYzMSwiZXhwIjoxNjU1Mjc4ODMxfQ.cuTpk6NnXdccy6KiXuOjI6C1jVTM9oaMXR2rfbdutzA\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk2Y2NiMmEzYWM4YzE3YWFjNTg4NyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI3MTYzMSwiZXhwIjoxNjU1Mjc4ODMxfQ.mjngHu18bFrIuRpPEXveo-X7_AsCvt4MqtI2neNM4ms\"\n    }\n}"
+								},
+								{
+									"name": "/api/admin/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"{{email}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"366-rO2O6eFpmCy1VWpCqLnxGq1qRO0\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "870"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 15 Jun 2022 09:05:54 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Admin deleted\",\n    \"admin\": {\n        \"id\": \"62a99ec34c8636475df85bfc\",\n        \"username\": \"admin\",\n        \"firstname\": \"admin\",\n        \"lastname\": \"admin\",\n        \"phone\": 9012345678,\n        \"email\": \"admin@alphabi.co\",\n        \"passwordHash\": \"$2a$10$wgnuSAnxbvdo/Y8Jc52YiudH9L8BdGZkou5w992g9jZVvaBduTUw6\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsImlhdCI6MTY1NTI4MzgyNywiZXhwIjoxNjU1MjkxMDI3fQ.sHCVTf8nNrgsEqnXDjZshFN61q4W4fI55gslZ8O16Zc\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTk5ZWMzNGM4NjM2NDc1ZGY4NWJmYyIsImVtYWlsIjoiYWRtaW5AYWxwaGFiaS5jbyIsInJvbGUiOnsiaWQiOiI2MmE5OWVjMzRjODYzNjQ3NWRmODViZmIiLCJ0aXRsZSI6Im1vZGVyYXRvciJ9LCJpYXQiOjE2NTUyODM4MjcsImV4cCI6MTY1NTI5MTAyN30.ZYsxsVytkk2h39nkzIZfITe3_kiYpkRUuSyoaSIEL-s\",\n        \"roleId\": \"62a99ec34c8636475df85bfb\",\n        \"role\": {\n            \"id\": \"62a99ec34c8636475df85bfb\",\n            \"title\": \"moderator\"\n        }\n    }\n}"
+								},
+								{
+									"name": "/api/admin/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"{{email}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/admin/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"admin",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"377-ssI7f2bkTkYsmd80usa7Ysu3CHw\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "887"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Jun 2022 06:44:18 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": 200,\n    \"message\": \"Admin deleted\",\n    \"admin\": {\n        \"id\": \"62ad6fae3f991e1d47689455\",\n        \"username\": \"manager\",\n        \"firstname\": \"manager\",\n        \"lastname\": \"admin\",\n        \"phone\": 1234567891,\n        \"email\": \"manager@alphabi.co\",\n        \"passwordHash\": \"$2a$10$5FaNu7sCSZFiv4VN7ZTB0uVorabyNQ3sy8/jg86pWxrO3dIUwfhTe\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWQ2ZmFlM2Y5OTFlMWQ0NzY4OTQ1NSIsImVtYWlsIjoibWFuYWdlckBhbHBoYWJpLmNvIiwiaWF0IjoxNjU1NTM0NjAxLCJleHAiOjE2NTU1NDE4MDF9.bng8ykfQgb0l-vrYy3AE2wj_Dy8s1GgVw7mqG1NEqjI\",\n        \"adminToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWQ2ZmFlM2Y5OTFlMWQ0NzY4OTQ1NSIsImVtYWlsIjoibWFuYWdlckBhbHBoYWJpLmNvIiwicm9sZSI6eyJpZCI6IjYyYTlhMTc4NzMzMjQ2YzVlZjM3NTJjYSIsInRpdGxlIjoibWFzdGVyIn0sImlhdCI6MTY1NTUzNDYwMSwiZXhwIjoxNjU1NTQxODAxfQ.ajaexTx7N13yJ-tNWzV9pOdJuYh6GtNZIlCP9obybbI\",\n        \"roleId\": \"62a9a178733246c5ef3752ca\",\n        \"role\": {\n            \"id\": \"62a9a178733246c5ef3752ca\",\n            \"title\": \"master\"\n        }\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{adminToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "/api/products/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"New Product Created\") { ",
+									"    tests[\"Product creation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"productId\",res.product.id);",
+									"pm.environment.set(\"productName\",res.product.name);",
+									"pm.environment.set(\"productDescription\",res.product.description);",
+									"pm.environment.set(\"productShortDescriptions\",res.product.shortDescriptions);",
+									"pm.environment.set(\"productSlug\",res.product.slug);",
+									"pm.environment.set(\"productQuantity\",res.product.quantity);",
+									"pm.environment.set(\"productApproved\",res.product.approved);",
+									"pm.environment.set(\"productPublished\",res.product.published);",
+									"pm.environment.set(\"productPrice\",res.product.price);",
+									"pm.environment.set(\"productDiscountedPrice\",res.product.discountedPrice);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"approved\": {{$randomBoolean}},\n    \"published\": {{$randomBoolean}},\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/products/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{productName}}\",\n    \"description\": \"{{productDescription}}\",\n    \"shortDescriptions\": \"{{productShortDescription}}\",\n    \"slug\": \"{{productSlug}}\",\n    \"quantity\": {{productQuantity}},\n    \"approved\": {{productApproved}},\n    \"published\": {{productPublished}},\n    \"price\": {{productPrice}},\n    \"discountedPrice\": {{productDiscountedPrice}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"15e-3dOqAyma9Bs86z/yjZHjJjkXTpw\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "350"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:17:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62ac3885a684fef892c4261e\",\n        \"name\": \"Some stuff\",\n        \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some stuff\",\n        \"slug\": \"some-stuff\",\n        \"quantity\": 6,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 150,\n        \"discountedPrice\": 149\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Products found\") { ",
+									"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/products/?paginated=true&count=10&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "paginated",
+									"value": "true"
+								},
+								{
+									"key": "count",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "query",
+									"value": "some"
+								},
+								{
+									"key": "inStock",
+									"value": "true"
+								},
+								{
+									"key": "priceFrom",
+									"value": "10"
+								},
+								{
+									"key": "priceTo",
+									"value": "1000"
+								},
+								{
+									"key": "sortBy",
+									"value": "name"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "approved",
+									"value": "true"
+								},
+								{
+									"key": "published",
+									"value": "false"
+								}
+							]
+						},
+						"description": "Query params: paginated, count, offset"
+					},
+					"response": [
+						{
+							"name": "/api/products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "false",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"2b9-JOkUANpP0yo32NluDTTIx+o6v4c\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "697"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:24:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac3885a684fef892c4261e\",\n                \"name\": \"Some stuff\",\n                \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some stuff\",\n                \"slug\": \"some-stuff\",\n                \"quantity\": 6,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 150,\n                \"discountedPrice\": 149\n            },\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"total_count\": 2\n    }\n}"
+						},
+						{
+							"name": "/api/products/?paginated=true&count=1&offset=1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"1b7-vjhvtR+WeHznJQEgDPniMXx2eXU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "439"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:26:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 1,\n            \"count\": 1,\n            \"total_count\": 2\n        }\n    }\n}"
+						},
+						{
+							"name": "/api/products with queries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=lol&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "query",
+											"value": "lol"
+										},
+										{
+											"key": "inStock",
+											"value": "true"
+										},
+										{
+											"key": "priceFrom",
+											"value": "10"
+										},
+										{
+											"key": "priceTo",
+											"value": "1000"
+										},
+										{
+											"key": "sortBy",
+											"value": "name"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "approved",
+											"value": "true"
+										},
+										{
+											"key": "published",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"78-UJhSCDBecaj5bBp45yMJ5yiu5gM\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 12:39:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 1\n        }\n    }\n}"
+						},
+						{
+							"name": "/api/products with queries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "query",
+											"value": "some"
+										},
+										{
+											"key": "inStock",
+											"value": "true"
+										},
+										{
+											"key": "priceFrom",
+											"value": "10"
+										},
+										{
+											"key": "priceTo",
+											"value": "1000"
+										},
+										{
+											"key": "sortBy",
+											"value": "name"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "approved",
+											"value": "true"
+										},
+										{
+											"key": "published",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"19d-H8WULcV14ZJiINb8ZFf2WBveR8E\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "413"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 12:41:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac3885a684fef892c4261e\",\n                \"name\": \"Some stuff\",\n                \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some stuff\",\n                \"slug\": \"some-stuff\",\n                \"quantity\": 6,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 150,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 1\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/product/productId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Product found\") { ",
+									"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/products/{{productId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/product/productId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/{{productId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"172-8RBDof6CR6Uq+HJ9+P5ypd7xzcQ\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "370"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:29:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product found\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 149\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/product/update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Product updated\") { ",
+									"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"discountedPrice\": {{$randomPrice}}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/product/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{productName}}\",\n        \"discountedPrice\": {{productDiscountedPrice}}\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"179-cDtDid3k0rewHYnsLAfnF5NxaQk\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "377"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:32:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/products/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Product deleted\") { ",
+									"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/products/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"179-ZHTIkUem9uhIfKx79/Qvx9YDIME\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "377"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jun 2022 08:34:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "/api/company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Companies found\") { ",
+									"    tests[\"Couldn't get companies TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/company?query=S&adminApproval=false&paginated=true&count=3&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "S"
+								},
+								{
+									"key": "adminApproval",
+									"value": "false"
+								},
+								{
+									"key": "paginated",
+									"value": "true"
+								},
+								{
+									"key": "count",
+									"value": "3"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"1b7-Df92WqVRBkJ2TqSjIA4TpuCiMQE\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "439"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:21:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Companys found\",\n    \"companies\": {\n        \"companies\": [\n            {\n                \"id\": \"62adb5297df5fff0b5154dca\",\n                \"name\": \"New company\",\n                \"description\": \"New description\",\n                \"gstNumber\": \"1325fasghcvd26183\",\n                \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n                \"panNumber\": \"efjbkb476375\",\n                \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n                \"aadharNumber\": \"956456489632\",\n                \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n                \"adminApproval\": true,\n                \"tenants\": []\n            }\n        ],\n        \"total_count\": 1\n    }\n}"
+						},
+						{
+							"name": "/api/company",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company?query=S&adminApproval=false&paginated=true&count=3&offset=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "S"
+										},
+										{
+											"key": "adminApproval",
+											"value": "false"
+										},
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "3"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"746-VSwWTWKRN6+opGjn1uKdj2PXwyc\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 20 Jun 2022 06:49:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Companies found\",\n    \"companies\": {\n        \"companies\": [\n            {\n                \"id\": \"62b0156a6507f7a4fa174c8f\",\n                \"name\": \"Schroeder, Ward and Spencer\",\n                \"description\": \"Dolores est doloribus soluta tempore quam. Suscipit fuga ad quo recusandae est quisquam quibusdam vel ab. Quia optio quos aperiam. Aut odit qui minus est totam laboriosam dolorum eos voluptatem. Asperiores aut nesciunt sit dignissimos sed id minus amet aut.\",\n                \"gstNumber\": \"inventore-architecto-voluptas\",\n                \"gstCertificate\": \"d531aca8-f1db-4721-add4-020e6ab9fb9a\",\n                \"panNumber\": \"ullam-ex-et\",\n                \"panCard\": \"40f8755b-7fc1-46a3-a4e5-3c6e60731ad8\",\n                \"aadharNumber\": \"perferendis-quos-et\",\n                \"aadharCard\": \"76e83161-6e5e-4ed8-a2d8-ace2fb75cde6\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            },\n            {\n                \"id\": \"62b0156d6507f7a4fa174c90\",\n                \"name\": \"Hirthe, Bosco and Waelchi\",\n                \"description\": \"Iusto alias nisi ut eveniet et. Deserunt qui illo est consequuntur enim ut maiores. At officia harum occaecati. Beatae autem velit enim recusandae alias sed consequatur iure.\",\n                \"gstNumber\": \"iure-velit-sequi\",\n                \"gstCertificate\": \"45a136bc-cc77-4861-a236-467167da1982\",\n                \"panNumber\": \"provident-dolorum-nulla\",\n                \"panCard\": \"373ec210-a7ee-41ab-8011-4de2ed9b15bc\",\n                \"aadharNumber\": \"omnis-dolorem-blanditiis\",\n                \"aadharCard\": \"9ffc977b-9795-4a2c-a117-0fc9b851691c\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            },\n            {\n                \"id\": \"62b015726507f7a4fa174c91\",\n                \"name\": \"Brekke, Gutkowski and Hayes\",\n                \"description\": \"Ut id fugiat et sed hic repellat quis. Consequuntur tempore quibusdam repellendus qui minus. Quaerat ut voluptatibus praesentium. Ipsa at eveniet quisquam voluptas.\",\n                \"gstNumber\": \"ut-voluptatem-sed\",\n                \"gstCertificate\": \"4e9a952d-3d1f-441d-95e5-09c642965901\",\n                \"panNumber\": \"quae-fuga-et\",\n                \"panCard\": \"98f1f697-2335-4d34-98eb-fef6f2abfe5b\",\n                \"aadharNumber\": \"provident-vero-distinctio\",\n                \"aadharCard\": \"00f1f05d-6788-414a-98c7-fffb0ed25be5\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 3,\n            \"total_count\": 3\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"New Company Created\") { ",
+									"    tests[\"Company creation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"companyId\",res.company.id);",
+									"pm.environment.set(\"companyName\",res.company.name);",
+									"pm.environment.set(\"companyDescription\",res.company.description);",
+									"pm.environment.set(\"companyGSTNumber\",res.company.gstNumber);",
+									"pm.environment.set(\"companyGSTCertificate\",res.company.gstCertificate);",
+									"pm.environment.set(\"companyPANNumber\",res.company.panNumber);",
+									"pm.environment.set(\"companyPANCard\",res.company.panCard);",
+									"pm.environment.set(\"companyAadharNumber\",res.company.aadharNumber);",
+									"pm.environment.set(\"companyAdminApproval\",res.company.adminApproval);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"gstNumber\": \"{{$randomLoremSlug}}\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"{{$randomLoremSlug}}\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"{{$randomLoremSlug}}\",\n    \"aadharCard\": \"{{$guid}}\",\n    \"adminApproval\": {{$randomBoolean}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New company\",\n    \"description\": \"New description\",\n    \"gstNumber\": \"1325fasghcvd26183\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"efjbkb476375\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"956456489632\",\n    \"aadharCard\": \"{{$guid}}\",\n    \"adminApproval\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"18d-bBLfxLnH1pvaYf8Jo/MZM+4rSLg\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "397"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:21:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"New Company Created\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"New description\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/companyId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Company found\") { ",
+									"    tests[\"Company search failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/company/{{companyId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/companyId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company/{{companyId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"{{companyId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-Uks6DUoQS0/OyEO52EbKv7kZLm8\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:25:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company found\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"New description\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Company updated\") { ",
+									"    tests[\"Company updation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"companyName\",res.company.name);",
+									"pm.environment.set(\"companyDescription\",res.company.description);",
+									"pm.environment.set(\"companyGSTNumber\",res.company.gstNumber);",
+									"pm.environment.set(\"companyGSTCertificate\",res.company.gstCertificate);",
+									"pm.environment.set(\"companyPANNumber\",res.company.panNumber);",
+									"pm.environment.set(\"companyPANCard\",res.company.panCard);",
+									"pm.environment.set(\"companyAadharNumber\",res.company.aadharNumber);",
+									"pm.environment.set(\"companyAdminApproval\",res.company.adminApproval);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{companyId}}\",\n    \"updateData\": {\n        \"description\": \"{{$randomLoremParagraph}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{companyId}}\",\n    \"updateData\": {\n        \"description\": \"something new\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-iLrsaUKtBrD9r2/rescSU+T1RKU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:28:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company updated\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"something new\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Company deleted\") { ",
+									"    tests[\"Company deletion failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{companyId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{companyId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-jtZ+rFMm+77ErQ+2nMtB8sG0Q6o\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:35:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company deleted\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"something new\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tenant",
+			"item": [
+				{
+					"name": "/api/tenant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Tenants found\") { ",
+									"    tests[\"Error in finding Tenants TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tenant",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tenant",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"d3-wrcyzYdpfFJeeDEH5Dv7jr6DNKk\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "211"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:33:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenants found\",\n    \"tenants\": {\n        \"tenants\": [\n            {\n                \"id\": \"62adc5db7df5fff0b5154dcd\",\n                \"name\": \"tenant 1\",\n                \"description\": \"tenant 1 rocks\",\n                \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n                \"ownerId\": \"123456789\"\n            }\n        ],\n        \"total_count\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"New Tenant Created\") { ",
+									"    tests[\"Tenant creation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"tenantId\",res.tenant.id);",
+									"pm.environment.set(\"tenantName\",res.tenant.name);",
+									"pm.environment.set(\"tenantDescription\",res.tenant.description);",
+									"pm.environment.set(\"companyId\",res.tenant.companyId);",
+									"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"{{$randomWord}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"tenant 1\",\n    \"description\": \"tenant 1 rocks\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"123456789\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b9-dhK194FtAsJp2XHF2R5zb/etZsU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "185"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:32:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"New Tenant Created\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/tenantId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Tenant found\") { ",
+									"    tests[\"Tenant search failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/{{tenantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"{{tenantId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/tenantId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/{{tenantId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"{{tenantId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b3-w5ZK6YBn0z0dDvcBinfloWZjM28\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "179"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:44:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant found\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Tenant updated\") { ",
+									"    tests[\"Tenant updation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"tenantName\",res.tenant.name);",
+									"pm.environment.set(\"tenantDescription\",res.tenant.description);",
+									"pm.environment.set(\"companyId\",res.tenant.companyId);",
+									"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"tenant 2\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b5-pLO+OT0QABEQw0P/gu4dfBLXHaI\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:47:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant updated\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Tenant deleted\") { ",
+									"    tests[\"Tenant not found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{tenantId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{tenantId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b5-0cIwJmjllmNtmoV9aukQu6hjEIw\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:48:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant deleted\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
