@@ -9,7 +9,10 @@ export const createUser = async (data) => {
 
 // Read User
 export const getUser = async ({ username, email, phone, id }) => {
-  //   if (!username && !email && !phone && !id) return [];
+  if (!username && !email && !phone && !id) {
+    const users = await prisma.user.findMany();
+    return users;
+  }
 
   const query = { OR: [] };
 
