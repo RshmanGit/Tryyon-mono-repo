@@ -83,7 +83,8 @@ export const searchCompanies = async ({ query, adminApproval }) => {
   const condition = {};
 
   if (query) condition.name = { contains: query, mode: 'insensitive' };
-  if (adminApproval != undefined) condition.approved = approved == 'true';
+  if (adminApproval != undefined)
+    condition.adminApproval = adminApproval == 'true';
 
   const companies = await prisma.company.findMany({
     where: condition,
@@ -104,7 +105,8 @@ export const searchCompaniesPaginated = async ({
   const condition = {};
 
   if (query) condition.name = { contains: query, mode: 'insensitive' };
-  if (adminApproval != undefined) condition.approved = approved == 'true';
+  if (adminApproval != undefined)
+    condition.adminApproval = adminApproval == 'true';
 
   const [companies, total_count] = await prisma.$transaction([
     prisma.company.findMany({
@@ -115,7 +117,9 @@ export const searchCompaniesPaginated = async ({
         tenants: true
       }
     }),
-    prisma.company.count()
+    prisma.company.count({
+      where: condition
+    })
   ]);
 
   const pagination = {
