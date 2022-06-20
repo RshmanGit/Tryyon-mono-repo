@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import async from 'async';
 
-import { updateProduct } from '../../../prisma/products/products';
+import { updateProduct, checkProduct } from '../../../prisma/products/products';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 
