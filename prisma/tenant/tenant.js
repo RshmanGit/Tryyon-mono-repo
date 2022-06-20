@@ -49,7 +49,10 @@ export const getTenant = async (id) => {
 
 export const checkTenant = async (id) => {
   const tenant = await prisma.tenant.findMany({
-    where: { id }
+    where: { id },
+    include: {
+      owner: true
+    }
   });
 
   return tenant;

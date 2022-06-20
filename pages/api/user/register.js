@@ -1,7 +1,10 @@
 import async from 'async';
 import Joi from 'joi';
+import { uuid } from 'uuidv4';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-import { checkUser, createUser, updateUser } from '../../../prisma/user/user';
+import { getUser, createUser, updateUser } from '../../../prisma/user/user';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 
@@ -26,7 +29,7 @@ const handler = async (req, res) => {
       {
         verification: async () => {
           const { email, username, phone } = req.body;
-          const userCheck = await checkUser({ username, email, phone });
+          const userCheck = await getUser({ username, email, phone });
 
           if (userCheck.length != 0) {
             throw new Error(
@@ -35,7 +38,8 @@ const handler = async (req, res) => {
                 body: {
                   status: 409,
                   data: {
-                    message: 'User Already Exists'
+                    message:
+                      'User with same username or email or phone already exists'
                   }
                 }
               })
@@ -62,10 +66,15 @@ const handler = async (req, res) => {
                 { expiresIn: '2h' }
               );
 
-              //uuid needs to be implemented for verificationCode
+              const verificationCode = uuid();
+              const verificationExpiry = new Date(
+                new Date().getTime() + 48 * 60 * 60 * 1000
+              );
+
               const user = await updateUser(createdUser.id, {
                 token,
-                verificationCode
+                verificationCode,
+                verificationExpiry
               });
               return { message: 'New user registered', user };
             }
