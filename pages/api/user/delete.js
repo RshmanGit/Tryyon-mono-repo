@@ -1,18 +1,10 @@
 import async from 'async';
-import Joi from 'joi';
 
-import validate from '../../../utils/middlewares/validation';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 import verifyToken from '../../../utils/middlewares/userAuth';
 
 import { deleteUser, getUser } from '../../../prisma/user/user';
-
-const schema = {
-  body: Joi.object({
-    id: Joi.string().required()
-  })
-};
 
 const handler = async (req, res) => {
   await runMiddleware(req, res, verifyToken);
@@ -20,7 +12,7 @@ const handler = async (req, res) => {
     async.auto(
       {
         verification: async () => {
-          const { id } = req.body;
+          const { id } = req.user;
           const userCheck = await getUser({ id });
 
           if (userCheck.length == 0) {
@@ -44,7 +36,7 @@ const handler = async (req, res) => {
         removeUser: [
           'verification',
           async () => {
-            const { id } = req.body;
+            const { id } = req.user;
 
             const user = await deleteUser(id);
 
@@ -76,4 +68,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default validate(schema, handler);
+export default handler;

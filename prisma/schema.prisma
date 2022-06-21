@@ -79,7 +79,7 @@ model User {
   token              String?
   email_verified     Boolean       @default(false)
   verificationCode   String?
-  verificationExpiry DateTime
+  verificationExpiry DateTime?
   Tenant             Tenant?
   Associations       Associations?
 }

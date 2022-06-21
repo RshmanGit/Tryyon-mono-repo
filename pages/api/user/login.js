@@ -46,14 +46,17 @@ const handler = async (req, res) => {
             const { email, password } = req.body;
             const user = await getUser({ email });
 
-            if (user && (await bcrypt.compare(password, user.passwordHash))) {
+            if (
+              user.length != 0 &&
+              (await bcrypt.compare(password, user[0].passwordHash))
+            ) {
               const token = jwt.sign(
-                { id: user.id, email: user.email },
+                { id: user[0].id, email: user[0].email },
                 process.env.TOKEN_KEY,
                 { expiresIn: '2h' }
               );
 
-              const updatedUser = await updateUser(user.id, { token });
+              const updatedUser = await updateUser(user[0].id, { token });
 
               return {
                 message: 'User Authenticated',
