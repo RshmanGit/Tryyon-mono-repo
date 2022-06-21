@@ -1,15 +1,9 @@
 import async from 'async';
-import Joi from 'joi';
 
-import validate from '../../../utils/middlewares/validation';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 import verifyToken from '../../../utils/middlewares/userAuth';
 import { getUser, updateUser } from '../../../prisma/user/user';
-
-const schema = {
-  body: Joi.object({})
-};
 
 const handler = async (req, res) => {
   await runMiddleware(req, res, verifyToken);
@@ -65,11 +59,11 @@ const handler = async (req, res) => {
           }
         ]
       },
-      handleResponse(req, res, 'check')
+      handleResponse(req, res, 'verify')
     );
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }
 };
 
-export default validate(schema, handler);
+export default handler;
