@@ -2,6 +2,10 @@ import { prisma } from '../prisma';
 
 // Create Association
 export const createAssociation = async (data) => {
+  const { userId, tenantId, ...rest } = data;
+
+  if (userId) rest.user = { connect: { id: userId } };
+  if (tenantId) rest.tenant = { connect: { id: tenantId } };
   const association = await prisma.associations.create({ data });
 
   return association;
