@@ -2,8 +2,11 @@ import { prisma } from '../prisma';
 
 // Create Tenant
 export const createTenant = async (data) => {
-  const { companyId, ...rest } = data;
+  const { companyId, ownerId, ...rest } = data;
+
   if (companyId) rest.company = { connect: { id: companyId } };
+  if (ownerId) rest.owner = { connect: { id: ownerId } };
+
   const tenant = await prisma.tenant.create({
     data: rest
   });
@@ -117,8 +120,11 @@ export const searchTenantsPaginated = async ({
 
 // Update Tenant
 export const updateTenant = async (id, updateData) => {
-  const { companyId, ...rest } = updateData;
+  const { companyId, ownerId, ...rest } = updateData;
+
   if (companyId) rest.company = { connect: { id: companyId } };
+  if (ownerId) rest.owner = { connect: { id: ownerId } };
+
   const tenant = await prisma.tenant.update({
     where: { id },
     data: { ...rest }
