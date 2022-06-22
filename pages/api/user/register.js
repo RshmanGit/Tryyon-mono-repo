@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import { getUser, createUser, updateUser } from '../../../prisma/user/user';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
+import transporter from '../../../mail/transporter';
 
 const schema = {
   body: Joi.object({
@@ -73,6 +74,7 @@ const handler = async (req, res) => {
                 verificationCode,
                 verificationExpiry
               });
+
               return { message: 'New user registered', user };
             }
             throw new Error(
@@ -82,6 +84,55 @@ const handler = async (req, res) => {
                   status: 500,
                   data: {
                     message: 'Internal Server Error'
+                  }
+                }
+              })
+            );
+          }
+        ],
+        email: [
+          'create',
+          async () => {
+            const { email } = req.body;
+            const user = await getUser({ email });
+
+            if (user.length != 0) {
+              const mailOptions = {
+                from: process.env.MAIL_USERNAME,
+                to: user[0].email,
+                subject: 'Verify your account',
+                text: `The code is ${user[0].verificationCode}`
+              };
+
+              const info = await transporter.sendMail(mailOptions);
+
+              console.log(info);
+              if (info.rejected.length != 0) {
+                throw new Error(
+                  JSON.stringify({
+                    errorkey: 'email',
+                    body: {
+                      status: 500,
+                      data: {
+                        message: 'Verification mail not sent'
+                      }
+                    }
+                  })
+                );
+              }
+
+              return {
+                message: 'Verification email sent'
+              };
+            }
+
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'email',
+                body: {
+                  status: 500,
+                  data: {
+                    message: 'Internal server error'
                   }
                 }
               })

@@ -3890,8 +3890,8 @@
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
 											"});",
-											"pm.test(\"Response time is less than 2000ms\", function () {",
-											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
 											"});",
 											"",
 											"pm.environment.set(\"userId\",res.user.id);",
@@ -3946,7 +3946,72 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "/api/user/register",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"{{$randomUserName}}\",\n    \"firstname\": \"{{$randomFirstName}}\",\n    \"lastname\": \"{{$randomLastName}}\",\n    \"phone\": {{userPhone}},\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{userPassword}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/user/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"user",
+												"register"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"27a-JCN1wAkiSbVCnDDxm+aN0l/jH/c\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "634"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 21 Jun 2022 08:42:02 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New user registered\",\n    \"user\": {\n        \"id\": \"62b184575044577dbb7afb23\",\n        \"username\": \"Myles_Emmerich64\",\n        \"firstname\": \"Elaina\",\n        \"lastname\": \"Brekke\",\n        \"phone\": 6833972654,\n        \"email\": \"Shayna_Hickle7@gmail.com\",\n        \"passwordHash\": \"$2a$10$FTq5b3U5ak4vw2JIZkrnp.yc0to//vM7XwPtoOexwFuPt21h6pEFi\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjE4NDU3NTA0NDU3N2RiYjdhZmIyMyIsImVtYWlsIjoiU2hheW5hX0hpY2tsZTdAZ21haWwuY29tIiwiaWF0IjoxNjU1ODAwOTE5LCJleHAiOjE2NTU4MDgxMTl9.3sa6ZDP5r3H31a5oxGzihBsnETJldHzUyI62NGiH04E\",\n        \"email_verified\": false,\n        \"verificationCode\": \"43c40a1a-e959-472f-a959-36373601b133\",\n        \"verificationExpiry\": \"2022-06-23T08:41:59.311Z\"\n    }\n}"
+								}
+							]
 						},
 						{
 							"name": "/api/user/login",
@@ -4221,7 +4286,69 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "/api/user/verify",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/user/verify?code={{userVerificationCode}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"user",
+												"verify"
+											],
+											"query": [
+												{
+													"key": "code",
+													"value": "{{userVerificationCode}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"27b-fQWP20y7PP+aAI2xYzeW1ALJqH4\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "635"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 21 Jun 2022 08:42:56 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"User verified\",\n    \"verifiedUser\": {\n        \"id\": \"62b184575044577dbb7afb23\",\n        \"username\": \"Myles_Emmerich64\",\n        \"firstname\": \"Elaina\",\n        \"lastname\": \"Brekke\",\n        \"phone\": 6833972654,\n        \"email\": \"Shayna_Hickle7@gmail.com\",\n        \"passwordHash\": \"$2a$10$FTq5b3U5ak4vw2JIZkrnp.yc0to//vM7XwPtoOexwFuPt21h6pEFi\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjE4NDU3NTA0NDU3N2RiYjdhZmIyMyIsImVtYWlsIjoiU2hheW5hX0hpY2tsZTdAZ21haWwuY29tIiwiaWF0IjoxNjU1ODAwOTE5LCJleHAiOjE2NTU4MDgxMTl9.3sa6ZDP5r3H31a5oxGzihBsnETJldHzUyI62NGiH04E\",\n        \"email_verified\": true,\n        \"verificationCode\": \"43c40a1a-e959-472f-a959-36373601b133\",\n        \"verificationExpiry\": \"2022-06-23T08:41:59.311Z\"\n    }\n}"
+								}
+							]
 						},
 						{
 							"name": "/api/user/delete",
