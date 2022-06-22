@@ -75,11 +75,34 @@ const handler = async (req, res) => {
                 verificationExpiry
               });
 
+              return { message: 'New user registered', user };
+            }
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'create',
+                body: {
+                  status: 500,
+                  data: {
+                    message: 'Internal Server Error'
+                  }
+                }
+              })
+            );
+          }
+        ],
+        email: [
+          'verification',
+          'create',
+          async () => {
+            const { email } = req.body;
+            const user = await getUser({ email });
+
+            if (user.length != 0) {
               const mailOptions = {
                 from: process.env.MAIL_USERNAME,
-                to: user.email,
+                to: user[0].email,
                 subject: 'Verify your account',
-                text: `The code is ${verificationCode}`
+                text: `The code is ${user[0].verificationCode}`
               };
 
               const info = await transporter.sendMail(mailOptions);
@@ -88,7 +111,7 @@ const handler = async (req, res) => {
               if (info.rejected.length != 0) {
                 throw new Error(
                   JSON.stringify({
-                    errorkey: 'create',
+                    errorkey: 'email',
                     body: {
                       status: 500,
                       data: {
@@ -99,15 +122,18 @@ const handler = async (req, res) => {
                 );
               }
 
-              return { message: 'New user registered', user };
+              return {
+                message: 'Verification email sent'
+              };
             }
+
             throw new Error(
               JSON.stringify({
-                errorkey: 'create',
+                errorkey: 'email',
                 body: {
                   status: 500,
                   data: {
-                    message: 'Internal Server Error'
+                    message: 'Internal server error'
                   }
                 }
               })
