@@ -8,7 +8,13 @@ export const createUser = async (data) => {
 };
 
 // Read User
-export const getUser = async ({ username, email, phone, id }) => {
+export const getUser = async ({
+  username,
+  email,
+  phone,
+  id,
+  verificationCode
+}) => {
   if (!username && !email && !phone && !id) {
     const users = await prisma.user.findMany();
     return users;
@@ -20,6 +26,7 @@ export const getUser = async ({ username, email, phone, id }) => {
   if (id) query.OR.push({ id });
   if (email) query.OR.push({ email });
   if (phone) query.OR.push({ phone });
+  if (verificationCode) query.OR.push({ verificationCode });
 
   const user = await prisma.user.findMany({
     where: query
