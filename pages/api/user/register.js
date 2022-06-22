@@ -91,7 +91,6 @@ const handler = async (req, res) => {
           }
         ],
         email: [
-          'verification',
           'create',
           async () => {
             const { email } = req.body;
