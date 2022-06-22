@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 
 // Custom components
-import DefaultAuth from '../../ui/layouts/auth/Default.js';
+import DefaultAuth from '../../../ui/layouts/auth/Default.js';
 
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
@@ -55,7 +55,7 @@ function Login() {
       >
         <Box me="auto">
           <Heading color={textColor} fontSize="36px" mb="10px">
-            Sign In (User)
+            Sign In (Admin)
           </Heading>
           <Text
             mb="36px"
@@ -86,7 +86,7 @@ function Login() {
             onSubmit={(values) => {
               //   alert(JSON.stringify(values, null, 2));
               setButtonText('Submitting...');
-              fetch('/api/user/login', {
+              fetch('/api/admin/login', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -95,8 +95,8 @@ function Login() {
               })
                 .then((res) => res.json())
                 .then((res) => {
-                  if (res.message === 'User Authenticated') {
-                    setButtonText('User Authenticated');
+                  if (res.message === 'admin Authenticated') {
+                    setButtonText('Admin Authenticated');
                     return res;
                   } else {
                     alert(res.message);
@@ -232,7 +232,7 @@ function Login() {
           <Flex alignItems="start" maxW="100%" mt="0px">
             <Text color={textColorDetails} fontWeight="400" fontSize="14px">
               Not registered yet?{' '}
-              <Link href="/auth/signup">
+              <Link href="/auth/admin/signup">
                 <a>
                   <b>Create an Account</b>
                 </a>
