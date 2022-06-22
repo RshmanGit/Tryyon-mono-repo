@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import { getUser, createUser, updateUser } from '../../../prisma/user/user';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
-import transporter from '../../../mail/transporter';
+import transporter from '../../../utils/mail/transporter';
 
 const schema = {
   body: Joi.object({
@@ -98,10 +98,14 @@ const handler = async (req, res) => {
 
             if (user.length != 0) {
               const mailOptions = {
-                from: process.env.MAIL_USERNAME,
+                from: `"Tryyon" <${process.env.MAIL_USERNAME}>`,
                 to: user[0].email,
                 subject: 'Verify your account',
-                text: `The code is ${user[0].verificationCode}`
+                text: `Please click this link to verify your mail: ${
+                  process.env.BASE_URL +
+                  '/auth/verify?' +
+                  user[0].verificationCode
+                }`
               };
 
               const info = await transporter.sendMail(mailOptions);
