@@ -6,23 +6,18 @@ import verifyToken from '../../../utils/middlewares/userAuth';
 import { getUser, updateUser } from '../../../prisma/user/user';
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
   if (req.method == 'GET') {
     async.auto(
       {
         verify: [
           async () => {
             const { code } = req.query;
-            const { id } = req.user;
 
-            const user = await getUser({ id });
+            const user = await getUser({ verificationCode: code });
 
             if (user.length != 0) {
-              if (
-                user[0].verificationCode == code &&
-                user[0].verificationExpiry.getTime() > new Date().getTime()
-              ) {
-                const verifiedUser = await updateUser(id, {
+              if (user[0].verificationExpiry.getTime() > new Date().getTime()) {
+                const verifiedUser = await updateUser(user[0].id, {
                   email_verified: true
                 });
 
@@ -38,7 +33,7 @@ const handler = async (req, res) => {
                   body: {
                     status: 409,
                     data: {
-                      message: 'Verification code is invalid or expired'
+                      message: 'Verification code is expired'
                     }
                   }
                 })
@@ -51,7 +46,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'User not found'
+                    message: 'Verification code is invalid'
                   }
                 }
               })
