@@ -5,7 +5,7 @@ import {
   getAssociation,
   updateAssociation
 } from '../../../prisma/association/association';
-import { checkTenant } from '../../../prisma/tenant/tenant';
+import { getTenant } from '../../../prisma/tenant/tenant';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 import isAllowedUser from '../../../utils/middlewares/isAllowedUser';
@@ -62,7 +62,7 @@ const handler = async (req, res) => {
             }
 
             if (tenantId) {
-              const tenant = await checkTenant(tenantId);
+              const tenant = await getTenant(tenantId);
 
               if (tenant.length != 0) {
                 // check if given user is the owner of the tenant
@@ -108,7 +108,7 @@ const handler = async (req, res) => {
               );
             }
 
-            const tenant = await checkTenant(tenantId);
+            const tenant = await getTenant(tenantId);
 
             if (tenant.length != 0) {
               // check if the user is the owner of the tenant
