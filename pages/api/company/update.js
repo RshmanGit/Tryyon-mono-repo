@@ -4,6 +4,8 @@ import async from 'async';
 import { updateCompany, checkCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
+import verifyToken from '../../../utils/middlewares/userAuth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
@@ -23,11 +25,13 @@ const schema = {
 };
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, verifyToken);
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
           const { id } = req.body;
+          const userId = req.user.id;
           const companyCheck = await checkCompany({ id });
 
           if (companyCheck.length == 0) {
@@ -38,6 +42,20 @@ const handler = async (req, res) => {
                   status: 404,
                   data: {
                     message: 'No such company found'
+                  }
+                }
+              })
+            );
+          }
+
+          if (companyCheck[0].ownerId != userId) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'User is not the owner of this company'
                   }
                 }
               })
