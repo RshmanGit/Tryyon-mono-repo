@@ -1,8 +1,6 @@
 import async from 'async';
 
 import handleResponse from '../../../utils/helpers/handleResponse';
-import runMiddleware from '../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../utils/middlewares/userAuth';
 import { getUser, updateUser } from '../../../prisma/user/user';
 
 const handler = async (req, res) => {

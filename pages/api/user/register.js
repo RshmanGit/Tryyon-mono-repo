@@ -103,7 +103,7 @@ const handler = async (req, res) => {
                 subject: 'Verify your account',
                 text: `Please click this link to verify your mail: ${
                   process.env.BASE_URL +
-                  '/auth/verify?' +
+                  '/auth/verify?code=' +
                   user[0].verificationCode
                 }`
               };
