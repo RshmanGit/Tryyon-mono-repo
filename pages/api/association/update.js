@@ -6,6 +6,7 @@ import {
   updateAssociation
 } from '../../../prisma/association/association';
 import { getTenant } from '../../../prisma/tenant/tenant';
+import { checkCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 import isAllowedUser from '../../../utils/middlewares/isAllowedUser';
@@ -62,11 +63,27 @@ const handler = async (req, res) => {
             }
 
             if (tenantId) {
+              const company = await checkCompany({ ownerId: userId });
+
+              if (company.length == 0) {
+                throw new Error(
+                  JSON.stringify({
+                    errorkey: 'verify',
+                    body: {
+                      status: 409,
+                      data: {
+                        message: 'User does not have a company'
+                      }
+                    }
+                  })
+                );
+              }
+
               const tenant = await getTenant(tenantId);
 
               if (tenant.length != 0) {
                 // check if given user is the owner of the tenant
-                if (userId != tenant[0].owner.id) {
+                if (company[0].id != tenant[0].companyId) {
                   throw new Error(
                     JSON.stringify({
                       errorkey: 'verify',
@@ -112,7 +129,23 @@ const handler = async (req, res) => {
 
             if (tenant.length != 0) {
               // check if the user is the owner of the tenant
-              if (id == tenant[0].owner.id) {
+              const company = await checkCompany({ ownerId: id });
+
+              if (company.length == 0) {
+                throw new Error(
+                  JSON.stringify({
+                    errorkey: 'verify',
+                    body: {
+                      status: 409,
+                      data: {
+                        message: 'User does not have a company'
+                      }
+                    }
+                  })
+                );
+              }
+
+              if (company[0].id == tenant[0].companyId) {
                 req.body.userId = id;
                 return {
                   message: 'Association validated'

@@ -10,6 +10,7 @@ import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 import isAllowedUser from '../../../utils/middlewares/isAllowedUser';
 import validate from '../../../utils/middlewares/validation';
+import { checkCompany } from '../../../prisma/company/company';
 
 const schema = {
   body: Joi.object({
@@ -61,11 +62,27 @@ const handler = async (req, res) => {
               );
             }
 
+            const company = await checkCompany({ ownerId: userId });
+
+            if (company.length == 0) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verify',
+                  body: {
+                    status: 409,
+                    data: {
+                      message: 'User does not have a company'
+                    }
+                  }
+                })
+              );
+            }
+
             const tenant = await getTenant(tenantId);
 
             if (tenant.length != 0) {
               // check if given user is the owner of the tenant
-              if (userId == tenant[0].owner.id) {
+              if (company[0].id == tenant[0].companyId) {
                 return {
                   message: 'Association validated'
                 };
@@ -121,8 +138,23 @@ const handler = async (req, res) => {
             const tenant = await getTenant(tenantId);
 
             if (tenant.length != 0) {
+              const company = await checkCompany({ ownerId: id });
+
+              if (company.length == 0) {
+                throw new Error(
+                  JSON.stringify({
+                    errorkey: 'verify',
+                    body: {
+                      status: 409,
+                      data: {
+                        message: 'User does not have a company'
+                      }
+                    }
+                  })
+                );
+              }
               // check if the user is the owner of the tenant
-              if (id == tenant[0].owner.id) {
+              if (company[0].id == tenant[0].companyId) {
                 req.body.userId = id;
                 return {
                   message: 'Association validated'
