@@ -24,14 +24,14 @@ import {
 } from '@chakra-ui/react';
 
 // Custom components
-import DefaultAuth from '../../ui/layouts/auth/Default.js';
+import DefaultAuth from '../../../ui/layouts/auth/Default.js';
 
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { stringify } from 'stylis';
 
-function Signup() {
+function Register() {
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
@@ -39,15 +39,7 @@ function Signup() {
   const brandStars = useColorModeValue('brand.500', 'brand.400');
 
   const [show, setShow] = useState(false);
-  const [buttonText, setButtonText] = useState('Sign up');
-  const [signup, setState] = useState(0);
-  let router = useRouter();
-
-  useEffect(() => {
-    if (signup === 1) {
-      router.push('/auth/login');
-    }
-  });
+  const [buttonText, setButtonText] = useState('Register');
 
   const handleClick = () => setShow(!show);
   return (
@@ -66,17 +58,17 @@ function Signup() {
         flexDirection="column"
       >
         <Box me="auto">
-          <Heading color={textColor} fontSize="34px" mb="2px" mt="-75px">
-            Sign Up
+          <Heading color={textColor} fontSize="34px" mb="2px" mt="-45px">
+            Register your tenant
           </Heading>
           <Text
-            mb="10px"
+            mb="30px"
             ms="4px"
             color={textColorSecondary}
             fontWeight="400"
             fontSize="md"
           >
-            Enter your details to sign up!
+            Enter the details to register!
           </Text>
         </Box>
         <Flex
@@ -92,34 +84,29 @@ function Signup() {
         >
           <Formik
             initialValues={{
-              username: '',
-              firstname: '',
-              lastname: '',
-              email: '',
-              password: '',
-              phone: ''
+              name: '',
+              description: '',
+              companyId: '',
+              ownerId: ''
             }}
             onSubmit={(values) => {
               //   alert(JSON.stringify(values, null, 2));
-              setButtonText('Creating your account...');
-              let temp = parseInt(values.phone, 10);
-              values.phone = temp;
-              fetch('/api/user/register', {
+              setButtonText('Registering the tenant...');
+              fetch('/api/tenant/create', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(values, null, 6)
+                body: JSON.stringify(values, null, 4)
               })
                 .then((res) => res.json())
                 .then((res) => {
-                  if (res.message === 'New user registered') {
+                  if (res.message === 'New Tenant Created') {
                     setButtonText('Registered');
-                    setState(1);
                     return res;
                   } else {
                     alert(res.message);
-                    setButtonText('Sign up again');
+                    setButtonText('Register again');
                     throw new Error(
                       JSON.stringify({
                         message: res.message
@@ -131,10 +118,7 @@ function Signup() {
                 .catch((err) => {
                   console.error(JSON.parse(err.message));
                 });
-              values.phone = '';
-              values.email = '';
-              values.password = '';
-              values.username = '';
+              values.companyId = '';
             }}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -150,14 +134,14 @@ function Signup() {
                     color={textColor}
                     display="flex"
                   >
-                    Username<Text color={brandStars}>*</Text>
+                    Tenant Name<Text color={brandStars}>*</Text>
                   </FormLabel>
                   <InputGroup size="md">
                     <Field
                       as={Input}
                       isRequired={true}
-                      id="username"
-                      name="username"
+                      id="name"
+                      name="name"
                       fontSize="sm"
                       mb="2px"
                       size="md"
@@ -177,14 +161,14 @@ function Signup() {
                     color={textColor}
                     display="flex"
                   >
-                    Firstname<Text color={brandStars}>*</Text>
+                    Description<Text color={brandStars}>*</Text>
                   </FormLabel>
                   <InputGroup size="md">
                     <Field
                       as={Input}
                       isRequired={true}
-                      id="firstname"
-                      name="firstname"
+                      id="description"
+                      name="description"
                       fontSize="sm"
                       mb="2px"
                       size="md"
@@ -204,14 +188,14 @@ function Signup() {
                     color={textColor}
                     display="flex"
                   >
-                    Lastname<Text color={brandStars}>*</Text>
+                    Company ID<Text color={brandStars}>*</Text>
                   </FormLabel>
                   <InputGroup size="md">
                     <Field
                       as={Input}
                       isRequired={true}
-                      id="lastname"
-                      name="lastname"
+                      id="companyId"
+                      name="companyId"
                       fontSize="sm"
                       mb="2px"
                       size="md"
@@ -222,89 +206,7 @@ function Signup() {
 
                 <FormControl
                   mb="4px"
-                  isInvalid={!!errors.phone && touched.phone}
-                >
-                  <FormLabel
-                    display="flex"
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
-                    mb="5px"
-                  >
-                    Contact No.<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    isRequired={true}
-                    id="phone"
-                    name="phone"
-                    variant="auth"
-                    fontSize="sm"
-                    ms={{ base: '0px', md: '0px' }}
-                    type="phone"
-                    mb="2px"
-                    fontWeight="500"
-                    size="md"
-                    validate={(value) => {
-                      let error;
-                      let phoneFormat = /^[0-9]*$/;
-                      if (!value.match(phoneFormat)) {
-                        error = 'Phone number must contain only digits';
-                      }
-                      if (value.length !== 10) {
-                        error = 'Phone number must contain 10 digits';
-                      }
-                      return error;
-                    }}
-                  />
-                  <FormErrorMessage>{errors.phone}</FormErrorMessage>
-                </FormControl>
-
-                <FormControl
-                  mb="4px"
-                  isInvalid={!!errors.email && touched.email}
-                >
-                  <FormLabel
-                    display="flex"
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
-                    mb="5px"
-                  >
-                    Email<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    isRequired={true}
-                    id="email"
-                    name="email"
-                    variant="auth"
-                    fontSize="sm"
-                    ms={{ base: '0px', md: '0px' }}
-                    type="email"
-                    placeholder="mail@alphabi.co"
-                    mb="2px"
-                    fontWeight="500"
-                    size="md"
-                    validate={(value) => {
-                      let error;
-                      let mailformat =
-                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-                      if (!value.match(mailformat)) {
-                        error = 'Please enter a valid email to register';
-                      }
-                      return error;
-                    }}
-                  />
-                  <FormErrorMessage>{errors.email}</FormErrorMessage>
-                </FormControl>
-
-                <FormControl
-                  mb="4px"
-                  isInvalid={!!errors.password && touched.password}
+                  // isInvalid={!!errors.username && touched.username}
                 >
                   <FormLabel
                     ms="4px"
@@ -313,42 +215,20 @@ function Signup() {
                     color={textColor}
                     display="flex"
                   >
-                    Password<Text color={brandStars}>*</Text>
+                    Owner ID<Text color={brandStars}>*</Text>
                   </FormLabel>
                   <InputGroup size="md">
                     <Field
                       as={Input}
                       isRequired={true}
-                      id="password"
-                      name="password"
+                      id="ownerId"
+                      name="ownerId"
                       fontSize="sm"
-                      placeholder="Min. 8 characters"
                       mb="2px"
                       size="md"
-                      type={show ? 'text' : 'password'}
                       variant="auth"
-                      validate={(value) => {
-                        let error;
-                        if (value.length < 7) {
-                          error = 'Password must contain at least 8 characters';
-                        }
-                        return error;
-                      }}
                     />
-                    <InputRightElement
-                      display="flex"
-                      alignItems="center"
-                      mt="4px"
-                    >
-                      <Icon
-                        color={textColorSecondary}
-                        _hover={{ cursor: 'pointer' }}
-                        as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                        onClick={handleClick}
-                      />
-                    </InputRightElement>
                   </InputGroup>
-                  <FormErrorMessage>{errors.password}</FormErrorMessage>
                 </FormControl>
 
                 <FormControl>
@@ -365,30 +245,11 @@ function Signup() {
                     h="37"
                     mb="8px"
                     mt="13px"
+                    ml="75px"
                     onClick={handleSubmit}
                   >
                     {buttonText}
                   </Button>
-                  <InputRightElement
-                    display="flex"
-                    alignItems="center"
-                    mt="20px"
-                  >
-                    <Flex alignItems="start" maxW="100%" mt="0px">
-                      <Text
-                        color={textColorDetails}
-                        fontWeight="400"
-                        fontSize="14px"
-                      >
-                        Already registered?{' '}
-                        <Link href="/auth/login">
-                          <a>
-                            <b>Sign In</b>
-                          </a>
-                        </Link>
-                      </Text>
-                    </Flex>
-                  </InputRightElement>
                 </FormControl>
               </form>
             )}
@@ -399,4 +260,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Register;

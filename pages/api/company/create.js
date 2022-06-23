@@ -10,11 +10,11 @@ const schema = {
     name: Joi.string().required(),
     description: Joi.string().required(),
     gstNumber: Joi.string().required(),
-    gstCertificate: Joi.string().guid({ version: 'uuidv4' }),
+    gstCertificate: Joi.string().guid({ version: 'uuidv4' }).optional(),
     panNumber: Joi.string().required(),
-    panCard: Joi.string().guid({ version: 'uuidv4' }),
+    panCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
     aadharNumber: Joi.string().required(),
-    aadharCard: Joi.string().guid({ version: 'uuidv4' }),
+    aadharCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
     adminApproval: Joi.boolean().default(false)
   })
 };
