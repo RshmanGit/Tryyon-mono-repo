@@ -15,7 +15,7 @@ export const getUser = async ({
   id,
   verificationCode
 }) => {
-  if (!username && !email && !phone && !id) {
+  if (!username && !email && !phone && !id && !verificationCode) {
     const users = await prisma.user.findMany();
     return users;
   }
