@@ -2754,7 +2754,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"gstNumber\": \"{{$randomLoremSlug}}\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"{{$randomLoremSlug}}\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"{{$randomLoremSlug}}\",\n    \"aadharCard\": \"{{$guid}}\",\n    \"adminApproval\": {{$randomBoolean}}\n}",
+							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"gstNumber\": \"{{$randomLoremSlug}}\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"{{$randomLoremSlug}}\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"{{$randomLoremSlug}}\",\n    \"aadharCard\": \"{{$guid}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3181,6 +3181,36 @@
 						}
 					]
 				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{userToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
@@ -3316,7 +3346,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"{{userId}}\"\n}",
+							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3599,7 +3629,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\",\n        \"companyId\": \"{{companyId}}\"\n    }\n}",
+							"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3867,6 +3897,36 @@
 						}
 					]
 				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{userToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
@@ -3925,7 +3985,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"{{$randomUserName}}\",\n    \"firstname\": \"{{$randomFirstName}}\",\n    \"lastname\": \"{{$randomLastName}}\",\n    \"phone\": {{userPhone}},\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{userPassword}}\"\n}",
+									"raw": "{\n    \"username\": \"{{$randomUserName}}\",\n    \"firstname\": \"{{$randomFirstName}}\",\n    \"lastname\": \"{{$randomLastName}}\",\n    \"phone\": {{userPhone}},\n    \"email\": \"ankit@alphabi.co\",\n    \"password\": \"{{userPassword}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4449,6 +4509,27 @@
 										"api",
 										"user",
 										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/user/progress",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/user/progress",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"progress"
 									]
 								}
 							},
