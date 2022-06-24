@@ -24,14 +24,14 @@ import {
 } from '@chakra-ui/react';
 
 // Custom components
-import DefaultAuth from '../../ui/layouts/auth/Default.js';
+import DefaultAuth from '../../../ui/layouts/auth/Default.js';
 
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { stringify } from 'stylis';
 
-function Signup() {
+function Register() {
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
@@ -39,13 +39,13 @@ function Signup() {
   const brandStars = useColorModeValue('brand.500', 'brand.400');
 
   const [show, setShow] = useState(false);
-  const [buttonText, setButtonText] = useState('Sign up');
-  const [signup, setState] = useState(0);
+  const [buttonText, setButtonText] = useState('Register');
+  const [register, setCompState] = useState(0);
   let router = useRouter();
 
   useEffect(() => {
-    if (signup === 1) {
-      router.push('/auth/login');
+    if (register === 1) {
+      router.push('/auth/create/tenant');
     }
   });
 
@@ -66,17 +66,17 @@ function Signup() {
         flexDirection="column"
       >
         <Box me="auto">
-          <Heading color={textColor} fontSize="34px" mb="2px" mt="-75px">
-            Sign Up
+          <Heading color={textColor} fontSize="34px" mb="2px" mt="100px">
+            Register your company
           </Heading>
           <Text
-            mb="10px"
+            mb="30px"
             ms="4px"
             color={textColorSecondary}
             fontWeight="400"
             fontSize="md"
           >
-            Enter your details to sign up!
+            Enter the details to register!
           </Text>
         </Box>
         <Flex
@@ -92,34 +92,34 @@ function Signup() {
         >
           <Formik
             initialValues={{
-              username: '',
-              firstname: '',
-              lastname: '',
-              email: '',
-              password: '',
-              phone: ''
+              name: '',
+              description: '',
+              gstNumber: '',
+              gstCertificate: '',
+              panNumber: '',
+              panCard: '',
+              aadharNumber: '',
+              aadharCard: ''
             }}
             onSubmit={(values) => {
               //   alert(JSON.stringify(values, null, 2));
-              setButtonText('Creating your account...');
-              let temp = parseInt(values.phone, 10);
-              values.phone = temp;
-              fetch('/api/user/register', {
+              setButtonText('Registering the company...');
+              fetch('/api/company/create', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(values, null, 6)
+                body: JSON.stringify(values, null, 5)
               })
                 .then((res) => res.json())
                 .then((res) => {
-                  if (res.message === 'New user registered') {
+                  if (res.message === 'New Company Created') {
                     setButtonText('Registered');
-                    setState(1);
+                    setCompState(1);
                     return res;
                   } else {
                     alert(res.message);
-                    setButtonText('Sign up again');
+                    setButtonText('Register again');
                     throw new Error(
                       JSON.stringify({
                         message: res.message
@@ -131,10 +131,9 @@ function Signup() {
                 .catch((err) => {
                   console.error(JSON.parse(err.message));
                 });
-              values.phone = '';
-              values.email = '';
-              values.password = '';
-              values.username = '';
+              values.gstNumber = '';
+              values.panNumber = '';
+              values.aadharNumber = '';
             }}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -150,14 +149,14 @@ function Signup() {
                     color={textColor}
                     display="flex"
                   >
-                    Username<Text color={brandStars}>*</Text>
+                    Company Name<Text color={brandStars}>*</Text>
                   </FormLabel>
                   <InputGroup size="md">
                     <Field
                       as={Input}
                       isRequired={true}
-                      id="username"
-                      name="username"
+                      id="name"
+                      name="name"
                       fontSize="sm"
                       mb="2px"
                       size="md"
@@ -177,14 +176,14 @@ function Signup() {
                     color={textColor}
                     display="flex"
                   >
-                    Firstname<Text color={brandStars}>*</Text>
+                    Description<Text color={brandStars}>*</Text>
                   </FormLabel>
                   <InputGroup size="md">
                     <Field
                       as={Input}
                       isRequired={true}
-                      id="firstname"
-                      name="firstname"
+                      id="description"
+                      name="description"
                       fontSize="sm"
                       mb="2px"
                       size="md"
@@ -195,7 +194,7 @@ function Signup() {
 
                 <FormControl
                   mb="4px"
-                  // isInvalid={!!errors.username && touched.username}
+                  isInvalid={!!errors.gstNumber && touched.gstNumber}
                 >
                   <FormLabel
                     ms="4px"
@@ -204,151 +203,207 @@ function Signup() {
                     color={textColor}
                     display="flex"
                   >
-                    Lastname<Text color={brandStars}>*</Text>
+                    GST Number<Text color={brandStars}>*</Text>
                   </FormLabel>
                   <InputGroup size="md">
                     <Field
                       as={Input}
                       isRequired={true}
-                      id="lastname"
-                      name="lastname"
+                      id="gstNumber"
+                      name="gstNumber"
                       fontSize="sm"
-                      mb="2px"
+                      mb="6px"
                       size="md"
-                      variant="auth"
-                    />
-                  </InputGroup>
-                </FormControl>
-
-                <FormControl
-                  mb="4px"
-                  isInvalid={!!errors.phone && touched.phone}
-                >
-                  <FormLabel
-                    display="flex"
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
-                    mb="5px"
-                  >
-                    Contact No.<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    isRequired={true}
-                    id="phone"
-                    name="phone"
-                    variant="auth"
-                    fontSize="sm"
-                    ms={{ base: '0px', md: '0px' }}
-                    type="phone"
-                    mb="2px"
-                    fontWeight="500"
-                    size="md"
-                    validate={(value) => {
-                      let error;
-                      let phoneFormat = /^[0-9]*$/;
-                      if (!value.match(phoneFormat)) {
-                        error = 'Phone number must contain only digits';
-                      }
-                      if (value.length !== 10) {
-                        error = 'Phone number must contain 10 digits';
-                      }
-                      return error;
-                    }}
-                  />
-                  <FormErrorMessage>{errors.phone}</FormErrorMessage>
-                </FormControl>
-
-                <FormControl
-                  mb="4px"
-                  isInvalid={!!errors.email && touched.email}
-                >
-                  <FormLabel
-                    display="flex"
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
-                    mb="5px"
-                  >
-                    Email<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <Field
-                    as={Input}
-                    isRequired={true}
-                    id="email"
-                    name="email"
-                    variant="auth"
-                    fontSize="sm"
-                    ms={{ base: '0px', md: '0px' }}
-                    type="email"
-                    placeholder="mail@alphabi.co"
-                    mb="2px"
-                    fontWeight="500"
-                    size="md"
-                    validate={(value) => {
-                      let error;
-                      let mailformat =
-                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-                      if (!value.match(mailformat)) {
-                        error = 'Please enter a valid email to register';
-                      }
-                      return error;
-                    }}
-                  />
-                  <FormErrorMessage>{errors.email}</FormErrorMessage>
-                </FormControl>
-
-                <FormControl
-                  mb="4px"
-                  isInvalid={!!errors.password && touched.password}
-                >
-                  <FormLabel
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
-                    display="flex"
-                  >
-                    Password<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <InputGroup size="md">
-                    <Field
-                      as={Input}
-                      isRequired={true}
-                      id="password"
-                      name="password"
-                      fontSize="sm"
-                      placeholder="Min. 8 characters"
-                      mb="2px"
-                      size="md"
-                      type={show ? 'text' : 'password'}
                       variant="auth"
                       validate={(value) => {
                         let error;
-                        if (value.length < 7) {
-                          error = 'Password must contain at least 8 characters';
+                        let gstFormat = /^[0-9]*$/;
+                        if (!value.match(gstFormat)) {
+                          error = 'GST number must contain only digits';
+                        }
+                        if (value.length !== 15) {
+                          error = 'GST number must contain 15 digits';
                         }
                         return error;
                       }}
                     />
-                    <InputRightElement
-                      display="flex"
-                      alignItems="center"
-                      mt="4px"
-                    >
-                      <Icon
-                        color={textColorSecondary}
-                        _hover={{ cursor: 'pointer' }}
-                        as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                        onClick={handleClick}
-                      />
-                    </InputRightElement>
                   </InputGroup>
-                  <FormErrorMessage>{errors.password}</FormErrorMessage>
+                  <FormErrorMessage>{errors.gstNumber}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb="4px">
+                  {/* <Flex justifyContent="space-between" align="center" mb="24px">
+                    <Link href="#">
+                      <a>Forgot password?</a>
+                    </Link>
+                  </Flex> */}
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    GST Certificate<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  <Button
+                    fontSize="sm"
+                    variant="brand"
+                    fontWeight="500"
+                    id="gstCertificate"
+                    name="gstCertificate"
+                    w="30%"
+                    h="27"
+                    mb="8px"
+                    // mt="13px"
+                    // ml="75px"
+                    // onClick={}
+                  >
+                    Upload
+                  </Button>
+                </FormControl>
+
+                <FormControl
+                  mb="4px"
+                  isInvalid={!!errors.panNumber && touched.panNumber}
+                >
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    PAN Number<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  <InputGroup size="md">
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="panNumber"
+                      name="panNumber"
+                      fontSize="sm"
+                      mb="6px"
+                      size="md"
+                      variant="auth"
+                      validate={(value) => {
+                        let error;
+                        let panFormat = /^[a-zA-Z0-9]*$/;
+                        if (!value.match(panFormat)) {
+                          error =
+                            'PAN number must contain only alphanumeric characters';
+                        }
+                        if (value.length !== 10) {
+                          error = 'PAN number must contain 10 digits';
+                        }
+                        return error;
+                      }}
+                    />
+                  </InputGroup>
+                  <FormErrorMessage>{errors.panNumber}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb="4px">
+                  {/* <Flex justifyContent="space-between" align="center" mb="24px">
+                    <Link href="#">
+                      <a>Forgot password?</a>
+                    </Link>
+                  </Flex> */}
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    PAN Card<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  <Button
+                    fontSize="sm"
+                    variant="brand"
+                    fontWeight="500"
+                    id="panCard"
+                    name="panCard"
+                    w="30%"
+                    h="27"
+                    mb="8px"
+                    // mt="13px"
+                    // ml="75px"
+                    // onClick={}
+                  >
+                    Upload
+                  </Button>
+                </FormControl>
+
+                <FormControl
+                  mb="4px"
+                  isInvalid={!!errors.aadharNumber && touched.aadharNumber}
+                >
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    Aadhar Number<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  <InputGroup size="md">
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="aadharNumber"
+                      name="aadharNumber"
+                      fontSize="sm"
+                      mb="6px"
+                      size="md"
+                      variant="auth"
+                      validate={(value) => {
+                        let error;
+                        let aadharFormat = /^[0-9]*$/;
+                        if (!value.match(aadharFormat)) {
+                          error = 'Aadhar number must contain only digits';
+                        }
+                        if (value.length !== 12) {
+                          error = 'Aadhar number must contain 12 digits';
+                        }
+                        return error;
+                      }}
+                    />
+                  </InputGroup>
+                  <FormErrorMessage>{errors.aadharNumber}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb="4px">
+                  {/* <Flex justifyContent="space-between" align="center" mb="24px">
+                    <Link href="#">
+                      <a>Forgot password?</a>
+                    </Link>
+                  </Flex> */}
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    Aadhar Card<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  <Button
+                    fontSize="sm"
+                    variant="brand"
+                    fontWeight="500"
+                    id="aadharCard"
+                    name="aadharCard"
+                    w="30%"
+                    h="27"
+                    mb="8px"
+                    // mt="13px"
+                    // ml="75px"
+                    // onClick={}
+                  >
+                    Upload
+                  </Button>
                 </FormControl>
 
                 <FormControl>
@@ -365,30 +420,11 @@ function Signup() {
                     h="37"
                     mb="8px"
                     mt="13px"
+                    ml="75px"
                     onClick={handleSubmit}
                   >
                     {buttonText}
                   </Button>
-                  <InputRightElement
-                    display="flex"
-                    alignItems="center"
-                    mt="20px"
-                  >
-                    <Flex alignItems="start" maxW="100%" mt="0px">
-                      <Text
-                        color={textColorDetails}
-                        fontWeight="400"
-                        fontSize="14px"
-                      >
-                        Already registered?{' '}
-                        <Link href="/auth/login">
-                          <a>
-                            <b>Sign In</b>
-                          </a>
-                        </Link>
-                      </Text>
-                    </Flex>
-                  </InputRightElement>
                 </FormControl>
               </form>
             )}
@@ -399,4 +435,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Register;
