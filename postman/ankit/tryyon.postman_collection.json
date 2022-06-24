@@ -2516,1360 +2516,6 @@
 			]
 		},
 		{
-			"name": "Company",
-			"item": [
-				{
-					"name": "/api/company",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Companies found\") { ",
-									"    tests[\"Couldn't get companies TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/company?query=S&adminApproval=false&paginated=true&count=3&offset=0",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"company"
-							],
-							"query": [
-								{
-									"key": "query",
-									"value": "S"
-								},
-								{
-									"key": "adminApproval",
-									"value": "false"
-								},
-								{
-									"key": "paginated",
-									"value": "true"
-								},
-								{
-									"key": "count",
-									"value": "3"
-								},
-								{
-									"key": "offset",
-									"value": "0"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/company",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/company",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"company"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"1b7-Df92WqVRBkJ2TqSjIA4TpuCiMQE\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "439"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 11:21:51 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Companys found\",\n    \"companies\": {\n        \"companies\": [\n            {\n                \"id\": \"62adb5297df5fff0b5154dca\",\n                \"name\": \"New company\",\n                \"description\": \"New description\",\n                \"gstNumber\": \"1325fasghcvd26183\",\n                \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n                \"panNumber\": \"efjbkb476375\",\n                \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n                \"aadharNumber\": \"956456489632\",\n                \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n                \"adminApproval\": true,\n                \"tenants\": []\n            }\n        ],\n        \"total_count\": 1\n    }\n}"
-						},
-						{
-							"name": "/api/company",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/company?query=S&adminApproval=false&paginated=true&count=3&offset=0",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"company"
-									],
-									"query": [
-										{
-											"key": "query",
-											"value": "S"
-										},
-										{
-											"key": "adminApproval",
-											"value": "false"
-										},
-										{
-											"key": "paginated",
-											"value": "true"
-										},
-										{
-											"key": "count",
-											"value": "3"
-										},
-										{
-											"key": "offset",
-											"value": "0"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"746-VSwWTWKRN6+opGjn1uKdj2PXwyc\""
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Content-Encoding",
-									"value": "gzip"
-								},
-								{
-									"key": "Date",
-									"value": "Mon, 20 Jun 2022 06:49:32 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Companies found\",\n    \"companies\": {\n        \"companies\": [\n            {\n                \"id\": \"62b0156a6507f7a4fa174c8f\",\n                \"name\": \"Schroeder, Ward and Spencer\",\n                \"description\": \"Dolores est doloribus soluta tempore quam. Suscipit fuga ad quo recusandae est quisquam quibusdam vel ab. Quia optio quos aperiam. Aut odit qui minus est totam laboriosam dolorum eos voluptatem. Asperiores aut nesciunt sit dignissimos sed id minus amet aut.\",\n                \"gstNumber\": \"inventore-architecto-voluptas\",\n                \"gstCertificate\": \"d531aca8-f1db-4721-add4-020e6ab9fb9a\",\n                \"panNumber\": \"ullam-ex-et\",\n                \"panCard\": \"40f8755b-7fc1-46a3-a4e5-3c6e60731ad8\",\n                \"aadharNumber\": \"perferendis-quos-et\",\n                \"aadharCard\": \"76e83161-6e5e-4ed8-a2d8-ace2fb75cde6\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            },\n            {\n                \"id\": \"62b0156d6507f7a4fa174c90\",\n                \"name\": \"Hirthe, Bosco and Waelchi\",\n                \"description\": \"Iusto alias nisi ut eveniet et. Deserunt qui illo est consequuntur enim ut maiores. At officia harum occaecati. Beatae autem velit enim recusandae alias sed consequatur iure.\",\n                \"gstNumber\": \"iure-velit-sequi\",\n                \"gstCertificate\": \"45a136bc-cc77-4861-a236-467167da1982\",\n                \"panNumber\": \"provident-dolorum-nulla\",\n                \"panCard\": \"373ec210-a7ee-41ab-8011-4de2ed9b15bc\",\n                \"aadharNumber\": \"omnis-dolorem-blanditiis\",\n                \"aadharCard\": \"9ffc977b-9795-4a2c-a117-0fc9b851691c\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            },\n            {\n                \"id\": \"62b015726507f7a4fa174c91\",\n                \"name\": \"Brekke, Gutkowski and Hayes\",\n                \"description\": \"Ut id fugiat et sed hic repellat quis. Consequuntur tempore quibusdam repellendus qui minus. Quaerat ut voluptatibus praesentium. Ipsa at eveniet quisquam voluptas.\",\n                \"gstNumber\": \"ut-voluptatem-sed\",\n                \"gstCertificate\": \"4e9a952d-3d1f-441d-95e5-09c642965901\",\n                \"panNumber\": \"quae-fuga-et\",\n                \"panCard\": \"98f1f697-2335-4d34-98eb-fef6f2abfe5b\",\n                \"aadharNumber\": \"provident-vero-distinctio\",\n                \"aadharCard\": \"00f1f05d-6788-414a-98c7-fffb0ed25be5\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 3,\n            \"total_count\": 3\n        }\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/company/create",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"New Company Created\") { ",
-									"    tests[\"Company creation failed TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});",
-									"",
-									"pm.environment.set(\"companyId\",res.company.id);",
-									"pm.environment.set(\"companyName\",res.company.name);",
-									"pm.environment.set(\"companyDescription\",res.company.description);",
-									"pm.environment.set(\"companyGSTNumber\",res.company.gstNumber);",
-									"pm.environment.set(\"companyGSTCertificate\",res.company.gstCertificate);",
-									"pm.environment.set(\"companyPANNumber\",res.company.panNumber);",
-									"pm.environment.set(\"companyPANCard\",res.company.panCard);",
-									"pm.environment.set(\"companyAadharNumber\",res.company.aadharNumber);",
-									"pm.environment.set(\"companyAdminApproval\",res.company.adminApproval);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"gstNumber\": \"{{$randomLoremSlug}}\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"{{$randomLoremSlug}}\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"{{$randomLoremSlug}}\",\n    \"aadharCard\": \"{{$guid}}\",\n    \"adminApproval\": {{$randomBoolean}}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/company/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"company",
-								"create"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/company/create",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"New company\",\n    \"description\": \"New description\",\n    \"gstNumber\": \"1325fasghcvd26183\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"efjbkb476375\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"956456489632\",\n    \"aadharCard\": \"{{$guid}}\",\n    \"adminApproval\": true\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/company/create",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"company",
-										"create"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"18d-bBLfxLnH1pvaYf8Jo/MZM+4rSLg\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "397"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 11:21:13 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"New Company Created\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"New description\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/company/companyId",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Company found\") { ",
-									"    tests[\"Company search failed TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/company/{{companyId}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"company",
-								"{{companyId}}"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/company/companyId",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/company/{{companyId}}",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"company",
-										"{{companyId}}"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"194-Uks6DUoQS0/OyEO52EbKv7kZLm8\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "404"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 11:25:03 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Company found\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"New description\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/company/update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Company updated\") { ",
-									"    tests[\"Company updation failed TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});",
-									"",
-									"pm.environment.set(\"companyName\",res.company.name);",
-									"pm.environment.set(\"companyDescription\",res.company.description);",
-									"pm.environment.set(\"companyGSTNumber\",res.company.gstNumber);",
-									"pm.environment.set(\"companyGSTCertificate\",res.company.gstCertificate);",
-									"pm.environment.set(\"companyPANNumber\",res.company.panNumber);",
-									"pm.environment.set(\"companyPANCard\",res.company.panCard);",
-									"pm.environment.set(\"companyAadharNumber\",res.company.aadharNumber);",
-									"pm.environment.set(\"companyAdminApproval\",res.company.adminApproval);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{companyId}}\",\n    \"updateData\": {\n        \"description\": \"{{$randomLoremParagraph}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/company/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"company",
-								"update"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/company/update",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"{{companyId}}\",\n    \"updateData\": {\n        \"description\": \"something new\"\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/company/update",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"company",
-										"update"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"194-iLrsaUKtBrD9r2/rescSU+T1RKU\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "404"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 11:28:23 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Company updated\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"something new\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/company/delete",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Company deleted\") { ",
-									"    tests[\"Company deletion failed TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{companyId}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/company/delete",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"company",
-								"delete"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/company/delete",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"{{companyId}}\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/company/delete",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"company",
-										"delete"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"194-jtZ+rFMm+77ErQ+2nMtB8sG0Q6o\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "404"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 11:35:50 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Company deleted\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"something new\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Tenant",
-			"item": [
-				{
-					"name": "/api/tenant",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Tenants found\") { ",
-									"    tests[\"Error in finding Tenants TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/tenant",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"tenant"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/tenant",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/tenant",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"tenant"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"d3-wrcyzYdpfFJeeDEH5Dv7jr6DNKk\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "211"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 12:33:02 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Tenants found\",\n    \"tenants\": {\n        \"tenants\": [\n            {\n                \"id\": \"62adc5db7df5fff0b5154dcd\",\n                \"name\": \"tenant 1\",\n                \"description\": \"tenant 1 rocks\",\n                \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n                \"ownerId\": \"123456789\"\n            }\n        ],\n        \"total_count\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/tenant/create",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"New Tenant Created\") { ",
-									"    tests[\"Tenant creation failed TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});",
-									"",
-									"pm.environment.set(\"tenantId\",res.tenant.id);",
-									"pm.environment.set(\"tenantName\",res.tenant.name);",
-									"pm.environment.set(\"tenantDescription\",res.tenant.description);",
-									"pm.environment.set(\"companyId\",res.tenant.companyId);",
-									"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"{{userId}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/tenant/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"tenant",
-								"create"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/tenant/create",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"tenant 1\",\n    \"description\": \"tenant 1 rocks\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"123456789\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/tenant/create",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"tenant",
-										"create"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"b9-dhK194FtAsJp2XHF2R5zb/etZsU\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "185"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 12:32:28 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"New Tenant Created\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
-						},
-						{
-							"name": "/api/tenant/create",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"{{$randomWord}}\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/tenant/create",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"tenant",
-										"create"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"3f-0GsRaZvuxiMjVHEWfUQg1w/re9o\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "63"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Mon, 20 Jun 2022 07:53:14 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Company with given companyId already has a tenant\"\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/tenant/tenantId",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Tenant found\") { ",
-									"    tests[\"Tenant search failed TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/tenant/{{tenantId}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"tenant",
-								"{{tenantId}}"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/tenant/tenantId",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/tenant/{{tenantId}}",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"tenant",
-										"{{tenantId}}"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"b3-w5ZK6YBn0z0dDvcBinfloWZjM28\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "179"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 12:44:30 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Tenant found\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/tenant/update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Tenant updated\") { ",
-									"    tests[\"Tenant updation failed TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});",
-									"",
-									"pm.environment.set(\"tenantName\",res.tenant.name);",
-									"pm.environment.set(\"tenantDescription\",res.tenant.description);",
-									"pm.environment.set(\"companyId\",res.tenant.companyId);",
-									"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\",\n        \"companyId\": \"{{companyId}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/tenant/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"tenant",
-								"update"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/tenant/update",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"tenant 2\"\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/tenant/update",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"tenant",
-										"update"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"b5-pLO+OT0QABEQw0P/gu4dfBLXHaI\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "181"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 12:47:20 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Tenant updated\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
-						},
-						{
-							"name": "/api/tenant/update",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\",\n        \"companyId\": \"{{companyId}}\"\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/tenant/update",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"tenant",
-										"update"
-									]
-								}
-							},
-							"status": "Conflict",
-							"code": 409,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"3f-0GsRaZvuxiMjVHEWfUQg1w/re9o\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "63"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Mon, 20 Jun 2022 07:59:32 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Company with given companyId already has a tenant\"\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/tenant/delete",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Tenant deleted\") { ",
-									"    tests[\"Tenant not found TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{tenantId}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/tenant/delete",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"tenant",
-								"delete"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/tenant/delete",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"{{tenantId}}\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/tenant/delete",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"tenant",
-										"delete"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"b5-0cIwJmjllmNtmoV9aukQu6hjEIw\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "181"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 18 Jun 2022 12:48:34 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"Tenant deleted\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
-						}
-					]
-				}
-			]
-		},
-		{
 			"name": "User",
 			"item": [
 				{
@@ -4453,6 +3099,27 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "/api/user/progress",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/user/progress",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"progress"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"auth": {
@@ -4485,6 +3152,1420 @@
 							}
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "/api/company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Companies found\") { ",
+									"    tests[\"Couldn't get companies TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/company?query=S&adminApproval=false&paginated=true&count=3&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "S"
+								},
+								{
+									"key": "adminApproval",
+									"value": "false"
+								},
+								{
+									"key": "paginated",
+									"value": "true"
+								},
+								{
+									"key": "count",
+									"value": "3"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"1b7-Df92WqVRBkJ2TqSjIA4TpuCiMQE\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "439"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:21:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Companys found\",\n    \"companies\": {\n        \"companies\": [\n            {\n                \"id\": \"62adb5297df5fff0b5154dca\",\n                \"name\": \"New company\",\n                \"description\": \"New description\",\n                \"gstNumber\": \"1325fasghcvd26183\",\n                \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n                \"panNumber\": \"efjbkb476375\",\n                \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n                \"aadharNumber\": \"956456489632\",\n                \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n                \"adminApproval\": true,\n                \"tenants\": []\n            }\n        ],\n        \"total_count\": 1\n    }\n}"
+						},
+						{
+							"name": "/api/company",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company?query=S&adminApproval=false&paginated=true&count=3&offset=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "S"
+										},
+										{
+											"key": "adminApproval",
+											"value": "false"
+										},
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "3"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"746-VSwWTWKRN6+opGjn1uKdj2PXwyc\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 20 Jun 2022 06:49:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Companies found\",\n    \"companies\": {\n        \"companies\": [\n            {\n                \"id\": \"62b0156a6507f7a4fa174c8f\",\n                \"name\": \"Schroeder, Ward and Spencer\",\n                \"description\": \"Dolores est doloribus soluta tempore quam. Suscipit fuga ad quo recusandae est quisquam quibusdam vel ab. Quia optio quos aperiam. Aut odit qui minus est totam laboriosam dolorum eos voluptatem. Asperiores aut nesciunt sit dignissimos sed id minus amet aut.\",\n                \"gstNumber\": \"inventore-architecto-voluptas\",\n                \"gstCertificate\": \"d531aca8-f1db-4721-add4-020e6ab9fb9a\",\n                \"panNumber\": \"ullam-ex-et\",\n                \"panCard\": \"40f8755b-7fc1-46a3-a4e5-3c6e60731ad8\",\n                \"aadharNumber\": \"perferendis-quos-et\",\n                \"aadharCard\": \"76e83161-6e5e-4ed8-a2d8-ace2fb75cde6\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            },\n            {\n                \"id\": \"62b0156d6507f7a4fa174c90\",\n                \"name\": \"Hirthe, Bosco and Waelchi\",\n                \"description\": \"Iusto alias nisi ut eveniet et. Deserunt qui illo est consequuntur enim ut maiores. At officia harum occaecati. Beatae autem velit enim recusandae alias sed consequatur iure.\",\n                \"gstNumber\": \"iure-velit-sequi\",\n                \"gstCertificate\": \"45a136bc-cc77-4861-a236-467167da1982\",\n                \"panNumber\": \"provident-dolorum-nulla\",\n                \"panCard\": \"373ec210-a7ee-41ab-8011-4de2ed9b15bc\",\n                \"aadharNumber\": \"omnis-dolorem-blanditiis\",\n                \"aadharCard\": \"9ffc977b-9795-4a2c-a117-0fc9b851691c\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            },\n            {\n                \"id\": \"62b015726507f7a4fa174c91\",\n                \"name\": \"Brekke, Gutkowski and Hayes\",\n                \"description\": \"Ut id fugiat et sed hic repellat quis. Consequuntur tempore quibusdam repellendus qui minus. Quaerat ut voluptatibus praesentium. Ipsa at eveniet quisquam voluptas.\",\n                \"gstNumber\": \"ut-voluptatem-sed\",\n                \"gstCertificate\": \"4e9a952d-3d1f-441d-95e5-09c642965901\",\n                \"panNumber\": \"quae-fuga-et\",\n                \"panCard\": \"98f1f697-2335-4d34-98eb-fef6f2abfe5b\",\n                \"aadharNumber\": \"provident-vero-distinctio\",\n                \"aadharCard\": \"00f1f05d-6788-414a-98c7-fffb0ed25be5\",\n                \"adminApproval\": false,\n                \"tenants\": []\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 3,\n            \"total_count\": 3\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"New Company Created\") { ",
+									"    tests[\"Company creation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"companyId\",res.company.id);",
+									"pm.environment.set(\"companyName\",res.company.name);",
+									"pm.environment.set(\"companyDescription\",res.company.description);",
+									"pm.environment.set(\"companyGSTNumber\",res.company.gstNumber);",
+									"pm.environment.set(\"companyGSTCertificate\",res.company.gstCertificate);",
+									"pm.environment.set(\"companyPANNumber\",res.company.panNumber);",
+									"pm.environment.set(\"companyPANCard\",res.company.panCard);",
+									"pm.environment.set(\"companyAadharNumber\",res.company.aadharNumber);",
+									"pm.environment.set(\"companyAdminApproval\",res.company.adminApproval);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"gstNumber\": \"{{$randomLoremSlug}}\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"{{$randomLoremSlug}}\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"{{$randomLoremSlug}}\",\n    \"aadharCard\": \"{{$guid}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New company\",\n    \"description\": \"New description\",\n    \"gstNumber\": \"1325fasghcvd26183\",\n    \"gstCertificate\": \"{{$guid}}\",\n    \"panNumber\": \"efjbkb476375\",\n    \"panCard\": \"{{$guid}}\",\n    \"aadharNumber\": \"956456489632\",\n    \"aadharCard\": \"{{$guid}}\",\n    \"adminApproval\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"18d-bBLfxLnH1pvaYf8Jo/MZM+4rSLg\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "397"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:21:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"New Company Created\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"New description\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/companyId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Company found\") { ",
+									"    tests[\"Company search failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/company/{{companyId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/companyId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company/{{companyId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"{{companyId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-Uks6DUoQS0/OyEO52EbKv7kZLm8\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:25:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company found\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"New description\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Company updated\") { ",
+									"    tests[\"Company updation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"companyName\",res.company.name);",
+									"pm.environment.set(\"companyDescription\",res.company.description);",
+									"pm.environment.set(\"companyGSTNumber\",res.company.gstNumber);",
+									"pm.environment.set(\"companyGSTCertificate\",res.company.gstCertificate);",
+									"pm.environment.set(\"companyPANNumber\",res.company.panNumber);",
+									"pm.environment.set(\"companyPANCard\",res.company.panCard);",
+									"pm.environment.set(\"companyAadharNumber\",res.company.aadharNumber);",
+									"pm.environment.set(\"companyAdminApproval\",res.company.adminApproval);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{companyId}}\",\n    \"updateData\": {\n        \"description\": \"{{$randomLoremParagraph}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{companyId}}\",\n    \"updateData\": {\n        \"description\": \"something new\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-iLrsaUKtBrD9r2/rescSU+T1RKU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:28:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company updated\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"something new\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/company/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Company deleted\") { ",
+									"    tests[\"Company deletion failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{companyId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/company/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"company",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/company/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{companyId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/company/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"194-jtZ+rFMm+77ErQ+2nMtB8sG0Q6o\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "404"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 11:35:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company deleted\",\n    \"company\": {\n        \"id\": \"62adb5297df5fff0b5154dca\",\n        \"name\": \"New company\",\n        \"description\": \"something new\",\n        \"gstNumber\": \"1325fasghcvd26183\",\n        \"gstCertificate\": \"e0d41a26-aa81-4f99-883b-d5327e8e7019\",\n        \"panNumber\": \"efjbkb476375\",\n        \"panCard\": \"ca95b89f-517f-4095-821c-3b07a6d39c01\",\n        \"aadharNumber\": \"956456489632\",\n        \"aadharCard\": \"b254001e-1d0a-40b6-9d21-84f4bbc4343f\",\n        \"adminApproval\": true,\n        \"tenants\": []\n    }\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{userToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Tenant",
+			"item": [
+				{
+					"name": "/api/tenant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Tenants found\") { ",
+									"    tests[\"Error in finding Tenants TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tenant",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tenant",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"d3-wrcyzYdpfFJeeDEH5Dv7jr6DNKk\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "211"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:33:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenants found\",\n    \"tenants\": {\n        \"tenants\": [\n            {\n                \"id\": \"62adc5db7df5fff0b5154dcd\",\n                \"name\": \"tenant 1\",\n                \"description\": \"tenant 1 rocks\",\n                \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n                \"ownerId\": \"123456789\"\n            }\n        ],\n        \"total_count\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"New Tenant Created\") { ",
+									"    tests[\"Tenant creation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"tenantId\",res.tenant.id);",
+									"pm.environment.set(\"tenantName\",res.tenant.name);",
+									"pm.environment.set(\"tenantDescription\",res.tenant.description);",
+									"pm.environment.set(\"companyId\",res.tenant.companyId);",
+									"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"tenant 1\",\n    \"description\": \"tenant 1 rocks\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"123456789\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b9-dhK194FtAsJp2XHF2R5zb/etZsU\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "185"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:32:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"New Tenant Created\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						},
+						{
+							"name": "/api/tenant/create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"companyId\": \"{{companyId}}\",\n    \"ownerId\": \"{{$randomWord}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"create"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"3f-0GsRaZvuxiMjVHEWfUQg1w/re9o\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 20 Jun 2022 07:53:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company with given companyId already has a tenant\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/tenantId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Tenant found\") { ",
+									"    tests[\"Tenant search failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/{{tenantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"{{tenantId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/tenantId",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/{{tenantId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"{{tenantId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b3-w5ZK6YBn0z0dDvcBinfloWZjM28\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "179"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:44:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant found\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 1\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Tenant updated\") { ",
+									"    tests[\"Tenant updation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"tenantName\",res.tenant.name);",
+									"pm.environment.set(\"tenantDescription\",res.tenant.description);",
+									"pm.environment.set(\"companyId\",res.tenant.companyId);",
+									"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"tenant 2\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b5-pLO+OT0QABEQw0P/gu4dfBLXHaI\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:47:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant updated\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						},
+						{
+							"name": "/api/tenant/update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{tenantId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomCompanyName}}\",\n        \"companyId\": \"{{companyId}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"update"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"3f-0GsRaZvuxiMjVHEWfUQg1w/re9o\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 20 Jun 2022 07:59:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Company with given companyId already has a tenant\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/tenant/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Tenant deleted\") { ",
+									"    tests[\"Tenant not found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{tenantId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tenant/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tenant",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/tenant/delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{tenantId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/tenant/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tenant",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "\"b5-0cIwJmjllmNtmoV9aukQu6hjEIw\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 Jun 2022 12:48:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tenant deleted\",\n    \"tenant\": {\n        \"id\": \"62adc5db7df5fff0b5154dcd\",\n        \"name\": \"tenant 2\",\n        \"description\": \"tenant 1 rocks\",\n        \"companyId\": \"62adb8ab7df5fff0b5154dcb\",\n        \"ownerId\": \"123456789\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{userToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},

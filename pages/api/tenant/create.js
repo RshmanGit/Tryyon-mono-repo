@@ -5,23 +5,24 @@ import { createTenant } from '../../../prisma/tenant/tenant';
 import { checkCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
+import verifyToken from '../../../utils/middlewares/userAuth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
     name: Joi.string().required(),
-    description: Joi.string().required(),
-    companyId: Joi.string().required(),
-    ownerId: Joi.string().required()
+    description: Joi.string().required()
   })
 };
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, verifyToken);
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
-          const { companyId } = req.body;
-          const companyCheck = await checkCompany({ id: companyId });
+          const { id } = req.user;
+          const companyCheck = await checkCompany({ ownerId: id });
 
           if (companyCheck.length == 0) {
             throw new Error(
@@ -30,7 +31,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No company with given companyId found'
+                    message: 'User does not have a company'
                   }
                 }
               })
@@ -44,7 +45,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 409,
                   data: {
-                    message: 'Company with given companyId already has a tenant'
+                    message: 'User already has a tenant'
                   }
                 }
               })
@@ -59,6 +60,10 @@ const handler = async (req, res) => {
           'verification',
           async () => {
             const { body } = req;
+            const { id } = req.user;
+            const company = await checkCompany({ ownerId: id });
+
+            body.companyId = company[0].id;
 
             const res = await createTenant(body);
 

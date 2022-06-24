@@ -1,5 +1,4 @@
 import async from 'async';
-import Joi from 'joi';
 
 import { getAssociation } from '../../../prisma/association/association';
 import handleResponse from '../../../utils/helpers/handleResponse';

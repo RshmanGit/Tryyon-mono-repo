@@ -4,6 +4,8 @@ import Joi from 'joi';
 import { createCompany, checkCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
+import verifyToken from '../../../utils/middlewares/userAuth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
@@ -20,12 +22,15 @@ const schema = {
 };
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, verifyToken);
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
           const { gstNumber, aadharNumber, panNumber } = req.body;
+          const { id } = req.user;
           const companyCheck = await checkCompany({
+            ownerId: id,
             gstNumber,
             aadharNumber,
             panNumber
@@ -39,7 +44,7 @@ const handler = async (req, res) => {
                   status: 409,
                   data: {
                     message:
-                      'Company with same GST Number or Aadhar Number or PAN Number already exists'
+                      'Company with same owner or GST Number or Aadhar Number or PAN Number already exists'
                   }
                 }
               })
@@ -54,6 +59,9 @@ const handler = async (req, res) => {
           'verification',
           async () => {
             const { body } = req;
+            const { id } = req.user;
+
+            body.ownerId = id;
 
             const res = await createCompany(body);
 

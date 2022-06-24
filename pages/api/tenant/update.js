@@ -1,10 +1,12 @@
 import Joi from 'joi';
 import async from 'async';
 
-import { updateTenant, checkTenant } from '../../../prisma/tenant/tenant';
+import { updateTenant, getTenant } from '../../../prisma/tenant/tenant';
 import { checkCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
+import verifyToken from '../../../utils/middlewares/userAuth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
@@ -14,13 +16,45 @@ const schema = {
 };
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, verifyToken);
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
-          const { id, updateData } = req.body;
-          const { companyId } = updateData;
-          const tenantCheck = await checkTenant(id);
+          const { id } = req.body;
+          const ownerId = req.user.id;
+
+          const company = await checkCompany({ ownerId });
+
+          if (company.length == 0) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'User does not have a company'
+                  }
+                }
+              })
+            );
+          }
+
+          if (!company[0].tenant) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'User does not have a tenant'
+                  }
+                }
+              })
+            );
+          }
+
+          const tenantCheck = await getTenant(id);
 
           if (tenantCheck.length == 0) {
             throw new Error(
@@ -36,37 +70,18 @@ const handler = async (req, res) => {
             );
           }
 
-          if (companyId) {
-            const companyCheck = await checkCompany({ id: companyId });
-
-            if (companyCheck.length == 0) {
-              throw new Error(
-                JSON.stringify({
-                  errorkey: 'verification',
-                  body: {
-                    status: 404,
-                    data: {
-                      message: 'No company with given companyId found'
-                    }
+          if (company[0].tenant.id != id) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 401,
+                  data: {
+                    message: 'User is not the owner of this tenant'
                   }
-                })
-              );
-            }
-
-            if (companyCheck[0].tenant) {
-              throw new Error(
-                JSON.stringify({
-                  errorkey: 'verification',
-                  body: {
-                    status: 409,
-                    data: {
-                      message:
-                        'Company with given companyId already has a tenant'
-                    }
-                  }
-                })
-              );
-            }
+                }
+              })
+            );
           }
 
           return {
@@ -91,9 +106,9 @@ const handler = async (req, res) => {
               JSON.stringify({
                 errorKey: 'updateTenant',
                 body: {
-                  status: 404,
+                  status: 500,
                   data: {
-                    message: 'No such Tenant found'
+                    message: 'Internal server error'
                   }
                 }
               })

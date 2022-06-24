@@ -2,10 +2,9 @@ import { prisma } from '../prisma';
 
 // Create Tenant
 export const createTenant = async (data) => {
-  const { companyId, ownerId, ...rest } = data;
+  const { companyId, ...rest } = data;
 
-  if (companyId) rest.company = { connect: { id: companyId } };
-  if (ownerId) rest.owner = { connect: { id: ownerId } };
+  rest.company = { connect: { id: companyId } };
 
   const tenant = await prisma.tenant.create({
     data: rest
@@ -43,35 +42,18 @@ export const getAllTenantsPaginated = async (offset, count) => {
 };
 
 export const getTenant = async (id) => {
-  const tenant = await prisma.tenant.findUnique({
+  const tenant = await prisma.tenant.findMany({
     where: { id }
   });
 
   return tenant;
 };
 
-export const checkTenant = async (id) => {
-  const tenant = await prisma.tenant.findMany({
-    where: { id },
-    include: {
-      owner: true
-    }
-  });
-
-  return tenant;
-};
-
-export const searchTenants = async ({
-  query,
-  companyId,
-  ownerId,
-  adminApproval
-}) => {
+export const searchTenants = async ({ query, companyId, adminApproval }) => {
   const condition = {};
 
   if (query) condition.name = { contains: query, mode: 'insensitive' };
   if (companyId) condition.companyId = companyId;
-  if (ownerId) condition.ownerId = ownerId;
   if (adminApproval !== undefined)
     condition.adminApproval = adminApproval == 'true';
 
@@ -85,7 +67,6 @@ export const searchTenants = async ({
 export const searchTenantsPaginated = async ({
   query,
   companyId,
-  ownerId,
   adminApproval,
   count,
   offset
@@ -94,7 +75,6 @@ export const searchTenantsPaginated = async ({
 
   if (query) condition.name = { contains: query, mode: 'insensitive' };
   if (companyId) condition.companyId = companyId;
-  if (ownerId) condition.ownerId = ownerId;
   if (adminApproval !== undefined)
     condition.adminApproval = adminApproval == 'true';
 
@@ -120,10 +100,9 @@ export const searchTenantsPaginated = async ({
 
 // Update Tenant
 export const updateTenant = async (id, updateData) => {
-  const { companyId, ownerId, ...rest } = updateData;
+  const { companyId, ...rest } = updateData;
 
   if (companyId) rest.company = { connect: { id: companyId } };
-  if (ownerId) rest.owner = { connect: { id: ownerId } };
 
   const tenant = await prisma.tenant.update({
     where: { id },

@@ -1,6 +1,6 @@
 import async from 'async';
 
-import { getTenant, checkTenant } from '../../../prisma/tenant/tenant';
+import { getTenant } from '../../../prisma/tenant/tenant';
 import handleResponse from '../../../utils/helpers/handleResponse';
 
 const handler = async (req, res) => {
@@ -10,7 +10,7 @@ const handler = async (req, res) => {
         main: [
           async () => {
             const { tenantId } = req.query;
-            const tenant = await checkTenant(tenantId);
+            const tenant = await getTenant(tenantId);
 
             if (tenant.length != 0) {
               return {
