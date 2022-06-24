@@ -2,6 +2,16 @@ import { prisma } from '../prisma';
 
 // Create User
 export const createUser = async (data) => {
+  const { role } = data;
+
+  if (role)
+    data.role = {
+      connectOrCreate: {
+        where: { title: role },
+        create: { title: role, adminRoles: [], tenantRoles: [] }
+      }
+    };
+
   const user = await prisma.user.create({ data });
 
   return user;
@@ -37,6 +47,15 @@ export const getUser = async ({
 
 // Update User
 export const updateUser = async (id, updateData) => {
+  const { role } = updateData;
+  if (role)
+    updateData.role = {
+      connectOrCreate: {
+        where: { title: role },
+        create: { title: role, adminRoles: [], tenantRoles: [] }
+      }
+    };
+
   const user = await prisma.user.update({
     where: { id },
     data: updateData
