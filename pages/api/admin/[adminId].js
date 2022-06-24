@@ -4,52 +4,32 @@ import Joi from 'joi';
 import validate from '../../../utils/middlewares/validation';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../utils/middlewares/adminAuth';
+import auth from '../../../utils/middlewares/auth';
 
-import { getAdminByID, checkAdmin } from '../../../prisma/admin/admin';
+import { getAdmin } from '../../../prisma/admin/admin';
 
 const schema = {
-  body: Joi.object({})
+  query: Joi.object({
+    adminId: Joi.string().required()
+  })
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
-  if (req.method == 'GET') {
+  await runMiddleware(req, res, auth);
+  if (!req.admin) res.status(401).json({ message: 'Unauthorized access' });
+  else if (req.method == 'GET') {
     async.auto(
       {
-        verification: async () => {
-          const { adminId } = req.query;
-          const adminCheck = await checkAdmin({ id: adminId });
-
-          if (adminCheck.length == 0) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 404,
-                  data: {
-                    message: 'No such admin found'
-                  }
-                }
-              })
-            );
-          }
-
-          return {
-            message: 'Admin Validated'
-          };
-        },
         main: [
-          'verification',
           async () => {
             const { adminId } = req.query;
 
-            const admin = await getAdminByID(adminId);
+            const admin = await getAdmin({ id: adminId });
 
-            if (admin) {
+            if (admin.length != 0) {
               return {
                 message: 'Admin found',
-                admin
+                admin: admin[0]
               };
             }
 
