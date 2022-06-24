@@ -11,23 +11,29 @@ datasource db {
 }
 
 model Admin {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
-  username     String  @unique
-  firstname    String
-  lastname     String
-  phone        Int     @unique
-  email        String  @unique
-  passwordHash String
-  token        String?
-  adminToken   String?
-  role         Role?   @relation(fields: [roleId], references: [id])
-  roleId       String? @db.ObjectId
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  username           String    @unique
+  firstname          String
+  lastname           String
+  phone              Int       @unique
+  email              String    @unique
+  passwordHash       String
+  token              String?
+  approved           Boolean   @default(false)
+  email_verified     Boolean   @default(false)
+  verificationCode   String?
+  verificationExpiry DateTime?
+  role               Role?     @relation(fields: [roleId], references: [id])
+  roleId             String?   @db.ObjectId
 }
 
 model Role {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  title  String  @unique
-  admins Admin[]
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String  @unique
+  adminRoles  Json[]
+  tenantRoles Json[]
+  admins      Admin[]
+  User        User[]
 }
 
 model Product {
@@ -82,6 +88,8 @@ model User {
   verificationExpiry DateTime?
   associations       Associations?
   company            Company?
+  role               Role?         @relation(fields: [roleId], references: [id])
+  roleId             String?       @db.ObjectId
 }
 
 model Associations {
