@@ -1,61 +1,84 @@
 import Joi from 'joi';
 import async from 'async';
 
-import { updateCompany, checkCompany } from '../../../prisma/company/company';
+import { updateCompany, getCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
-    id: Joi.string().required(),
-    updateData: Joi.object({
-      name: Joi.string().optional(),
-      description: Joi.string().optional(),
-      gstNumber: Joi.string().optional(),
-      gstCertificate: Joi.string().guid({ version: 'uuidv4' }).optional(),
-      panNumber: Joi.string().optional(),
-      panCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
-      aadharNumber: Joi.string().optional(),
-      aadharCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
-      adminApproval: Joi.boolean().optional()
-    })
+    id: Joi.string().optional(),
+    name: Joi.string().optional(),
+    description: Joi.string().optional(),
+    gstNumber: Joi.string().optional(),
+    gstCertificate: Joi.string().guid({ version: 'uuidv4' }).optional(),
+    panNumber: Joi.string().optional(),
+    panCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
+    aadharNumber: Joi.string().optional(),
+    aadharCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
+    adminApproval: Joi.boolean().optional()
   })
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
+  await runMiddleware(req, res, auth);
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
-          const { id } = req.body;
-          const userId = req.user.id;
-          const companyCheck = await checkCompany({ id });
+          if (!req.admin) {
+            // if its a non admin user
+            const ownerId = req.user.id;
+            const companyCheck = await getCompany({ ownerId });
 
-          if (companyCheck.length == 0) {
+            if (companyCheck.length == 0) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 404,
+                    data: {
+                      message: 'User does not have a company'
+                    }
+                  }
+                })
+              );
+            }
+
+            return {
+              message: 'Company found',
+              company: companyCheck[0]
+            };
+          }
+
+          const { id } = req.body;
+
+          if (!id) {
             throw new Error(
               JSON.stringify({
                 errorkey: 'verification',
                 body: {
-                  status: 404,
+                  status: 409,
                   data: {
-                    message: 'No such company found'
+                    message: 'Company ID not provided'
                   }
                 }
               })
             );
           }
 
-          if (companyCheck[0].ownerId != userId) {
+          const company = await getCompany({ id });
+
+          if (company.length == 0) {
             throw new Error(
               JSON.stringify({
                 errorkey: 'verification',
                 body: {
                   status: 404,
                   data: {
-                    message: 'User is not the owner of this company'
+                    message: 'Company not found'
                   }
                 }
               })
@@ -63,20 +86,24 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'Company found'
+            message: 'Company found',
+            company: company[0]
           };
         },
         updateCompany: [
           'verification',
-          async () => {
-            const { id, updateData } = req.body;
+          async (results) => {
+            const { body } = req;
+            if (body.id) delete body.id;
 
-            const company = await updateCompany(id, updateData);
+            const { company } = results.verification;
 
-            if (company) {
+            const updatedCompany = await updateCompany(company.id, body);
+
+            if (updatedCompany) {
               return {
                 message: 'Company updated',
-                company
+                updatedCompany
               };
             }
 
