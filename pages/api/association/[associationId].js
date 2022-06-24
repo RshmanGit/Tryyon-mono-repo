@@ -3,10 +3,10 @@ import async from 'async';
 import { getAssociation } from '../../../prisma/association/association';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
-import isAllowedUser from '../../../utils/middlewares/isAllowedUser';
+import auth from '../../../utils/middlewares/auth';
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, isAllowedUser);
+  await runMiddleware(req, res, auth);
   if (req.method == 'GET') {
     async.auto(
       {
