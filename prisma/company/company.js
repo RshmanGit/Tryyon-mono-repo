@@ -13,52 +13,7 @@ export const createCompany = async (data) => {
 };
 
 // Read Company
-export const getAllCompanies = async () => {
-  const [companies, total_count] = await prisma.$transaction([
-    prisma.company.findMany({
-      include: {
-        tenant: true
-      }
-    }),
-    prisma.company.count()
-  ]);
-
-  return { companies, total_count };
-};
-
-export const getAllCompaniesPaginated = async (offset, count) => {
-  const [companies, total_count] = await prisma.$transaction([
-    prisma.company.findMany({
-      skip: offset,
-      take: count,
-      include: {
-        tenant: true
-      }
-    }),
-    prisma.company.count()
-  ]);
-
-  const pagination = {
-    offset,
-    count,
-    total_count
-  };
-
-  return { companies, pagination };
-};
-
-export const getCompany = async (id) => {
-  const company = await prisma.company.findUnique({
-    where: { id },
-    include: {
-      tenant: true
-    }
-  });
-
-  return company;
-};
-
-export const checkCompany = async ({
+export const getCompany = async ({
   id,
   ownerId,
   gstNumber,
@@ -66,6 +21,7 @@ export const checkCompany = async ({
   aadharNumber
 }) => {
   if (!id && !gstNumber && !panNumber && !aadharNumber && !ownerId) return [];
+
   const query = { OR: [] };
 
   if (id) query.OR.push({ id });
@@ -84,9 +40,15 @@ export const checkCompany = async ({
   return company;
 };
 
-export const searchCompanies = async ({ query, adminApproval, ownerId }) => {
+export const searchCompanies = async ({
+  id,
+  query,
+  adminApproval,
+  ownerId
+}) => {
   const condition = {};
 
+  if (id) condition.id = id;
   if (query) condition.name = { contains: query, mode: 'insensitive' };
   if (ownerId) condition.ownerId = ownerId;
   if (adminApproval != undefined)
@@ -103,6 +65,7 @@ export const searchCompanies = async ({ query, adminApproval, ownerId }) => {
 };
 
 export const searchCompaniesPaginated = async ({
+  id,
   query,
   adminApproval,
   ownerId,
@@ -111,6 +74,7 @@ export const searchCompaniesPaginated = async ({
 }) => {
   const condition = {};
 
+  if (id) condition.id = id;
   if (query) condition.name = { contains: query, mode: 'insensitive' };
   if (ownerId) condition.ownerId = ownerId;
   if (adminApproval != undefined)
@@ -157,11 +121,8 @@ export const updateCompany = async (id, updateData) => {
 
 // Delete Company
 export const deleteCompany = async (id) => {
-  const deletedCompany = await prisma.company.delete({
-    where: { id },
-    include: {
-      tenant: true
-    }
+  const deletedCompany = await prisma.company.deleteMany({
+    where: { id }
   });
 
   return deletedCompany;
