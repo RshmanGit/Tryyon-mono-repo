@@ -29,7 +29,7 @@ const handler = async (req, res) => {
     async.auto(
       {
         verification: async () => {
-          const { ownerId, gstNumber, aadharNumber, panNumber } = req.body;
+          let { ownerId, gstNumber, aadharNumber, panNumber } = req.body;
 
           if (req.admin) {
             if (!ownerId) {

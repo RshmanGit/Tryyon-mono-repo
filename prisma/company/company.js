@@ -121,7 +121,7 @@ export const updateCompany = async (id, updateData) => {
 
 // Delete Company
 export const deleteCompany = async (id) => {
-  const deletedCompany = await prisma.company.deleteMany({
+  const deletedCompany = await prisma.company.delete({
     where: { id }
   });
 
