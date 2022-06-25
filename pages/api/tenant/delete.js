@@ -2,44 +2,42 @@ import Joi from 'joi';
 import async from 'async';
 
 import { deleteTenant, getTenant } from '../../../prisma/tenant/tenant';
+import { prisma } from '../../../prisma/prisma';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
-import { checkCompany } from '../../../prisma/company/company';
 
 const schema = {
   body: Joi.object({
-    id: Joi.string().required()
+    id: Joi.string().optional()
   })
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
+  await runMiddleware(req, res, auth);
   if (req.method == 'DELETE') {
     async.auto(
       {
         verification: async () => {
-          const ownerId = req.user.id;
-          const { id } = req.body;
-
-          const company = await checkCompany({ ownerId });
-
-          if (company.length == 0) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 404,
-                  data: {
-                    message: 'User does not have a company'
-                  }
+          if (!req.admin) {
+            // if a non admin user is trying to delete
+            const ownerId = req.user.id;
+            const tenantCheck = await prisma.tenant.findMany({
+              where: {
+                company: {
+                  ownerId
                 }
-              })
-            );
-          }
+              }
+            });
 
-          if (!company[0].tenant) {
+            if (tenantCheck.length != 0) {
+              return {
+                message: 'Tenant found',
+                tenant: tenantCheck[0]
+              };
+            }
+
             throw new Error(
               JSON.stringify({
                 errorkey: 'verification',
@@ -53,7 +51,24 @@ const handler = async (req, res) => {
             );
           }
 
-          const tenantCheck = await getTenant(id);
+          // if an admin is trying to delete
+          const { id } = req.body;
+
+          if (!id) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 409,
+                  data: {
+                    message: 'Tenant ID not provided'
+                  }
+                }
+              })
+            );
+          }
+
+          const tenantCheck = await getTenant({ id });
 
           if (tenantCheck.length == 0) {
             throw new Error(
@@ -69,28 +84,15 @@ const handler = async (req, res) => {
             );
           }
 
-          if (company[0].tenant.id != id) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 401,
-                  data: {
-                    message: 'User is not the owner of this tenant'
-                  }
-                }
-              })
-            );
-          }
-
           return {
-            message: 'Tenant found'
+            message: 'Tenant found',
+            tenant: tenantCheck[0]
           };
         },
-        removeTenant: [
+        delete: [
           'verification',
-          async () => {
-            const { id } = req.body;
+          async (results) => {
+            const { id } = results.verification.tenant;
 
             const res = await deleteTenant(id);
 
@@ -103,11 +105,11 @@ const handler = async (req, res) => {
 
             throw new Error(
               JSON.stringify({
-                errorKey: 'removeTenant',
+                errorKey: 'delete',
                 body: {
-                  status: 404,
+                  status: 500,
                   data: {
-                    message: 'No such Tenant found'
+                    message: 'Internal server error'
                   }
                 }
               })
@@ -115,7 +117,7 @@ const handler = async (req, res) => {
           }
         ]
       },
-      handleResponse(req, res, 'removeTenant')
+      handleResponse(req, res, 'delete')
     );
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });

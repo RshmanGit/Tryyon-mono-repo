@@ -2,45 +2,44 @@ import Joi from 'joi';
 import async from 'async';
 
 import { updateTenant, getTenant } from '../../../prisma/tenant/tenant';
-import { checkCompany } from '../../../prisma/company/company';
+import { prisma } from '../../../prisma/prisma';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
-    id: Joi.string().required(),
-    updateData: Joi.object()
+    id: Joi.string().optional(),
+    name: Joi.string().optional(),
+    description: Joi.string().optional()
   })
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
+  await runMiddleware(req, res, auth);
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
-          const { id } = req.body;
-          const ownerId = req.user.id;
-
-          const company = await checkCompany({ ownerId });
-
-          if (company.length == 0) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 404,
-                  data: {
-                    message: 'User does not have a company'
-                  }
+          if (!req.admin) {
+            // non admin user
+            const ownerId = req.user.id;
+            const tenant = await prisma.tenant.findMany({
+              where: {
+                company: {
+                  ownerId
                 }
-              })
-            );
-          }
+              }
+            });
 
-          if (!company[0].tenant) {
+            if (tenant.length != 0) {
+              return {
+                message: 'Tenant found',
+                tenant: tenant[0]
+              };
+            }
+
             throw new Error(
               JSON.stringify({
                 errorkey: 'verification',
@@ -54,7 +53,23 @@ const handler = async (req, res) => {
             );
           }
 
-          const tenantCheck = await getTenant(id);
+          // admin user
+          const { id } = req.body;
+          if (!id) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 409,
+                  data: {
+                    message: 'Tenant ID not provided'
+                  }
+                }
+              })
+            );
+          }
+
+          const tenantCheck = await getTenant({ id });
 
           if (tenantCheck.length == 0) {
             throw new Error(
@@ -70,30 +85,20 @@ const handler = async (req, res) => {
             );
           }
 
-          if (company[0].tenant.id != id) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 401,
-                  data: {
-                    message: 'User is not the owner of this tenant'
-                  }
-                }
-              })
-            );
-          }
-
           return {
-            message: 'Tenant found'
+            message: 'Tenant found',
+            tenant: tenantCheck[0]
           };
         },
-        updateTenant: [
+        update: [
           'verification',
-          async () => {
-            const { id, updateData } = req.body;
+          async (results) => {
+            const { body } = req;
+            if (body.id) delete body.id;
 
-            const tenant = await updateTenant(id, updateData);
+            const { id } = results.verification.tenant;
+
+            const tenant = await updateTenant(id, body);
 
             if (tenant) {
               return {
@@ -104,7 +109,7 @@ const handler = async (req, res) => {
 
             throw new Error(
               JSON.stringify({
-                errorKey: 'updateTenant',
+                errorKey: 'update',
                 body: {
                   status: 500,
                   data: {
@@ -116,7 +121,7 @@ const handler = async (req, res) => {
           }
         ]
       },
-      handleResponse(req, res, 'updateTenant')
+      handleResponse(req, res, 'update')
     );
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });

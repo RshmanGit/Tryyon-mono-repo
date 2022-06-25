@@ -1,51 +1,92 @@
 import async from 'async';
 import Joi from 'joi';
 
-import { createTenant } from '../../../prisma/tenant/tenant';
-import { checkCompany } from '../../../prisma/company/company';
+import { createTenant, getTenant } from '../../../prisma/tenant/tenant';
+import { getCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
+    companyId: Joi.string().optional(),
     name: Joi.string().required(),
     description: Joi.string().required()
   })
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
+  await runMiddleware(req, res, auth);
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
-          const { id } = req.user;
-          const companyCheck = await checkCompany({ ownerId: id });
+          if (!req.admin) {
+            const { id } = req.user;
 
-          if (companyCheck.length == 0) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 404,
-                  data: {
-                    message: 'User does not have a company'
+            const companyCheck = await getCompany({ ownerId: id });
+
+            if (companyCheck.length == 0) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 404,
+                    data: {
+                      message: 'User does not have a company'
+                    }
                   }
-                }
-              })
-            );
+                })
+              );
+            }
+
+            if (companyCheck[0].tenant) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 404,
+                    data: {
+                      message: 'User already has a tenant'
+                    }
+                  }
+                })
+              );
+            }
+
+            return {
+              message: 'Tenant validated',
+              company: companyCheck[0]
+            };
           }
 
-          if (companyCheck[0].tenant) {
+          const { companyId } = req.body;
+
+          if (!companyId) {
             throw new Error(
               JSON.stringify({
                 errorkey: 'verification',
                 body: {
                   status: 409,
                   data: {
-                    message: 'User already has a tenant'
+                    message: 'Company ID not provided'
+                  }
+                }
+              })
+            );
+          }
+
+          const tenantCheck = await getTenant({ companyId });
+
+          if (tenantCheck.length != 0) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 409,
+                  data: {
+                    message: 'Tenant with same company already exists'
                   }
                 }
               })
@@ -53,17 +94,15 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'Company found'
+            message: 'Tenant validated',
+            company: tenantCheck[0].company
           };
         },
         create: [
           'verification',
-          async () => {
+          async (results) => {
             const { body } = req;
-            const { id } = req.user;
-            const company = await checkCompany({ ownerId: id });
-
-            body.companyId = company[0].id;
+            body.companyId = results.verification.company.id;
 
             const res = await createTenant(body);
 
