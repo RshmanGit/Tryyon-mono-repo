@@ -35,7 +35,8 @@ const handler = async (req, res) => {
             }
 
             return {
-              message: 'Association validated'
+              message: 'Association validated',
+              association: associationCheck[0]
             };
           }
 
@@ -50,7 +51,8 @@ const handler = async (req, res) => {
             if (associationCheck.length != 0) {
               if (associationCheck[0].userId == userId) {
                 return {
-                  message: 'Association validated'
+                  message: 'Association validated',
+                  association: associationCheck[0]
                 };
               }
 
@@ -82,14 +84,13 @@ const handler = async (req, res) => {
         },
         read: [
           'verify',
-          async () => {
-            const { associationId } = req.query;
-            const association = await getAssociation({ id: associationId });
+          async (results) => {
+            const { association } = results.verify;
 
-            if (association.length != 0)
+            if (association)
               return {
                 message: 'Association found',
-                association: association[0]
+                association
               };
 
             throw new Error(
