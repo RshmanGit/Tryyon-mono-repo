@@ -3,11 +3,12 @@ import async from 'async';
 import { getUser, updateUser } from '../../../prisma/user/user';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
-  if (req.method == 'GET') {
+  await runMiddleware(req, res, auth);
+  if (!req.user) res.status(401).json({ message: 'Not applicable for admin' });
+  else if (req.method == 'GET') {
     async.auto(
       {
         check: [

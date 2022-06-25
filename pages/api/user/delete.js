@@ -2,16 +2,63 @@ import async from 'async';
 
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
+import validate from '../../../utils/middlewares/validation';
 
 import { deleteUser, getUser } from '../../../prisma/user/user';
 
+const schema = {
+  body: Joi.object({
+    id: Joi.string().email().optional()
+  })
+};
+
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
+  await runMiddleware(req, res, auth);
   if (req.method == 'DELETE') {
     async.auto(
       {
         verification: async () => {
+          if (req.admin) {
+            // admin user
+            const { id } = req.body;
+
+            if (!id) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 409,
+                    data: {
+                      message: 'User ID not provided'
+                    }
+                  }
+                })
+              );
+            }
+
+            const userCheck = await getUser({ id });
+
+            if (userCheck.length == 0) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 404,
+                    data: {
+                      message: 'No such user found'
+                    }
+                  }
+                })
+              );
+            }
+
+            return {
+              message: 'User Validated'
+            };
+          }
+
+          // non admin user
           const { id } = req.user;
           const userCheck = await getUser({ id });
 
@@ -33,7 +80,7 @@ const handler = async (req, res) => {
             message: 'User Validated'
           };
         },
-        removeUser: [
+        delete: [
           'verification',
           async () => {
             const { id } = req.user;
@@ -49,7 +96,7 @@ const handler = async (req, res) => {
 
             throw new Error(
               JSON.stringify({
-                errorKey: 'removeUser',
+                errorKey: 'delete',
                 body: {
                   status: 500,
                   data: {
@@ -61,11 +108,11 @@ const handler = async (req, res) => {
           }
         ]
       },
-      handleResponse(req, res, 'removeUser')
+      handleResponse(req, res, 'delete')
     );
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }
 };
 
-export default handler;
+export default validate(schema, handler);
