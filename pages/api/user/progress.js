@@ -3,12 +3,12 @@ import async from 'async';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 import auth from '../../../utils/middlewares/auth';
-import { checkCompany } from '../../../prisma/company/company';
+import { getCompany } from '../../../prisma/company/company';
 import { getUser } from '../../../prisma/user/user';
 
 const handler = async (req, res) => {
   await runMiddleware(req, res, auth);
-  if (!req.admin) res.status(401).json({ message: 'Not applicable for admin' });
+  if (!req.user) res.status(401).json({ message: 'Not applicable for admin' });
   else if (req.method == 'GET') {
     async.auto(
       {
@@ -33,7 +33,7 @@ const handler = async (req, res) => {
 
           progress.user = userCheck[0];
 
-          const company = await checkCompany({ ownerId: userCheck[0].id });
+          const company = await getCompany({ ownerId: userCheck[0].id });
 
           if (company.length != 0) {
             progress.company = company;
