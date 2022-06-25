@@ -7,53 +7,39 @@ export const createTenant = async (data) => {
   rest.company = { connect: { id: companyId } };
 
   const tenant = await prisma.tenant.create({
-    data: rest
+    data: rest,
+    include: {
+      company: true
+    }
   });
 
   return tenant;
 };
 
 // Read Tenant
-export const getAllTenants = async () => {
-  const [tenants, total_count] = await prisma.$transaction([
-    prisma.tenant.findMany(),
-    prisma.tenant.count()
-  ]);
+export const getTenant = async ({ id, companyId }) => {
+  if (!id && !companyId) return [];
 
-  return { tenants, total_count };
-};
+  const query = { OR: [] };
 
-export const getAllTenantsPaginated = async (offset, count) => {
-  const [tenants, total_count] = await prisma.$transaction([
-    prisma.tenant.findMany({
-      skip: offset,
-      take: count
-    }),
-    prisma.tenant.count()
-  ]);
+  if (id) query.OR.push({ id });
+  if (companyId) query.OR.push({ companyId });
 
-  const pagination = {
-    offset,
-    count,
-    total_count
-  };
-
-  return { tenants, pagination };
-};
-
-export const getTenant = async (id) => {
   const tenant = await prisma.tenant.findMany({
-    where: { id }
+    where: query,
+    include: {
+      company: true
+    }
   });
 
   return tenant;
 };
 
-export const searchTenants = async ({ query, companyId, adminApproval }) => {
+export const searchTenants = async ({ id, query, adminApproval }) => {
   const condition = {};
 
+  if (id) condition.id = id;
   if (query) condition.name = { contains: query, mode: 'insensitive' };
-  if (companyId) condition.companyId = companyId;
   if (adminApproval !== undefined)
     condition.adminApproval = adminApproval == 'true';
 
@@ -65,16 +51,16 @@ export const searchTenants = async ({ query, companyId, adminApproval }) => {
 };
 
 export const searchTenantsPaginated = async ({
+  id,
   query,
-  companyId,
   adminApproval,
   count,
   offset
 }) => {
   const condition = {};
 
+  if (id) condition.id = id;
   if (query) condition.name = { contains: query, mode: 'insensitive' };
-  if (companyId) condition.companyId = companyId;
   if (adminApproval !== undefined)
     condition.adminApproval = adminApproval == 'true';
 
@@ -106,7 +92,10 @@ export const updateTenant = async (id, updateData) => {
 
   const tenant = await prisma.tenant.update({
     where: { id },
-    data: { ...rest }
+    data: { ...rest },
+    include: {
+      company: true
+    }
   });
 
   return tenant;
