@@ -8,6 +8,9 @@ const auth = (req, res, next) => {
       .json({ message: 'A token is required for authentication' });
   }
 
+  if (req.admin) delete req.admin;
+  if (req.user) delete req.user;
+
   const token = req.headers['authorization'].replace('Bearer ', '');
 
   let isAuthenticatedUser = false,
