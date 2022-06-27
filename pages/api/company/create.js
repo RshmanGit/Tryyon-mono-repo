@@ -1,10 +1,10 @@
 import async from 'async';
 import Joi from 'joi';
 
-import { createCompany, checkCompany } from '../../../prisma/company/company';
+import { createCompany, getCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
@@ -17,20 +17,38 @@ const schema = {
     panCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
     aadharNumber: Joi.string().required(),
     aadharCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
-    adminApproval: Joi.boolean().default(false)
+    adminApproval: Joi.boolean().default(false),
+    ownerId: Joi.string().optional()
   })
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
+  await runMiddleware(req, res, auth);
+
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
-          const { gstNumber, aadharNumber, panNumber } = req.body;
-          const { id } = req.user;
-          const companyCheck = await checkCompany({
-            ownerId: id,
+          let { ownerId, gstNumber, aadharNumber, panNumber } = req.body;
+
+          if (req.admin) {
+            if (!ownerId) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 409,
+                    data: {
+                      message: 'Owner ID not provided'
+                    }
+                  }
+                })
+              );
+            }
+          } else if (req.user) ownerId = req.user.id;
+
+          const companyCheck = await getCompany({
+            ownerId,
             gstNumber,
             aadharNumber,
             panNumber
@@ -52,16 +70,17 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'Company validated'
+            message: 'Company validated',
+            ownerId
           };
         },
         create: [
           'verification',
-          async () => {
+          async (results) => {
             const { body } = req;
-            const { id } = req.user;
+            const { ownerId } = results.verification;
 
-            body.ownerId = id;
+            body.ownerId = ownerId;
 
             const res = await createCompany(body);
 

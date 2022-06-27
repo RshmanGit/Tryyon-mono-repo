@@ -17,7 +17,8 @@ const schema = {
     phone: Joi.number().min(1000000000).max(9999999999).required(),
     email: Joi.string().required(),
     password: Joi.string().required(),
-    email_verified: Joi.boolean().default(false)
+    email_verified: Joi.boolean().default(false),
+    role: Joi.string().required()
   })
 };
 
@@ -59,7 +60,11 @@ const handler = async (req, res) => {
 
             if (createdUser) {
               const token = jwt.sign(
-                { id: createdUser.id, email: createdUser.email },
+                {
+                  id: createdUser.id,
+                  email: createdUser.email,
+                  role: createdUser.role
+                },
                 process.env.TOKEN_KEY,
                 { expiresIn: '2h' }
               );

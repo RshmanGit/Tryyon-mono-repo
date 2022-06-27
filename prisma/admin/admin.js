@@ -2,139 +2,92 @@ import { prisma } from '../prisma';
 
 // Create Admin
 export const createAdmin = async (data) => {
-  const { role, ...rest } = data;
-  let admin;
-
-  if (role) {
-    admin = await prisma.admin.create({
-      data: {
-        role: {
-          connectOrCreate: {
-            where: {
-              title: role
-            },
-            create: {
-              title: role
-            }
-          }
-        },
-        ...rest
-      },
-      include: {
-        role: true
+  const { role } = data;
+  if (role)
+    data.role = {
+      connectOrCreate: {
+        where: { title: role },
+        create: { title: role, adminRoles: [], tenantRoles: [] }
       }
-    });
-  } else admin = await prisma.admin.create({ data });
+    };
+
+  const admin = await prisma.admin.create({ data });
 
   return admin;
 };
 
 // Read Admin
-export const getAdminByID = async (id) => {
-  const admin = await prisma.admin.findUnique({
-    where: { id },
-    include: {
-      role: true
-    }
-  });
+export const getAdmin = async ({
+  id,
+  username,
+  email,
+  phone,
+  verificationCode,
+  all
+}) => {
+  if (
+    !id &&
+    !username &&
+    !email &&
+    !phone &&
+    !verificationCode &&
+    all === undefined
+  )
+    return [];
+  if (all !== undefined && all) {
+    const admins = await prisma.admin.findMany({
+      include: {
+        role: true
+      }
+    });
 
-  return admin;
-};
-
-export const getAdminByEmail = async (email) => {
-  const admin = await prisma.admin.findUnique({
-    where: { email },
-    include: {
-      role: true
-    }
-  });
-
-  return admin;
-};
-
-// Check Admin
-export const checkAdmin = async ({ username, email, phone, id }) => {
-  if (!username && !email && !phone && !id) return [];
+    return admins;
+  }
 
   const query = { OR: [] };
-
-  if (username) query.OR.push({ username });
   if (id) query.OR.push({ id });
+  if (username) query.OR.push({ username });
   if (email) query.OR.push({ email });
   if (phone) query.OR.push({ phone });
+  if (verificationCode) query.OR.push({ verificationCode });
 
-  const admin = await prisma.admin.findMany({
+  const admins = await prisma.admin.findMany({
     where: query,
     include: {
       role: true
     }
   });
 
-  return admin;
+  return admins;
 };
 
 // Update Admin
 export const updateAdmin = async (id, updateData) => {
-  let admin;
-  const { role, ...rest } = updateData;
-
-  if (role) {
-    admin = await prisma.admin.update({
-      where: { id },
-      data: {
-        role: {
-          connectOrCreate: {
-            where: {
-              title: role
-            },
-            create: {
-              title: role
-            }
-          }
-        },
-        ...rest
+  const { role } = updateData;
+  if (role)
+    updateData.role = {
+      connectOrCreate: {
+        where: { title: role },
+        create: { title: role, adminRoles: [], tenantRoles: [] }
       }
-    });
-  } else {
-    admin = await prisma.admin.update({
-      where: { id },
-      data: { ...updateData }
-    });
-  }
+    };
+
+  const admin = await prisma.admin.update({
+    where: { id },
+    data: updateData,
+    include: {
+      role: true
+    }
+  });
+
   return admin;
 };
 
 // Delete Admin
-export const deleteAdmin = async ({ id, email, username, phone }) => {
-  let deletedUser;
-  if (id)
-    deletedUser = await prisma.admin.delete({
-      where: { id },
-      include: {
-        role: true
-      }
-    });
-  else if (email)
-    deletedUser = await prisma.admin.delete({
-      where: { email },
-      include: {
-        role: true
-      }
-    });
-  else if (username)
-    deletedUser = await prisma.admin.delete({
-      where: { username },
-      include: {
-        role: true
-      }
-    });
-  else if (phone)
-    deletedUser = await prisma.admin.delete({
-      where: { phone },
-      include: {
-        role: true
-      }
-    });
+export const deleteAdmin = async (id) => {
+  const deletedUser = await prisma.admin.deleteMany({
+    where: { id }
+  });
 
   return deletedUser;
 };

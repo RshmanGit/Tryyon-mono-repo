@@ -1,12 +1,17 @@
 import jwt from 'jsonwebtoken';
 
 // Checking if the user is an admin or an authenticated user and setting req.admin and/or req.user
-const isAllowedUser = (req, res, next) => {
-  const token = req.headers['authorization'].replace('Bearer ', '');
-
-  if (!token) {
-    return res.status(403).send('A token is required for authentication');
+const auth = (req, res, next) => {
+  if (!req.headers['authorization']) {
+    return res
+      .status(403)
+      .json({ message: 'A token is required for authentication' });
   }
+
+  if (req.admin) delete req.admin;
+  if (req.user) delete req.user;
+
+  const token = req.headers['authorization'].replace('Bearer ', '');
 
   let isAuthenticatedUser = false,
     isAdmin = false;
@@ -34,4 +39,4 @@ const isAllowedUser = (req, res, next) => {
   return next();
 };
 
-export default isAllowedUser;
+export default auth;

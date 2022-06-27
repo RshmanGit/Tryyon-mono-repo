@@ -4,18 +4,41 @@ import Joi from 'joi';
 import { checkRole, createRole } from '../../../../prisma/admin/roles';
 import handleResponse from '../../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../../utils/middlewares/adminAuth';
+import auth from '../../../../utils/middlewares/auth';
 import validate from '../../../../utils/middlewares/validation';
 
 const schema = {
   body: Joi.object({
-    title: Joi.string().required()
+    title: Joi.string().required(),
+    adminRoles: Joi.array()
+      .items(
+        Joi.object({
+          module: Joi.string().required(),
+          read: Joi.boolean().required(),
+          write: Joi.boolean().required(),
+          edit: Joi.boolean().required(),
+          delete: Joi.boolean().required()
+        })
+      )
+      .required(),
+    tenantRoles: Joi.array()
+      .items(
+        Joi.object({
+          module: Joi.string().required(),
+          read: Joi.boolean().required(),
+          write: Joi.boolean().required(),
+          edit: Joi.boolean().required(),
+          delete: Joi.boolean().required()
+        })
+      )
+      .required()
   })
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
-  if (req.method == 'POST') {
+  await runMiddleware(req, res, auth);
+  if (!req.admin) res.status(401).json({ message: 'Unauthorized access' });
+  else if (req.method == 'POST') {
     async.auto(
       {
         verify: async () => {

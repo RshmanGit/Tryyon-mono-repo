@@ -1,19 +1,53 @@
 import async from 'async';
 
 import {
-  getAllTenants,
-  getAllTenantsPaginated,
   searchTenants,
   searchTenantsPaginated
 } from '../../../prisma/tenant/tenant';
 import handleResponse from '../../../utils/helpers/handleResponse';
+import { prisma } from '../../../prisma/prisma';
+import auth from '../../../utils/middlewares/auth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
   if (req.method == 'GET') {
     async.auto(
       {
         read: [
           async () => {
+            if (!req.admin) {
+              // non admin user
+              const ownerId = req.user.id;
+              const tenant = await prisma.tenant.findMany({
+                where: {
+                  company: {
+                    ownerId
+                  }
+                }
+              });
+
+              if (tenant.length != 0) {
+                return {
+                  message: 'Tenant found',
+                  tenant: tenant[0]
+                };
+              }
+
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 404,
+                    data: {
+                      message: 'User does not have a tenant'
+                    }
+                  }
+                })
+              );
+            }
+
+            // admin user
             const { paginated, count, offset, ...rest } = req.query;
 
             if (paginated == 'true' && (!count || !offset)) {
@@ -31,30 +65,28 @@ const handler = async (req, res) => {
               );
             }
 
-            let tenants;
+            if (paginated) {
+              const tenants = await searchTenantsPaginated({
+                offset: Number(offset),
+                count: Number(count),
+                ...rest
+              });
 
-            if (Object.keys(rest).length == 0) {
-              if (paginated)
-                tenants = await getAllTenantsPaginated(
-                  Number(offset),
-                  Number(count)
-                );
-              else tenants = await getAllTenants();
+              if (tenants.tenants.length != 0) {
+                return {
+                  message: 'Tenants found',
+                  tenants
+                };
+              }
             } else {
-              if (paginated) {
-                tenants = await searchTenantsPaginated({
-                  offset: Number(offset),
-                  count: Number(count),
-                  ...rest
-                });
-              } else tenants = await searchTenants(rest);
-            }
+              const tenants = await searchTenants(rest);
 
-            if (tenants) {
-              return {
-                message: 'Tenants found',
-                tenants
-              };
+              if (tenants.length != 0) {
+                return {
+                  message: 'Tenants found',
+                  tenants
+                };
+              }
             }
 
             throw new Error(

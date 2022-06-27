@@ -2,14 +2,16 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import async from 'async';
 import Joi from 'joi';
+import { uuid } from 'uuidv4';
 
 import {
-  checkAdmin,
   createAdmin,
+  getAdmin,
   updateAdmin
 } from '../../../prisma/admin/admin';
 import validate from '../../../utils/middlewares/validation';
 import handleResponse from '../../../utils/helpers/handleResponse';
+import transporter from '../../../utils/mail/transporter';
 
 const schema = {
   body: Joi.object({
@@ -29,7 +31,7 @@ const handler = async (req, res) => {
       {
         verification: async () => {
           const { email, username, phone } = req.body;
-          const adminCheck = await checkAdmin({ username, email, phone });
+          const adminCheck = await getAdmin({ username, email, phone });
 
           if (adminCheck.length != 0) {
             throw new Error(
@@ -60,11 +62,6 @@ const handler = async (req, res) => {
 
             if (createdAdmin) {
               const token = jwt.sign(
-                { id: createdAdmin.id, email: createdAdmin.email },
-                process.env.TOKEN_KEY,
-                { expiresIn: '2h' }
-              );
-              const adminToken = jwt.sign(
                 {
                   id: createdAdmin.id,
                   email: createdAdmin.email,
@@ -74,9 +71,15 @@ const handler = async (req, res) => {
                 { expiresIn: '2h' }
               );
 
+              const verificationCode = uuid();
+              const verificationExpiry = new Date(
+                new Date().getTime() + 48 * 60 * 60 * 1000
+              );
+
               const admin = await updateAdmin(createdAdmin.id, {
                 token,
-                adminToken
+                verificationCode,
+                verificationExpiry
               });
               return { message: 'New admin registered', admin };
             }
@@ -87,6 +90,58 @@ const handler = async (req, res) => {
                   status: 500,
                   data: {
                     message: 'Internal Server Error'
+                  }
+                }
+              })
+            );
+          }
+        ],
+        email: [
+          'register',
+          async (results) => {
+            const { admin } = results.register;
+
+            if (admin) {
+              const mailOptions = {
+                from: `"Tryyon" <${process.env.MAIL_USERNAME}>`,
+                to: admin.email,
+                subject: 'Verify your account',
+                text: `Please click this link to verify your mail: ${
+                  process.env.BASE_URL +
+                  '/api/admin/verify?code=' +
+                  admin.verificationCode
+                }`
+              };
+
+              const info = await transporter.sendMail(mailOptions);
+
+              console.log(info);
+              if (info.rejected.length != 0) {
+                throw new Error(
+                  JSON.stringify({
+                    errorkey: 'email',
+                    body: {
+                      status: 500,
+                      data: {
+                        message: 'Verification mail not sent'
+                      }
+                    }
+                  })
+                );
+              }
+
+              return {
+                message: 'Verification email sent'
+              };
+            }
+
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'email',
+                body: {
+                  status: 500,
+                  data: {
+                    message: 'Internal server error'
                   }
                 }
               })

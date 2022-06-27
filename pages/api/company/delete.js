@@ -1,10 +1,10 @@
 import Joi from 'joi';
 import async from 'async';
 
-import { deleteCompany, checkCompany } from '../../../prisma/company/company';
+import { deleteCompany, getCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
@@ -14,14 +14,13 @@ const schema = {
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
+  await runMiddleware(req, res, auth);
   if (req.method == 'DELETE') {
     async.auto(
       {
         verification: async () => {
           const { id } = req.body;
-          const ownerId = req.user.id;
-          const companyCheck = await checkCompany({ id });
+          const companyCheck = await getCompany({ id });
 
           if (companyCheck.length == 0) {
             throw new Error(
@@ -30,32 +29,36 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such company found'
+                    message: 'Company not found'
                   }
                 }
               })
             );
           }
 
-          if (companyCheck[0].ownerId != ownerId) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 401,
-                  data: {
-                    message: 'User is not the owner of this company'
+          if (req.user) {
+            const ownerId = req.user.id;
+
+            if (companyCheck[0].ownerId != ownerId) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 401,
+                    data: {
+                      message: 'User is not the owner of this company'
+                    }
                   }
-                }
-              })
-            );
+                })
+              );
+            }
           }
 
           return {
             message: 'Company found'
           };
         },
-        removeCompany: [
+        delete: [
           'verification',
           async () => {
             const { id } = req.body;
@@ -71,7 +74,7 @@ const handler = async (req, res) => {
 
             throw new Error(
               JSON.stringify({
-                errorKey: 'removeCompany',
+                errorKey: 'delete',
                 body: {
                   status: 404,
                   data: {
@@ -83,7 +86,7 @@ const handler = async (req, res) => {
           }
         ]
       },
-      handleResponse(req, res, 'removeCompany')
+      handleResponse(req, res, 'delete')
     );
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });

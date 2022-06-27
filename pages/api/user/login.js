@@ -51,7 +51,7 @@ const handler = async (req, res) => {
               (await bcrypt.compare(password, user[0].passwordHash))
             ) {
               const token = jwt.sign(
-                { id: user[0].id, email: user[0].email },
+                { id: user[0].id, email: user[0].email, role: user[0].role },
                 process.env.TOKEN_KEY,
                 { expiresIn: '2h' }
               );

@@ -2,13 +2,14 @@ import async from 'async';
 
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 
 import { getUser } from '../../../prisma/user/user';
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
-  if (req.method == 'GET') {
+  await runMiddleware(req, res, auth);
+  if (!req.admin) res.status(401).json({ message: 'Unauthorized access' });
+  else if (req.method == 'GET') {
     async.auto(
       {
         main: async () => {

@@ -6,10 +6,11 @@ import { getUser, updateUser } from '../../../prisma/user/user';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../utils/middlewares/userAuth';
+import auth from '../../../utils/middlewares/auth';
 
 const schema = {
   body: Joi.object({
+    id: Joi.string().optional(),
     username: Joi.string().optional(),
     firstname: Joi.string().optional(),
     lastname: Joi.string().optional(),
@@ -24,19 +25,54 @@ const schema = {
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
+  await runMiddleware(req, res, auth);
   if (req.method == 'POST') {
     async.auto(
       {
         verification: async () => {
+          let id;
+          if (req.admin) {
+            id = req.body.id;
+
+            if (!id) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 409,
+                    data: {
+                      message: 'User ID not provided'
+                    }
+                  }
+                })
+              );
+            }
+
+            const checkExistence = await getUser({ id });
+
+            if (checkExistence.length == 0) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 409,
+                    data: {
+                      message:
+                        'User with given id is deleted or does not exists'
+                    }
+                  }
+                })
+              );
+            }
+          } else if (req.user) {
+            id = req.user.id;
+          }
+
           const { email, username, phone } = req.body;
-          const { id } = req.user;
 
           let userCheck = [];
           if (email || username || phone)
             userCheck = await getUser({ username, email, phone });
-
-          const checkExistence = await getUser({ id });
 
           if (userCheck.length != 0) {
             throw new Error(
@@ -53,29 +89,18 @@ const handler = async (req, res) => {
             );
           }
 
-          if (checkExistence.length == 0) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 409,
-                  data: {
-                    message: 'User with given id is deleted or does not exists'
-                  }
-                }
-              })
-            );
-          }
-
           return {
-            message: 'User Validated'
+            message: 'User Validated',
+            id
           };
         },
         update: [
           'verification',
-          async () => {
+          async (results) => {
             const { body } = req;
-            const { id } = req.user;
+            if (body.id) delete body.id;
+
+            const { id } = results.verification;
 
             if (body.password) {
               body.passwordHash = await bcrypt.hash(body.password, 10);

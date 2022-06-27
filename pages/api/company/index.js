@@ -1,19 +1,46 @@
 import async from 'async';
 
 import {
-  getAllCompanies,
-  getAllCompaniesPaginated,
   searchCompanies,
-  searchCompaniesPaginated
+  searchCompaniesPaginated,
+  getCompany
 } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
+import auth from '../../../utils/middlewares/auth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
   if (req.method == 'GET') {
     async.auto(
       {
         read: [
           async () => {
+            if (!req.admin) {
+              // if a non admin authenticated user
+              const { id } = req.user;
+              const company = await getCompany({ ownerId: id });
+
+              if (company.length == 0) {
+                throw new Error(
+                  JSON.stringify({
+                    errorKey: 'read',
+                    body: {
+                      status: 404,
+                      data: {
+                        message: 'User does not have a company'
+                      }
+                    }
+                  })
+                );
+              }
+
+              return {
+                message: 'Company found',
+                company: company[0]
+              };
+            }
+
             const { paginated, count, offset, ...rest } = req.query;
 
             if (paginated == 'true' && (!count || !offset)) {
@@ -33,24 +60,15 @@ const handler = async (req, res) => {
 
             let companies;
 
-            if (Object.keys(rest).length == 0) {
-              if (paginated)
-                companies = await getAllCompaniesPaginated(
-                  Number(offset),
-                  Number(count)
-                );
-              else companies = await getAllCompanies();
-            } else {
-              if (paginated) {
-                companies = await searchCompaniesPaginated({
-                  offset: Number(offset),
-                  count: Number(count),
-                  ...rest
-                });
-              } else companies = await searchCompanies(rest);
-            }
+            if (paginated)
+              companies = await searchCompaniesPaginated({
+                offset: Number(offset),
+                count: Number(count),
+                ...rest
+              });
+            else companies = await searchCompanies(rest);
 
-            if (companies) {
+            if (companies.length != 0) {
               return {
                 message: 'Companies found',
                 companies

@@ -3,11 +3,7 @@ import jwt from 'jsonwebtoken';
 import async from 'async';
 import Joi from 'joi';
 
-import {
-  getAdminByEmail,
-  updateAdmin,
-  checkAdmin
-} from '../../../prisma/admin/admin';
+import { updateAdmin, getAdmin } from '../../../prisma/admin/admin';
 import validate from '../../../utils/middlewares/validation';
 import handleResponse from '../../../utils/helpers/handleResponse';
 
@@ -24,7 +20,7 @@ const handler = async (req, res) => {
       {
         verification: async () => {
           const { email } = req.body;
-          const adminCheck = await checkAdmin({ email });
+          const adminCheck = await getAdmin({ email });
 
           if (adminCheck.length == 0) {
             throw new Error(
@@ -41,31 +37,25 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'Admin Validated'
+            message: 'Admin Validated',
+            admin: adminCheck[0]
           };
         },
         login: [
           'verification',
-          async () => {
-            const { email, password } = req.body;
-            const admin = await getAdminByEmail(email);
+          async (results) => {
+            const { password } = req.body;
+            const { admin } = results.verification;
 
             if (admin && (await bcrypt.compare(password, admin.passwordHash))) {
               const token = jwt.sign(
-                { id: admin.id, email: admin.email },
-                process.env.TOKEN_KEY,
-                { expiresIn: '2h' }
-              );
-
-              const adminToken = jwt.sign(
                 { id: admin.id, email: admin.email, role: admin.role },
                 process.env.ADMIN_TOKEN_KEY,
                 { expiresIn: '2h' }
               );
 
               const updatedAdmin = await updateAdmin(admin.id, {
-                token,
-                adminToken
+                token
               });
 
               return {

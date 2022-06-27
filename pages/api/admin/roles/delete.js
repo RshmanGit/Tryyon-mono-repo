@@ -4,7 +4,7 @@ import async from 'async';
 import { deleteRole, checkRole } from '../../../../prisma/admin/roles';
 import handleResponse from '../../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../../utils/helpers/runMiddleware';
-import verifyToken from '../../../../utils/middlewares/adminAuth';
+import auth from '../../../../utils/middlewares/auth';
 import validate from '../../../../utils/middlewares/validation';
 
 const schema = {
@@ -14,8 +14,9 @@ const schema = {
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, verifyToken);
-  if (req.method == 'DELETE') {
+  await runMiddleware(req, res, auth);
+  if (!req.admin) res.status(401).json({ message: 'Unauthorized access' });
+  else if (req.method == 'DELETE') {
     async.auto(
       {
         verify: async () => {

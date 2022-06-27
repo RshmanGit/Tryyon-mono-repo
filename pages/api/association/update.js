@@ -5,11 +5,9 @@ import {
   getAssociation,
   updateAssociation
 } from '../../../prisma/association/association';
-import { getTenant } from '../../../prisma/tenant/tenant';
-import { checkCompany } from '../../../prisma/company/company';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
-import isAllowedUser from '../../../utils/middlewares/isAllowedUser';
+import auth from '../../../utils/middlewares/auth';
 import validate from '../../../utils/middlewares/validation';
 
 const schema = {
@@ -21,7 +19,7 @@ const schema = {
 };
 
 const handler = async (req, res) => {
-  await runMiddleware(req, res, isAllowedUser);
+  await runMiddleware(req, res, auth);
   if (req.method == 'POST') {
     async.auto(
       {
@@ -63,44 +61,33 @@ const handler = async (req, res) => {
             }
 
             if (tenantId) {
-              const company = await checkCompany({ ownerId: userId });
+              const tenant = await prisma.tenant.findMany({
+                where: {
+                  id: tenantId,
+                  company: {
+                    ownerId: userId
+                  }
+                }
+              });
 
-              if (company.length == 0) {
+              if (tenant.length == 0) {
                 throw new Error(
                   JSON.stringify({
                     errorkey: 'verify',
                     body: {
                       status: 409,
                       data: {
-                        message: 'User does not have a company'
+                        message: 'Given user is not the owner of tenant'
                       }
                     }
                   })
                 );
               }
-
-              const tenant = await getTenant(tenantId);
-
-              if (tenant.length != 0) {
-                // check if given user is the owner of the tenant
-                if (company[0].id != tenant[0].companyId) {
-                  throw new Error(
-                    JSON.stringify({
-                      errorkey: 'verify',
-                      body: {
-                        status: 409,
-                        data: {
-                          message: 'Given user is not the owner of tenant'
-                        }
-                      }
-                    })
-                  );
-                }
-              }
             }
 
             return {
-              message: 'Association validated'
+              message: 'Association validated',
+              association: associationCheck[0]
             };
           }
 
@@ -125,70 +112,43 @@ const handler = async (req, res) => {
               );
             }
 
-            const tenant = await getTenant(tenantId);
-
-            if (tenant.length != 0) {
-              // check if the user is the owner of the tenant
-              const company = await checkCompany({ ownerId: id });
-
-              if (company.length == 0) {
-                throw new Error(
-                  JSON.stringify({
-                    errorkey: 'verify',
-                    body: {
-                      status: 409,
-                      data: {
-                        message: 'User does not have a company'
-                      }
-                    }
-                  })
-                );
+            const tenant = await prisma.tenant.findMany({
+              where: {
+                id: tenantId,
+                company: {
+                  ownerId: id
+                }
               }
+            });
 
-              if (company[0].id == tenant[0].companyId) {
-                req.body.userId = id;
-                return {
-                  message: 'Association validated'
-                };
-              }
-
+            if (tenant.length == 0) {
               throw new Error(
                 JSON.stringify({
                   errorkey: 'verify',
                   body: {
                     status: 409,
                     data: {
-                      message: 'User is not the owner of tenant'
+                      message: 'Given user is not the owner of tenant'
                     }
                   }
                 })
               );
             }
 
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verify',
-                body: {
-                  status: 404,
-                  data: {
-                    message: 'Tenant not found'
-                  }
-                }
-              })
-            );
+            return {
+              message: 'Association validated',
+              association: associationCheck[0]
+            };
           }
         },
         update: [
           'verify',
-          async () => {
+          async (results) => {
             const { body } = req;
             if (req.user) body.userId = req.user.id;
 
-            const association = await getAssociation({ userId: body.userId });
-            const updatedAssociation = await updateAssociation(
-              association[0].id,
-              body
-            );
+            const { id } = results.verify.association;
+            const updatedAssociation = await updateAssociation(id, body);
 
             if (updatedAssociation)
               return { message: 'Association updated', updatedAssociation };
