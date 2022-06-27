@@ -1,4 +1,5 @@
 import async from 'async';
+import Joi from 'joi';
 
 import handleResponse from '../../../utils/helpers/handleResponse';
 import runMiddleware from '../../../utils/helpers/runMiddleware';
@@ -9,7 +10,7 @@ import { deleteUser, getUser } from '../../../prisma/user/user';
 
 const schema = {
   body: Joi.object({
-    id: Joi.string().email().optional()
+    id: Joi.string().optional()
   })
 };
 
@@ -54,7 +55,8 @@ const handler = async (req, res) => {
             }
 
             return {
-              message: 'User Validated'
+              message: 'User Validated',
+              id
             };
           }
 
@@ -77,13 +79,14 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'User Validated'
+            message: 'User Validated',
+            id
           };
         },
         delete: [
           'verification',
-          async () => {
-            const { id } = req.user;
+          async (results) => {
+            const { id } = results.verification;
 
             const user = await deleteUser(id);
 

@@ -57,7 +57,7 @@ const handler = async (req, res) => {
 
             return {
               message: 'Tenant validated',
-              company: companyCheck[0]
+              companyId: companyCheck[0].id
             };
           }
 
@@ -95,14 +95,14 @@ const handler = async (req, res) => {
 
           return {
             message: 'Tenant validated',
-            company: tenantCheck[0].company
+            companyId
           };
         },
         create: [
           'verification',
           async (results) => {
             const { body } = req;
-            body.companyId = results.verification.company.id;
+            body.companyId = results.verification.companyId;
 
             const res = await createTenant(body);
 
