@@ -26,6 +26,8 @@ import DefaultAuth from '../../ui/layouts/auth/Default.js';
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import { useRouter } from 'next/router.js';
+import { useEffect } from 'react';
 
 function Login() {
   // Chakra color mode
@@ -36,8 +38,54 @@ function Login() {
 
   const [show, setShow] = React.useState(false);
   const [buttonText, setButtonText] = React.useState('Sign in');
+  const [company, setCompany] = React.useState(0);
+  const router = useRouter();
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+  useEffect(() => {
+    if (company === 1) {
+      router.push('/auth/create/tenant');
+    } else if (company === 2) {
+      router.push('/auth/create/company');
+    } else if (company === 3) {
+      router.push('/auth/dashboard');
+    }
+  });
 
   const handleClick = () => setShow(!show);
+
+  function solve(token) {
+    fetch('/api/user/progress', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        if (res.progress.company && res.progress.tenant) {
+          sessionStorage.setItem('company', 'ok');
+          sessionStorage.setItem('tenant', 'ok');
+          setCompany(3);
+          return res;
+        } else if (res.progress.company) {
+          setCompany(1);
+          sessionStorage.setItem('company', 'ok');
+          return res;
+        } else {
+          setCompany(2);
+          return res;
+        }
+      })
+      // .then((res) => alert(res.message))
+      .catch((err) => {
+        console.error(JSON.parse(err.message));
+      });
+  }
+
   return (
     <DefaultAuth illustrationBackground={'/auth.png'} image={'/auth.png'}>
       <Flex
@@ -95,10 +143,14 @@ function Login() {
               })
                 .then((res) => res.json())
                 .then((res) => {
+                  // console.log(res);
                   if (res.message === 'User Authenticated') {
+                    sessionStorage.clear();
+                    alert(res.message);
                     setButtonText('User Authenticated');
                     return res;
                   } else {
+                    sessionStorage.clear();
                     alert(res.message);
                     setButtonText('Retry');
                     throw new Error(
@@ -109,7 +161,12 @@ function Login() {
                     );
                   }
                 })
-                .then((res) => alert(res.message))
+                .then((res) => {
+                  if (res.message === 'User Authenticated') {
+                    sessionStorage.setItem('token_use', res.updatedUser.token);
+                    solve(res.updatedUser.token);
+                  }
+                })
                 .catch((err) => {
                   console.error(JSON.parse(err.message));
                 });

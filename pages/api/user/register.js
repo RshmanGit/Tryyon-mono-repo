@@ -18,7 +18,7 @@ const schema = {
     email: Joi.string().required(),
     password: Joi.string().required(),
     email_verified: Joi.boolean().default(false),
-    role: Joi.string().required()
+    role: Joi.string().optional()
   })
 };
 
