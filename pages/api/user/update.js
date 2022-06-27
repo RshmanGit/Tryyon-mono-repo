@@ -14,13 +14,9 @@ const schema = {
     username: Joi.string().optional(),
     firstname: Joi.string().optional(),
     lastname: Joi.string().optional(),
-    phone: Joi.string()
-      .length(10)
-      .pattern(/^[0-9]+$/)
-      .optional(),
+    phone: Joi.number().min(1000000000).max(9999999999).required(),
     email: Joi.string().optional(),
-    password: Joi.string().optional(),
-    email_verified: Joi.boolean().optional()
+    password: Joi.string().optional()
   })
 };
 
