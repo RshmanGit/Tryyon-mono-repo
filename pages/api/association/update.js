@@ -94,7 +94,9 @@ const handler = async (req, res) => {
           // if an authenticated user is trying to create an association
           if (req.user) {
             const { id } = req.user; // userId is not needed to be there in body
-            const { tenantId } = req.body;
+            const { tenantId, approval } = req.body;
+            if (approval) delete req.body.approval;
+
             const associationCheck = await getAssociation({ userId: id });
 
             // if the user is already having an association
