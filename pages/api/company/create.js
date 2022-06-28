@@ -12,11 +12,11 @@ const schema = {
     name: Joi.string().required(),
     description: Joi.string().required(),
     gstNumber: Joi.string().required(),
-    gstCertificate: Joi.string().guid({ version: 'uuidv4' }).optional(),
+    gstCertificate: Joi.string().guid({ version: 'uuidv4' }),
     panNumber: Joi.string().required(),
-    panCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
+    panCard: Joi.string().guid({ version: 'uuidv4' }),
     aadharNumber: Joi.string().required(),
-    aadharCard: Joi.string().guid({ version: 'uuidv4' }).optional(),
+    aadharCard: Joi.string().guid({ version: 'uuidv4' }),
     adminApproval: Joi.boolean().default(false),
     ownerId: Joi.string().optional()
   })

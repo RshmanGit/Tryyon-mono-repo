@@ -44,7 +44,21 @@ function Register() {
   let router = useRouter();
 
   useEffect(() => {
+    if (!sessionStorage.token_use) {
+      alert('Login first !');
+      router.push('/auth/login');
+    } else if (
+      sessionStorage.company === 'ok' &&
+      sessionStorage.tenant === 'ok'
+    ) {
+      alert('Company & Tenant already registered !');
+      router.push('/auth/dashboard');
+    } else if (sessionStorage.company === 'ok') {
+      alert('Company already registered !');
+      router.push('/auth/create/tenant');
+    }
     if (register === 1) {
+      sessionStorage.setItem('company', 'ok');
       router.push('/auth/create/tenant');
     }
   });
@@ -107,7 +121,8 @@ function Register() {
               fetch('/api/company/create', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${sessionStorage.token_use}`
                 },
                 body: JSON.stringify(values, null, 5)
               })

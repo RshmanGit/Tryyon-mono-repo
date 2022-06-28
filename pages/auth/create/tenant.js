@@ -40,6 +40,28 @@ function Register() {
 
   const [show, setShow] = useState(false);
   const [buttonText, setButtonText] = useState('Register');
+  const [dashboard, setDashboard] = useState(0);
+  let router = useRouter();
+
+  useEffect(() => {
+    if (!sessionStorage.token_use) {
+      alert('Login first !');
+      router.push('/auth/login');
+    } else if (
+      sessionStorage.company === 'ok' &&
+      sessionStorage.tenant === 'ok'
+    ) {
+      alert('Tenant already registered !');
+      router.push('/auth/dashboard');
+    } else if (!sessionStorage.company) {
+      alert('Register your company first');
+      router.push('/auth/create/company');
+    }
+    if (dashboard === 1) {
+      sessionStorage.setItem('tenant', 'ok');
+      router.push('/auth/dashboard');
+    }
+  });
 
   const handleClick = () => setShow(!show);
   return (
@@ -85,9 +107,7 @@ function Register() {
           <Formik
             initialValues={{
               name: '',
-              description: '',
-              companyId: '',
-              ownerId: ''
+              description: ''
             }}
             onSubmit={(values) => {
               //   alert(JSON.stringify(values, null, 2));
@@ -95,7 +115,8 @@ function Register() {
               fetch('/api/tenant/create', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${sessionStorage.token_use}`
                 },
                 body: JSON.stringify(values, null, 4)
               })
@@ -103,6 +124,7 @@ function Register() {
                 .then((res) => {
                   if (res.message === 'New Tenant Created') {
                     setButtonText('Registered');
+                    setDashboard(1);
                     return res;
                   } else {
                     alert(res.message);
@@ -118,15 +140,11 @@ function Register() {
                 .catch((err) => {
                   console.error(JSON.parse(err.message));
                 });
-              values.companyId = '';
             }}
           >
             {({ handleSubmit, errors, touched }) => (
               <form>
-                <FormControl
-                  mb="4px"
-                  // isInvalid={!!errors.username && touched.username}
-                >
+                <FormControl mb="4px" isInvalid={!!errors.name && touched.name}>
                   <FormLabel
                     ms="4px"
                     fontSize="sm"
@@ -146,13 +164,20 @@ function Register() {
                       mb="2px"
                       size="md"
                       variant="auth"
+                      validate={(value) => {
+                        let error;
+                        if (value.length == 0) {
+                          error = "Tenant Name can't be an empty string";
+                        }
+                        return error;
+                      }}
                     />
                   </InputGroup>
                 </FormControl>
 
                 <FormControl
                   mb="4px"
-                  // isInvalid={!!errors.username && touched.username}
+                  isInvalid={!!errors.description && touched.description}
                 >
                   <FormLabel
                     ms="4px"
@@ -173,60 +198,13 @@ function Register() {
                       mb="2px"
                       size="md"
                       variant="auth"
-                    />
-                  </InputGroup>
-                </FormControl>
-
-                <FormControl
-                  mb="4px"
-                  // isInvalid={!!errors.username && touched.username}
-                >
-                  <FormLabel
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
-                    display="flex"
-                  >
-                    Company ID<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <InputGroup size="md">
-                    <Field
-                      as={Input}
-                      isRequired={true}
-                      id="companyId"
-                      name="companyId"
-                      fontSize="sm"
-                      mb="2px"
-                      size="md"
-                      variant="auth"
-                    />
-                  </InputGroup>
-                </FormControl>
-
-                <FormControl
-                  mb="4px"
-                  // isInvalid={!!errors.username && touched.username}
-                >
-                  <FormLabel
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
-                    display="flex"
-                  >
-                    Owner ID<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <InputGroup size="md">
-                    <Field
-                      as={Input}
-                      isRequired={true}
-                      id="ownerId"
-                      name="ownerId"
-                      fontSize="sm"
-                      mb="2px"
-                      size="md"
-                      variant="auth"
+                      validate={(value) => {
+                        let error;
+                        if (value.length == 0) {
+                          error = "Description can't be empty";
+                        }
+                        return error;
+                      }}
                     />
                   </InputGroup>
                 </FormControl>

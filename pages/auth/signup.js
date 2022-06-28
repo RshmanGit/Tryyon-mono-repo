@@ -42,8 +42,12 @@ function Signup() {
   const [buttonText, setButtonText] = useState('Sign up');
   const [signup, setState] = useState(0);
   let router = useRouter();
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
 
   useEffect(() => {
+    sessionStorage.clear();
     if (signup === 1) {
       router.push('/auth/login');
     }
@@ -114,10 +118,12 @@ function Signup() {
                 .then((res) => res.json())
                 .then((res) => {
                   if (res.message === 'New user registered') {
+                    sessionStorage.clear();
                     setButtonText('Registered');
                     setState(1);
                     return res;
                   } else {
+                    sessionStorage.clear();
                     alert(res.message);
                     setButtonText('Sign up again');
                     throw new Error(
