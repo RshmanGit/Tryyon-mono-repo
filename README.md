@@ -1546,3 +1546,95 @@ Built on Next.js and Prisma ORM.
         }
       }
       ```
+
+## Attribute Routes
+
+- Common
+
+  - **/api/products/attribute**
+
+    - Unprotected route
+    - Accepted method - `GET`
+    - Query format -
+      ```
+      id: string, optional
+      query: string, optional (searched in name)
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Attributes found",
+        "attributes": [
+          {
+            "id": "62baf1ea6f5b9fe8bdff4520",
+            "name": "Consultant",
+            "description": "...",
+            "slug": "temporibus-sed-repellendus"
+          },
+          ...
+        ]
+      }
+      ```
+
+  - **/api/products/attribute/create**
+    - Unprotected route
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      name: string, required
+      description: string, required
+      slug: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Attribute Created",
+        "attribute": {
+          "id": "62baf3826f5b9fe8bdff4524",
+          "name": "enhance",
+          "description": "...",
+          "slug": "est-odio-quo"
+        }
+      }
+      ```
+  - **/api/products/attribute/delete**
+    - Unprotected route
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Attribute Deleted",
+        "attribute": {
+          "id": "62baf3826f5b9fe8bdff4524",
+          "name": "Industrial",
+          "description": "...",
+          "slug": "est-odio-quo"
+        }
+      }
+      ```
+  - **/api/products/attribute/update**
+    - Unprotected route
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      name: string, optional
+      description: string, optional
+      slug: string, optional
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Attribute Updated",
+        "attribute": {
+          "id": "62baf3826f5b9fe8bdff4524",
+          "name": "Industrial",
+          "description": "...",
+          "slug": "est-odio-quo"
+        }
+      }
+      ```
