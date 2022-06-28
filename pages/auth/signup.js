@@ -47,7 +47,6 @@ function Signup() {
   }, []);
 
   useEffect(() => {
-    sessionStorage.clear();
     if (signup === 1) {
       router.push('/auth/login');
     }
