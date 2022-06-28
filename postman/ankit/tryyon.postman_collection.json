@@ -1267,6 +1267,447 @@
 			"name": "Products",
 			"item": [
 				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "/api/products/category/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Category Created\") { ",
+											"    tests[\"Category creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set('categoryId', res.category.id);",
+											"pm.environment.set('parentCategoryId', res.category.parentCategoryId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomProductAdjective}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/category/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"category",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/category/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomProductAdjective}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"137-+PejsJ4jx5/7rpja9yIKPo2gK1E\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "311"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 10:27:43 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Category Created\",\n    \"category\": {\n        \"id\": \"62bad79ff4b8ec8aad5ced38\",\n        \"name\": \"Unbranded\",\n        \"description\": \"Vero iusto voluptates reiciendis nihil. Tempora facere optio ad et vel esse sunt. Omnis voluptate amet.\",\n        \"slug\": \"dolore-aliquid-explicabo\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products/category/",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/category?isRoot=true&includeChildren=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"category"
+									],
+									"query": [
+										{
+											"key": "isRoot",
+											"value": "true"
+										},
+										{
+											"key": "query",
+											"value": "fanta",
+											"disabled": true
+										},
+										{
+											"key": "includeChildren",
+											"value": "true"
+										},
+										{
+											"key": "id",
+											"value": "{{categoryId}}",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/category/",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/category?isRoot=true&includeChildren=true",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category"
+											],
+											"query": [
+												{
+													"key": "isRoot",
+													"value": "true"
+												},
+												{
+													"key": "query",
+													"value": "fanta",
+													"disabled": true
+												},
+												{
+													"key": "includeChildren",
+													"value": "true"
+												},
+												{
+													"key": "id",
+													"value": "{{categoryId}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"58c-k23tv8A5XrbOEV732FVHtysp4Jk\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 11:06:29 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Categories found\",\n    \"categories\": [\n        {\n            \"id\": \"62bad0b6f4b8ec8aad5ced34\",\n            \"name\": \"Fantastic\",\n            \"description\": \"Ut ipsam sed facilis. Dignissimos quaerat numquam voluptatibus. Ratione molestiae ipsam.\",\n            \"slug\": \"aspernatur-animi-quia\",\n            \"root\": true,\n            \"parentCategoryId\": null,\n            \"children\": [\n                {\n                    \"id\": \"62bad793f4b8ec8aad5ced35\",\n                    \"name\": \"Sleek\",\n                    \"description\": \"Illum tempore neque amet dolor. Deleniti quia molestias quas omnis autem. Tenetur maiores quia. Aut et omnis consequuntur dolorem accusantium dolor.\",\n                    \"slug\": \"modi-est-atque\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n                },\n                {\n                    \"id\": \"62bad79af4b8ec8aad5ced36\",\n                    \"name\": \"Gorgeous\",\n                    \"description\": \"Fuga dicta mollitia. Et et architecto nulla blanditiis esse quam. Quo id sapiente.\",\n                    \"slug\": \"iure-omnis-neque\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n                },\n                {\n                    \"id\": \"62bad79df4b8ec8aad5ced37\",\n                    \"name\": \"Sleek\",\n                    \"description\": \"Debitis recusandae consequatur et molestiae officia sed perspiciatis vitae voluptatem. Consequuntur et magni officia eum quae nobis voluptate et aut. Hic qui beatae. Quaerat optio fuga.\",\n                    \"slug\": \"dolor-atque-soluta\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n                },\n                {\n                    \"id\": \"62bad79ff4b8ec8aad5ced38\",\n                    \"name\": \"Unbranded\",\n                    \"description\": \"Vero iusto voluptates reiciendis nihil. Tempora facere optio ad et vel esse sunt. Omnis voluptate amet.\",\n                    \"slug\": \"dolore-aliquid-explicabo\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n                }\n            ]\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products/category/update",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{categoryId}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/category/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"category",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/category/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{categoryId}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"171-skUCe6aHWDDpY++wNQxR5sRiIuA\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "369"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 10:53:46 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Category Updated\",\n    \"category\": {\n        \"id\": \"62badc78f4b8ec8aad5ced39\",\n        \"name\": \"Practical\",\n        \"description\": \"Qui omnis autem doloremque mollitia corrupti et quo eaque. Quia quia dolor ut. Quia consequatur et dolores explicabo iste voluptatum. Consequatur earum voluptatem accusamus.\",\n        \"slug\": \"quis-quasi-animi\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad79ff4b8ec8aad5ced38\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products/category/delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{categoryId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/category/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"category",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/category/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{categoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"171-M389vHyNaJBHB6SyjbNe6pXC8/M\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "369"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 11:04:33 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Category Deleted\",\n    \"category\": {\n        \"id\": \"62badc78f4b8ec8aad5ced39\",\n        \"name\": \"Practical\",\n        \"description\": \"Qui omnis autem doloremque mollitia corrupti et quo eaque. Quia quia dolor ut. Quia consequatur et dolores explicabo iste voluptatum. Consequatur earum voluptatem accusamus.\",\n        \"slug\": \"quis-quasi-animi\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad79ff4b8ec8aad5ced38\"\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
 					"name": "/api/products/create",
 					"event": [
 						{
