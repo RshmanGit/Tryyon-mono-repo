@@ -40,7 +40,7 @@ Built on Next.js and Prisma ORM.
     role: string
     ```
   - Successful Response -
-    ```json
+    ```
     {
         message: 'New admin registered',
         admin: {
@@ -68,7 +68,7 @@ Built on Next.js and Prisma ORM.
     password: string, required
     ```
   - Successful Response -
-    ```json
+    ```
     {
         message: 'New admin registered',
         admin: {
@@ -95,7 +95,7 @@ Built on Next.js and Prisma ORM.
     ?code=<verification-code>
     ```
   - Successful Response -
-    ```json
+    ```
     {
         "message": "Admin verified",
         "verifiedAdmin": {
@@ -124,7 +124,7 @@ Built on Next.js and Prisma ORM.
   - Protected route - bearer token needed
   - Accepted method - `GET`
   - Successful Response -
-    ```json
+    ```
     {
         "message": "Admin Authenticated",
         "admin": {
@@ -145,7 +145,7 @@ Built on Next.js and Prisma ORM.
   - Protected route - bearer token needed
   - Accepted method - `GET`
   - Successful Response -
-    ```json
+    ```
     {
         "message": "Admin found",
         "admin": {
@@ -178,7 +178,7 @@ Built on Next.js and Prisma ORM.
     id: string, required
     ```
   - Successful Response -
-    ```json
+    ```
     {
       "message": "Admin deleted"
     }
@@ -202,7 +202,7 @@ Built on Next.js and Prisma ORM.
     discountedPrice: float, required
     ```
   - Successful Response -
-    ```json
+    ```
     {
         "message": "New Product Created",
         "product": {
@@ -239,7 +239,7 @@ Built on Next.js and Prisma ORM.
     ```
   - Successful Response -
 
-    ```json
+    ```
     // paginated
     {
         "status": 200,
@@ -307,7 +307,7 @@ Built on Next.js and Prisma ORM.
   - Unprotected route
   - Accepted method - `GET`
   - Successful Response -
-    ```json
+    ```
     {
       "status": 200,
       "message": "Product found",
@@ -329,7 +329,7 @@ Built on Next.js and Prisma ORM.
   - Unprotected route
   - Accepted method - `POST`
   - Successful Response -
-    ```json
+    ```
     {
       "status": 200,
       "message": "Product updated",
@@ -355,7 +355,7 @@ Built on Next.js and Prisma ORM.
     id: string, required
     ```
   - Successful Response -
-    ```json
+    ```
     {
       "status": 200,
       "message": "Product deleted",
@@ -391,7 +391,7 @@ Built on Next.js and Prisma ORM.
       role: string
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New user registered",
         "user": {
@@ -419,7 +419,7 @@ Built on Next.js and Prisma ORM.
       password: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User Authenticated",
         "updatedUser": {
@@ -446,7 +446,7 @@ Built on Next.js and Prisma ORM.
       ?code=<verification-code>
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User verified",
         "verifiedUser": {
@@ -470,7 +470,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Users found",
           "users": [
@@ -496,7 +496,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User found",
         "user": {
@@ -523,7 +523,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User deleted",
         "user": {
@@ -556,7 +556,7 @@ Built on Next.js and Prisma ORM.
       password: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User updated",
         "updatedUser": {
@@ -580,7 +580,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User Authenticated",
         "user": {
@@ -595,7 +595,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User found",
         "user": {
@@ -615,7 +615,7 @@ Built on Next.js and Prisma ORM.
       }
       ```
     - Unsuccessful Response - (if provided userId of another user)
-      ```json
+      ```
       {
         "message": "Unauthorized access"
       }
@@ -628,7 +628,7 @@ Built on Next.js and Prisma ORM.
       {} // empty object
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User deleted",
         "user": {
@@ -651,7 +651,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User logged out",
         "user": {
@@ -683,7 +683,7 @@ Built on Next.js and Prisma ORM.
       password: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User updated",
         "updatedUser": {
@@ -706,7 +706,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User progress",
         "progress": {
@@ -774,7 +774,7 @@ Built on Next.js and Prisma ORM.
       ```
     - Successful Response -
 
-      ```json
+      ```
       // paginated
       {
           "message": "Companies found",
@@ -871,7 +871,7 @@ Built on Next.js and Prisma ORM.
       ownerId: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New Company Created",
         "company": {
@@ -897,7 +897,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Company deleted",
         "company": {
@@ -932,7 +932,7 @@ Built on Next.js and Prisma ORM.
       adminApproval: boolean, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Company updated",
           "updatedCompany": {
@@ -958,7 +958,7 @@ Built on Next.js and Prisma ORM.
     - Accepted method - `GET`
     - Query format - no query
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Company found",
           "company": {
@@ -978,7 +978,7 @@ Built on Next.js and Prisma ORM.
       }
       ```
     - Unsuccessful Response -
-      ```json
+      ```
       {
         "message": "User does not have a company"
       }
@@ -999,7 +999,7 @@ Built on Next.js and Prisma ORM.
       adminApproval: boolean, default - false
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New Company Created",
         "company": {
@@ -1025,7 +1025,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Company deleted",
         "company": {
@@ -1060,7 +1060,7 @@ Built on Next.js and Prisma ORM.
       adminApproval: boolean, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Company updated",
           "updatedCompany": {
@@ -1096,7 +1096,7 @@ Built on Next.js and Prisma ORM.
       offset: number, required if paginated is true
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Tenants found",
           "tenants": [
@@ -1126,7 +1126,7 @@ Built on Next.js and Prisma ORM.
       description: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "New Tenant Created",
           "tenant": {
@@ -1146,7 +1146,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Tenant deleted",
         "tenant": {
@@ -1167,7 +1167,7 @@ Built on Next.js and Prisma ORM.
       description: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Tenant updated",
           "tenant": {
@@ -1185,7 +1185,7 @@ Built on Next.js and Prisma ORM.
     - Accepted method - `GET`
     - Query format - No query
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Tenant found",
         "tenant": {
@@ -1205,7 +1205,7 @@ Built on Next.js and Prisma ORM.
       description: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "New Tenant Created",
           "tenant": {
@@ -1225,7 +1225,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Tenant deleted",
         "tenant": {
@@ -1245,7 +1245,7 @@ Built on Next.js and Prisma ORM.
       description: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Tenant updated",
           "tenant": {
@@ -1266,7 +1266,7 @@ Built on Next.js and Prisma ORM.
     - Accepted method - `GET`
     - Query format - No query
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Associations found",
           "associations": [
@@ -1285,7 +1285,7 @@ Built on Next.js and Prisma ORM.
     - Accepted method - `GET`
     - Query format - No query
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association found",
         "association": {
@@ -1306,7 +1306,7 @@ Built on Next.js and Prisma ORM.
       approval: boolean, optional, default - false
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New Association Created",
         "createdAssociation": {
@@ -1325,7 +1325,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association deleted",
         "deletedAssociation": {
@@ -1346,7 +1346,7 @@ Built on Next.js and Prisma ORM.
       approval: boolean, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association updated",
         "updatedAssociation": {
@@ -1364,7 +1364,7 @@ Built on Next.js and Prisma ORM.
     - Query format - No query
     - Conditions - user can only access their own associations
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association found",
         "association": {
@@ -1383,7 +1383,7 @@ Built on Next.js and Prisma ORM.
       tenantId: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New Association Created",
         "createdAssociation": {
@@ -1402,7 +1402,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association deleted",
         "deletedAssociation": {
@@ -1421,7 +1421,7 @@ Built on Next.js and Prisma ORM.
       tenantId: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association updated",
         "updatedAssociation": {
@@ -1429,6 +1429,120 @@ Built on Next.js and Prisma ORM.
           "userId": "62b92c8dc18760f3a77c6ff0",
           "tenantId": "62b92f8cc18760f3a77c6ff4",
           "approval": true
+        }
+      }
+      ```
+
+## Category Routes
+
+- Common
+
+  - **/api/products/category**
+
+    - Unprotected route
+    - Accepted method - `GET`
+    - Query format -
+      ```
+      id: string, optional
+      isRoot: true/false, optional
+      query: string, optional (will be searched in name)
+      includeChildren: true/false, optional
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Categories found",
+        "categories": [
+          {
+            "id": "62bad0b6f4b8ec8aad5ced34",
+            "name": "Fantastic",
+            "description": "Ut ipsam sed facilis. Dignissimos quaerat numquam voluptatibus. Ratione molestiae ipsam.",
+            "slug": "aspernatur-animi-quia",
+            "root": true,
+            "parentCategoryId": null,
+            "children": [
+              {
+                "id": "62bad793f4b8ec8aad5ced35",
+                "name": "Sleek",
+                "description": "Illum tempore neque amet dolor. Deleniti quia molestias quas omnis autem. Tenetur maiores quia. Aut et omnis consequuntur dolorem accusantium dolor.",
+                "slug": "modi-est-atque",
+                "root": false,
+                "parentCategoryId": "62bad0b6f4b8ec8aad5ced34"
+              },
+              ...
+            ]
+          }
+        ]
+      }
+      ```
+
+  - **/api/products/category/create**
+    - Unprotected route
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      name: string, required
+      description: string, required
+      slug: string, required
+      parentCategoryId: string, optional
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Category Created",
+        "category": {
+          "id": "62bad79ff4b8ec8aad5ced38",
+          "name": "Unbranded",
+          "description": "...",
+          "slug": "dolore-aliquid-explicabo",
+          "root": false,
+          "parentCategoryId": "62bad0b6f4b8ec8aad5ced34"
+        }
+      }
+      ```
+  - **/api/products/category/delete**
+    - Unprotected route
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Category Deleted",
+        "category": {
+          "id": "62badc78f4b8ec8aad5ced39",
+          "name": "Practical",
+          "description": "...",
+          "slug": "quis-quasi-animi",
+          "root": false,
+          "parentCategoryId": "62bad79ff4b8ec8aad5ced38"
+        }
+      }
+      ```
+  - **/api/products/category/update**
+    - Unprotected route
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      name: string, optional
+      description: string, optional
+      slug: string, optional
+      parentCategoryId: string, optional
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Category Updated",
+        "category": {
+          "id": "62badc78f4b8ec8aad5ced39",
+          "name": "Practical",
+          "description": "...",
+          "slug": "quis-quasi-animi",
+          "root": false,
+          "parentCategoryId": "62bad79ff4b8ec8aad5ced38"
         }
       }
       ```
