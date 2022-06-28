@@ -1392,6 +1392,27 @@
 						},
 						{
 							"name": "/api/products/category/",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Categories found\") { ",
+											"    tests[\"Category search failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -1513,6 +1534,27 @@
 						},
 						{
 							"name": "/api/products/category/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Category Updated\") { ",
+											"    tests[\"Category updation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -1610,6 +1652,27 @@
 						},
 						{
 							"name": "/api/products/category/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Category deleted\") { ",
+											"    tests[\"Category deletion failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "DELETE",
 								"header": [],
@@ -1702,6 +1765,625 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"Category Deleted\",\n    \"category\": {\n        \"id\": \"62badc78f4b8ec8aad5ced39\",\n        \"name\": \"Practical\",\n        \"description\": \"Qui omnis autem doloremque mollitia corrupti et quo eaque. Quia quia dolor ut. Quia consequatur et dolores explicabo iste voluptatum. Consequatur earum voluptatem accusamus.\",\n        \"slug\": \"quis-quasi-animi\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad79ff4b8ec8aad5ced38\"\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Attribute",
+					"item": [
+						{
+							"name": "/api/products/attribute",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Attributes found\") { ",
+											"    tests[\"Attribute search failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/attribute",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"attribute"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{attributeId}}",
+											"disabled": true
+										},
+										{
+											"key": "query",
+											"value": "he",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/attribute",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{attributeId}}",
+													"disabled": true
+												},
+												{
+													"key": "query",
+													"value": "he",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"552-wfcEMWcKFUbCI+3dRrzG/Md1jlQ\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 12:26:52 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Attributes found\",\n    \"attributes\": [\n        {\n            \"id\": \"62baf1ea6f5b9fe8bdff4520\",\n            \"name\": \"Consultant\",\n            \"description\": \"Et quia atque tempore commodi aperiam. Autem architecto est veritatis velit voluptate aliquam dignissimos. Atque sunt accusamus eum ipsam ipsum molestiae facere. Qui alias molestiae quos nihil expedita dolorem.\",\n            \"slug\": \"temporibus-sed-repellendus\"\n        },\n        {\n            \"id\": \"62baf2236f5b9fe8bdff4521\",\n            \"name\": \"Cheese\",\n            \"description\": \"Sed qui dolor consequatur repudiandae nihil sit ex mollitia. Laboriosam voluptatibus distinctio expedita ea nobis soluta corrupti. Et autem laboriosam modi. Perspiciatis dolor ad.\",\n            \"slug\": \"ea-consequatur-dignissimos\"\n        },\n        {\n            \"id\": \"62baf2fc6f5b9fe8bdff4522\",\n            \"name\": \"24/7\",\n            \"description\": \"Cupiditate magnam eaque et eaque rerum quia et ex officiis. Quasi voluptatum dolore qui consectetur est saepe aut distinctio. Eaque similique maxime ut ut voluptates omnis ducimus. Minima cumque a eum. Corporis placeat molestiae quae architecto nulla nihil qui tempora. Quod est similique cum iusto odio et corporis in ullam.\",\n            \"slug\": \"enim-voluptas-aliquid\"\n        },\n        {\n            \"id\": \"62baf3826f5b9fe8bdff4524\",\n            \"name\": \"enhance\",\n            \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n            \"slug\": \"est-odio-quo\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "/api/products/attribute",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute?id={{attributeId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{attributeId}}"
+												},
+												{
+													"key": "query",
+													"value": "he",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"156-AJu6wJK11oYleidRFT9oCMzQrbs\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "342"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 12:27:01 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Attributes found\",\n    \"attributes\": [\n        {\n            \"id\": \"62baf3826f5b9fe8bdff4524\",\n            \"name\": \"enhance\",\n            \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n            \"slug\": \"est-odio-quo\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "/api/products/attribute",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute?query=he",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{attributeId}}",
+													"disabled": true
+												},
+												{
+													"key": "query",
+													"value": "he"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"147-yP1yK2opRIu3vzDTPrqkvsnt6Fk\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "327"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 12:27:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Attributes found\",\n    \"attributes\": [\n        {\n            \"id\": \"62baf2236f5b9fe8bdff4521\",\n            \"name\": \"Cheese\",\n            \"description\": \"Sed qui dolor consequatur repudiandae nihil sit ex mollitia. Laboriosam voluptatibus distinctio expedita ea nobis soluta corrupti. Et autem laboriosam modi. Perspiciatis dolor ad.\",\n            \"slug\": \"ea-consequatur-dignissimos\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products/attribute/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Attribute Created\") { ",
+											"    tests[\"Attribute creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set('attributeId', res.attribute.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomWord}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/attribute/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"attribute",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/attribute/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomWord}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"158-Zv8Mp6toMWFFtW9lgw/UOMlVUUQ\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "344"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 12:26:42 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Attribute Created\",\n    \"attribute\": {\n        \"id\": \"62baf3826f5b9fe8bdff4524\",\n        \"name\": \"enhance\",\n        \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n        \"slug\": \"est-odio-quo\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products/attribute/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Attribute Updated\") { ",
+											"    tests[\"Attribute updation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{attributeId}}\",\n    \"name\": \"{{$randomWord}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/attribute/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"attribute",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/attribute/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{attributeId}}\",\n    \"name\": \"{{$randomWord}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"157-/kw7pUR5gfYIlGoDcgcBqI2HCLI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "343"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 12:27:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Attribute Updated\",\n    \"attribute\": {\n        \"id\": \"62baf3826f5b9fe8bdff4524\",\n        \"name\": \"Industrial\",\n        \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n        \"slug\": \"est-odio-quo\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products/attribute/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Attribute deleted\") { ",
+											"    tests[\"Attribute deletion failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{attributeId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/attribute/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"attribute",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/attribute/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{attributeId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"157-WRvvYPzHzvH8f9zWYsRF8RtwADc\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "343"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Jun 2022 12:27:37 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Attribute Deleted\",\n    \"attribute\": {\n        \"id\": \"62baf3826f5b9fe8bdff4524\",\n        \"name\": \"Industrial\",\n        \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n        \"slug\": \"est-odio-quo\"\n    }\n}"
 								}
 							]
 						}
