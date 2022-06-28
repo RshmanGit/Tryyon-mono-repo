@@ -4520,7 +4520,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/company?query=S&adminApproval=false&paginated=true&count=3&offset=0",
+									"raw": "http://localhost:3000/api/company",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -4529,28 +4529,6 @@
 									"path": [
 										"api",
 										"company"
-									],
-									"query": [
-										{
-											"key": "query",
-											"value": "S"
-										},
-										{
-											"key": "adminApproval",
-											"value": "false"
-										},
-										{
-											"key": "paginated",
-											"value": "true"
-										},
-										{
-											"key": "count",
-											"value": "3"
-										},
-										{
-											"key": "offset",
-											"value": "0"
-										}
 									]
 								}
 							},
@@ -4561,7 +4539,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:3000/api/company?query=S&adminApproval=false&paginated=true&count=3&offset=0",
+											"raw": "http://localhost:3000/api/company",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -4570,28 +4548,6 @@
 											"path": [
 												"api",
 												"company"
-											],
-											"query": [
-												{
-													"key": "query",
-													"value": "S"
-												},
-												{
-													"key": "adminApproval",
-													"value": "false"
-												},
-												{
-													"key": "paginated",
-													"value": "true"
-												},
-												{
-													"key": "count",
-													"value": "3"
-												},
-												{
-													"key": "offset",
-													"value": "0"
-												}
 											]
 										}
 									},
@@ -4646,33 +4602,6 @@
 											"path": [
 												"api",
 												"company"
-											],
-											"query": [
-												{
-													"key": "query",
-													"value": "S",
-													"disabled": true
-												},
-												{
-													"key": "adminApproval",
-													"value": "false",
-													"disabled": true
-												},
-												{
-													"key": "paginated",
-													"value": "true",
-													"disabled": true
-												},
-												{
-													"key": "count",
-													"value": "3",
-													"disabled": true
-												},
-												{
-													"key": "offset",
-													"value": "0",
-													"disabled": true
-												}
 											]
 										}
 									},
@@ -7132,7 +7061,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"tenantId\": \"{{tenantId}}\",\n    \"approval\": true\n}",
+									"raw": "{\n    \"tenantId\": \"{{tenantId}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
