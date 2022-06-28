@@ -1,7 +1,10 @@
 import async from 'async';
 import Joi from 'joi';
 
-import { createCategory } from '../../../../prisma/products/category';
+import {
+  createCategory,
+  getCategory
+} from '../../../../prisma/products/category';
 import handleResponse from '../../../../utils/helpers/handleResponse';
 import validate from '../../../../utils/middlewares/validation';
 
