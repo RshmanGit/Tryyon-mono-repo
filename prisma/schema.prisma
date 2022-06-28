@@ -49,6 +49,24 @@ model Product {
   discountedPrice   Float?
 }
 
+model Category {
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  description      String?
+  slug             String
+  root             Boolean    @default(false)
+  parentCategoryId String?    @db.ObjectId
+  parentCategory   Category?  @relation("CategoryTree", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children         Category[] @relation("CategoryTree")
+}
+
+model Attribute {
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  description      String?
+  slug             String
+}
+
 model Tenant {
   id           String         @id @default(auto()) @map("_id") @db.ObjectId
   name         String
