@@ -17,7 +17,7 @@ const schema = {
     phone: Joi.number().min(1000000000).max(9999999999).required(),
     email: Joi.string().required(),
     password: Joi.string().required(),
-    role: Joi.string().required()
+    role: Joi.string().optional()
   })
 };
 
