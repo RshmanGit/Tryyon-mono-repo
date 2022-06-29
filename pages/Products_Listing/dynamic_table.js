@@ -217,15 +217,15 @@ function Entry() {
                 return c.map((colour) => {
                   return (
                     <Tr>
-                      <Td>{size}</Td>
-                      <Td>{colour}</Td>
+                      <Td key={size}>{size}</Td>
+                      <Td key={colour}>{colour}</Td>
                     </Tr>
                   );
                 });
               } else {
                 return (
                   <Tr>
-                    <Td>{size}</Td>
+                    <Td key={size}>{size}</Td>
                   </Tr>
                 );
               }
