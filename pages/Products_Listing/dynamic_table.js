@@ -216,16 +216,16 @@ function Entry() {
               if (c.length > 0) {
                 return c.map((colour) => {
                   return (
-                    <Tr>
-                      <Td key={size}>{size}</Td>
-                      <Td key={colour}>{colour}</Td>
+                    <Tr key={colour}>
+                      <Td>{size}</Td>
+                      <Td>{colour}</Td>
                     </Tr>
                   );
                 });
               } else {
                 return (
-                  <Tr>
-                    <Td key={size}>{size}</Td>
+                  <Tr key={size}>
+                    <Td>{size}</Td>
                   </Tr>
                 );
               }
