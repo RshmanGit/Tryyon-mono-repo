@@ -1,4 +1,9 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+// import your icons
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import {
   Box,
   Button,
@@ -20,6 +25,7 @@ import {
   Tr,
   Th,
   Td,
+  TextBox,
   TableCaption,
   TableContainer,
   Menu,
@@ -32,7 +38,8 @@ import {
   MenuDivider,
   Grid,
   GridItem,
-  Checkbox
+  Checkbox,
+  Divider
 } from '@chakra-ui/react';
 
 // Custom components
@@ -46,20 +53,28 @@ import { useState } from 'react';
 
 const initialState = {
   filters: {
-    colours: new Set(),
-    sizes: new Set()
+    colour: new Set(),
+    size: new Set()
   }
 };
 
+const variants = {
+  size: ['small', 'medium', 'large'],
+  colour: ['red', 'blue', 'green']
+};
+let maxy = 0;
 function Entry() {
   // Chakra color mode
   const [show, SetShow] = useState(true);
-
-  useEffect(() => {
-    console.log(initialState.filters.sizes.length);
-  });
-  let c = [...initialState.filters.colours];
-  let s = [...initialState.filters.sizes];
+  const textColorSecondary = 'gray.100';
+  const [sizzz, setSize] = useState(100);
+  let c = [...initialState.filters.colour];
+  let s = [...initialState.filters.size];
+  let vv = Object.keys(variants);
+  for (let i = 0; i < vv.length; i++) {
+    if (variants[vv[i]].length > maxy) maxy = variants[vv[i]].length;
+  }
+  // console.log(vv);
   return (
     <>
       <Flex
@@ -67,80 +82,104 @@ function Entry() {
         w="100%"
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
-        h="100%"
+        h="auto"
         alignItems="start"
         justifyContent="center"
-        mb={{ base: '30px', md: '80px' }}
+        mb={{ base: '30px', md: '0px' }}
         px={{ base: '25px', md: '0px' }}
-        mt={{ base: '10px', md: '10px' }}
+        pb={`${sizzz}px`}
+        mt={{ base: '10px', md: '0px' }}
         flexDirection="column"
       >
-        <Heading ml="30px">Variants</Heading>
+        <Grid
+          h="40px"
+          templateRows="repeat(1, 1fr)"
+          templateColumns="repeat(6, 1fr)"
+          gap={5}
+        >
+          <GridItem rowSpan={1} colSpan={2}>
+            <Heading ml="30px">Variants</Heading>
+          </GridItem>
+        </Grid>
         <Grid
           h="150px"
           templateRows="repeat(1, 1fr)"
-          templateColumns="repeat(8, 1fr)"
+          templateColumns="repeat(6, 1fr)"
           gap={4}
         >
-          <GridItem rowSpan={1} colSpan={1}>
-            <Menu closeOnSelect={false}>
-              <MenuButton
-                as={Button}
-                colorScheme="blue"
-                ml="30px"
-                mt="20px"
-                width="70%"
-              >
-                Size
-              </MenuButton>
-              <MenuList minWidth="120px">
-                <MenuOptionGroup>
-                  <MenuItemOption
-                    onChange={(e) => {
-                      if (e.target.checked === true) {
-                        initialState.filters.sizes.add(e.target.value);
-                      } else {
-                        initialState.filters.sizes.delete(e.target.value);
-                      }
-                      SetShow(!show);
-                    }}
-                    as={Checkbox}
-                    value="Small"
+          {vv.map((val) => {
+            return (
+              <GridItem rowSpan={1} colSpan={1}>
+                <Menu closeOnSelect={false}>
+                  <MenuButton
+                    as={Button}
+                    colorScheme="blue"
+                    ml="30px"
+                    mt="20px"
+                    minWidth="160px"
+                    // width="auto"
+                    key={val}
                   >
-                    Small
-                  </MenuItemOption>
-                  <MenuItemOption
-                    onChange={(e) => {
-                      if (e.target.checked === true) {
-                        initialState.filters.sizes.add(e.target.value);
-                      } else {
-                        initialState.filters.sizes.delete(e.target.value);
+                    <Text float="left">{val}</Text>
+                    <span>
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        style={{
+                          width: '15px',
+                          float: 'left',
+                          marginLeft: '15px',
+                          marginTop: '3px'
+                        }}
+                      />
+                    </span>
+                  </MenuButton>
+
+                  {variants[val].map((item) => {
+                    return (
+                      <MenuItemOption
+                        onChange={(e) => {
+                          if (e.target.checked === true) {
+                            initialState.filters[val].add(e.target.value);
+                          } else {
+                            initialState.filters[val].delete(e.target.value);
+                          }
+                          SetShow(!show);
+                        }}
+                        as={Checkbox}
+                        value={item}
+                        backgroundColor={textColorSecondary}
+                        ml="10px"
+                        mt="10px"
+                      >
+                        <Text key={item} mt="-37px" ml="10px">
+                          {item}
+                        </Text>
+                      </MenuItemOption>
+                    );
+                  })}
+                  <Button
+                    paddingInlineStart="10px"
+                    ml="20px"
+                    mt="10px"
+                    width="85%"
+                    fontSize="0.92em"
+                    background={textColorSecondary}
+                    key={val}
+                    onClick={() => {
+                      let option = prompt(`Add option for ${val} variant`);
+                      if (option !== null && option.length > 0) {
+                        variants[val].push(option);
+                        if (variants[val].length > maxy) setSize(sizzz + 60);
+                        else SetShow(!show);
                       }
-                      SetShow(!show);
                     }}
-                    as={Checkbox}
-                    value="Medium"
                   >
-                    Medium
-                  </MenuItemOption>
-                  <MenuItemOption
-                    onChange={(e) => {
-                      if (e.target.checked === true) {
-                        initialState.filters.sizes.add(e.target.value);
-                      } else {
-                        initialState.filters.sizes.delete(e.target.value);
-                      }
-                      SetShow(!show);
-                    }}
-                    as={Checkbox}
-                    value="Large"
-                  >
-                    Large
-                  </MenuItemOption>
-                </MenuOptionGroup>
-              </MenuList>
-            </Menu>
-          </GridItem>
+                    + Add option
+                  </Button>
+                </Menu>
+              </GridItem>
+            );
+          })}
 
           <GridItem rowSpan={1} colSpan={1}>
             <Menu closeOnSelect={false}>
@@ -149,56 +188,25 @@ function Entry() {
                 colorScheme="blue"
                 ml="30px"
                 mt="20px"
-                width="70%"
+                width="auto"
+                onClick={() => {
+                  let val = prompt('Add variant');
+                  if (val !== null && val.length !== 0 && vv.length < 5) {
+                    variants[val] = [];
+                    SetShow(!show);
+                  } else if (
+                    vv.length == 5 &&
+                    val !== null &&
+                    val.length !== 0
+                  ) {
+                    variants[val] = [];
+                    setSize(sizzz + 100);
+                  } else if (val !== null && val.length !== 0)
+                    alert('No more variants can be added !!');
+                }}
               >
-                Colour
+                + Add variant
               </MenuButton>
-              <MenuList minWidth="120px">
-                <MenuOptionGroup>
-                  <MenuItemOption
-                    onChange={(e) => {
-                      if (e.target.checked === true) {
-                        initialState.filters.colours.add(e.target.value);
-                      } else {
-                        initialState.filters.colours.delete(e.target.value);
-                      }
-                      SetShow(!show);
-                    }}
-                    as={Checkbox}
-                    value="Green"
-                  >
-                    Green
-                  </MenuItemOption>
-                  <MenuItemOption
-                    onChange={(e) => {
-                      if (e.target.checked === true) {
-                        initialState.filters.colours.add(e.target.value);
-                      } else {
-                        initialState.filters.colours.delete(e.target.value);
-                      }
-                      SetShow(!show);
-                    }}
-                    as={Checkbox}
-                    value="Blue"
-                  >
-                    Blue
-                  </MenuItemOption>
-                  <MenuItemOption
-                    onChange={(e) => {
-                      if (e.target.checked === true) {
-                        initialState.filters.colours.add(e.target.value);
-                      } else {
-                        initialState.filters.colours.delete(e.target.value);
-                      }
-                      SetShow(!show);
-                    }}
-                    as={Checkbox}
-                    value="Red"
-                  >
-                    Red
-                  </MenuItemOption>
-                </MenuOptionGroup>
-              </MenuList>
             </Menu>
           </GridItem>
         </Grid>
