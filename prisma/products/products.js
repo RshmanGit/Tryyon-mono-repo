@@ -59,8 +59,7 @@ export const searchProducts = async ({
   if (id) condition.$and.push({ _id: { $eq: { $oid: id } } });
   if (supplierId)
     condition.$and.push({ supplierId: { $eq: { $oid: supplierId } } });
-  if (query)
-    condition.$and.push({ $text: { $search: query, $caseSensitive: false } });
+  if (query) condition.$and.push({ name: { $regex: query, $options: 'i' } });
   if (inStock == true) condition.$and.push({ quantity: { $gt: 0 } });
   if (published != undefined) condition.$and.push({ published: published });
   if (categoryId)
