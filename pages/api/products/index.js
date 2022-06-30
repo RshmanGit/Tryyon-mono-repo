@@ -1,10 +1,7 @@
 import async from 'async';
 import Joi from 'joi';
 
-import {
-  searchProducts,
-  searchProductsPaginated
-} from '../../../prisma/products/products';
+import { searchProducts } from '../../../prisma/products/products';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 
