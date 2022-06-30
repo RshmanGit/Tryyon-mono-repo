@@ -1,20 +1,34 @@
 import async from 'async';
+import Joi from 'joi';
 
 import {
-  getAllProducts,
-  getAllProductsPaginated,
   searchProducts,
   searchProductsPaginated
 } from '../../../prisma/products/products';
 import handleResponse from '../../../utils/helpers/handleResponse';
+import validate from '../../../utils/middlewares/validation';
+
+const schema = {
+  body: Joi.object({
+    id: Joi.string().optional(),
+    query: Joi.string().optional(),
+    inStock: Joi.boolean().optional(),
+    published: Joi.boolean().optional(),
+    supplierId: Joi.string().optional(),
+    categoryId: Joi.string().optional(),
+    attributes: Joi.object().optional(),
+    sortBy: Joi.string().optional(),
+    order: Joi.string().allow('desc', 'asc').optional()
+  })
+};
 
 const handler = async (req, res) => {
-  if (req.method == 'GET') {
+  if (req.method == 'POST') {
     async.auto(
       {
         read: [
           async () => {
-            const { paginated, count, offset, ...rest } = req.query;
+            const { paginated, count, offset, ...rest } = req.body;
 
             if (paginated == 'true' && (!count || !offset)) {
               throw new Error(
@@ -33,22 +47,13 @@ const handler = async (req, res) => {
 
             let products;
 
-            if (Object.keys(rest).length == 0) {
-              if (paginated)
-                products = await getAllProductsPaginated(
-                  Number(offset),
-                  Number(count)
-                );
-              else products = await getAllProducts();
-            } else {
-              if (paginated) {
-                products = await searchProductsPaginated({
-                  offset: Number(offset),
-                  count: Number(count),
-                  ...rest
-                });
-              } else products = await searchProducts(rest);
-            }
+            if (paginated) {
+              products = await searchProductsPaginated({
+                offset: Number(offset),
+                count: Number(count),
+                ...rest
+              });
+            } else products = await searchProducts(rest);
 
             if (products) {
               return {
@@ -78,4 +83,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default handler;
+export default validate(schema, handler);

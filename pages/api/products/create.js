@@ -12,10 +12,10 @@ const schema = {
     shortDescriptions: Joi.string().required(),
     slug: Joi.string().required(),
     quantity: Joi.number(),
-    approved: Joi.boolean().default(false),
+    supplierId: Joi.string().required(),
     published: Joi.boolean().default(false),
-    price: Joi.number().required(),
-    discountedPrice: Joi.number().required()
+    attributes: Joi.object().required(),
+    categoryIds: Joi.array().required()
   })
 };
 

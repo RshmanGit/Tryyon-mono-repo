@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import async from 'async';
 
-import { deleteProduct, checkProduct } from '../../../prisma/products/products';
+import { deleteProduct, getProduct } from '../../../prisma/products/products';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 
@@ -17,7 +17,7 @@ const handler = async (req, res) => {
       {
         verification: async () => {
           const { id } = req.body;
-          const productCheck = await checkProduct(id);
+          const productCheck = await getProduct(id);
 
           if (productCheck.length == 0) {
             throw new Error(
