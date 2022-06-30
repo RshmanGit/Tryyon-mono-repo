@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // import your icons
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faPencil, faBan } from '@fortawesome/free-solid-svg-icons';
 import {
   Box,
   Button,
@@ -109,21 +109,34 @@ function Entry() {
         >
           {vv.map((val) => {
             return (
-              <GridItem rowSpan={1} colSpan={1}>
-                <Menu closeOnSelect={false}>
+              <GridItem rowSpan={1} colSpan={1} key={val}>
+                <Menu closeOnSelect={false} key={val}>
                   <MenuButton
                     as={Button}
                     colorScheme="blue"
                     ml="30px"
                     mt="20px"
                     minWidth="160px"
-                    // width="auto"
+                    width="auto"
                     key={val}
                   >
-                    <Text float="left">{val}</Text>
+                    <Text float="left" key={val}>
+                      {val}
+                    </Text>
                     <span>
                       <FontAwesomeIcon
                         icon={faPencil}
+                        style={{
+                          width: '15px',
+                          float: 'left',
+                          marginLeft: '15px',
+                          marginTop: '3px'
+                        }}
+                      />
+                    </span>
+                    <span>
+                      <FontAwesomeIcon
+                        icon={faBan}
                         style={{
                           width: '15px',
                           float: 'left',
@@ -137,6 +150,7 @@ function Entry() {
                   {variants[val].map((item) => {
                     return (
                       <MenuItemOption
+                        key={val}
                         onChange={(e) => {
                           if (e.target.checked === true) {
                             initialState.filters[val].add(e.target.value);
@@ -153,6 +167,29 @@ function Entry() {
                       >
                         <Text key={item} mt="-37px" ml="10px">
                           {item}
+                          {/* <span>
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        style={{
+                          width: '15px',
+                          float: 'right',
+                          marginLeft: '25px',
+                          marginTop: '3px'
+                        }}
+                      />
+                    </span> */}
+                          <span>
+                            <FontAwesomeIcon
+                              icon={faBan}
+                              style={{
+                                width: '15px',
+                                float: 'right',
+                                position: 'absolute',
+                                marginLeft: '90px',
+                                marginTop: '-17px'
+                              }}
+                            />
+                          </span>
                         </Text>
                       </MenuItemOption>
                     );
