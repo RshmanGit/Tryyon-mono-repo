@@ -2428,7 +2428,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"approved\": {{$randomBoolean}},\n    \"published\": {{$randomBoolean}},\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
+							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2537,13 +2537,44 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// \"count\": 10,",
+									"// \"offset\": 0,",
+									"// \"id\": \"{{productId}}\",",
+									"// \"query\": \"{{productName}}\",",
+									"// \"inStock\": {{$randomBoolean}},",
+									"// \"published\": {{$randomBoolean}},",
+									"// \"supplierId\": \"{{tenantId}}\",",
+									"// \"categoryId\": \"{{categoryId}}\",",
+									"// \"sortBy\": \"name\",",
+									"// \"order\": \"asc\",",
+									"// \"attributes\": {",
+									"//         \"size\": \"l\",",
+									"//         \"color\": \"red\"",
+									"//     },"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3000/api/products/?paginated=true&count=10&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
+							"raw": "http://localhost:3000/api/products/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2553,52 +2584,6 @@
 								"api",
 								"products",
 								""
-							],
-							"query": [
-								{
-									"key": "paginated",
-									"value": "true"
-								},
-								{
-									"key": "count",
-									"value": "10"
-								},
-								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "query",
-									"value": "some"
-								},
-								{
-									"key": "inStock",
-									"value": "true"
-								},
-								{
-									"key": "priceFrom",
-									"value": "10"
-								},
-								{
-									"key": "priceTo",
-									"value": "1000"
-								},
-								{
-									"key": "sortBy",
-									"value": "name"
-								},
-								{
-									"key": "order",
-									"value": "desc"
-								},
-								{
-									"key": "approved",
-									"value": "true"
-								},
-								{
-									"key": "published",
-									"value": "false"
-								}
 							]
 						},
 						"description": "Query params: paginated, count, offset"
@@ -3065,7 +3050,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"discountedPrice\": {{$randomPrice}}\n    }\n}",
+							"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
