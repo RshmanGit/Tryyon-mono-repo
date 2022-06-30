@@ -37,16 +37,18 @@ model Role {
 }
 
 model Product {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
   name              String
   description       String?
   shortDescriptions String?
   slug              String
-  quantity          Int     @default(0)
-  approved          Boolean @default(false)
-  published         Boolean @default(false)
-  price             Float
-  discountedPrice   Float?
+  quantity          Int        @default(0)
+  supplier          Tenant     @relation(fields: [supplierId], references: [id])
+  supplierId        String     @db.ObjectId
+  published         Boolean    @default(false)
+  attributes        Json
+  categories        Category[] @relation(fields: [categoryIds], references: [id])
+  categoryIds       String[]   @db.ObjectId
 }
 
 model Category {
@@ -58,13 +60,15 @@ model Category {
   parentCategoryId String?    @db.ObjectId
   parentCategory   Category?  @relation("CategoryTree", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   children         Category[] @relation("CategoryTree")
+  products         Product[]  @relation(fields: [productIds], references: [id])
+  productIds       String[]   @db.ObjectId
 }
 
 model Attribute {
-  id               String     @id @default(auto()) @map("_id") @db.ObjectId
-  name             String
-  description      String?
-  slug             String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  slug        String
 }
 
 model Tenant {
@@ -74,6 +78,7 @@ model Tenant {
   company      Company        @relation(fields: [companyId], references: [id])
   companyId    String         @unique @db.ObjectId
   Associations Associations[]
+  Product      Product[]
 }
 
 model Company {

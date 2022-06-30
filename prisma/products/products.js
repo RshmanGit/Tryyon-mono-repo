@@ -2,50 +2,25 @@ import { prisma } from '../prisma';
 
 // Create Product
 export const createProduct = async (data) => {
+  const { supplierId, categoryIds, ...rest } = data;
+
+  if (supplierId) rest.supplier = { connect: { id: supplierId } };
+  if (categoryIds.length != 0) {
+    rest.categories = { connect: [] };
+    categoryIds.forEach((id) => {
+      rest.categories.connect.push({ id });
+    });
+  }
+
   const product = await prisma.product.create({
-    data: data
+    data: rest
   });
 
   return product;
 };
 
 // Read Product
-export const getAllProducts = async () => {
-  const [products, total_count] = await prisma.$transaction([
-    prisma.product.findMany(),
-    prisma.product.count()
-  ]);
-
-  return { products, total_count };
-};
-
-export const getAllProductsPaginated = async (offset, count) => {
-  const [products, total_count] = await prisma.$transaction([
-    prisma.product.findMany({
-      skip: offset,
-      take: count
-    }),
-    prisma.product.count()
-  ]);
-
-  const pagination = {
-    offset,
-    count,
-    total_count
-  };
-
-  return { products, pagination };
-};
-
 export const getProduct = async (id) => {
-  const product = await prisma.product.findUnique({
-    where: { id }
-  });
-
-  return product;
-};
-
-export const checkProduct = async (id) => {
   const products = await prisma.product.findMany({
     where: { id }
   });
@@ -54,105 +29,100 @@ export const checkProduct = async (id) => {
 };
 
 export const searchProducts = async ({
+  id,
   query,
   inStock,
-  approved,
   published,
-  priceFrom,
-  priceTo,
-  sortBy,
-  order
-}) => {
-  const condition = {},
-    sortProducts = {};
-  const productProperties = [
-    'name',
-    'description',
-    'price',
-    'discountedPrice',
-    'quantity'
-  ];
-
-  if (query) condition.name = { contains: query, mode: 'insensitive' };
-  if (inStock == 'true') condition.quantity = { gt: 0 };
-  if (approved != undefined) condition.approved = approved == 'true';
-  if (published != undefined) condition.published = published == 'true';
-  if (priceFrom) condition.price = { gt: parseInt(priceFrom, 10) };
-  if (priceTo) condition.price = { lt: parseInt(priceTo, 10) };
-
-  if (sortBy) {
-    if (!(sortBy in productProperties)) sortBy = 'price';
-    sortProducts[sortBy] = order ? order : 'asc';
-  }
-
-  const products = await prisma.product.findMany({
-    where: condition,
-    orderBy: sortProducts
-  });
-
-  return products;
-};
-
-export const searchProductsPaginated = async ({
-  query,
-  inStock,
-  approved,
-  published,
-  priceFrom,
-  priceTo,
+  supplierId,
+  attributes,
   sortBy,
   order,
-  count,
-  offset
+  categoryId
 }) => {
-  const condition = {},
-    sortProducts = {};
-  const productProperties = [
-    'name',
-    'description',
-    'price',
-    'discountedPrice',
-    'quantity'
-  ];
+  const condition = { $and: [] },
+    sortProducts = {},
+    options = {};
 
-  if (query) condition.name = { contains: query, mode: 'insensitive' };
-  if (inStock == 'true') condition.quantity = { gt: 0 };
-  if (approved != undefined) condition.approved = approved == 'true';
-  if (published != undefined) condition.published = published == 'true';
-  if (priceFrom) condition.price = { gt: parseInt(priceFrom, 10) };
-  if (priceTo) condition.price = { lt: parseInt(priceTo, 10) };
+  const productProperties = ['name', 'description', 'quantity'];
+
+  if (attributes) {
+    const attr = {};
+
+    for (let prop in attributes) {
+      attr[`attributes.${prop}`] = { $elemMatch: { $eq: attributes[prop] } };
+    }
+
+    condition.$and.push(attr);
+    console.log(attr);
+  }
+
+  if (id) condition.$and.push({ _id: { $eq: { $oid: id } } });
+  if (supplierId)
+    condition.$and.push({ supplierId: { $eq: { $oid: supplierId } } });
+  if (query)
+    condition.$and.push({ $text: { $search: query, $caseSensitive: false } });
+  if (inStock == true) condition.$and.push({ quantity: { $gt: 0 } });
+  if (published != undefined) condition.$and.push({ published: published });
+  if (categoryId)
+    condition.$and.push({
+      categoryIds: { $elemMatch: { $eq: { $oid: categoryId } } }
+    });
 
   if (sortBy) {
     if (!(sortBy in productProperties)) sortBy = 'price';
-    sortProducts[sortBy] = order ? order : 'asc';
+    sortProducts[sortBy] = order == 'desc' ? -1 : 1;
+    options.$orderby = sortProducts;
   }
 
-  const [products, total_count] = await prisma.$transaction([
-    prisma.product.findMany({
-      skip: offset,
-      take: count,
-      where: condition,
-      orderBy: sortProducts
-    }),
-    prisma.product.count({
-      where: condition
-    })
-  ]);
+  if (condition.$and.length == 0) {
+    delete condition.$and;
+  }
 
-  const pagination = {
-    offset,
-    count,
-    total_count
-  };
+  prisma.product.findRaw({
+    filter: condition
+  });
+  const products = await prisma.product.findRaw({
+    filter: condition,
+    options
+  });
 
-  return { products, pagination };
+  let res = products.map((product) => {
+    let tmpId = product._id.$oid;
+    delete product._id;
+    product.id = tmpId;
+
+    let tmp = product.supplierId.$oid;
+    delete product.supplierId;
+
+    product.supplierId = tmp;
+
+    let tmpArr = product.categoryIds.map((e) => e.$oid);
+    delete product.categoryIds;
+
+    product.categoryIds = tmpArr;
+
+    return product;
+  });
+
+  return res;
 };
 
 // Update Product
 export const updateProduct = async (id, updateData) => {
+  const { supplierId, categoryIds, ...rest } = updateData;
+
+  if (supplierId) rest.supplier = { connect: { id: supplierId } };
+
+  if (categoryIds.length != 0) {
+    rest.categories = { connect: [] };
+    categoryIds.forEach((id) => {
+      rest.categories.connect.push({ id });
+    });
+  }
+
   const product = await prisma.product.update({
     where: { id },
-    data: { ...updateData }
+    data: rest
   });
 
   return product;
