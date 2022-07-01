@@ -2566,7 +2566,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{}",
+							"raw": "{\n    \"query\": \"g\",\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3253,6 +3253,282 @@
 							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "SKUs",
+			"item": [
+				{
+					"name": "/api/sku/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"New SKU Created\") { ",
+									"    tests[\"Product creation failed TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.environment.set(\"skuId\",res.sku.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"productId\": \"{{productId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/sku/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sku",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/sku",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"SKUs found\") { ",
+									"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// \"count\": 10,",
+									"// \"offset\": 0,",
+									"// \"id\": \"{{productId}}\",",
+									"// \"query\": \"{{productName}}\",",
+									"// \"inStock\": {{$randomBoolean}},",
+									"// \"published\": {{$randomBoolean}},",
+									"// \"supplierId\": \"{{tenantId}}\",",
+									"// \"categoryId\": \"{{categoryId}}\",",
+									"// \"sortBy\": \"name\",",
+									"// \"order\": \"asc\",",
+									"// \"attributes\": {",
+									"//         \"size\": \"l\",",
+									"//         \"color\": \"red\"",
+									"//     },"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/sku/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sku",
+								""
+							]
+						},
+						"description": "Query params: paginated, count, offset"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/sku/skuId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"SKU found\") { ",
+									"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/sku/{{skuId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sku",
+								"{{skuId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/sku/update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"SKU updated\") { ",
+									"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{skuId}}\",\n    \"updateData\": {\n        \"published\": {{$randomBoolean}}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/sku/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sku",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"if(res.message !== \"Product deleted\") { ",
+									"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+									"    return;",
+									"}",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"delete"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
