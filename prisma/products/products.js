@@ -37,11 +37,16 @@ export const searchProducts = async ({
   attributes,
   sortBy,
   order,
-  categoryId
+  categoryId,
+  pagination,
+  offset,
+  limit
 }) => {
   const condition = { $and: [] },
     sortProducts = {},
     options = {};
+
+  let total_count;
 
   const productProperties = ['name', 'description', 'quantity'];
 
@@ -77,9 +82,16 @@ export const searchProducts = async ({
     delete condition.$and;
   }
 
-  prisma.product.findRaw({
-    filter: condition
-  });
+  if (pagination) {
+    options.skip = offset;
+    options.limit = limit;
+
+    total_count = await prisma.$runCommandRaw({
+      count: 'Product',
+      query: condition
+    });
+  }
+
   const products = await prisma.product.findRaw({
     filter: condition,
     options
@@ -102,6 +114,17 @@ export const searchProducts = async ({
 
     return product;
   });
+
+  if (pagination) {
+    return {
+      skus: res,
+      pagination: {
+        total_count: total_count.n,
+        limit,
+        offset
+      }
+    };
+  }
 
   return res;
 };

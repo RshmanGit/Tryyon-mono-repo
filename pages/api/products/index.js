@@ -15,7 +15,10 @@ const schema = {
     categoryId: Joi.string().optional(),
     attributes: Joi.object().optional(),
     sortBy: Joi.string().optional(),
-    order: Joi.string().allow('desc', 'asc').optional()
+    order: Joi.string().allow('desc', 'asc').optional(),
+    pagination: Joi.boolean().optional(),
+    offset: Joi.number().optional(),
+    limit: Joi.number().optional()
   })
 };
 
@@ -25,32 +28,25 @@ const handler = async (req, res) => {
       {
         read: [
           async () => {
-            const { paginated, count, offset, ...rest } = req.body;
+            const { body } = req;
+            const { pagination, offset, limit } = body;
 
-            if (paginated == 'true' && (!count || !offset)) {
+            if (pagination && (!offset || !limit || offset < 1)) {
               throw new Error(
                 JSON.stringify({
                   errorKey: 'read',
                   body: {
-                    status: 422,
+                    status: 409,
                     data: {
                       message:
-                        'Missing query parameter, both count and offset need with paginated'
+                        'Correct offset or limit not provided for pagination'
                     }
                   }
                 })
               );
             }
 
-            let products;
-
-            if (paginated) {
-              products = await searchProductsPaginated({
-                offset: Number(offset),
-                count: Number(count),
-                ...rest
-              });
-            } else products = await searchProducts(rest);
+            const products = await searchProducts(body);
 
             if (products) {
               return {
