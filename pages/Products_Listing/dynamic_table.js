@@ -84,7 +84,7 @@ function Entry() {
         me="auto"
         h="auto"
         alignItems="start"
-        justifyContent="center"
+        justifyContent="left"
         mb={{ base: '30px', md: '0px' }}
         px={{ base: '25px', md: '0px' }}
         pb={`${sizzz}px`}
@@ -110,42 +110,66 @@ function Entry() {
           {vv.map((val) => {
             return (
               <GridItem rowSpan={1} colSpan={1} key={val}>
-                <Menu closeOnSelect={false} key={val}>
-                  <MenuButton
+                <Menu closeOnSelect={false}>
+                  <MenuItemOption
                     as={Button}
-                    colorScheme="blue"
-                    ml="30px"
+                    backgroundColor="black"
+                    color="white"
+                    ml="20px"
                     mt="20px"
                     minWidth="160px"
                     width="auto"
-                    key={val}
+                    _hover={{ bg: 'gray.400' }}
+                    _focus={{ color: 'white' }}
                   >
-                    <Text float="left" key={val}>
+                    <Text float="left" key={val} ml="-20px">
                       {val}
+
+                      {/* <span> */}
+                      <span>
+                        <FontAwesomeIcon
+                          icon={faPencil}
+                          style={{
+                            width: '15px',
+                            float: 'right',
+                            position: 'absolute',
+                            marginLeft: '80px',
+                            marginTop: '-16px'
+                          }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            let result = prompt(
+                              `Change the name of ${val} variant`
+                            );
+                            if (result.length > 0 && result !== null) {
+                              variants[result] = variants[val];
+                              delete variants[val];
+                              SetShow(!show);
+                            }
+                          }}
+                        />
+                      </span>
+
+                      <span>
+                        <FontAwesomeIcon
+                          icon={faBan}
+                          style={{
+                            width: '15px',
+                            float: 'right',
+                            position: 'absolute',
+                            marginLeft: '110px',
+                            marginTop: '-16px'
+                          }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            console.log('FCK');
+                            delete variants[val];
+                            SetShow(!show);
+                          }}
+                        />
+                      </span>
                     </Text>
-                    <span>
-                      <FontAwesomeIcon
-                        icon={faPencil}
-                        style={{
-                          width: '15px',
-                          float: 'left',
-                          marginLeft: '15px',
-                          marginTop: '3px'
-                        }}
-                      />
-                    </span>
-                    <span>
-                      <FontAwesomeIcon
-                        icon={faBan}
-                        style={{
-                          width: '15px',
-                          float: 'left',
-                          marginLeft: '15px',
-                          marginTop: '3px'
-                        }}
-                      />
-                    </span>
-                  </MenuButton>
+                  </MenuItemOption>
 
                   {variants[val].map((item) => {
                     return (
@@ -187,6 +211,15 @@ function Entry() {
                                 position: 'absolute',
                                 marginLeft: '90px',
                                 marginTop: '-17px'
+                              }}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                for (let i = 0; i < variants[val].length; i++) {
+                                  if (variants[val][i] === item) {
+                                    variants[val].splice(i, 1);
+                                    SetShow(!show);
+                                  }
+                                }
                               }}
                             />
                           </span>
