@@ -331,17 +331,17 @@ function Entry() {
         <Table variant="simple">
           <Thead fontWeight="bold">
             <Tr>
-              {vv.map((key) => {
-                return <Td>{key}</Td>;
+              {vv.map((key1) => {
+                return <Td key={key1}>{key1}</Td>;
               })}
             </Tr>
           </Thead>
           <Tbody>
             {res.map((table) => {
               return (
-                <Tr>
+                <Tr key={table}>
                   {table.map((entry) => {
-                    return <Td>{entry}</Td>;
+                    return <Td key={entry}>{entry}</Td>;
                   })}
                 </Tr>
               );
