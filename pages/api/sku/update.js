@@ -27,25 +27,59 @@ const handler = async (req, res) => {
       {
         verification: async () => {
           const { id } = req.body;
-          const productCheck = await getSKU(id);
 
-          if (productCheck.length == 0) {
-            throw new Error(
-              JSON.stringify({
-                errorkey: 'verification',
-                body: {
-                  status: 404,
-                  data: {
-                    message: 'No such SKU found'
+          if (req.admin) {
+            const skuCheck = await getSKU(id);
+
+            if (skuCheck.length == 0) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 404,
+                    data: {
+                      message: 'No such sku found'
+                    }
+                  }
+                })
+              );
+            }
+
+            return {
+              message: 'SKU found'
+            };
+          } else {
+            const ownerId = req.user.id;
+
+            const skuCheck = await prisma.sKU.findMany({
+              where: {
+                id,
+                supplier: {
+                  company: {
+                    ownerId
                   }
                 }
-              })
-            );
-          }
+              }
+            });
 
-          return {
-            message: 'SKU found'
-          };
+            if (skuCheck.length == 0) {
+              throw new Error(
+                JSON.stringify({
+                  errorkey: 'verification',
+                  body: {
+                    status: 404,
+                    data: {
+                      message: 'No such SKU found'
+                    }
+                  }
+                })
+              );
+            }
+
+            return {
+              message: 'SKU found'
+            };
+          }
         },
         update: [
           'verification',

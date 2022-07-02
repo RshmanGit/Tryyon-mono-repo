@@ -2,8 +2,12 @@ import async from 'async';
 
 import { getSKU } from '../../../prisma/products/sku';
 import handleResponse from '../../../utils/helpers/handleResponse';
+import auth from '../../../utils/middlewares/auth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
+
   if (req.method == 'GET') {
     async.auto(
       {

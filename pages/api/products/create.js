@@ -4,6 +4,9 @@ import Joi from 'joi';
 import { createProduct } from '../../../prisma/products/products';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
+import auth from '../../../utils/middlewares/auth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
+import { prisma } from '../../../prisma/prisma';
 
 const schema = {
   body: Joi.object({
@@ -12,7 +15,7 @@ const schema = {
     shortDescriptions: Joi.string().required(),
     slug: Joi.string().required(),
     quantity: Joi.number(),
-    supplierId: Joi.string().required(),
+    supplierId: Joi.string().optional(),
     published: Joi.boolean().default(false),
     attributes: Joi.object().required(),
     categoryIds: Joi.array().required()
@@ -20,12 +23,64 @@ const schema = {
 };
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
+
   if (req.method == 'POST') {
     async.auto(
       {
+        verify: async () => {
+          const { body } = req;
+
+          if (req.admin) {
+            if (!body.supplierId) {
+              throw new Error(
+                JSON.stringify({
+                  errorKey: 'create',
+                  body: {
+                    status: 409,
+                    data: {
+                      message: 'Supplier ID not provided'
+                    }
+                  }
+                })
+              );
+            }
+          } else {
+            const { id } = req.user;
+            const tenant = await prisma.tenant.findMany({
+              where: {
+                company: {
+                  ownerId: id
+                }
+              }
+            });
+
+            if (tenant.length == 0) {
+              throw new Error(
+                JSON.stringify({
+                  errorKey: 'create',
+                  body: {
+                    status: 404,
+                    data: {
+                      message: 'User does not have a tenant'
+                    }
+                  }
+                })
+              );
+            }
+
+            body.supplierId = tenant.id;
+          }
+
+          return {
+            message: 'Product validated',
+            body
+          };
+        },
         create: [
-          async () => {
-            const { body } = req;
+          'verify',
+          async (results) => {
+            const { body } = results.verify;
 
             const res = await createProduct(body);
 

@@ -7,6 +7,8 @@ import {
 } from '../../../../prisma/products/attribute';
 import handleResponse from '../../../../utils/helpers/handleResponse';
 import validate from '../../../../utils/middlewares/validation';
+import runMiddleware from '../../../../utils/helpers/runMiddleware';
+import auth from '../../../../utils/middlewares/auth';
 
 const schema = {
   body: Joi.object({
@@ -15,6 +17,8 @@ const schema = {
 };
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
+
   if (req.method == 'DELETE') {
     async.auto(
       {
