@@ -4331,7 +4331,7 @@
 										},
 										{
 											"key": "ETag",
-											"value": "\"8f1-HrB22Z1oqBB+I8ynLxLQ4mGNX/8\""
+											"value": "\"470-VyZZCjaCTmZLFatu83VaSIZy2RU\""
 										},
 										{
 											"key": "Vary",
@@ -4343,7 +4343,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sat, 02 Jul 2022 09:19:17 GMT"
+											"value": "Sat, 02 Jul 2022 11:06:47 GMT"
 										},
 										{
 											"key": "Connection",
@@ -4359,7 +4359,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"message\": \"Products found\",\n    \"products\": [\n        {\n            \"name\": \"Awesome Granite Chips\",\n            \"description\": \"Quos est aliquid qui excepturi. Nobis non doloremque eos. Laboriosam velit ipsa possimus incidunt a dolores. Vitae eum adipisci in optio consequatur sit magnam illo. Blanditiis et et fugiat iure et quia et.\",\n            \"shortDescriptions\": \"At iusto voluptas.\",\n            \"slug\": \"tenetur-aliquid-sequi\",\n            \"quantity\": 576,\n            \"published\": false,\n            \"attributes\": {\n                \"size\": [\n                    \"l\",\n                    \"m\",\n                    \"s\"\n                ],\n                \"color\": [\n                    \"red\",\n                    \"blue\"\n                ]\n            },\n            \"id\": \"62bec14ab39f92c3e0a3199a\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"categoryIds\": [\n                \"62bd634d0a9de06da86e291a\"\n            ]\n        },\n        {\n            \"name\": \"Ergonomic Frozen Gloves\",\n            \"description\": \"Et voluptatum aut maiores qui doloribus ducimus sed impedit ex. Sed rem illum qui et quia aliquam et. Et aut laudantium aut corrupti amet rerum explicabo.\",\n            \"shortDescriptions\": \"Corrupti delectus enim fugiat et sapiente explicabo mollitia quis.\",\n            \"slug\": \"ducimus-non-id\",\n            \"quantity\": 790,\n            \"published\": false,\n            \"attributes\": {\n                \"size\": [\n                    \"l\",\n                    \"m\",\n                    \"s\"\n                ],\n                \"color\": [\n                    \"red\",\n                    \"blue\"\n                ]\n            },\n            \"id\": \"62bec14cb39f92c3e0a3199b\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"categoryIds\": [\n                \"62bd634d0a9de06da86e291a\"\n            ]\n        },\n        {\n            \"name\": \"Intelligent Wooden Tuna\",\n            \"description\": \"Sit voluptatem rerum omnis. Placeat accusantium delectus nihil omnis. Reiciendis ipsum beatae culpa. Voluptatibus velit nemo ea dolores occaecati quo et ducimus non. Quia rerum fugiat provident voluptatem natus non aut. Est dolores et est nemo magnam perspiciatis minima aut.\",\n            \"shortDescriptions\": \"A at aliquid neque illo corrupti.\",\n            \"slug\": \"minima-dolor-ea\",\n            \"quantity\": 817,\n            \"published\": true,\n            \"attributes\": {\n                \"size\": [\n                    \"l\",\n                    \"m\",\n                    \"s\"\n                ],\n                \"color\": [\n                    \"red\",\n                    \"blue\"\n                ]\n            },\n            \"id\": \"62bec152b39f92c3e0a3199d\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"categoryIds\": [\n                \"62bd634d0a9de06da86e291a\"\n            ]\n        },\n        {\n            \"name\": \"Licensed Steel Sausages\",\n            \"description\": \"Ratione velit consequatur non et quia est in nisi et. Sunt et sed adipisci architecto ratione autem voluptatibus. Aspernatur sed debitis id placeat distinctio eius id voluptatem est. Nisi in ea consectetur.\",\n            \"shortDescriptions\": \"Quia cupiditate dolorem dignissimos itaque harum provident nemo.\",\n            \"slug\": \"ipsam-ad-aut\",\n            \"quantity\": 542,\n            \"published\": true,\n            \"attributes\": {\n                \"size\": [\n                    \"l\",\n                    \"m\",\n                    \"s\"\n                ],\n                \"color\": [\n                    \"red\",\n                    \"blue\"\n                ]\n            },\n            \"id\": \"62bec147b39f92c3e0a31999\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"categoryIds\": [\n                \"62bd634d0a9de06da86e291a\"\n            ]\n        }\n    ]\n}"
+									"body": "{\n    \"message\": \"Products found\",\n    \"products\": {\n        \"skus\": [\n            {\n                \"name\": \"Ergonomic Frozen Gloves\",\n                \"description\": \"Et voluptatum aut maiores qui doloribus ducimus sed impedit ex. Sed rem illum qui et quia aliquam et. Et aut laudantium aut corrupti amet rerum explicabo.\",\n                \"shortDescriptions\": \"Corrupti delectus enim fugiat et sapiente explicabo mollitia quis.\",\n                \"slug\": \"ducimus-non-id\",\n                \"quantity\": 790,\n                \"published\": false,\n                \"attributes\": {\n                    \"size\": [\n                        \"l\",\n                        \"m\",\n                        \"s\"\n                    ],\n                    \"color\": [\n                        \"red\",\n                        \"blue\"\n                    ]\n                },\n                \"id\": \"62bec14cb39f92c3e0a3199b\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62bd634d0a9de06da86e291a\"\n                ]\n            },\n            {\n                \"name\": \"Ergonomic Frozen Shoes\",\n                \"description\": \"Aut perspiciatis consectetur. Sit quia deleniti ratione eum aut eos. Molestias nostrum corrupti occaecati tempora sit a cumque molestiae consequatur. Quae sit non.\",\n                \"shortDescriptions\": \"Labore ut architecto sit quia.\",\n                \"slug\": \"repellendus-delectus-sit\",\n                \"quantity\": 599,\n                \"published\": false,\n                \"attributes\": {\n                    \"size\": [\n                        \"l\",\n                        \"m\",\n                        \"s\"\n                    ],\n                    \"color\": [\n                        \"red\",\n                        \"blue\"\n                    ]\n                },\n                \"id\": \"62c013d2d49389ce1fc48ad1\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62c010ebd49389ce1fc48ac9\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"total_count\": 5,\n            \"limit\": 2,\n            \"offset\": 1\n        }\n    }\n}"
 								}
 							]
 						},
@@ -4433,11 +4433,11 @@
 										},
 										{
 											"key": "ETag",
-											"value": "\"24b-yoE5kRiVXxu68JZMN9buu6Hecdk\""
+											"value": "\"21d-5zLRrLjwS8jGm1Vtl2l6NLNEfvI\""
 										},
 										{
 											"key": "Content-Length",
-											"value": "587"
+											"value": "541"
 										},
 										{
 											"key": "Vary",
@@ -4445,7 +4445,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sat, 02 Jul 2022 09:20:26 GMT"
+											"value": "Sat, 02 Jul 2022 09:38:58 GMT"
 										},
 										{
 											"key": "Connection",
@@ -4457,7 +4457,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"message\": \"Product found\",\n    \"product\": [\n        {\n            \"id\": \"62c00dcad49389ce1fc48ac0\",\n            \"name\": \"Handmade Cotton Pants\",\n            \"description\": \"Perferendis omnis dolor suscipit vel eligendi. Consectetur fuga est. Inventore voluptate enim sint necessitatibus sed quos sapiente. Consequatur ratione eum quia et dicta et.\",\n            \"shortDescriptions\": \"Quis est voluptatum nobis non sint natus enim voluptatem.\",\n            \"slug\": \"explicabo-aspernatur-dolorem\",\n            \"quantity\": 157,\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": true,\n            \"attributes\": {\n                \"size\": [\n                    \"l\",\n                    \"m\",\n                    \"s\"\n                ],\n                \"color\": [\n                    \"red\",\n                    \"blue\"\n                ]\n            },\n            \"categoryIds\": [\n                \"62c00b39d49389ce1fc48abd\"\n            ]\n        }\n    ]\n}"
+									"body": "{\n    \"message\": \"Product found\",\n    \"product\": [\n        {\n            \"id\": \"62c01203d49389ce1fc48ace\",\n            \"name\": \"Licensed Soft Sausages\",\n            \"description\": \"Et magni et ipsa in maiores doloremque voluptas. Dolorem magnam voluptatum necessitatibus sint quos officia ut maxime impedit. Quod est qui. Neque laudantium ut.\",\n            \"shortDescriptions\": \"Qui et qui eveniet.\",\n            \"slug\": \"veritatis-molestiae-accusantium\",\n            \"quantity\": 725,\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": false,\n            \"attributes\": {\n                \"size\": [\n                    \"l\",\n                    \"m\",\n                    \"s\"\n                ],\n                \"color\": [\n                    \"red\",\n                    \"blue\"\n                ]\n            },\n            \"categoryIds\": [\n                \"62c010ebd49389ce1fc48ac9\"\n            ]\n        }\n    ]\n}"
 								}
 							]
 						},
@@ -6422,7 +6422,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"New SKU Created\") { ",
-											"    tests[\"Product creation failed TEST FAILED\"] = res.message == null;",
+											"    tests[\"SKU creation failed TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -6540,7 +6540,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"SKUs found\") { ",
-											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    tests[\"No SKU found TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -6677,7 +6677,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"SKU found\") { ",
-											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    tests[\"No SKU found TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -6775,7 +6775,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"SKU updated\") { ",
-											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    tests[\"SKU not found TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -6890,8 +6890,8 @@
 									"script": {
 										"exec": [
 											"var res = JSON.parse(responseBody);",
-											"if(res.message !== \"Product deleted\") { ",
-											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"if(res.message !== \"SKU deleted\") { ",
+											"    tests[\"SKU not found TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -6939,7 +6939,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+											"raw": "{\n    \"id\": \"{{skuId}}\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -6947,7 +6947,7 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:3000/api/products/delete",
+											"raw": "http://localhost:3000/api/sku/delete",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -6955,7 +6955,7 @@
 											"port": "3000",
 											"path": [
 												"api",
-												"products",
+												"sku",
 												"delete"
 											]
 										}
@@ -6970,11 +6970,11 @@
 										},
 										{
 											"key": "ETag",
-											"value": "\"2a6-8FatSk9gMGkDvy9uV+wX34JcRSA\""
+											"value": "\"141-4uFNGrapiqkz7Gxr2k9vUTuZUXU\""
 										},
 										{
 											"key": "Content-Length",
-											"value": "678"
+											"value": "321"
 										},
 										{
 											"key": "Vary",
@@ -6982,7 +6982,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sat, 02 Jul 2022 09:29:54 GMT"
+											"value": "Sat, 02 Jul 2022 09:46:23 GMT"
 										},
 										{
 											"key": "Connection",
@@ -6994,7 +6994,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62c00eb1d49389ce1fc48ac1\",\n        \"name\": \"Rustic Wooden Shirt\",\n        \"description\": \"Qui alias dolores et autem deserunt praesentium et libero veritatis. Quis voluptate omnis magni harum quidem optio officia. Aut perferendis voluptatem. Rerum modi rerum quis. Amet eius a atque consectetur repellendus error et est aut. Illum ad voluptatem eos ipsum rem sed.\",\n        \"shortDescriptions\": \"Sit nihil est sequi maiores unde doloribus repellat.\",\n        \"slug\": \"corrupti-ipsam-praesentium\",\n        \"quantity\": 608,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": false,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c00b39d49389ce1fc48abd\"\n        ]\n    }\n}"
+									"body": "{\n    \"message\": \"SKU deleted\",\n    \"sku\": {\n        \"id\": \"62c013dad49389ce1fc48ad2\",\n        \"slug\": \"et-qui-vitae\",\n        \"quantity\": 562,\n        \"productId\": \"62c013d2d49389ce1fc48ad1\",\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": false,\n        \"attributes\": {\n            \"size\": \"l\",\n            \"color\": \"red\"\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"price\": 346.1,\n        \"discountedPrice\": 848.22\n    }\n}"
 								}
 							]
 						}
@@ -7042,7 +7042,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"New SKU Created\") { ",
-											"    tests[\"Product creation failed TEST FAILED\"] = res.message == null;",
+											"    tests[\"SKU creation failed TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -7160,7 +7160,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"SKUs found\") { ",
-											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    tests[\"No SKU found TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -7297,7 +7297,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"SKU found\") { ",
-											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    tests[\"No SKU found TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -7395,7 +7395,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"SKU updated\") { ",
-											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    tests[\"SKU not found TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
@@ -7511,7 +7511,7 @@
 										"exec": [
 											"var res = JSON.parse(responseBody);",
 											"if(res.message !== \"SKU deleted\") { ",
-											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    tests[\"SKU not found TEST FAILED\"] = res.message == null;",
 											"    return;",
 											"}",
 											"pm.test(\"Status code is 200\", function () {",
