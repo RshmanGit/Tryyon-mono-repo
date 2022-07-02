@@ -21,7 +21,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -35,7 +34,6 @@ import {
   MenuItemOption,
   MenuGroup,
   MenuOptionGroup,
-  MenuDivider,
   Grid,
   GridItem,
   Checkbox,
@@ -51,6 +49,7 @@ import { RiEyeCloseLine } from 'react-icons/ri';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
+// maintaining initialState object
 const initialState = {
   filters: {
     size: new Set(),
@@ -58,60 +57,56 @@ const initialState = {
   }
 };
 
+//default variants and their options
 const variants = {
   size: ['small', 'medium', 'large'],
   colour: ['red', 'blue', 'green']
 };
-let maxy = 0,
-  idx = 0;
+let maxy = 0;
+
 function Entry() {
   // Chakra color mode
   const [show, SetShow] = useState(true);
   const textColorSecondary = 'gray.100';
   const [sizzz, setSize] = useState(100);
-  // let c = [...initialState.filters.colour];
-  // let s = [...initialState.filters.size];
+
   let vv = Object.keys(variants);
   let kk = Object.keys(initialState.filters);
+
+  //function to generate permutations of all possible entries dynamically
   function permute(input) {
     var out = [];
-
     (function permute_r(input, current) {
       if (input.length === 0) {
         out.push(current);
         return;
       }
-
       var next = input.slice(1);
-
       for (var i = 0, n = input[0].length; i != n; ++i) {
         permute_r(next, current.concat([input[0][i]]));
       }
     })(input, []);
-
     return out;
   }
+
+  //for sizing purpose, setting maxy as maximum options all the variants have
   for (let i = 0; i < vv.length; i++) {
     if (variants[vv[i]].length > maxy) maxy = variants[vv[i]].length;
   }
-  // console.log(vv);
+
   let res;
   let arr = [];
-  // if(idx%2==0){
+
   kk.map((key) => {
-    // console.log(key)
     let s = [...initialState.filters[key]];
     if (s.length === 0) {
       s.push('');
     }
     arr.push(s);
   });
+
   res = permute(arr);
-  for (let i = 0; i < res.length; i++) {
-    console.log(res[i]);
-  }
-  // }
-  // idx++;
+
   return (
     <>
       <Flex
@@ -162,8 +157,8 @@ function Entry() {
                     <Text float="left" key={val} ml="-20px">
                       {val}
 
-                      {/* <span> */}
                       <span>
+                        {/* for updating variant name */}
                         <FontAwesomeIcon
                           icon={faPencil}
                           style={{
@@ -181,12 +176,6 @@ function Entry() {
                             if (result.length > 0 && result !== null) {
                               variants[result] = variants[val];
                               delete variants[val];
-                              // initialState.filters[result] = initialState.filters[val];
-                              // initialState.filters[result] = new Set();
-                              // let c = [...initialState.filters[val]];
-                              // c.map((val)=>{
-                              //   initialState.filters[result].add(val);
-                              // })
                               delete initialState.filters[val];
                               SetShow(!show);
                             }
@@ -195,6 +184,7 @@ function Entry() {
                       </span>
 
                       <span>
+                        {/* for deleting a variant */}
                         <FontAwesomeIcon
                           icon={faBan}
                           style={{
@@ -214,7 +204,6 @@ function Entry() {
                       </span>
                     </Text>
                   </MenuItemOption>
-
                   {variants[val].map((item) => {
                     return (
                       <MenuItemOption
@@ -241,18 +230,8 @@ function Entry() {
                       >
                         <Text key={item} mt="-37px" ml="10px">
                           {item}
-                          {/* <span>
-                      <FontAwesomeIcon
-                        icon={faPencil}
-                        style={{
-                          width: '15px',
-                          float: 'right',
-                          marginLeft: '25px',
-                          marginTop: '3px'
-                        }}
-                      />
-                    </span> */}
                           <span>
+                            {/* For deleting an option */}
                             <FontAwesomeIcon
                               icon={faBan}
                               style={{
@@ -281,6 +260,8 @@ function Entry() {
                       </MenuItemOption>
                     );
                   })}
+
+                  {/* Button for adding more options for each variant */}
                   <Button
                     paddingInlineStart="10px"
                     ml="20px"
@@ -306,6 +287,7 @@ function Entry() {
             );
           })}
 
+          {/* Button for adding more variants limited to max 6 variants */}
           <GridItem rowSpan={1} colSpan={1}>
             <Menu closeOnSelect={false}>
               <MenuButton
@@ -319,9 +301,7 @@ function Entry() {
                   let val = prompt('Add variant');
                   if (val !== null && val.length !== 0 && vv.length < 5) {
                     variants[val] = [];
-                    // if(initialState.filters.hasOwnProperty(val) !== true){
                     initialState.filters[val] = new Set();
-                    // }
                     SetShow(!show);
                   } else if (
                     vv.length == 5 &&
@@ -329,10 +309,7 @@ function Entry() {
                     val.length !== 0
                   ) {
                     variants[val] = [];
-                    // if(initialState.filters.hasOwnProperty(val) !== true){
                     initialState.filters[val] = new Set();
-
-                    // }
                     setSize(sizzz + 100);
                   } else if (val !== null && val.length !== 0)
                     alert('No more variants can be added !!');
@@ -344,6 +321,8 @@ function Entry() {
           </GridItem>
         </Grid>
       </Flex>
+
+      {/* For generating table entries dynamically */}
       <TableContainer border="1px" borderColor="gray.200">
         <Table variant="simple">
           <Thead fontWeight="bold">
