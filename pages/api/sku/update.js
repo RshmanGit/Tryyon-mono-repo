@@ -15,7 +15,7 @@ const schema = {
       slug: Joi.string().optional(),
       quantity: Joi.number(),
       productId: Joi.string().optional(),
-      published: Joi.boolean().default(false),
+      published: Joi.boolean().optional(),
       attributes: Joi.object().optional(),
       categoryIds: Joi.array().optional(),
       price: Joi.number().optional(),
