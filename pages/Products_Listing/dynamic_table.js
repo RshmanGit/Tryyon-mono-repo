@@ -53,8 +53,8 @@ import { useState } from 'react';
 
 const initialState = {
   filters: {
-    colour: new Set(),
-    size: new Set()
+    size: new Set(),
+    colour: new Set()
   }
 };
 
@@ -62,19 +62,56 @@ const variants = {
   size: ['small', 'medium', 'large'],
   colour: ['red', 'blue', 'green']
 };
-let maxy = 0;
+let maxy = 0,
+  idx = 0;
 function Entry() {
   // Chakra color mode
   const [show, SetShow] = useState(true);
   const textColorSecondary = 'gray.100';
   const [sizzz, setSize] = useState(100);
-  let c = [...initialState.filters.colour];
-  let s = [...initialState.filters.size];
+  // let c = [...initialState.filters.colour];
+  // let s = [...initialState.filters.size];
   let vv = Object.keys(variants);
+  let kk = Object.keys(initialState.filters);
+  function permute(input) {
+    var out = [];
+
+    (function permute_r(input, current) {
+      if (input.length === 0) {
+        out.push(current);
+        return;
+      }
+
+      var next = input.slice(1);
+
+      for (var i = 0, n = input[0].length; i != n; ++i) {
+        permute_r(next, current.concat([input[0][i]]));
+      }
+    })(input, []);
+
+    return out;
+  }
   for (let i = 0; i < vv.length; i++) {
     if (variants[vv[i]].length > maxy) maxy = variants[vv[i]].length;
   }
   // console.log(vv);
+  let res = [[]];
+  let arr = [];
+  // if(idx%2==0){
+  kk.map((key) => {
+    // console.log(key)
+    let s = [...initialState.filters[key]];
+    if (s.length === 0) {
+      s.push('');
+    }
+    arr.push(s);
+  });
+  res = permute(arr);
+  for (let i = 0; i < res.length; i++) {
+    console.log(res[i]);
+  }
+  // }
+  // idx++;
   return (
     <>
       <Flex
@@ -85,7 +122,7 @@ function Entry() {
         h="auto"
         alignItems="start"
         justifyContent="left"
-        mb={{ base: '30px', md: '0px' }}
+        mb={{ base: '30px', md: '20px' }}
         px={{ base: '25px', md: '0px' }}
         pb={`${sizzz}px`}
         mt={{ base: '10px', md: '0px' }}
@@ -162,8 +199,8 @@ function Entry() {
                           }}
                           onClick={(e) => {
                             e.preventDefault();
-                            console.log('FCK');
                             delete variants[val];
+                            delete initialState.filters[val];
                             SetShow(!show);
                           }}
                         />
@@ -176,6 +213,7 @@ function Entry() {
                       <MenuItemOption
                         key={val}
                         onChange={(e) => {
+                          e.preventDefault();
                           if (e.target.checked === true) {
                             initialState.filters[val].add(e.target.value);
                           } else {
@@ -239,7 +277,7 @@ function Entry() {
                       let option = prompt(`Add option for ${val} variant`);
                       if (option !== null && option.length > 0) {
                         variants[val].push(option);
-                        if (variants[val].length > maxy) setSize(sizzz + 60);
+                        if (variants[val].length > maxy) setSize(sizzz + 50);
                         else SetShow(!show);
                       }
                     }}
@@ -259,10 +297,14 @@ function Entry() {
                 ml="30px"
                 mt="20px"
                 width="auto"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   let val = prompt('Add variant');
                   if (val !== null && val.length !== 0 && vv.length < 5) {
                     variants[val] = [];
+                    // if(initialState.filters.hasOwnProperty(val) !== true){
+                    initialState.filters[val] = new Set();
+                    // }
                     SetShow(!show);
                   } else if (
                     vv.length == 5 &&
@@ -270,6 +312,10 @@ function Entry() {
                     val.length !== 0
                   ) {
                     variants[val] = [];
+                    // if(initialState.filters.hasOwnProperty(val) !== true){
+                    initialState.filters[val] = new Set();
+
+                    // }
                     setSize(sizzz + 100);
                   } else if (val !== null && val.length !== 0)
                     alert('No more variants can be added !!');
@@ -281,32 +327,24 @@ function Entry() {
           </GridItem>
         </Grid>
       </Flex>
-      <TableContainer borderColor="black">
+      <TableContainer border="1px" borderColor="gray.200">
         <Table variant="simple">
-          <Thead>
+          <Thead fontWeight="bold">
             <Tr>
-              <Td paddingLeft="5">Size</Td>
-              <Td paddingLeft="5">Colour</Td>
+              {vv.map((key) => {
+                return <Td>{key}</Td>;
+              })}
             </Tr>
           </Thead>
           <Tbody>
-            {s.map((size) => {
-              if (c.length > 0) {
-                return c.map((colour) => {
-                  return (
-                    <Tr key={colour}>
-                      <Td>{size}</Td>
-                      <Td>{colour}</Td>
-                    </Tr>
-                  );
-                });
-              } else {
-                return (
-                  <Tr key={size}>
-                    <Td>{size}</Td>
-                  </Tr>
-                );
-              }
+            {res.map((table) => {
+              return (
+                <Tr>
+                  {table.map((entry) => {
+                    return <Td>{entry}</Td>;
+                  })}
+                </Tr>
+              );
             })}
           </Tbody>
         </Table>
