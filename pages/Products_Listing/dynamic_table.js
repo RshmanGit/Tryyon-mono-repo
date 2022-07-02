@@ -95,7 +95,7 @@ function Entry() {
     if (variants[vv[i]].length > maxy) maxy = variants[vv[i]].length;
   }
   // console.log(vv);
-  let res = [[]];
+  let res;
   let arr = [];
   // if(idx%2==0){
   kk.map((key) => {
@@ -181,6 +181,13 @@ function Entry() {
                             if (result.length > 0 && result !== null) {
                               variants[result] = variants[val];
                               delete variants[val];
+                              // initialState.filters[result] = initialState.filters[val];
+                              // initialState.filters[result] = new Set();
+                              // let c = [...initialState.filters[val]];
+                              // c.map((val)=>{
+                              //   initialState.filters[result].add(val);
+                              // })
+                              delete initialState.filters[val];
                               SetShow(!show);
                             }
                           }}
@@ -211,10 +218,15 @@ function Entry() {
                   {variants[val].map((item) => {
                     return (
                       <MenuItemOption
-                        key={val}
+                        key={item}
                         onChange={(e) => {
                           e.preventDefault();
                           if (e.target.checked === true) {
+                            if (
+                              initialState.filters.hasOwnProperty(val) !== true
+                            ) {
+                              initialState.filters[val] = new Set();
+                            }
                             initialState.filters[val].add(e.target.value);
                           } else {
                             initialState.filters[val].delete(e.target.value);
@@ -255,6 +267,10 @@ function Entry() {
                                 for (let i = 0; i < variants[val].length; i++) {
                                   if (variants[val][i] === item) {
                                     variants[val].splice(i, 1);
+                                    let s = [...initialState.filters[val]];
+                                    if (s.includes(item) === true) {
+                                      initialState.filters[val].delete(item);
+                                    }
                                     SetShow(!show);
                                   }
                                 }
@@ -273,7 +289,8 @@ function Entry() {
                     fontSize="0.92em"
                     background={textColorSecondary}
                     key={val}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
                       let option = prompt(`Add option for ${val} variant`);
                       if (option !== null && option.length > 0) {
                         variants[val].push(option);
