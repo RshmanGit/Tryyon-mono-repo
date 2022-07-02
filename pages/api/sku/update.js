@@ -4,6 +4,9 @@ import async from 'async';
 import { updateSKU, getSKU } from '../../../prisma/products/sku';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
+import auth from '../../../utils/middlewares/auth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
+import { prisma } from '../../../prisma/prisma';
 
 const schema = {
   body: Joi.object({
@@ -22,6 +25,8 @@ const schema = {
 };
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
+
   if (req.method == 'POST') {
     async.auto(
       {

@@ -69,7 +69,7 @@ const handler = async (req, res) => {
               );
             }
 
-            body.supplierId = tenant.id;
+            body.supplierId = tenant[0].id;
           }
 
           return {

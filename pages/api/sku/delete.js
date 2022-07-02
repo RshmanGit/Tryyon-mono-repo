@@ -76,7 +76,7 @@ const handler = async (req, res) => {
             };
           }
         },
-        removeSKU: [
+        delete: [
           'verification',
           async () => {
             const { id } = req.body;
@@ -92,7 +92,7 @@ const handler = async (req, res) => {
 
             throw new Error(
               JSON.stringify({
-                errorKey: 'removeSKU',
+                errorKey: 'delete',
                 body: {
                   status: 404,
                   data: {
@@ -104,7 +104,7 @@ const handler = async (req, res) => {
           }
         ]
       },
-      handleResponse(req, res, 'removeSKU')
+      handleResponse(req, res, 'delete')
     );
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });

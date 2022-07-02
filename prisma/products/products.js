@@ -5,7 +5,7 @@ export const createProduct = async (data) => {
   const { supplierId, categoryIds, ...rest } = data;
 
   if (supplierId) rest.supplier = { connect: { id: supplierId } };
-  if (categoryIds.length != 0) {
+  if (categoryIds && categoryIds.length != 0) {
     rest.categories = { connect: [] };
     categoryIds.forEach((id) => {
       rest.categories.connect.push({ id });
@@ -48,8 +48,6 @@ export const searchProducts = async ({
 
   let total_count;
 
-  const productProperties = ['name', 'description', 'quantity'];
-
   if (attributes) {
     const attr = {};
 
@@ -73,9 +71,9 @@ export const searchProducts = async ({
     });
 
   if (sortBy) {
-    if (!(sortBy in productProperties)) sortBy = 'price';
     sortProducts[sortBy] = order == 'desc' ? -1 : 1;
-    options.$orderby = sortProducts;
+    options.sort = sortProducts;
+    console.log(options);
   }
 
   if (condition.$and.length == 0) {
@@ -135,7 +133,7 @@ export const updateProduct = async (id, updateData) => {
 
   if (supplierId) rest.supplier = { connect: { id: supplierId } };
 
-  if (categoryIds.length != 0) {
+  if (categoryIds && categoryIds.length != 0) {
     rest.categories = { connect: [] };
     categoryIds.forEach((id) => {
       rest.categories.connect.push({ id });

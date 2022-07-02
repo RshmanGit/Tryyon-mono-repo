@@ -6,7 +6,7 @@ export const createSKU = async (data) => {
 
   if (productId) rest.product = { connect: { id: productId } };
   if (supplierId) rest.supplier = { connect: { id: supplierId } };
-  if (categoryIds.length != 0) {
+  if (categoryIds && categoryIds.length != 0) {
     rest.categories = { connect: [] };
     categoryIds.forEach((id) => {
       rest.categories.connect.push({ id });
