@@ -46,8 +46,12 @@ import DefaultAuth from '../../ui/layouts/auth/Default.js';
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import Link from 'next/link';
+import { useRouter } from 'next/router.js';
 import { useEffect } from 'react';
 import { useState } from 'react';
+
+import { Formik, Field } from 'formik';
 
 // maintaining initialState object
 const initialState = {
@@ -69,6 +73,15 @@ function Entry() {
   const [show, SetShow] = useState(true);
   const textColorSecondary = 'gray.100';
   const [sizzz, setSize] = useState(100);
+
+  const textColor = useColorModeValue('navy.700', 'white');
+  const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
+  const brandStars = useColorModeValue('brand.500', 'brand.400');
+
+  const [buttonText, setButtonText] = useState('Create');
+  const [signup, setState] = useState(0);
+
+  const handleClick = () => setShow(!show);
 
   let vv = Object.keys(variants);
   let kk = Object.keys(initialState.filters);
@@ -109,6 +122,418 @@ function Entry() {
 
   return (
     <>
+      <DefaultAuth illustrationBackground={'/auth.png'} image={'/auth.png'}>
+        <Flex
+          maxW={{ base: '100%', md: 'max-content' }}
+          w="100%"
+          mx={{ base: 'auto', lg: '0px' }}
+          me="auto"
+          h="100%"
+          alignItems="start"
+          justifyContent="center"
+          // mb={{ base: '-20px', md: '-20px' }}
+          px={{ base: '25px', md: '0px' }}
+          // mt={{ base: '40px', md: '14vh' }}
+          mt="120px"
+          flexDirection="column"
+        >
+          <Box me="auto">
+            <Heading color={textColor} fontSize="34px" mb="16px">
+              Create your products
+            </Heading>
+          </Box>
+          <Flex
+            zIndex="2"
+            direction="column"
+            w={{ base: '100%', md: '420px' }}
+            maxW="100%"
+            background="transparent"
+            borderRadius="15px"
+            mx={{ base: 'auto', lg: 'unset' }}
+            me="auto"
+            mb={{ base: '30px', md: 'auto' }}
+          >
+            <Formik
+              initialValues={{
+                name: '',
+                description: '',
+                shortDescriptions: '',
+                slug: '',
+                quantity: '',
+                price: '',
+                discountedPrice: ''
+              }}
+              onSubmit={(values) => {
+                //   alert(JSON.stringify(values, null, 2));
+                setButtonText('Creating your product...');
+                let temp = parseInt(values.quantity, 10);
+                let temp2 = parseInt(values.price, 10);
+                let temp3 = parseInt(values.discountedPrice, 10);
+                values.quantity = temp;
+                values.price = temp2;
+                values.discountedPrice = temp3;
+                fetch('/api/products/create', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(values, null, 7)
+                })
+                  .then((res) => res.json())
+                  .then((res) => {
+                    if (res.message === 'New Product Created') {
+                      setButtonText('Product created !');
+                      setState(1);
+                      return res;
+                    } else {
+                      alert(res.message);
+                      setButtonText('Retry !');
+                      throw new Error(
+                        JSON.stringify({
+                          message: res.message
+                        })
+                      );
+                    }
+                  })
+                  .then((res) => alert(res.message))
+                  .catch((err) => {
+                    console.error(JSON.parse(err.message));
+                  });
+              }}
+            >
+              {({ handleSubmit, errors, touched }) => (
+                <form>
+                  <FormControl
+                    mb="4px"
+                    isInvalid={!!errors.name && touched.name}
+                  >
+                    <FormLabel
+                      ms="4px"
+                      fontSize="sm"
+                      fontWeight="500"
+                      color={textColor}
+                      display="flex"
+                    >
+                      Name<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    {/* <InputGroup size="md"> */}
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="name"
+                      name="name"
+                      variant="auth"
+                      fontSize="sm"
+                      ms={{ base: '0px', md: '0px' }}
+                      mb="3px"
+                      fontWeight="500"
+                      size="md"
+                      validate={(value) => {
+                        let error;
+                        if (value.length === 0) {
+                          error = 'Field can not be empty';
+                        }
+                        return error;
+                      }}
+                    />
+                    <FormErrorMessage>{errors.name}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl
+                    mb="4px"
+                    isInvalid={!!errors.description && touched.description}
+                  >
+                    <FormLabel
+                      ms="4px"
+                      fontSize="sm"
+                      fontWeight="500"
+                      color={textColor}
+                      display="flex"
+                    >
+                      Description<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    {/* <InputGroup size="md"> */}
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="description"
+                      name="description"
+                      variant="auth"
+                      fontSize="sm"
+                      ms={{ base: '0px', md: '0px' }}
+                      mb="3px"
+                      fontWeight="500"
+                      size="md"
+                      validate={(value) => {
+                        let error;
+                        if (value.length === 0) {
+                          error = 'Field can not be empty';
+                        }
+                        sessionStorage.setItem('desc', value.length);
+                        return error;
+                      }}
+                    />
+                    <FormErrorMessage>{errors.description}</FormErrorMessage>
+                    {/* </InputGroup> */}
+                  </FormControl>
+
+                  <FormControl
+                    mb="4px"
+                    isInvalid={
+                      !!errors.shortDescriptions && touched.shortDescriptions
+                    }
+                  >
+                    <FormLabel
+                      ms="4px"
+                      fontSize="sm"
+                      fontWeight="500"
+                      color={textColor}
+                      display="flex"
+                    >
+                      Short Description<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    {/* <InputGroup size="md"> */}
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="shortDescriptions"
+                      name="shortDescriptions"
+                      variant="auth"
+                      fontSize="sm"
+                      ms={{ base: '0px', md: '0px' }}
+                      mb="3px"
+                      fontWeight="500"
+                      size="md"
+                      validate={(value) => {
+                        let error;
+                        if (value.length === 0) {
+                          error = 'Field can not be empty';
+                          return error;
+                        }
+                        if (value.length >= sessionStorage.getItem('desc')) {
+                          error = 'It should be less than the main description';
+                        }
+                        return error;
+                      }}
+                    />
+                    <FormErrorMessage>
+                      {errors.shortDescriptions}
+                    </FormErrorMessage>
+                    {/* </InputGroup> */}
+                  </FormControl>
+
+                  <FormControl
+                    mb="4px"
+                    isInvalid={!!errors.slug && touched.slug}
+                  >
+                    <FormLabel
+                      ms="4px"
+                      fontSize="sm"
+                      fontWeight="500"
+                      color={textColor}
+                      display="flex"
+                    >
+                      Slug<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    {/* <InputGroup size="md"> */}
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="slug"
+                      name="slug"
+                      variant="auth"
+                      fontSize="sm"
+                      ms={{ base: '0px', md: '0px' }}
+                      mb="3px"
+                      fontWeight="500"
+                      size="md"
+                      validate={(value) => {
+                        let error;
+                        if (value.length === 0) {
+                          error = 'Field can not be empty';
+                        }
+                        return error;
+                      }}
+                    />
+                    <FormErrorMessage>{errors.slug}</FormErrorMessage>
+                    {/* </InputGroup> */}
+                  </FormControl>
+
+                  <FormControl
+                    mb="4px"
+                    isInvalid={!!errors.quantity && touched.quantity}
+                  >
+                    <FormLabel
+                      display="flex"
+                      ms="4px"
+                      fontSize="sm"
+                      fontWeight="500"
+                      color={textColor}
+                      mb="5px"
+                    >
+                      Quantity<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="quantity"
+                      name="quantity"
+                      variant="auth"
+                      fontSize="sm"
+                      ms={{ base: '0px', md: '0px' }}
+                      mb="3px"
+                      fontWeight="500"
+                      size="md"
+                      validate={(value) => {
+                        let error;
+                        let Format = /^[0-9]*$/;
+                        if (!value.match(Format)) {
+                          error = 'Quantity must be present in numbers';
+                        }
+                        if (value[0] === '0') {
+                          error = 'First digit of quantity can not be 0';
+                        }
+                        if (value.length === 0) {
+                          error = 'Field can not be empty';
+                        }
+                        return error;
+                      }}
+                    />
+                    <FormErrorMessage>{errors.quantity}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl
+                    mb="4px"
+                    isInvalid={!!errors.price && touched.price}
+                  >
+                    <FormLabel
+                      display="flex"
+                      ms="4px"
+                      fontSize="sm"
+                      fontWeight="500"
+                      color={textColor}
+                      mb="5px"
+                    >
+                      Price<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="price"
+                      name="price"
+                      variant="auth"
+                      fontSize="sm"
+                      ms={{ base: '0px', md: '0px' }}
+                      mb="3px"
+                      fontWeight="500"
+                      size="md"
+                      validate={(value) => {
+                        let error;
+                        let Format = /^[0-9]*$/;
+                        if (!value.match(Format)) {
+                          error = 'Price must be present in numbers';
+                        }
+                        if (value[0] === '0') {
+                          error = 'First digit of price can not be 0';
+                        }
+                        if (value.length === 0) {
+                          error = 'Field can not be empty';
+                        }
+                        sessionStorage.setItem('price', value);
+                        return error;
+                      }}
+                    />
+                    <FormErrorMessage>{errors.price}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl
+                    mb="4px"
+                    isInvalid={
+                      !!errors.discountedPrice && touched.discountedPrice
+                    }
+                  >
+                    <FormLabel
+                      display="flex"
+                      ms="4px"
+                      fontSize="sm"
+                      fontWeight="500"
+                      color={textColor}
+                      mb="5px"
+                    >
+                      Discounted Price<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    <Field
+                      as={Input}
+                      isRequired={true}
+                      id="discountedPrice"
+                      name="discountedPrice"
+                      variant="auth"
+                      fontSize="sm"
+                      ms={{ base: '0px', md: '0px' }}
+                      mb="3px"
+                      fontWeight="500"
+                      size="md"
+                      validate={(value) => {
+                        let error;
+                        let Format = /^[0-9]*$/;
+                        if (value.length === 0) {
+                          error = 'Field can not be empty';
+                          return error;
+                        }
+                        if (!value.match(Format)) {
+                          error = 'Discounted Price must be present in numbers';
+                        }
+                        if (value[0] === '0') {
+                          error =
+                            'First digit of discounted price can not be 0';
+                        }
+                        let tt = parseInt(sessionStorage.getItem('price'), 10);
+                        let rr = parseInt(value, 10);
+                        if (rr >= tt) {
+                          error =
+                            'Discounted price should be less than the original price';
+                        }
+
+                        return error;
+                      }}
+                    />
+                    <FormErrorMessage>
+                      {errors.discountedPrice}
+                    </FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl>
+                    {/* <Flex justifyContent="space-between" align="center" mb="24px">
+                    <Link href="#">
+                      <a>Forgot password?</a>
+                    </Link>
+                  </Flex> */}
+                    <Button
+                      fontSize="sm"
+                      variant="brand"
+                      fontWeight="500"
+                      w="55%"
+                      h="37"
+                      mb="8px"
+                      mt="13px"
+                      ml="80px"
+                      onClick={handleSubmit}
+                    >
+                      {buttonText}
+                    </Button>
+                    <InputRightElement
+                      display="flex"
+                      alignItems="center"
+                      mt="20px"
+                    ></InputRightElement>
+                  </FormControl>
+                </form>
+              )}
+            </Formik>
+          </Flex>
+        </Flex>
+      </DefaultAuth>
+
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w="100%"
@@ -120,7 +545,7 @@ function Entry() {
         mb={{ base: '30px', md: '20px' }}
         px={{ base: '25px', md: '0px' }}
         pb={`${sizzz}px`}
-        mt={{ base: '10px', md: '0px' }}
+        mt={{ base: '10px', md: '250px' }}
         flexDirection="column"
       >
         <Grid
