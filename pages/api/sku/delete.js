@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import async from 'async';
 
-import { deleteProduct, getProduct } from '../../../prisma/products/products';
+import { deleteSKU, getSKU } from '../../../prisma/products/sku';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 import auth from '../../../utils/middlewares/auth';
@@ -24,16 +24,16 @@ const handler = async (req, res) => {
           const { id } = req.body;
 
           if (req.admin) {
-            const productCheck = await getProduct(id);
+            const skuCheck = await getSKU(id);
 
-            if (productCheck.length == 0) {
+            if (skuCheck.length == 0) {
               throw new Error(
                 JSON.stringify({
                   errorkey: 'verification',
                   body: {
                     status: 404,
                     data: {
-                      message: 'No such product found'
+                      message: 'No such sku found'
                     }
                   }
                 })
@@ -41,12 +41,12 @@ const handler = async (req, res) => {
             }
 
             return {
-              message: 'Product found'
+              message: 'SKU found'
             };
           } else {
             const ownerId = req.user.id;
 
-            const productCheck = await prisma.product.findMany({
+            const skuCheck = await prisma.sKU.findMany({
               where: {
                 id,
                 supplier: {
@@ -57,14 +57,14 @@ const handler = async (req, res) => {
               }
             });
 
-            if (productCheck.length == 0) {
+            if (skuCheck.length == 0) {
               throw new Error(
                 JSON.stringify({
                   errorkey: 'verification',
                   body: {
                     status: 404,
                     data: {
-                      message: 'No such product found'
+                      message: 'No such SKU found'
                     }
                   }
                 })
@@ -72,7 +72,7 @@ const handler = async (req, res) => {
             }
 
             return {
-              message: 'Product found'
+              message: 'SKU found'
             };
           }
         },
@@ -81,12 +81,12 @@ const handler = async (req, res) => {
           async () => {
             const { id } = req.body;
 
-            const res = await deleteProduct(id);
+            const res = await deleteSKU(id);
 
             if (res) {
               return {
-                message: 'Product deleted',
-                product: res
+                message: 'SKU deleted',
+                sku: res
               };
             }
 
@@ -96,7 +96,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such Product found'
+                    message: 'No such SKU found'
                   }
                 }
               })

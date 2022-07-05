@@ -1,7 +1,7 @@
 import async from 'async';
 import Joi from 'joi';
 
-import { createProduct } from '../../../prisma/products/products';
+import { createSKU } from '../../../prisma/products/sku';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 import auth from '../../../utils/middlewares/auth';
@@ -10,15 +10,15 @@ import { prisma } from '../../../prisma/prisma';
 
 const schema = {
   body: Joi.object({
-    name: Joi.string().required(),
-    description: Joi.string().required(),
-    shortDescriptions: Joi.string().required(),
     slug: Joi.string().required(),
     quantity: Joi.number(),
+    productId: Joi.string().required(),
     supplierId: Joi.string().optional(),
     published: Joi.boolean().default(false),
     attributes: Joi.object().required(),
-    categoryIds: Joi.array().required()
+    categoryIds: Joi.array().required(),
+    price: Joi.number().required(),
+    discountedPrice: Joi.number().required()
   })
 };
 
@@ -73,7 +73,7 @@ const handler = async (req, res) => {
           }
 
           return {
-            message: 'Product validated',
+            message: 'SKU validated',
             body
           };
         },
@@ -82,12 +82,12 @@ const handler = async (req, res) => {
           async (results) => {
             const { body } = results.verify;
 
-            const res = await createProduct(body);
+            const res = await createSKU(body);
 
             if (res) {
               return {
-                message: 'New Product Created',
-                product: res
+                message: 'New SKU Created',
+                sku: res
               };
             }
 

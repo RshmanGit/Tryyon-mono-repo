@@ -1,18 +1,18 @@
+# README
+
 # Tryyon Mono Repo
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with `[create-next-app](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)`.
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
+npm run dev# oryarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000/) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
@@ -40,7 +40,7 @@ Built on Next.js and Prisma ORM.
     role: string
     ```
   - Successful Response -
-    ```json
+    ```
     {
         message: 'New admin registered',
         admin: {
@@ -68,7 +68,7 @@ Built on Next.js and Prisma ORM.
     password: string, required
     ```
   - Successful Response -
-    ```json
+    ```
     {
         message: 'New admin registered',
         admin: {
@@ -95,7 +95,7 @@ Built on Next.js and Prisma ORM.
     ?code=<verification-code>
     ```
   - Successful Response -
-    ```json
+    ```
     {
         "message": "Admin verified",
         "verifiedAdmin": {
@@ -124,7 +124,7 @@ Built on Next.js and Prisma ORM.
   - Protected route - bearer token needed
   - Accepted method - `GET`
   - Successful Response -
-    ```json
+    ```
     {
         "message": "Admin Authenticated",
         "admin": {
@@ -145,7 +145,7 @@ Built on Next.js and Prisma ORM.
   - Protected route - bearer token needed
   - Accepted method - `GET`
   - Successful Response -
-    ```json
+    ```
     {
         "message": "Admin found",
         "admin": {
@@ -178,199 +178,9 @@ Built on Next.js and Prisma ORM.
     id: string, required
     ```
   - Successful Response -
-    ```json
+    ```
     {
       "message": "Admin deleted"
-    }
-    ```
-
-## Product routes
-
-- **/api/products/create**
-  - Unprotected route
-  - Accepted method - `POST`
-  - Body format -
-    ```
-    name: string, required
-    description: string, required
-    shortDescriptions: string, required
-    slug: string, required
-    quantity: integer
-    approved: boolean, default - false
-    published: boolean, default - false
-    price: float, required
-    discountedPrice: float, required
-    ```
-  - Successful Response -
-    ```json
-    {
-        "message": "New Product Created",
-        "product": {
-            "id": "...",
-            "name": "...",
-            "description": "...",
-            "shortDescriptions": "...",
-            "slug": "...",
-            "quantity": ...,
-            "approved": ...,
-            "published": ...,
-            "price": ...,
-            "discountedPrice": ...
-        }
-    }
-    ```
-- **/api/products**
-
-  - Unprotected route
-  - Accepted method - `GET`
-  - Query format -
-    ```
-    paginated: true/false
-    count: number, required if paginated is true
-    offset: number, required if paginated is true
-    query: <search-query>, optional
-    inStock: true/false, optional
-    priceFrom: number, optional
-    priceTo: number, optional
-    sortBy: name, one of the product properties - ['name', 'description', 'price', 'discountedPrice', 'quantity'], optional
-    order: asc/desc, optional
-    approved: true/false, optional
-    published: true/false, optional
-    ```
-  - Successful Response -
-
-    ```json
-    // paginated
-    {
-        "status": 200,
-        "message": "Products found",
-        "products": {
-            "products": [
-                {
-                    "id": "62ac391ea684fef892c4261f",
-                    "name": "Some other stuff",
-                    "description": "This is some other stuff with more stuff inside it so it is totally stuffed with stuffs",
-                    "shortDescriptions": "This is some other stuff",
-                    "slug": "some-other-stuff",
-                    "quantity": 15,
-                    "approved": true,
-                    "published": false,
-                    "price": 1000,
-                    "discountedPrice": 149
-                }
-            ],
-            "pagination": {
-                "offset": 1,
-                "count": 1,
-                "total_count": 2
-            }
-        }
-    }
-
-    // not paginated
-    {
-        "status": 200,
-        "message": "Products found",
-        "products": {
-            "products": [
-                {
-                    "id": "62ac3885a684fef892c4261e",
-                    "name": "Some stuff",
-                    "description": "This is some stuff with more stuff inside it so it is totally stuffed with stuffs",
-                    "shortDescriptions": "This is some stuff",
-                    "slug": "some-stuff",
-                    "quantity": 6,
-                    "approved": true,
-                    "published": false,
-                    "price": 150,
-                    "discountedPrice": 149
-                },
-                {
-                    "id": "62ac391ea684fef892c4261f",
-                    "name": "Some other stuff",
-                    "description": "This is some other stuff with more stuff inside it so it is totally stuffed with stuffs",
-                    "shortDescriptions": "This is some other stuff",
-                    "slug": "some-other-stuff",
-                    "quantity": 15,
-                    "approved": true,
-                    "published": false,
-                    "price": 1000,
-                    "discountedPrice": 149
-                }
-            ],
-            "total_count": 2
-        }
-    }
-    ```
-
-- **/api/products/{{productId}}**
-  - Unprotected route
-  - Accepted method - `GET`
-  - Successful Response -
-    ```json
-    {
-      "status": 200,
-      "message": "Product found",
-      "product": {
-        "id": "62ac391ea684fef892c4261f",
-        "name": "Some other stuff",
-        "description": "This is some other stuff with more stuff inside it so it is totally stuffed with stuffs",
-        "shortDescriptions": "This is some other stuff",
-        "slug": "some-other-stuff",
-        "quantity": 15,
-        "approved": true,
-        "published": false,
-        "price": 1000,
-        "discountedPrice": 149
-      }
-    }
-    ```
-- **/api/products/update**
-  - Unprotected route
-  - Accepted method - `POST`
-  - Successful Response -
-    ```json
-    {
-      "status": 200,
-      "message": "Product updated",
-      "product": {
-        "id": "62ac391ea684fef892c4261f",
-        "name": "Some other random stuff",
-        "description": "This is some other stuff with more stuff inside it so it is totally stuffed with stuffs",
-        "shortDescriptions": "This is some other stuff",
-        "slug": "some-other-stuff",
-        "quantity": 15,
-        "approved": true,
-        "published": false,
-        "price": 1000,
-        "discountedPrice": 1
-      }
-    }
-    ```
-- **/api/products/delete**
-  - Unprotected route
-  - Accepted method - `DELETE`
-  - Body format -
-    ```
-    id: string, required
-    ```
-  - Successful Response -
-    ```json
-    {
-      "status": 200,
-      "message": "Product deleted",
-      "product": {
-        "id": "62ac391ea684fef892c4261f",
-        "name": "Some other random stuff",
-        "description": "This is some other stuff with more stuff inside it so it is totally stuffed with stuffs",
-        "shortDescriptions": "This is some other stuff",
-        "slug": "some-other-stuff",
-        "quantity": 15,
-        "approved": true,
-        "published": false,
-        "price": 1000,
-        "discountedPrice": 1
-      }
     }
     ```
 
@@ -391,7 +201,7 @@ Built on Next.js and Prisma ORM.
       role: string
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New user registered",
         "user": {
@@ -419,7 +229,7 @@ Built on Next.js and Prisma ORM.
       password: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User Authenticated",
         "updatedUser": {
@@ -446,7 +256,7 @@ Built on Next.js and Prisma ORM.
       ?code=<verification-code>
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User verified",
         "verifiedUser": {
@@ -470,7 +280,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Users found",
           "users": [
@@ -496,7 +306,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User found",
         "user": {
@@ -523,7 +333,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User deleted",
         "user": {
@@ -556,7 +366,7 @@ Built on Next.js and Prisma ORM.
       password: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User updated",
         "updatedUser": {
@@ -580,7 +390,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User Authenticated",
         "user": {
@@ -595,7 +405,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User found",
         "user": {
@@ -615,7 +425,7 @@ Built on Next.js and Prisma ORM.
       }
       ```
     - Unsuccessful Response - (if provided userId of another user)
-      ```json
+      ```
       {
         "message": "Unauthorized access"
       }
@@ -628,7 +438,7 @@ Built on Next.js and Prisma ORM.
       {} // empty object
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User deleted",
         "user": {
@@ -651,7 +461,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User logged out",
         "user": {
@@ -683,7 +493,7 @@ Built on Next.js and Prisma ORM.
       password: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User updated",
         "updatedUser": {
@@ -706,7 +516,7 @@ Built on Next.js and Prisma ORM.
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Successful Response -
-      ```json
+      ```
       {
         "message": "User progress",
         "progress": {
@@ -758,9 +568,7 @@ Built on Next.js and Prisma ORM.
 ## Company **Routes**
 
 - For admin
-
   - **/api/company**
-
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Query format -
@@ -773,8 +581,7 @@ Built on Next.js and Prisma ORM.
       id: companyId
       ```
     - Successful Response -
-
-      ```json
+      ```
       // paginated
       {
           "message": "Companies found",
@@ -853,7 +660,6 @@ Built on Next.js and Prisma ORM.
           ]
       }
       ```
-
   - **/api/company/create**
     - Protected route - bearer token needed
     - Accepted method - `POST`
@@ -871,7 +677,7 @@ Built on Next.js and Prisma ORM.
       ownerId: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New Company Created",
         "company": {
@@ -897,7 +703,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Company deleted",
         "company": {
@@ -932,7 +738,7 @@ Built on Next.js and Prisma ORM.
       adminApproval: boolean, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Company updated",
           "updatedCompany": {
@@ -951,14 +757,13 @@ Built on Next.js and Prisma ORM.
           }
       }
       ```
-
 - For user
   - **/api/company**
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Query format - no query
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Company found",
           "company": {
@@ -978,7 +783,7 @@ Built on Next.js and Prisma ORM.
       }
       ```
     - Unsuccessful Response -
-      ```json
+      ```
       {
         "message": "User does not have a company"
       }
@@ -999,7 +804,7 @@ Built on Next.js and Prisma ORM.
       adminApproval: boolean, default - false
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New Company Created",
         "company": {
@@ -1025,7 +830,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Company deleted",
         "company": {
@@ -1060,7 +865,7 @@ Built on Next.js and Prisma ORM.
       adminApproval: boolean, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Company updated",
           "updatedCompany": {
@@ -1096,7 +901,7 @@ Built on Next.js and Prisma ORM.
       offset: number, required if paginated is true
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Tenants found",
           "tenants": [
@@ -1126,7 +931,7 @@ Built on Next.js and Prisma ORM.
       description: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "New Tenant Created",
           "tenant": {
@@ -1146,7 +951,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Tenant deleted",
         "tenant": {
@@ -1167,7 +972,7 @@ Built on Next.js and Prisma ORM.
       description: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Tenant updated",
           "tenant": {
@@ -1185,7 +990,7 @@ Built on Next.js and Prisma ORM.
     - Accepted method - `GET`
     - Query format - No query
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Tenant found",
         "tenant": {
@@ -1205,7 +1010,7 @@ Built on Next.js and Prisma ORM.
       description: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "New Tenant Created",
           "tenant": {
@@ -1225,7 +1030,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Tenant deleted",
         "tenant": {
@@ -1245,7 +1050,7 @@ Built on Next.js and Prisma ORM.
       description: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Tenant updated",
           "tenant": {
@@ -1266,7 +1071,7 @@ Built on Next.js and Prisma ORM.
     - Accepted method - `GET`
     - Query format - No query
     - Successful Response -
-      ```json
+      ```
       {
           "message": "Associations found",
           "associations": [
@@ -1276,7 +1081,7 @@ Built on Next.js and Prisma ORM.
                   "tenantId": "62b92f8cc18760f3a77c6ff4",
                   "approval": false
               },
-      				...
+                    ...
           ]
       }
       ```
@@ -1285,7 +1090,7 @@ Built on Next.js and Prisma ORM.
     - Accepted method - `GET`
     - Query format - No query
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association found",
         "association": {
@@ -1306,7 +1111,7 @@ Built on Next.js and Prisma ORM.
       approval: boolean, optional, default - false
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New Association Created",
         "createdAssociation": {
@@ -1325,7 +1130,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association deleted",
         "deletedAssociation": {
@@ -1346,7 +1151,7 @@ Built on Next.js and Prisma ORM.
       approval: boolean, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association updated",
         "updatedAssociation": {
@@ -1364,7 +1169,7 @@ Built on Next.js and Prisma ORM.
     - Query format - No query
     - Conditions - user can only access their own associations
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association found",
         "association": {
@@ -1383,7 +1188,7 @@ Built on Next.js and Prisma ORM.
       tenantId: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "New Association Created",
         "createdAssociation": {
@@ -1402,7 +1207,7 @@ Built on Next.js and Prisma ORM.
       id: string, required
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association deleted",
         "deletedAssociation": {
@@ -1421,7 +1226,7 @@ Built on Next.js and Prisma ORM.
       tenantId: string, optional
       ```
     - Successful Response -
-      ```json
+      ```
       {
         "message": "Association updated",
         "updatedAssociation": {
@@ -1430,5 +1235,1109 @@ Built on Next.js and Prisma ORM.
           "tenantId": "62b92f8cc18760f3a77c6ff4",
           "approval": true
         }
+      }
+      ```
+
+## Category Routes
+
+- For admin -
+  - **/api/products/category**
+    - Protected route - auth token needed (either user or admin)
+    - Accepted method - `GET`
+    - Query format -
+      ```
+      id: string, optional
+      isRoot: true/false, optional
+      query: string, optional (will be searched in name)
+      includeChildren: true/false, optional
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Categories found",
+        "categories": [
+          {
+            "id": "62bad0b6f4b8ec8aad5ced34",
+            "name": "Fantastic",
+            "description": "Ut ipsam sed facilis. Dignissimos quaerat numquam voluptatibus. Ratione molestiae ipsam.",
+            "slug": "aspernatur-animi-quia",
+            "root": true,
+            "parentCategoryId": null,
+            "children": [
+              {
+                "id": "62bad793f4b8ec8aad5ced35",
+                "name": "Sleek",
+                "description": "Illum tempore neque amet dolor. Deleniti quia molestias quas omnis autem. Tenetur maiores quia. Aut et omnis consequuntur dolorem accusantium dolor.",
+                "slug": "modi-est-atque",
+                "root": false,
+                "parentCategoryId": "62bad0b6f4b8ec8aad5ced34"
+              },
+              ...
+            ]
+          }
+        ]
+      }
+      ```
+  - **/api/products/category/create**
+    - Protected route - auth token needed (either user or admin)
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      name: string, required
+      description: string, required
+      slug: string, required
+      parentCategoryId: string, optional
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Category Created",
+        "category": {
+          "id": "62bad79ff4b8ec8aad5ced38",
+          "name": "Unbranded",
+          "description": "...",
+          "slug": "dolore-aliquid-explicabo",
+          "root": false,
+          "parentCategoryId": "62bad0b6f4b8ec8aad5ced34"
+        }
+      }
+      ```
+  - **/api/products/category/delete**
+    - Protected route - auth token needed (either user or admin)
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Category Deleted",
+        "category": {
+          "id": "62badc78f4b8ec8aad5ced39",
+          "name": "Practical",
+          "description": "...",
+          "slug": "quis-quasi-animi",
+          "root": false,
+          "parentCategoryId": "62bad79ff4b8ec8aad5ced38"
+        }
+      }
+      ```
+  - **/api/products/category/update**
+    - Protected route - auth token needed (either user or admin)
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      name: string, optional
+      description: string, optional
+      slug: string, optional
+      parentCategoryId: string, optional
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Category Updated",
+        "category": {
+          "id": "62badc78f4b8ec8aad5ced39",
+          "name": "Practical",
+          "description": "...",
+          "slug": "quis-quasi-animi",
+          "root": false,
+          "parentCategoryId": "62bad79ff4b8ec8aad5ced38"
+        }
+      }
+      ```
+
+## Attribute Routes
+
+- Common
+  - **/api/products/attribute**
+    - Protected route - auth token needed (either user or admin)
+    - Accepted method - `GET`
+    - Query format -
+      ```
+      id: string, optional
+      query: string, optional (searched in name)
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Attributes found",
+        "attributes": [
+          {
+            "id": "62baf1ea6f5b9fe8bdff4520",
+            "name": "Consultant",
+            "description": "...",
+            "slug": "temporibus-sed-repellendus"
+          },
+          ...
+        ]
+      }
+      ```
+  - **/api/products/attribute/create**
+    - Protected route - auth token needed (either user or admin)
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      name: string, required
+      description: string, required
+      slug: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Attribute Created",
+        "attribute": {
+          "id": "62baf3826f5b9fe8bdff4524",
+          "name": "enhance",
+          "description": "...",
+          "slug": "est-odio-quo"
+        }
+      }
+      ```
+  - **/api/products/attribute/delete**
+    - Protected route - auth token needed (either user or admin)
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Attribute Deleted",
+        "attribute": {
+          "id": "62baf3826f5b9fe8bdff4524",
+          "name": "Industrial",
+          "description": "...",
+          "slug": "est-odio-quo"
+        }
+      }
+      ```
+  - **/api/products/attribute/update**
+    - Protected route - auth token needed (either user or admin)
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      name: string, optional
+      description: string, optional
+      slug: string, optional
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Attribute Updated",
+        "attribute": {
+          "id": "62baf3826f5b9fe8bdff4524",
+          "name": "Industrial",
+          "description": "...",
+          "slug": "est-odio-quo"
+        }
+      }
+      ```
+
+## Product routes
+
+- For admin -
+  - **/api/products/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      name: string, required
+      description: string, required
+      shortDescriptions: string, required
+      slug: string, required
+      quantity: number, default - 0
+      supplierId: string, required
+      published: boolean, default - false
+      attributes: object, required, structure - {key: [...arr]}
+      categoryIds: array, required
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "New Product Created",
+          "product": {
+              "id": "62c00dcad49389ce1fc48ac0",
+              "name": "Handmade Cotton Pants",
+              "description": "...",
+              "shortDescriptions": "...",
+              "slug": "explicabo-aspernatur-dolorem",
+              "quantity": 157,
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ]
+          }
+      }
+      ```
+  - **/api/products**
+    - Unprotected route
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, optional
+      query: string, optional
+      inStock: boolean, optional
+      published: boolean, optional
+      supplierId: string, optional
+      categoryId: string, optional
+      attributes: object, optional
+      sortBy: string, optional
+      order: string, allowed values - 'desc'/'asc', optional
+      pagination: boolean, optional
+      offset: number, optional
+      limit: number, optional
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "Products found",
+          "products": {
+              "skus": [
+                  {
+                      "name": "Ergonomic Frozen Gloves",
+                      "description": "...",
+                      "shortDescriptions": "...",
+                      "slug": "ducimus-non-id",
+                      "quantity": 790,
+                      "published": false,
+                      "attributes": {
+                          "size": [
+                              "l",
+                              "m",
+                              "s"
+                          ],
+                          "color": [
+                              "red",
+                              "blue"
+                          ]
+                      },
+                      "id": "62bec14cb39f92c3e0a3199b",
+                      "supplierId": "62b97af7190404e5c50e045d",
+                      "categoryIds": [
+                          "62bd634d0a9de06da86e291a"
+                      ]
+                  },
+                  {
+                      "name": "Ergonomic Frozen Shoes",
+                      "description": "...",
+                      "shortDescriptions": "...",
+                      "slug": "repellendus-delectus-sit",
+                      "quantity": 599,
+                      "published": false,
+                      "attributes": {
+                          "size": [
+                              "l",
+                              "m",
+                              "s"
+                          ],
+                          "color": [
+                              "red",
+                              "blue"
+                          ]
+                      },
+                      "id": "62c013d2d49389ce1fc48ad1",
+                      "supplierId": "62b97af7190404e5c50e045d",
+                      "categoryIds": [
+                          "62c010ebd49389ce1fc48ac9"
+                      ]
+                  }
+              ],
+              "pagination": {
+                  "total_count": 5,
+                  "limit": 2,
+                  "offset": 1
+              }
+          }
+      }
+      ```
+  - **/api/products/{{productId}}**
+    - Unprotected route
+    - Accepted method - `GET`
+    - Successful Response -
+      ```
+      {
+          "message": "Product found",
+          "product": [
+              {
+                  "id": "62c01203d49389ce1fc48ace",
+                  "name": "Licensed Soft Sausages",
+                  "description": "...",
+                  "shortDescriptions": "Qui et qui eveniet.",
+                  "slug": "veritatis-molestiae-accusantium",
+                  "quantity": 725,
+                  "supplierId": "62b97af7190404e5c50e045d",
+                  "published": false,
+                  "attributes": {
+                      "size": [
+                          "l",
+                          "m",
+                          "s"
+                      ],
+                      "color": [
+                          "red",
+                          "blue"
+                      ]
+                  },
+                  "categoryIds": [
+                      "62c010ebd49389ce1fc48ac9"
+                  ]
+              }
+          ]
+      }
+      ```
+  - **/api/products/update**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      updateData: {
+        name: string, optional
+        description: string, optional
+        shortDescriptions: string, optional
+        slug: string, optional
+        quantity: number, optional
+        attributes: object, optional, structure - {key: [...arr]}
+        categoryIds: array, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "Product updated",
+          "product": {
+              "id": "62c00dcad49389ce1fc48ac0",
+              "name": "Ergonomic Wooden Salad",
+              "description": "...",
+              "shortDescriptions": "...",
+              "slug": "explicabo-aspernatur-dolorem",
+              "quantity": 142,
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ]
+          }
+      }
+      ```
+  - **/api/products/delete**
+    - Protected route - bearer token needed
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "Product deleted",
+          "product": {
+              "id": "62c00dcad49389ce1fc48ac0",
+              "name": "Ergonomic Wooden Salad",
+              "description": "...",
+              "shortDescriptions": "...",
+              "slug": "explicabo-aspernatur-dolorem",
+              "quantity": 142,
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ]
+          }
+      }
+      ```
+- For user -
+  - **/api/products/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      name: string, required
+      description: string, required
+      shortDescriptions: string, required
+      slug: string, required
+      quantity: number, default - 0
+      published: boolean, default - false
+      attributes: object, required, structure - {key: [...arr]}
+      categoryIds: array, required
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "New Product Created",
+          "product": {
+              "id": "62c00dcad49389ce1fc48ac0",
+              "name": "Handmade Cotton Pants",
+              "description": "...",
+              "shortDescriptions": "...",
+              "slug": "explicabo-aspernatur-dolorem",
+              "quantity": 157,
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ]
+          }
+      }
+      ```
+  - **/api/products**
+    - Unprotected route
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, optional
+      query: string, optional
+      inStock: boolean, optional
+      published: boolean, optional
+      supplierId: string, optional
+      categoryId: string, optional
+      attributes: object, optional
+      sortBy: string, optional
+      order: string, allowed values - 'desc'/'asc', optional
+      pagination: boolean, optional
+      offset: number, optional
+      limit: number, optional
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "Products found",
+          "products": {
+              "skus": [
+                  {
+                      "name": "Ergonomic Frozen Gloves",
+                      "description": "...",
+                      "shortDescriptions": "...",
+                      "slug": "ducimus-non-id",
+                      "quantity": 790,
+                      "published": false,
+                      "attributes": {
+                          "size": [
+                              "l",
+                              "m",
+                              "s"
+                          ],
+                          "color": [
+                              "red",
+                              "blue"
+                          ]
+                      },
+                      "id": "62bec14cb39f92c3e0a3199b",
+                      "supplierId": "62b97af7190404e5c50e045d",
+                      "categoryIds": [
+                          "62bd634d0a9de06da86e291a"
+                      ]
+                  },
+                  {
+                      "name": "Ergonomic Frozen Shoes",
+                      "description": "...",
+                      "shortDescriptions": "...",
+                      "slug": "repellendus-delectus-sit",
+                      "quantity": 599,
+                      "published": false,
+                      "attributes": {
+                          "size": [
+                              "l",
+                              "m",
+                              "s"
+                          ],
+                          "color": [
+                              "red",
+                              "blue"
+                          ]
+                      },
+                      "id": "62c013d2d49389ce1fc48ad1",
+                      "supplierId": "62b97af7190404e5c50e045d",
+                      "categoryIds": [
+                          "62c010ebd49389ce1fc48ac9"
+                      ]
+                  }
+              ],
+              "pagination": {
+                  "total_count": 5,
+                  "limit": 2,
+                  "offset": 1
+              }
+          }
+      }
+      ```
+  - **/api/products/{{productId}}**
+    - Unprotected route
+    - Accepted method - `GET`
+    - Successful Response -
+      ```
+      {
+          "message": "Product found",
+          "product": [
+              {
+                  "id": "62c01203d49389ce1fc48ace",
+                  "name": "Licensed Soft Sausages",
+                  "description": "...",
+                  "shortDescriptions": "Qui et qui eveniet.",
+                  "slug": "veritatis-molestiae-accusantium",
+                  "quantity": 725,
+                  "supplierId": "62b97af7190404e5c50e045d",
+                  "published": false,
+                  "attributes": {
+                      "size": [
+                          "l",
+                          "m",
+                          "s"
+                      ],
+                      "color": [
+                          "red",
+                          "blue"
+                      ]
+                  },
+                  "categoryIds": [
+                      "62c010ebd49389ce1fc48ac9"
+                  ]
+              }
+          ]
+      }
+      ```
+  - **/api/products/update**
+    - Protected route - bearer token needed
+    - Accessible only by owner
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      updateData: {
+        name: string, optional
+        description: string, optional
+        shortDescriptions: string, optional
+        slug: string, optional
+        quantity: number, optional
+        attributes: object, optional, structure - {key: [...arr]}
+        categoryIds: array, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "Product updated",
+          "product": {
+              "id": "62c00dcad49389ce1fc48ac0",
+              "name": "Ergonomic Wooden Salad",
+              "description": "...",
+              "shortDescriptions": "...",
+              "slug": "explicabo-aspernatur-dolorem",
+              "quantity": 142,
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ]
+          }
+      }
+      ```
+  - **/api/products/delete**
+    - Protected route - bearer token needed
+    - Accessible only by owner
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "Product deleted",
+          "product": {
+              "id": "62c00dcad49389ce1fc48ac0",
+              "name": "Ergonomic Wooden Salad",
+              "description": "...",
+              "shortDescriptions": "...",
+              "slug": "explicabo-aspernatur-dolorem",
+              "quantity": 142,
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ]
+          }
+      }
+      ```
+
+## SKU routes
+
+- For admin -
+  - **/api/sku/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      slug: string, required
+      quantity: number, default - 0
+      productId: string, required
+      supplierId: string, required
+      published: boolean, default - false
+      attributes: object, required, structure - {key: [...arr]}
+      categoryIds: array, required
+      price: number, required
+      discountedPrice: number, required
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "New SKU Created",
+          "sku": {
+              "id": "62c00f17d49389ce1fc48ac5",
+              "slug": "aliquid-aut-nulla",
+              "quantity": 797,
+              "productId": "62c00eb1d49389ce1fc48ac1",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": "l",
+                  "color": "red"
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ],
+              "price": 966.88,
+              "discountedPrice": 962.11
+          }
+      }
+      ```
+  - **/api/sku**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, optional
+      inStock: boolean, optional
+      published: boolean, optional
+      priceFrom: number, optional
+      priceTo: number, optional
+      supplierId: string, optional
+      productId: string, optional
+      categoryId: string, optional
+      attributes: object, optional
+      pagination: boolean, optional
+      offset: number, optional
+      limit: number, optional
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "SKUs found",
+          "skus": {
+              "skus": [
+                  {
+                      "slug": "adipisci-fugit-aut",
+                      "quantity": 494,
+                      "published": true,
+                      "attributes": {
+                          "size": "l",
+                          "color": "red"
+                      },
+                      "price": 134.9,
+                      "discountedPrice": 329.13,
+                      "id": "62c00f15d49389ce1fc48ac4",
+                      "supplierId": "62b97af7190404e5c50e045d",
+                      "categoryIds": [
+                          "62c00b39d49389ce1fc48abd"
+                      ]
+                  },
+                  {
+                      "slug": "aliquid-aut-nulla",
+                      "quantity": 797,
+                      "published": true,
+                      "attributes": {
+                          "size": "l",
+                          "color": "red"
+                      },
+                      "price": 966.88,
+                      "discountedPrice": 962.11,
+                      "id": "62c00f17d49389ce1fc48ac5",
+                      "supplierId": "62b97af7190404e5c50e045d",
+                      "categoryIds": [
+                          "62c00b39d49389ce1fc48abd"
+                      ]
+                  }
+              ],
+              "pagination": {
+                  "total_count": 3,
+                  "limit": 2,
+                  "offset": 1
+              }
+          }
+      }
+      ```
+  - **/api/sku/{{skuId}}**
+    - Protected route - bearer token needed
+    - Accepted method - `GET`
+    - Successful Response -
+      ```
+      {
+          "message": "SKU found",
+          "sku": [
+              {
+                  "id": "62c00f17d49389ce1fc48ac5",
+                  "slug": "aliquid-aut-nulla",
+                  "quantity": 797,
+                  "productId": "62c00eb1d49389ce1fc48ac1",
+                  "supplierId": "62b97af7190404e5c50e045d",
+                  "published": true,
+                  "attributes": {
+                      "size": "l",
+                      "color": "red"
+                  },
+                  "categoryIds": [
+                      "62c00b39d49389ce1fc48abd"
+                  ],
+                  "price": 966.88,
+                  "discountedPrice": 962.11
+              }
+          ]
+      }
+      ```
+  - **/api/sku/update**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      updateData: {
+        slug: string, optional
+        quantity: number, optional
+        productId: string, optional
+        published: boolean, optional
+        attributes: object, optional
+        categoryIds: array, optional
+        price: number, optional
+        discountedPrice: number, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "SKU updated",
+          "sku": {
+              "id": "62c00f17d49389ce1fc48ac5",
+              "slug": "aliquid-aut-nulla",
+              "quantity": 797,
+              "productId": "62c00eb1d49389ce1fc48ac1",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": "l",
+                  "color": "red"
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ],
+              "price": 966.88,
+              "discountedPrice": 962.11
+          }
+      }
+      ```
+  - **/api/sku/delete**
+    - Protected route - bearer token needed
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "SKU deleted",
+          "sku": {
+              "id": "62c013dad49389ce1fc48ad2",
+              "slug": "et-qui-vitae",
+              "quantity": 562,
+              "productId": "62c013d2d49389ce1fc48ad1",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": false,
+              "attributes": {
+                  "size": "l",
+                  "color": "red"
+              },
+              "categoryIds": [
+                  "62c010ebd49389ce1fc48ac9"
+              ],
+              "price": 346.1,
+              "discountedPrice": 848.22
+          }
+      }
+      ```
+- For user -
+  - **/api/sku/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      slug: string, required
+      quantity: number, default - 0
+      productId: string, required
+      published: boolean, default - false
+      attributes: object, required, structure - {key: [...arr]}
+      categoryIds: array, required
+      price: number, required
+      discountedPrice: number, required
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "New SKU Created",
+          "sku": {
+              "id": "62c00f17d49389ce1fc48ac5",
+              "slug": "aliquid-aut-nulla",
+              "quantity": 797,
+              "productId": "62c00eb1d49389ce1fc48ac1",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": "l",
+                  "color": "red"
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ],
+              "price": 966.88,
+              "discountedPrice": 962.11
+          }
+      }
+      ```
+  - **/api/sku**
+    - Protected route - bearer token needed
+    - Accessible only by all
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, optional
+      inStock: boolean, optional
+      published: boolean, optional
+      priceFrom: number, optional
+      priceTo: number, optional
+      supplierId: string, optional
+      productId: string, optional
+      categoryId: string, optional
+      attributes: object, optional
+      pagination: boolean, optional
+      offset: number, optional
+      limit: number, optional
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "SKUs found",
+          "skus": {
+              "skus": [
+                  {
+                      "slug": "adipisci-fugit-aut",
+                      "quantity": 494,
+                      "published": true,
+                      "attributes": {
+                          "size": "l",
+                          "color": "red"
+                      },
+                      "price": 134.9,
+                      "discountedPrice": 329.13,
+                      "id": "62c00f15d49389ce1fc48ac4",
+                      "supplierId": "62b97af7190404e5c50e045d",
+                      "categoryIds": [
+                          "62c00b39d49389ce1fc48abd"
+                      ]
+                  },
+                  {
+                      "slug": "aliquid-aut-nulla",
+                      "quantity": 797,
+                      "published": true,
+                      "attributes": {
+                          "size": "l",
+                          "color": "red"
+                      },
+                      "price": 966.88,
+                      "discountedPrice": 962.11,
+                      "id": "62c00f17d49389ce1fc48ac5",
+                      "supplierId": "62b97af7190404e5c50e045d",
+                      "categoryIds": [
+                          "62c00b39d49389ce1fc48abd"
+                      ]
+                  }
+              ],
+              "pagination": {
+                  "total_count": 3,
+                  "limit": 2,
+                  "offset": 1
+              }
+          }
+      }
+      ```
+  - **/api/sku/{{skuId}}**
+    - Protected route - bearer token needed
+    - Accessible only by all
+    - Accepted method - `GET`
+    - Successful Response -
+      ```
+      {
+          "message": "SKU found",
+          "sku": [
+              {
+                  "id": "62c00f17d49389ce1fc48ac5",
+                  "slug": "aliquid-aut-nulla",
+                  "quantity": 797,
+                  "productId": "62c00eb1d49389ce1fc48ac1",
+                  "supplierId": "62b97af7190404e5c50e045d",
+                  "published": true,
+                  "attributes": {
+                      "size": "l",
+                      "color": "red"
+                  },
+                  "categoryIds": [
+                      "62c00b39d49389ce1fc48abd"
+                  ],
+                  "price": 966.88,
+                  "discountedPrice": 962.11
+              }
+          ]
+      }
+      ```
+  - **/api/sku/update**
+    - Protected route - bearer token needed
+    - Accessible only by owner
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      updateData: {
+        slug: string, optional
+        quantity: number, optional
+        productId: string, optional
+        published: boolean, optional
+        attributes: object, optional
+        categoryIds: array, optional
+        price: number, optional
+        discountedPrice: number, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "SKU updated",
+          "sku": {
+              "id": "62c00f17d49389ce1fc48ac5",
+              "slug": "aliquid-aut-nulla",
+              "quantity": 797,
+              "productId": "62c00eb1d49389ce1fc48ac1",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": true,
+              "attributes": {
+                  "size": "l",
+                  "color": "red"
+              },
+              "categoryIds": [
+                  "62c00b39d49389ce1fc48abd"
+              ],
+              "price": 966.88,
+              "discountedPrice": 962.11
+          }
+      }
+      ```
+  - **/api/sku/delete**
+    - Protected route - bearer token needed
+    - Accessible only by owner
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+          "message": "SKU deleted",
+          "sku": {
+              "id": "62c013dad49389ce1fc48ad2",
+              "slug": "et-qui-vitae",
+              "quantity": 562,
+              "productId": "62c013d2d49389ce1fc48ad1",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "published": false,
+              "attributes": {
+                  "size": "l",
+                  "color": "red"
+              },
+              "categoryIds": [
+                  "62c010ebd49389ce1fc48ac9"
+              ],
+              "price": 346.1,
+              "discountedPrice": 848.22
+          }
       }
       ```

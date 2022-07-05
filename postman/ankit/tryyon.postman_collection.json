@@ -1264,891 +1264,6 @@
 			]
 		},
 		{
-			"name": "Products",
-			"item": [
-				{
-					"name": "/api/products/create",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"New Product Created\") { ",
-									"    tests[\"Product creation failed TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});",
-									"",
-									"pm.environment.set(\"productId\",res.product.id);",
-									"pm.environment.set(\"productName\",res.product.name);",
-									"pm.environment.set(\"productDescription\",res.product.description);",
-									"pm.environment.set(\"productShortDescriptions\",res.product.shortDescriptions);",
-									"pm.environment.set(\"productSlug\",res.product.slug);",
-									"pm.environment.set(\"productQuantity\",res.product.quantity);",
-									"pm.environment.set(\"productApproved\",res.product.approved);",
-									"pm.environment.set(\"productPublished\",res.product.published);",
-									"pm.environment.set(\"productPrice\",res.product.price);",
-									"pm.environment.set(\"productDiscountedPrice\",res.product.discountedPrice);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"approved\": {{$randomBoolean}},\n    \"published\": {{$randomBoolean}},\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/products/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"products",
-								"create"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/products/create",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"approved\": {{$randomBoolean}},\n    \"published\": {{$randomBoolean}},\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/products/create",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products",
-										"create"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"28d-L7DxH6dahxaqM/i4QLx4QW1Fllg\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "653"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Mon, 27 Jun 2022 03:55:23 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62b92a2bc18760f3a77c6fed\",\n        \"name\": \"Refined Frozen Pants\",\n        \"description\": \"Qui id labore quae voluptatum accusamus quis id rem. Architecto ipsa explicabo dolor officiis dignissimos quis et. Soluta aut recusandae dicta et sed tenetur aliquam minus natus. Animi magnam molestiae et laudantium commodi magnam. Et dolore sit saepe nihil et sint est sequi molestiae. Ut molestiae sit omnis velit velit excepturi nulla possimus.\",\n        \"shortDescriptions\": \"Aperiam beatae laborum aut provident fuga.\",\n        \"slug\": \"quod-quaerat-ratione\",\n        \"quantity\": 860,\n        \"approved\": false,\n        \"published\": false,\n        \"price\": 360,\n        \"discountedPrice\": 611.28\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/products",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Products found\") { ",
-									"    tests[\"No product found TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/products/?paginated=true&count=10&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"products",
-								""
-							],
-							"query": [
-								{
-									"key": "paginated",
-									"value": "true"
-								},
-								{
-									"key": "count",
-									"value": "10"
-								},
-								{
-									"key": "offset",
-									"value": "0"
-								},
-								{
-									"key": "query",
-									"value": "some"
-								},
-								{
-									"key": "inStock",
-									"value": "true"
-								},
-								{
-									"key": "priceFrom",
-									"value": "10"
-								},
-								{
-									"key": "priceTo",
-									"value": "1000"
-								},
-								{
-									"key": "sortBy",
-									"value": "name"
-								},
-								{
-									"key": "order",
-									"value": "desc"
-								},
-								{
-									"key": "approved",
-									"value": "true"
-								},
-								{
-									"key": "published",
-									"value": "false"
-								}
-							]
-						},
-						"description": "Query params: paginated, count, offset"
-					},
-					"response": [
-						{
-							"name": "/api/products",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/products/",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products",
-										""
-									],
-									"query": [
-										{
-											"key": "paginated",
-											"value": "false",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"2b9-JOkUANpP0yo32NluDTTIx+o6v4c\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "697"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 17 Jun 2022 08:24:51 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac3885a684fef892c4261e\",\n                \"name\": \"Some stuff\",\n                \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some stuff\",\n                \"slug\": \"some-stuff\",\n                \"quantity\": 6,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 150,\n                \"discountedPrice\": 149\n            },\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"total_count\": 2\n    }\n}"
-						},
-						{
-							"name": "/api/products/?paginated=true&count=1&offset=1",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products",
-										""
-									],
-									"query": [
-										{
-											"key": "paginated",
-											"value": "true"
-										},
-										{
-											"key": "count",
-											"value": "1"
-										},
-										{
-											"key": "offset",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"1b7-vjhvtR+WeHznJQEgDPniMXx2eXU\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "439"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 17 Jun 2022 08:26:53 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac391ea684fef892c4261f\",\n                \"name\": \"Some other stuff\",\n                \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some other stuff\",\n                \"slug\": \"some-other-stuff\",\n                \"quantity\": 15,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 1000,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 1,\n            \"count\": 1,\n            \"total_count\": 2\n        }\n    }\n}"
-						},
-						{
-							"name": "/api/products with queries",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=lol&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products",
-										""
-									],
-									"query": [
-										{
-											"key": "paginated",
-											"value": "true"
-										},
-										{
-											"key": "count",
-											"value": "1"
-										},
-										{
-											"key": "offset",
-											"value": "0"
-										},
-										{
-											"key": "query",
-											"value": "lol"
-										},
-										{
-											"key": "inStock",
-											"value": "true"
-										},
-										{
-											"key": "priceFrom",
-											"value": "10"
-										},
-										{
-											"key": "priceTo",
-											"value": "1000"
-										},
-										{
-											"key": "sortBy",
-											"value": "name"
-										},
-										{
-											"key": "order",
-											"value": "desc"
-										},
-										{
-											"key": "approved",
-											"value": "true"
-										},
-										{
-											"key": "published",
-											"value": "false"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"78-UJhSCDBecaj5bBp45yMJ5yiu5gM\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "120"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 17 Jun 2022 12:39:13 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 1\n        }\n    }\n}"
-						},
-						{
-							"name": "/api/products with queries",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/products/?paginated=true&count=1&offset=0&query=some&inStock=true&priceFrom=10&priceTo=1000&sortBy=name&order=desc&approved=true&published=false",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products",
-										""
-									],
-									"query": [
-										{
-											"key": "paginated",
-											"value": "true"
-										},
-										{
-											"key": "count",
-											"value": "1"
-										},
-										{
-											"key": "offset",
-											"value": "0"
-										},
-										{
-											"key": "query",
-											"value": "some"
-										},
-										{
-											"key": "inStock",
-											"value": "true"
-										},
-										{
-											"key": "priceFrom",
-											"value": "10"
-										},
-										{
-											"key": "priceTo",
-											"value": "1000"
-										},
-										{
-											"key": "sortBy",
-											"value": "name"
-										},
-										{
-											"key": "order",
-											"value": "desc"
-										},
-										{
-											"key": "approved",
-											"value": "true"
-										},
-										{
-											"key": "published",
-											"value": "false"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"19d-H8WULcV14ZJiINb8ZFf2WBveR8E\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "413"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 17 Jun 2022 12:41:11 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"id\": \"62ac3885a684fef892c4261e\",\n                \"name\": \"Some stuff\",\n                \"description\": \"This is some stuff with more stuff inside it so it is totally stuffed with stuffs\",\n                \"shortDescriptions\": \"This is some stuff\",\n                \"slug\": \"some-stuff\",\n                \"quantity\": 6,\n                \"approved\": true,\n                \"published\": false,\n                \"price\": 150,\n                \"discountedPrice\": 149\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 1\n        }\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/product/productId",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Product found\") { ",
-									"    tests[\"No product found TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/products/{{productId}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"products",
-								"{{productId}}"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/product/productId",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/products/{{productId}}",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products",
-										"{{productId}}"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"172-8RBDof6CR6Uq+HJ9+P5ypd7xzcQ\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "370"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 17 Jun 2022 08:29:29 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Product found\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 149\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/product/update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Product updated\") { ",
-									"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"discountedPrice\": {{$randomPrice}}\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/products/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"products",
-								"update"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/product/update",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{productName}}\",\n        \"discountedPrice\": {{productDiscountedPrice}}\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/products/update",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products",
-										"update"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"179-cDtDid3k0rewHYnsLAfnF5NxaQk\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "377"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 17 Jun 2022 08:32:09 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "/api/products/delete",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var res = JSON.parse(responseBody);",
-									"if(res.message !== \"Product deleted\") { ",
-									"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
-									"    return;",
-									"}",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response time is less than 2000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{productId}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/products/delete",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"products",
-								"delete"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/api/products/delete",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"{{productId}}\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/api/products/delete",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products",
-										"delete"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "ETag",
-									"value": "\"179-ZHTIkUem9uhIfKx79/Qvx9YDIME\""
-								},
-								{
-									"key": "Content-Length",
-									"value": "377"
-								},
-								{
-									"key": "Vary",
-									"value": "Accept-Encoding"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 17 Jun 2022 08:34:30 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": 200,\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62ac391ea684fef892c4261f\",\n        \"name\": \"Some other random stuff\",\n        \"description\": \"This is some other stuff with more stuff inside it so it is totally stuffed with stuffs\",\n        \"shortDescriptions\": \"This is some other stuff\",\n        \"slug\": \"some-other-stuff\",\n        \"quantity\": 15,\n        \"approved\": true,\n        \"published\": false,\n        \"price\": 1000,\n        \"discountedPrice\": 1\n    }\n}"
-						}
-					]
-				}
-			]
-		},
-		{
 			"name": "User",
 			"item": [
 				{
@@ -3825,6 +2940,4695 @@
 							]
 						}
 					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "As admin",
+					"item": [
+						{
+							"name": "Category",
+							"item": [
+								{
+									"name": "/api/products/category/create",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"New Category Created\") { ",
+													"    tests[\"Category creation failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});",
+													"",
+													"pm.environment.set('categoryId', res.category.id);",
+													"pm.environment.set('parentCategoryId', res.category.parentCategoryId);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomProductAdjective}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"create"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/category/create",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"{{$randomProductAdjective}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/category/create",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"category",
+														"create"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"137-+PejsJ4jx5/7rpja9yIKPo2gK1E\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "311"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 10:27:43 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"New Category Created\",\n    \"category\": {\n        \"id\": \"62bad79ff4b8ec8aad5ced38\",\n        \"name\": \"Unbranded\",\n        \"description\": \"Vero iusto voluptates reiciendis nihil. Tempora facere optio ad et vel esse sunt. Omnis voluptate amet.\",\n        \"slug\": \"dolore-aliquid-explicabo\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/category/",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Categories found\") { ",
+													"    tests[\"Category search failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/category?isRoot=true&includeChildren=true",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category"
+											],
+											"query": [
+												{
+													"key": "isRoot",
+													"value": "true"
+												},
+												{
+													"key": "query",
+													"value": "fanta",
+													"disabled": true
+												},
+												{
+													"key": "includeChildren",
+													"value": "true"
+												},
+												{
+													"key": "id",
+													"value": "{{categoryId}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/category/",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:3000/api/products/category?isRoot=true&includeChildren=true",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"category"
+													],
+													"query": [
+														{
+															"key": "isRoot",
+															"value": "true"
+														},
+														{
+															"key": "query",
+															"value": "fanta",
+															"disabled": true
+														},
+														{
+															"key": "includeChildren",
+															"value": "true"
+														},
+														{
+															"key": "id",
+															"value": "{{categoryId}}",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"58c-k23tv8A5XrbOEV732FVHtysp4Jk\""
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Content-Encoding",
+													"value": "gzip"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 11:06:29 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Categories found\",\n    \"categories\": [\n        {\n            \"id\": \"62bad0b6f4b8ec8aad5ced34\",\n            \"name\": \"Fantastic\",\n            \"description\": \"Ut ipsam sed facilis. Dignissimos quaerat numquam voluptatibus. Ratione molestiae ipsam.\",\n            \"slug\": \"aspernatur-animi-quia\",\n            \"root\": true,\n            \"parentCategoryId\": null,\n            \"children\": [\n                {\n                    \"id\": \"62bad793f4b8ec8aad5ced35\",\n                    \"name\": \"Sleek\",\n                    \"description\": \"Illum tempore neque amet dolor. Deleniti quia molestias quas omnis autem. Tenetur maiores quia. Aut et omnis consequuntur dolorem accusantium dolor.\",\n                    \"slug\": \"modi-est-atque\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n                },\n                {\n                    \"id\": \"62bad79af4b8ec8aad5ced36\",\n                    \"name\": \"Gorgeous\",\n                    \"description\": \"Fuga dicta mollitia. Et et architecto nulla blanditiis esse quam. Quo id sapiente.\",\n                    \"slug\": \"iure-omnis-neque\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n                },\n                {\n                    \"id\": \"62bad79df4b8ec8aad5ced37\",\n                    \"name\": \"Sleek\",\n                    \"description\": \"Debitis recusandae consequatur et molestiae officia sed perspiciatis vitae voluptatem. Consequuntur et magni officia eum quae nobis voluptate et aut. Hic qui beatae. Quaerat optio fuga.\",\n                    \"slug\": \"dolor-atque-soluta\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n                },\n                {\n                    \"id\": \"62bad79ff4b8ec8aad5ced38\",\n                    \"name\": \"Unbranded\",\n                    \"description\": \"Vero iusto voluptates reiciendis nihil. Tempora facere optio ad et vel esse sunt. Omnis voluptate amet.\",\n                    \"slug\": \"dolore-aliquid-explicabo\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\"\n                }\n            ]\n        }\n    ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/category/update",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Category Updated\") { ",
+													"    tests[\"Category updation failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{categoryId}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"update"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/category/update",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{categoryId}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/category/update",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"category",
+														"update"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"171-skUCe6aHWDDpY++wNQxR5sRiIuA\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "369"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 10:53:46 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Category Updated\",\n    \"category\": {\n        \"id\": \"62badc78f4b8ec8aad5ced39\",\n        \"name\": \"Practical\",\n        \"description\": \"Qui omnis autem doloremque mollitia corrupti et quo eaque. Quia quia dolor ut. Quia consequatur et dolores explicabo iste voluptatum. Consequatur earum voluptatem accusamus.\",\n        \"slug\": \"quis-quasi-animi\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad79ff4b8ec8aad5ced38\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/category/delete",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Category deleted\") { ",
+													"    tests[\"Category deletion failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{categoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"delete"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/category/delete",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{categoryId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/category/delete",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"category",
+														"delete"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"171-M389vHyNaJBHB6SyjbNe6pXC8/M\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "369"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 11:04:33 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Category Deleted\",\n    \"category\": {\n        \"id\": \"62badc78f4b8ec8aad5ced39\",\n        \"name\": \"Practical\",\n        \"description\": \"Qui omnis autem doloremque mollitia corrupti et quo eaque. Quia quia dolor ut. Quia consequatur et dolores explicabo iste voluptatum. Consequatur earum voluptatem accusamus.\",\n        \"slug\": \"quis-quasi-animi\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad79ff4b8ec8aad5ced38\"\n    }\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Attribute",
+							"item": [
+								{
+									"name": "/api/products/attribute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Attributes found\") { ",
+													"    tests[\"Attribute search failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{attributeId}}",
+													"disabled": true
+												},
+												{
+													"key": "query",
+													"value": "he",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/attribute",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute"
+													],
+													"query": [
+														{
+															"key": "id",
+															"value": "{{attributeId}}",
+															"disabled": true
+														},
+														{
+															"key": "query",
+															"value": "he",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"552-wfcEMWcKFUbCI+3dRrzG/Md1jlQ\""
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Content-Encoding",
+													"value": "gzip"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 12:26:52 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Attributes found\",\n    \"attributes\": [\n        {\n            \"id\": \"62baf1ea6f5b9fe8bdff4520\",\n            \"name\": \"Consultant\",\n            \"description\": \"Et quia atque tempore commodi aperiam. Autem architecto est veritatis velit voluptate aliquam dignissimos. Atque sunt accusamus eum ipsam ipsum molestiae facere. Qui alias molestiae quos nihil expedita dolorem.\",\n            \"slug\": \"temporibus-sed-repellendus\"\n        },\n        {\n            \"id\": \"62baf2236f5b9fe8bdff4521\",\n            \"name\": \"Cheese\",\n            \"description\": \"Sed qui dolor consequatur repudiandae nihil sit ex mollitia. Laboriosam voluptatibus distinctio expedita ea nobis soluta corrupti. Et autem laboriosam modi. Perspiciatis dolor ad.\",\n            \"slug\": \"ea-consequatur-dignissimos\"\n        },\n        {\n            \"id\": \"62baf2fc6f5b9fe8bdff4522\",\n            \"name\": \"24/7\",\n            \"description\": \"Cupiditate magnam eaque et eaque rerum quia et ex officiis. Quasi voluptatum dolore qui consectetur est saepe aut distinctio. Eaque similique maxime ut ut voluptates omnis ducimus. Minima cumque a eum. Corporis placeat molestiae quae architecto nulla nihil qui tempora. Quod est similique cum iusto odio et corporis in ullam.\",\n            \"slug\": \"enim-voluptas-aliquid\"\n        },\n        {\n            \"id\": \"62baf3826f5b9fe8bdff4524\",\n            \"name\": \"enhance\",\n            \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n            \"slug\": \"est-odio-quo\"\n        }\n    ]\n}"
+										},
+										{
+											"name": "/api/products/attribute",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute?id={{attributeId}}",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute"
+													],
+													"query": [
+														{
+															"key": "id",
+															"value": "{{attributeId}}"
+														},
+														{
+															"key": "query",
+															"value": "he",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"156-AJu6wJK11oYleidRFT9oCMzQrbs\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "342"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 12:27:01 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Attributes found\",\n    \"attributes\": [\n        {\n            \"id\": \"62baf3826f5b9fe8bdff4524\",\n            \"name\": \"enhance\",\n            \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n            \"slug\": \"est-odio-quo\"\n        }\n    ]\n}"
+										},
+										{
+											"name": "/api/products/attribute",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute?query=he",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute"
+													],
+													"query": [
+														{
+															"key": "id",
+															"value": "{{attributeId}}",
+															"disabled": true
+														},
+														{
+															"key": "query",
+															"value": "he"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"147-yP1yK2opRIu3vzDTPrqkvsnt6Fk\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "327"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 12:27:08 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Attributes found\",\n    \"attributes\": [\n        {\n            \"id\": \"62baf2236f5b9fe8bdff4521\",\n            \"name\": \"Cheese\",\n            \"description\": \"Sed qui dolor consequatur repudiandae nihil sit ex mollitia. Laboriosam voluptatibus distinctio expedita ea nobis soluta corrupti. Et autem laboriosam modi. Perspiciatis dolor ad.\",\n            \"slug\": \"ea-consequatur-dignissimos\"\n        }\n    ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/attribute/create",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"New Attribute Created\") { ",
+													"    tests[\"Attribute creation failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});",
+													"",
+													"pm.environment.set('attributeId', res.attribute.id);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomWord}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"create"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/attribute/create",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"{{$randomWord}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute/create",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute",
+														"create"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"158-Zv8Mp6toMWFFtW9lgw/UOMlVUUQ\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "344"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 12:26:42 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"New Attribute Created\",\n    \"attribute\": {\n        \"id\": \"62baf3826f5b9fe8bdff4524\",\n        \"name\": \"enhance\",\n        \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n        \"slug\": \"est-odio-quo\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/attribute/update",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Attribute Updated\") { ",
+													"    tests[\"Attribute updation failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{attributeId}}\",\n    \"name\": \"{{$randomWord}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"update"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/attribute/update",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{attributeId}}\",\n    \"name\": \"{{$randomWord}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute/update",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute",
+														"update"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"157-/kw7pUR5gfYIlGoDcgcBqI2HCLI\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "343"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 12:27:23 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Attribute Updated\",\n    \"attribute\": {\n        \"id\": \"62baf3826f5b9fe8bdff4524\",\n        \"name\": \"Industrial\",\n        \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n        \"slug\": \"est-odio-quo\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/attribute/delete",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Attribute deleted\") { ",
+													"    tests[\"Attribute deletion failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{attributeId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"delete"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/attribute/delete",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{attributeId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute/delete",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute",
+														"delete"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"157-WRvvYPzHzvH8f9zWYsRF8RtwADc\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "343"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 28 Jun 2022 12:27:37 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Attribute Deleted\",\n    \"attribute\": {\n        \"id\": \"62baf3826f5b9fe8bdff4524\",\n        \"name\": \"Industrial\",\n        \"description\": \"Quam sint rerum voluptas ea reiciendis. Enim fuga dolores recusandae recusandae vitae tempora. Cum repellendus velit sed quod magnam. Assumenda tempore aut qui odit. Delectus nisi dolor consequatur ut velit.\",\n        \"slug\": \"est-odio-quo\"\n    }\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/products/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Product Created\") { ",
+											"    tests[\"Product creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"productId\",res.product.id);",
+											"pm.environment.set(\"productName\",res.product.name);",
+											"pm.environment.set(\"productDescription\",res.product.description);",
+											"pm.environment.set(\"productShortDescriptions\",res.product.shortDescriptions);",
+											"pm.environment.set(\"productSlug\",res.product.slug);",
+											"pm.environment.set(\"productQuantity\",res.product.quantity);",
+											"pm.environment.set(\"productApproved\",res.product.approved);",
+											"pm.environment.set(\"productPublished\",res.product.published);",
+											"pm.environment.set(\"productPrice\",res.product.price);",
+											"pm.environment.set(\"productDiscountedPrice\",res.product.discountedPrice);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"24f-p4Q0cfjczpbzRHejwcRg6bHyNLA\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "591"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:20:11 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62c00dcad49389ce1fc48ac0\",\n        \"name\": \"Handmade Cotton Pants\",\n        \"description\": \"Perferendis omnis dolor suscipit vel eligendi. Consectetur fuga est. Inventore voluptate enim sint necessitatibus sed quos sapiente. Consequatur ratione eum quia et dicta et.\",\n        \"shortDescriptions\": \"Quis est voluptatum nobis non sint natus enim voluptatem.\",\n        \"slug\": \"explicabo-aspernatur-dolorem\",\n        \"quantity\": 157,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c00b39d49389ce1fc48abd\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Products found\") { ",
+											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// \"pagination\": true",
+											"// \"count\": 10,",
+											"// \"offset\": 0,",
+											"// \"id\": \"{{productId}}\",",
+											"// \"query\": \"{{productName}}\",",
+											"// \"inStock\": {{$randomBoolean}},",
+											"// \"published\": {{$randomBoolean}},",
+											"// \"supplierId\": \"{{tenantId}}\",",
+											"// \"categoryId\": \"{{categoryId}}\",",
+											"// \"sortBy\": \"name\",",
+											"// \"order\": \"asc\",",
+											"// \"attributes\": {",
+											"//         \"size\": \"l\",",
+											"//         \"color\": \"red\"",
+											"//     },"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": \"g\",\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"sortBy\": \"name\",\n    \"order\": \"asc\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									]
+								},
+								"description": "Query params: paginated, count, offset"
+							},
+							"response": [
+								{
+									"name": "/api/products",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"query\": \"g\",\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"sortBy\": \"name\",\n    \"order\": \"asc\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"470-VyZZCjaCTmZLFatu83VaSIZy2RU\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 11:06:47 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Products found\",\n    \"products\": {\n        \"skus\": [\n            {\n                \"name\": \"Ergonomic Frozen Gloves\",\n                \"description\": \"Et voluptatum aut maiores qui doloribus ducimus sed impedit ex. Sed rem illum qui et quia aliquam et. Et aut laudantium aut corrupti amet rerum explicabo.\",\n                \"shortDescriptions\": \"Corrupti delectus enim fugiat et sapiente explicabo mollitia quis.\",\n                \"slug\": \"ducimus-non-id\",\n                \"quantity\": 790,\n                \"published\": false,\n                \"attributes\": {\n                    \"size\": [\n                        \"l\",\n                        \"m\",\n                        \"s\"\n                    ],\n                    \"color\": [\n                        \"red\",\n                        \"blue\"\n                    ]\n                },\n                \"id\": \"62bec14cb39f92c3e0a3199b\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62bd634d0a9de06da86e291a\"\n                ]\n            },\n            {\n                \"name\": \"Ergonomic Frozen Shoes\",\n                \"description\": \"Aut perspiciatis consectetur. Sit quia deleniti ratione eum aut eos. Molestias nostrum corrupti occaecati tempora sit a cumque molestiae consequatur. Quae sit non.\",\n                \"shortDescriptions\": \"Labore ut architecto sit quia.\",\n                \"slug\": \"repellendus-delectus-sit\",\n                \"quantity\": 599,\n                \"published\": false,\n                \"attributes\": {\n                    \"size\": [\n                        \"l\",\n                        \"m\",\n                        \"s\"\n                    ],\n                    \"color\": [\n                        \"red\",\n                        \"blue\"\n                    ]\n                },\n                \"id\": \"62c013d2d49389ce1fc48ad1\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62c010ebd49389ce1fc48ac9\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"total_count\": 5,\n            \"limit\": 2,\n            \"offset\": 1\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product/productId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product found\") { ",
+											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/{{productId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product/productId",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/{{productId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"{{productId}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"21d-5zLRrLjwS8jGm1Vtl2l6NLNEfvI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "541"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:38:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product found\",\n    \"product\": [\n        {\n            \"id\": \"62c01203d49389ce1fc48ace\",\n            \"name\": \"Licensed Soft Sausages\",\n            \"description\": \"Et magni et ipsa in maiores doloremque voluptas. Dolorem magnam voluptatum necessitatibus sint quos officia ut maxime impedit. Quod est qui. Neque laudantium ut.\",\n            \"shortDescriptions\": \"Qui et qui eveniet.\",\n            \"slug\": \"veritatis-molestiae-accusantium\",\n            \"quantity\": 725,\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": false,\n            \"attributes\": {\n                \"size\": [\n                    \"l\",\n                    \"m\",\n                    \"s\"\n                ],\n                \"color\": [\n                    \"red\",\n                    \"blue\"\n                ]\n            },\n            \"categoryIds\": [\n                \"62c010ebd49389ce1fc48ac9\"\n            ]\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product updated\") { ",
+											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"quantity\": {{$randomInt}}\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"quantity\": {{$randomInt}}\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"24c-L6AKh0DTjVgOsayi/S8iikS5TgU\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "588"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:22:46 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62c00dcad49389ce1fc48ac0\",\n        \"name\": \"Ergonomic Wooden Salad\",\n        \"description\": \"Perferendis omnis dolor suscipit vel eligendi. Consectetur fuga est. Inventore voluptate enim sint necessitatibus sed quos sapiente. Consequatur ratione eum quia et dicta et.\",\n        \"shortDescriptions\": \"Quis est voluptatum nobis non sint natus enim voluptatem.\",\n        \"slug\": \"explicabo-aspernatur-dolorem\",\n        \"quantity\": 142,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c00b39d49389ce1fc48abd\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product deleted\") { ",
+											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"24c-DaZ06sBUXoGVkwru7FIqtmG+Ygs\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "588"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:23:06 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62c00dcad49389ce1fc48ac0\",\n        \"name\": \"Ergonomic Wooden Salad\",\n        \"description\": \"Perferendis omnis dolor suscipit vel eligendi. Consectetur fuga est. Inventore voluptate enim sint necessitatibus sed quos sapiente. Consequatur ratione eum quia et dicta et.\",\n        \"shortDescriptions\": \"Quis est voluptatum nobis non sint natus enim voluptatem.\",\n        \"slug\": \"explicabo-aspernatur-dolorem\",\n        \"quantity\": 142,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c00b39d49389ce1fc48abd\"\n        ]\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "As user",
+					"item": [
+						{
+							"name": "Category",
+							"item": [
+								{
+									"name": "/api/products/category/create",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"New Category Created\") { ",
+													"    tests[\"Category creation failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});",
+													"",
+													"pm.environment.set('categoryId', res.category.id);",
+													"pm.environment.set('parentCategoryId', res.category.parentCategoryId);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomProductAdjective}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"create"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/category/create",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"{{$randomProductAdjective}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/category/create",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"category",
+														"create"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"1a6-xM6fbW/oJq/1djmECUpeTKzRcIE\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "422"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 02 Jul 2022 09:32:26 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"New Category Created\",\n    \"category\": {\n        \"id\": \"62c010aad49389ce1fc48ac7\",\n        \"name\": \"Intelligent\",\n        \"description\": \"Asperiores accusantium saepe ducimus qui id repellat autem. Velit at voluptatem in reiciendis quae non omnis. Fuga vel inventore eaque voluptatem officia cum consequuntur eaque ratione.\",\n        \"slug\": \"molestiae-sed-voluptates\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad79ff4b8ec8aad5ced38\",\n        \"productIds\": [],\n        \"skuId\": []\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/category/",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Categories found\") { ",
+													"    tests[\"Category search failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/category?isRoot=true&includeChildren=true",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category"
+											],
+											"query": [
+												{
+													"key": "isRoot",
+													"value": "true"
+												},
+												{
+													"key": "query",
+													"value": "fanta",
+													"disabled": true
+												},
+												{
+													"key": "includeChildren",
+													"value": "true"
+												},
+												{
+													"key": "id",
+													"value": "{{categoryId}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/category/",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:3000/api/products/category?isRoot=true&includeChildren=true",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"category"
+													],
+													"query": [
+														{
+															"key": "isRoot",
+															"value": "true"
+														},
+														{
+															"key": "query",
+															"value": "fanta",
+															"disabled": true
+														},
+														{
+															"key": "includeChildren",
+															"value": "true"
+														},
+														{
+															"key": "id",
+															"value": "{{categoryId}}",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"613-ASt7vuII+f2E9qzu1KUTnwm77nY\""
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Content-Encoding",
+													"value": "gzip"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 02 Jul 2022 09:32:36 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Categories found\",\n    \"categories\": [\n        {\n            \"id\": \"62bad0b6f4b8ec8aad5ced34\",\n            \"name\": \"Fantastic\",\n            \"description\": \"Ut ipsam sed facilis. Dignissimos quaerat numquam voluptatibus. Ratione molestiae ipsam.\",\n            \"slug\": \"aspernatur-animi-quia\",\n            \"root\": true,\n            \"parentCategoryId\": null,\n            \"productIds\": [],\n            \"skuId\": [],\n            \"children\": [\n                {\n                    \"id\": \"62bad793f4b8ec8aad5ced35\",\n                    \"name\": \"Sleek\",\n                    \"description\": \"Illum tempore neque amet dolor. Deleniti quia molestias quas omnis autem. Tenetur maiores quia. Aut et omnis consequuntur dolorem accusantium dolor.\",\n                    \"slug\": \"modi-est-atque\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\",\n                    \"productIds\": [],\n                    \"skuId\": []\n                },\n                {\n                    \"id\": \"62bad79af4b8ec8aad5ced36\",\n                    \"name\": \"Gorgeous\",\n                    \"description\": \"Fuga dicta mollitia. Et et architecto nulla blanditiis esse quam. Quo id sapiente.\",\n                    \"slug\": \"iure-omnis-neque\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\",\n                    \"productIds\": [],\n                    \"skuId\": []\n                },\n                {\n                    \"id\": \"62bad79df4b8ec8aad5ced37\",\n                    \"name\": \"Sleek\",\n                    \"description\": \"Debitis recusandae consequatur et molestiae officia sed perspiciatis vitae voluptatem. Consequuntur et magni officia eum quae nobis voluptate et aut. Hic qui beatae. Quaerat optio fuga.\",\n                    \"slug\": \"dolor-atque-soluta\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\",\n                    \"productIds\": [],\n                    \"skuId\": []\n                },\n                {\n                    \"id\": \"62bad79ff4b8ec8aad5ced38\",\n                    \"name\": \"Unbranded\",\n                    \"description\": \"Vero iusto voluptates reiciendis nihil. Tempora facere optio ad et vel esse sunt. Omnis voluptate amet.\",\n                    \"slug\": \"dolore-aliquid-explicabo\",\n                    \"root\": false,\n                    \"parentCategoryId\": \"62bad0b6f4b8ec8aad5ced34\",\n                    \"productIds\": [],\n                    \"skuId\": []\n                }\n            ]\n        }\n    ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/category/update",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Category Updated\") { ",
+													"    tests[\"Category updation failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{categoryId}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"update"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/category/update",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{categoryId}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"parentCategoryId\": \"{{parentCategoryId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/category/update",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"category",
+														"update"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"188-sFCkk51qLQMJe5I0IhovwNb8zrI\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "392"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 02 Jul 2022 09:32:46 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Category Updated\",\n    \"category\": {\n        \"id\": \"62c010aad49389ce1fc48ac7\",\n        \"name\": \"Intelligent\",\n        \"description\": \"Voluptatem sit laudantium dolor animi nulla harum tempore perferendis cumque. Vero quis dolor aut veritatis. Enim ut asperiores. Recusandae enim ut quia et ad.\",\n        \"slug\": \"molestiae-sed-voluptates\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad79ff4b8ec8aad5ced38\",\n        \"productIds\": [],\n        \"skuId\": []\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/category/delete",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Category deleted\") { ",
+													"    tests[\"Category deletion failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{categoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/category/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"category",
+												"delete"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/category/delete",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{categoryId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/category/delete",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"category",
+														"delete"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"1e1-Y2hg79f3GS5gloGR9eSdXfKVFbU\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "481"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 02 Jul 2022 09:33:17 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Category Deleted\",\n    \"category\": {\n        \"id\": \"62c010d9d49389ce1fc48ac8\",\n        \"name\": \"Generic\",\n        \"description\": \"Qui labore voluptatem expedita velit consequatur. Amet autem voluptatum sed aspernatur est. Esse quia ullam reprehenderit quos consequatur. Blanditiis sunt et quis. Reiciendis asperiores nesciunt unde maxime cupiditate autem quod. Ea nesciunt sit earum consectetur.\",\n        \"slug\": \"nam-ab-odit\",\n        \"root\": false,\n        \"parentCategoryId\": \"62bad79ff4b8ec8aad5ced38\",\n        \"productIds\": [],\n        \"skuId\": []\n    }\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Attribute",
+							"item": [
+								{
+									"name": "/api/products/attribute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Attributes found\") { ",
+													"    tests[\"Attribute search failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute?id={{attributeId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{attributeId}}"
+												},
+												{
+													"key": "query",
+													"value": "he",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/attribute",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute?id={{attributeId}}",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute"
+													],
+													"query": [
+														{
+															"key": "id",
+															"value": "{{attributeId}}"
+														},
+														{
+															"key": "query",
+															"value": "he",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"12f-hTrhMlPwM/bN8aTn85M3P+1M4bQ\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "303"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 02 Jul 2022 09:33:56 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Attributes found\",\n    \"attributes\": [\n        {\n            \"id\": \"62c010ffd49389ce1fc48aca\",\n            \"name\": \"Cocos\",\n            \"description\": \"Asperiores et perferendis. Architecto officia deleniti autem aspernatur autem amet velit voluptas. Sapiente eum error tempore quibusdam. Autem rem cum sint culpa.\",\n            \"slug\": \"quia-deleniti-quidem\"\n        }\n    ]\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/attribute/create",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"New Attribute Created\") { ",
+													"    tests[\"Attribute creation failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});",
+													"",
+													"pm.environment.set('attributeId', res.attribute.id);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomWord}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"create"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/attribute/create",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"{{$randomWord}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"slug\": \"{{$randomLoremSlug}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute/create",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute",
+														"create"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"11d-9Sal1ZcO7W1Pdr2LYkue9MAQwnw\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "285"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 02 Jul 2022 09:34:13 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"New Attribute Created\",\n    \"attribute\": {\n        \"id\": \"62c01114d49389ce1fc48acb\",\n        \"name\": \"Borders\",\n        \"description\": \"Est nisi illum voluptate consequatur modi quia sit. Est voluptatum quia non ullam repudiandae similique fugiat. Accusamus voluptatem in.\",\n        \"slug\": \"assumenda-voluptatem-sed\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/attribute/update",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Attribute Updated\") { ",
+													"    tests[\"Attribute updation failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{attributeId}}\",\n    \"name\": \"{{$randomWord}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"update"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/attribute/update",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{attributeId}}\",\n    \"name\": \"{{$randomWord}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute/update",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute",
+														"update"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"11d-4NvQjHVXtHw03w7Y91alUuAPmgI\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "285"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 02 Jul 2022 09:34:22 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Attribute Updated\",\n    \"attribute\": {\n        \"id\": \"62c01114d49389ce1fc48acb\",\n        \"name\": \"compressing\",\n        \"description\": \"Est nisi illum voluptate consequatur modi quia sit. Est voluptatum quia non ullam repudiandae similique fugiat. Accusamus voluptatem in.\",\n        \"slug\": \"assumenda-voluptatem-sed\"\n    }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/products/attribute/delete",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var res = JSON.parse(responseBody);",
+													"if(res.message !== \"Attribute deleted\") { ",
+													"    tests[\"Attribute deletion failed TEST FAILED\"] = res.message == null;",
+													"    return;",
+													"}",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"Response time is less than 2000ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{attributeId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/attribute/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"attribute",
+												"delete"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "/api/products/attribute/delete",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": \"{{attributeId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:3000/api/products/attribute/delete",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"api",
+														"products",
+														"attribute",
+														"delete"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "ETag",
+													"value": "\"11d-RhDZFVAN1WXrCG5GCdE/lTpyWxc\""
+												},
+												{
+													"key": "Content-Length",
+													"value": "285"
+												},
+												{
+													"key": "Vary",
+													"value": "Accept-Encoding"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 02 Jul 2022 09:34:29 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"message\": \"Attribute Deleted\",\n    \"attribute\": {\n        \"id\": \"62c01114d49389ce1fc48acb\",\n        \"name\": \"compressing\",\n        \"description\": \"Est nisi illum voluptate consequatur modi quia sit. Est voluptatum quia non ullam repudiandae similique fugiat. Accusamus voluptatem in.\",\n        \"slug\": \"assumenda-voluptatem-sed\"\n    }\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/products/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Product Created\") { ",
+											"    tests[\"Product creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"productId\",res.product.id);",
+											"pm.environment.set(\"productName\",res.product.name);",
+											"pm.environment.set(\"productDescription\",res.product.description);",
+											"pm.environment.set(\"productShortDescriptions\",res.product.shortDescriptions);",
+											"pm.environment.set(\"productSlug\",res.product.slug);",
+											"pm.environment.set(\"productQuantity\",res.product.quantity);",
+											"pm.environment.set(\"productApproved\",res.product.approved);",
+											"pm.environment.set(\"productPublished\",res.product.published);",
+											"pm.environment.set(\"productPrice\",res.product.price);",
+											"pm.environment.set(\"productDiscountedPrice\",res.product.discountedPrice);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"1da-AnBpVGgMRN5Hffof0We8j0Ew/e8\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "474"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:37:22 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62c011d2d49389ce1fc48acd\",\n        \"name\": \"Handcrafted Fresh Computer\",\n        \"description\": \"Tempore sapiente qui nobis. Velit a nisi et. Amet dolorem eaque perferendis ipsam.\",\n        \"shortDescriptions\": \"Maiores et totam aut molestiae animi nostrum.\",\n        \"slug\": \"sit-cum-ut\",\n        \"quantity\": 676,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Products found\") { ",
+											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// \"count\": 10,",
+											"// \"offset\": 0,",
+											"// \"id\": \"{{productId}}\",",
+											"// \"query\": \"{{productName}}\",",
+											"// \"inStock\": {{$randomBoolean}},",
+											"// \"published\": {{$randomBoolean}},",
+											"// \"supplierId\": \"{{tenantId}}\",",
+											"// \"categoryId\": \"{{categoryId}}\",",
+											"// \"sortBy\": \"name\",",
+											"// \"order\": \"asc\",",
+											"// \"attributes\": {",
+											"//         \"size\": \"l\",",
+											"//         \"color\": \"red\"",
+											"//     },"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": \"g\",\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"categoryId\": \"{{categoryId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									]
+								},
+								"description": "Query params: paginated, count, offset"
+							},
+							"response": [
+								{
+									"name": "/api/products",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"query\": \"g\",\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"categoryId\": \"{{categoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"67-6tTxiiESzIZjjAPLRWMtlXlTGfw\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "103"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:38:49 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Products found\",\n    \"products\": {\n        \"skus\": [],\n        \"pagination\": {\n            \"total_count\": 1,\n            \"limit\": 2,\n            \"offset\": 1\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product/productId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product found\") { ",
+											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/{{productId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product/productId",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/{{productId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"{{productId}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"21d-5zLRrLjwS8jGm1Vtl2l6NLNEfvI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "541"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:38:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product found\",\n    \"product\": [\n        {\n            \"id\": \"62c01203d49389ce1fc48ace\",\n            \"name\": \"Licensed Soft Sausages\",\n            \"description\": \"Et magni et ipsa in maiores doloremque voluptas. Dolorem magnam voluptatum necessitatibus sint quos officia ut maxime impedit. Quod est qui. Neque laudantium ut.\",\n            \"shortDescriptions\": \"Qui et qui eveniet.\",\n            \"slug\": \"veritatis-molestiae-accusantium\",\n            \"quantity\": 725,\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": false,\n            \"attributes\": {\n                \"size\": [\n                    \"l\",\n                    \"m\",\n                    \"s\"\n                ],\n                \"color\": [\n                    \"red\",\n                    \"blue\"\n                ]\n            },\n            \"categoryIds\": [\n                \"62c010ebd49389ce1fc48ac9\"\n            ]\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product updated\") { ",
+											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"attributes\": {\n            \"size\": [\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\",\n                \"green\"\n            ]\n        },\n        \"categoryIds\": [\n            \"{{categoryId}}\"\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"220-s2yuscazf4kpZX5Lg0qWjuMMv3k\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "544"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:39:15 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62c01203d49389ce1fc48ace\",\n        \"name\": \"Intelligent Plastic Shirt\",\n        \"description\": \"Et magni et ipsa in maiores doloremque voluptas. Dolorem magnam voluptatum necessitatibus sint quos officia ut maxime impedit. Quod est qui. Neque laudantium ut.\",\n        \"shortDescriptions\": \"Qui et qui eveniet.\",\n        \"slug\": \"veritatis-molestiae-accusantium\",\n        \"quantity\": 725,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": false,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ]\n    }\n}"
+								},
+								{
+									"name": "/api/product/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"attributes\": {\n            \"size\": [\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\",\n                \"green\"\n            ]\n        },\n        \"categoryIds\": [\n            \"{{categoryId}}\"\n        ]\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"227-daFL0GEeK0lFsjIH1arrMmhc6yI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "551"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:40:21 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62c01203d49389ce1fc48ace\",\n        \"name\": \"Handcrafted Granite Keyboard\",\n        \"description\": \"Et magni et ipsa in maiores doloremque voluptas. Dolorem magnam voluptatum necessitatibus sint quos officia ut maxime impedit. Quod est qui. Neque laudantium ut.\",\n        \"shortDescriptions\": \"Qui et qui eveniet.\",\n        \"slug\": \"veritatis-molestiae-accusantium\",\n        \"quantity\": 725,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": false,\n        \"attributes\": {\n            \"size\": [\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\",\n                \"green\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/products/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product deleted\") { ",
+											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/products/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"227-b0D11wNDVVWkfDRoiyR6LU+wtx0\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "551"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:40:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62c01203d49389ce1fc48ace\",\n        \"name\": \"Handcrafted Granite Keyboard\",\n        \"description\": \"Et magni et ipsa in maiores doloremque voluptas. Dolorem magnam voluptatum necessitatibus sint quos officia ut maxime impedit. Quod est qui. Neque laudantium ut.\",\n        \"shortDescriptions\": \"Qui et qui eveniet.\",\n        \"slug\": \"veritatis-molestiae-accusantium\",\n        \"quantity\": 725,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": false,\n        \"attributes\": {\n            \"size\": [\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\",\n                \"green\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ]\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{userToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SKUs",
+			"item": [
+				{
+					"name": "As admin",
+					"item": [
+						{
+							"name": "/api/sku/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New SKU Created\") { ",
+											"    tests[\"SKU creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"skuId\",res.sku.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"productId\": \"{{productId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/sku/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"productId\": \"{{productId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"14a-buUYduwatonVsuZ/wZzix4tRZUA\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "330"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:25:44 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New SKU Created\",\n    \"sku\": {\n        \"id\": \"62c00f17d49389ce1fc48ac5\",\n        \"slug\": \"aliquid-aut-nulla\",\n        \"quantity\": 797,\n        \"productId\": \"62c00eb1d49389ce1fc48ac1\",\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": \"l\",\n            \"color\": \"red\"\n        },\n        \"categoryIds\": [\n            \"62c00b39d49389ce1fc48abd\"\n        ],\n        \"price\": 966.88,\n        \"discountedPrice\": 962.11\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"SKUs found\") { ",
+											"    tests[\"No SKU found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// \"pagination\": true",
+											"// \"count\": 10,",
+											"// \"offset\": 0,",
+											"// \"id\": \"{{productId}}\",",
+											"// \"inStock\": {{$randomBoolean}},",
+											"// \"published\": {{$randomBoolean}},",
+											"// \"supplierId\": \"{{tenantId}}\",",
+											"// \"categoryId\": \"{{categoryId}}\",",
+											"// \"attributes\": {",
+											"//         \"size\": \"l\",",
+											"//         \"color\": \"red\"",
+											"//     },"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"inStock\": {{$randomBoolean}},\n    \"published\": {{$randomBoolean}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"categoryId\": \"{{categoryId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										""
+									]
+								},
+								"description": "Query params: paginated, count, offset"
+							},
+							"response": [
+								{
+									"name": "/api/sku",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"inStock\": {{$randomBoolean}},\n    \"published\": {{$randomBoolean}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"categoryId\": \"{{categoryId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"25e-s8Rpa8GuR0Z4hpbkZiG1xOMQqmo\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "606"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:26:35 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"SKUs found\",\n    \"skus\": {\n        \"skus\": [\n            {\n                \"slug\": \"adipisci-fugit-aut\",\n                \"quantity\": 494,\n                \"published\": true,\n                \"attributes\": {\n                    \"size\": \"l\",\n                    \"color\": \"red\"\n                },\n                \"price\": 134.9,\n                \"discountedPrice\": 329.13,\n                \"id\": \"62c00f15d49389ce1fc48ac4\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62c00b39d49389ce1fc48abd\"\n                ]\n            },\n            {\n                \"slug\": \"aliquid-aut-nulla\",\n                \"quantity\": 797,\n                \"published\": true,\n                \"attributes\": {\n                    \"size\": \"l\",\n                    \"color\": \"red\"\n                },\n                \"price\": 966.88,\n                \"discountedPrice\": 962.11,\n                \"id\": \"62c00f17d49389ce1fc48ac5\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62c00b39d49389ce1fc48abd\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"total_count\": 3,\n            \"limit\": 2,\n            \"offset\": 1\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku/skuId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"SKU found\") { ",
+											"    tests[\"No SKU found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/sku/{{skuId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"{{skuId}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/sku/skuId",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/sku/{{skuId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"{{skuId}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"146-p1lLq/3IdKQbI9edQoPt6mhPwss\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "326"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:27:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"SKU found\",\n    \"sku\": [\n        {\n            \"id\": \"62c00f17d49389ce1fc48ac5\",\n            \"slug\": \"aliquid-aut-nulla\",\n            \"quantity\": 797,\n            \"productId\": \"62c00eb1d49389ce1fc48ac1\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": true,\n            \"attributes\": {\n                \"size\": \"l\",\n                \"color\": \"red\"\n            },\n            \"categoryIds\": [\n                \"62c00b39d49389ce1fc48abd\"\n            ],\n            \"price\": 966.88,\n            \"discountedPrice\": 962.11\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"SKU updated\") { ",
+											"    tests[\"SKU not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{skuId}}\",\n    \"updateData\": {\n        \"published\": {{$randomBoolean}}\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/sku/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{skuId}}\",\n    \"updateData\": {\n        \"published\": {{$randomBoolean}}\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"146-+Mv9jhH8+E8z3gXosJJT7wnTwGE\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "326"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:29:42 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"SKU updated\",\n    \"sku\": {\n        \"id\": \"62c00f17d49389ce1fc48ac5\",\n        \"slug\": \"aliquid-aut-nulla\",\n        \"quantity\": 797,\n        \"productId\": \"62c00eb1d49389ce1fc48ac1\",\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": \"l\",\n            \"color\": \"red\"\n        },\n        \"categoryIds\": [\n            \"62c00b39d49389ce1fc48abd\"\n        ],\n        \"price\": 966.88,\n        \"discountedPrice\": 962.11\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"SKU deleted\") { ",
+											"    tests[\"SKU not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{skuId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{skuId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"141-4uFNGrapiqkz7Gxr2k9vUTuZUXU\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "321"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:46:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"SKU deleted\",\n    \"sku\": {\n        \"id\": \"62c013dad49389ce1fc48ad2\",\n        \"slug\": \"et-qui-vitae\",\n        \"quantity\": 562,\n        \"productId\": \"62c013d2d49389ce1fc48ad1\",\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": false,\n        \"attributes\": {\n            \"size\": \"l\",\n            \"color\": \"red\"\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"price\": 346.1,\n        \"discountedPrice\": 848.22\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "As user",
+					"item": [
+						{
+							"name": "/api/sku/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New SKU Created\") { ",
+											"    tests[\"SKU creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"skuId\",res.sku.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"productId\": \"{{productId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/sku/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"productId\": \"{{productId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"price\": {{$randomPrice}},\n    \"discountedPrice\": {{$randomPrice}}\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"154-mpkfM4mdtL1ATltvnLgxJPN9IYY\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "340"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:41:59 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New SKU Created\",\n    \"sku\": {\n        \"id\": \"62c012e6d49389ce1fc48ad0\",\n        \"slug\": \"magnam-veritatis-consectetur\",\n        \"quantity\": 194,\n        \"productId\": \"62c012a5d49389ce1fc48acf\",\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": \"l\",\n            \"color\": \"red\"\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"price\": 174.13,\n        \"discountedPrice\": 539.2\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"SKUs found\") { ",
+											"    tests[\"No SKU found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// \"pagination\": true",
+											"// \"count\": 10,",
+											"// \"offset\": 0,",
+											"// \"id\": \"{{productId}}\",",
+											"// \"inStock\": {{$randomBoolean}},",
+											"// \"published\": {{$randomBoolean}},",
+											"// \"supplierId\": \"{{tenantId}}\",",
+											"// \"categoryId\": \"{{categoryId}}\",",
+											"// \"attributes\": {",
+											"//         \"size\": \"l\",",
+											"//         \"color\": \"red\"",
+											"//     },"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"published\": {{$randomBoolean}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										""
+									]
+								},
+								"description": "Query params: paginated, count, offset"
+							},
+							"response": [
+								{
+									"name": "/api/sku",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"published\": {{$randomBoolean}}\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"25e-QPP1FZppl1XN/IZ/Ca7/H6k99RY\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "606"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:43:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"SKUs found\",\n    \"skus\": {\n        \"skus\": [\n            {\n                \"slug\": \"ducimus-consequatur-aut\",\n                \"quantity\": 803,\n                \"published\": false,\n                \"attributes\": {\n                    \"size\": \"l\",\n                    \"color\": \"red\"\n                },\n                \"price\": 648.8,\n                \"discountedPrice\": 118.11,\n                \"id\": \"62beb8a3b39f92c3e0a31993\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62bd634d0a9de06da86e291a\"\n                ]\n            },\n            {\n                \"slug\": \"ab-ullam-ea\",\n                \"quantity\": 317,\n                \"published\": false,\n                \"attributes\": {\n                    \"size\": \"l\",\n                    \"color\": \"red\"\n                },\n                \"price\": 91.41,\n                \"discountedPrice\": 937.56,\n                \"id\": \"62beb8a8b39f92c3e0a31995\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62bd634d0a9de06da86e291a\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"total_count\": 5,\n            \"limit\": 2,\n            \"offset\": 1\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku/skuId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"SKU found\") { ",
+											"    tests[\"No SKU found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/sku/{{skuId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"{{skuId}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/sku/skuId",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/sku/{{skuId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"{{skuId}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"150-wbStLXeZ6zdde/YHScAw93+XB1A\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "336"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:43:16 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"SKU found\",\n    \"sku\": [\n        {\n            \"id\": \"62c012e6d49389ce1fc48ad0\",\n            \"slug\": \"magnam-veritatis-consectetur\",\n            \"quantity\": 194,\n            \"productId\": \"62c012a5d49389ce1fc48acf\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": true,\n            \"attributes\": {\n                \"size\": \"l\",\n                \"color\": \"red\"\n            },\n            \"categoryIds\": [\n                \"62c010ebd49389ce1fc48ac9\"\n            ],\n            \"price\": 174.13,\n            \"discountedPrice\": 539.2\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"SKU updated\") { ",
+											"    tests[\"SKU not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{skuId}}\",\n    \"updateData\": {\n        \"published\": {{$randomBoolean}}\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/sku/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{skuId}}\",\n    \"updateData\": {\n        \"published\": {{$randomBoolean}}\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"150-CBHbPzKX1eIBcmCBm66u3VoQOeE\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "336"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:43:29 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"SKU updated\",\n    \"sku\": {\n        \"id\": \"62c012e6d49389ce1fc48ad0\",\n        \"slug\": \"magnam-veritatis-consectetur\",\n        \"quantity\": 194,\n        \"productId\": \"62c012a5d49389ce1fc48acf\",\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": \"l\",\n            \"color\": \"red\"\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"price\": 174.13,\n        \"discountedPrice\": 539.2\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"SKU deleted\") { ",
+											"    tests[\"SKU not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{skuId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/products/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{skuId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"141-4uFNGrapiqkz7Gxr2k9vUTuZUXU\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "321"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 02 Jul 2022 09:46:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"SKU deleted\",\n    \"sku\": {\n        \"id\": \"62c013dad49389ce1fc48ad2\",\n        \"slug\": \"et-qui-vitae\",\n        \"quantity\": 562,\n        \"productId\": \"62c013d2d49389ce1fc48ad1\",\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": false,\n        \"attributes\": {\n            \"size\": \"l\",\n            \"color\": \"red\"\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"price\": 346.1,\n        \"discountedPrice\": 848.22\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{userToken}}",
+								"type": "string"
+							}
+						]
+					},
 					"event": [
 						{
 							"listen": "prerequest",

@@ -1,9 +1,10 @@
 import { prisma } from '../prisma';
 
-// Create Product
-export const createProduct = async (data) => {
-  const { supplierId, categoryIds, ...rest } = data;
+// Create SKU
+export const createSKU = async (data) => {
+  const { productId, supplierId, categoryIds, ...rest } = data;
 
+  if (productId) rest.product = { connect: { id: productId } };
   if (supplierId) rest.supplier = { connect: { id: supplierId } };
   if (categoryIds && categoryIds.length != 0) {
     rest.categories = { connect: [] };
@@ -12,47 +13,45 @@ export const createProduct = async (data) => {
     });
   }
 
-  const product = await prisma.product.create({
+  const sku = await prisma.sKU.create({
     data: rest
   });
 
-  return product;
+  return sku;
 };
 
-// Read Product
-export const getProduct = async (id) => {
-  const products = await prisma.product.findMany({
+// Read SKU
+export const getSKU = async (id) => {
+  const skus = await prisma.sKU.findMany({
     where: { id }
   });
 
-  return products;
+  return skus;
 };
 
-export const searchProducts = async ({
+export const searchSKUs = async ({
   id,
-  query,
   inStock,
   published,
+  priceFrom,
+  priceTo,
   supplierId,
   attributes,
-  sortBy,
-  order,
   categoryId,
+  productId,
   pagination,
   offset,
   limit
 }) => {
   const condition = { $and: [] },
-    sortProducts = {},
     options = {};
-
   let total_count;
 
   if (attributes) {
     const attr = {};
 
     for (let prop in attributes) {
-      attr[`attributes.${prop}`] = { $elemMatch: { $eq: attributes[prop] } };
+      attr[`attributes.${prop}`] = { $eq: attributes[prop] };
     }
 
     condition.$and.push(attr);
@@ -60,21 +59,25 @@ export const searchProducts = async ({
   }
 
   if (id) condition.$and.push({ _id: { $eq: { $oid: id } } });
+
   if (supplierId)
     condition.$and.push({ supplierId: { $eq: { $oid: supplierId } } });
-  if (query) condition.$and.push({ name: { $regex: query, $options: 'i' } });
+
+  if (priceFrom) condition.$and.push({ discountedPrice: { $gte: priceFrom } });
+
+  if (priceTo) condition.$and.push({ discountedPrice: { $lte: priceTo } });
+
+  if (productId)
+    condition.$and.push({ productId: { $eq: { $oid: productId } } });
+
   if (inStock == true) condition.$and.push({ quantity: { $gt: 0 } });
+
   if (published != undefined) condition.$and.push({ published: published });
+
   if (categoryId)
     condition.$and.push({
       categoryIds: { $elemMatch: { $eq: { $oid: categoryId } } }
     });
-
-  if (sortBy) {
-    sortProducts[sortBy] = order == 'desc' ? -1 : 1;
-    options.sort = sortProducts;
-    console.log(options);
-  }
 
   if (condition.$and.length == 0) {
     delete condition.$and;
@@ -85,32 +88,37 @@ export const searchProducts = async ({
     options.limit = limit;
 
     total_count = await prisma.$runCommandRaw({
-      count: 'Product',
+      count: 'SKU',
       query: condition
     });
   }
 
-  const products = await prisma.product.findRaw({
+  const skus = await prisma.sKU.findRaw({
     filter: condition,
     options
   });
 
-  let res = products.map((product) => {
-    let tmpId = product._id.$oid;
-    delete product._id;
-    product.id = tmpId;
+  let res = skus.map((sku) => {
+    let tmpId = sku._id.$oid;
+    delete sku._id;
+    sku.id = tmpId;
 
-    let tmp = product.supplierId.$oid;
-    delete product.supplierId;
+    let tmp = sku.supplierId.$oid;
+    delete sku.supplierId;
 
-    product.supplierId = tmp;
+    sku.supplierId = tmp;
 
-    let tmpArr = product.categoryIds.map((e) => e.$oid);
-    delete product.categoryIds;
+    let tmpProductId = sku.productId.$oid;
+    delete sku.productId;
 
-    product.categoryIds = tmpArr;
+    sku.productId = tmpProductId;
 
-    return product;
+    let tmpArr = sku.categoryIds.map((e) => e.$oid);
+    delete sku.categoryIds;
+
+    sku.categoryIds = tmpArr;
+
+    return sku;
   });
 
   if (pagination) {
@@ -127,9 +135,11 @@ export const searchProducts = async ({
   return res;
 };
 
-// Update Product
-export const updateProduct = async (id, updateData) => {
-  const { supplierId, categoryIds, ...rest } = updateData;
+// Update SKU
+export const updateSKU = async (id, updateData) => {
+  const { productId, supplierId, categoryIds, ...rest } = updateData;
+
+  if (productId) rest.product = { connect: { id: productId } };
 
   if (supplierId) rest.supplier = { connect: { id: supplierId } };
 
@@ -140,7 +150,7 @@ export const updateProduct = async (id, updateData) => {
     });
   }
 
-  const product = await prisma.product.update({
+  const product = await prisma.sKU.update({
     where: { id },
     data: rest
   });
@@ -148,11 +158,11 @@ export const updateProduct = async (id, updateData) => {
   return product;
 };
 
-// Delete Product
-export const deleteProduct = async (id) => {
-  const deletedProduct = await prisma.product.delete({
+// Delete SKU
+export const deleteSKU = async (id) => {
+  const deletedSKU = await prisma.sKU.delete({
     where: { id }
   });
 
-  return deletedProduct;
+  return deletedSKU;
 };
