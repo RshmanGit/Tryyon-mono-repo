@@ -41,12 +41,12 @@ export const searchCategory = async ({
   isRoot,
   includeChildren
 }) => {
-  const condition = { OR: [] };
+  const condition = { AND: [] };
 
-  if (id) condition.OR.push({ id });
+  if (id) condition.AND.push({ id });
   if (query)
-    condition.OR.push({ name: { contains: query, mode: 'insensitive' } });
-  if (isRoot) condition.OR.push({ root: isRoot == 'true' });
+    condition.AND.push({ name: { contains: query, mode: 'insensitive' } });
+  if (isRoot) condition.AND.push({ root: isRoot == 'true' });
 
   if (!id && !query && !isRoot) {
     const categories = await prisma.category.findMany({
