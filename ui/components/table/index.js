@@ -1,4 +1,5 @@
 import {
+  Button,
   Flex,
   Table,
   Tbody,
@@ -9,6 +10,8 @@ import {
   Tr,
   useColorModeValue
 } from '@chakra-ui/react';
+
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import React, { useMemo } from 'react';
 import {
   useGlobalFilter,
@@ -21,7 +24,7 @@ import {
 import Card from '../card/Card';
 
 export default function TableComp(props) {
-  const { columnsData, tableData } = props;
+  const { columnsData, tableData, editEntry, deleteEntry } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -76,6 +79,16 @@ export default function TableComp(props) {
                   </Flex>
                 </Th>
               ))}
+              <Th pe="10px" borderColor={borderColor} key="ACTION">
+                <Flex
+                  justify="space-between"
+                  align="center"
+                  fontSize={{ sm: '10px', lg: '12px' }}
+                  color="gray.400"
+                >
+                  ACTION
+                </Flex>
+              </Th>
             </Tr>
           ))}
         </Thead>
@@ -107,13 +120,36 @@ export default function TableComp(props) {
                       {...cell.getCellProps()}
                       key={index}
                       fontSize={{ sm: '14px' }}
-                      minW={{ sm: '150px', md: '200px', lg: 'auto' }}
+                      minW={{ sm: '150px', md: '200px', lg: '300px' }}
                       borderColor="transparent"
                     >
                       {data}
                     </Td>
                   );
                 })}
+                <Td
+                  display="flex"
+                  alignItems="center"
+                  minW={{ sm: '150px', md: '200px', lg: 'auto' }}
+                  borderColor="transparent"
+                  key="ACTION"
+                >
+                  <Button
+                    fontSize={{ sm: '14px' }}
+                    m="8px"
+                    colorScheme="blue"
+                    onClick={() => editEntry(row.cells[0].value)}
+                  >
+                    <EditIcon />
+                  </Button>
+                  <Button
+                    fontSize={{ sm: '14px' }}
+                    colorScheme="red"
+                    onClick={() => deleteEntry(row.cells[0].value)}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                </Td>
               </Tr>
             );
           })}
