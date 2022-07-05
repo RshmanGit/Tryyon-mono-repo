@@ -93,25 +93,22 @@ function Login() {
                 },
                 body: JSON.stringify(values, null, 2)
               })
-                .then((res) => res.json())
-                .then((res) => {
-                  if (res.message === 'admin Authenticated') {
-                    setButtonText('Admin Authenticated');
-                    return res;
-                  } else {
-                    alert(res.message);
-                    setButtonText('Retry');
-                    throw new Error(
-                      JSON.stringify({
-                        message: res.message,
-                        status: res.status
-                      })
-                    );
-                  }
+                .then(async (res) => {
+                  const data = await res.json();
+                  if (res.ok) return data;
+
+                  alert(res.message);
+                  setButtonText('Retry');
+                  throw new Error(res.message);
                 })
-                .then((res) => alert(res.message))
+                .then((res) => {
+                  setButtonText('Admin Authenticated');
+                  console.log(res);
+                  sessionStorage.setItem('adminToken', res.updatedAdmin.token);
+                  alert(res.message);
+                })
                 .catch((err) => {
-                  console.error(JSON.parse(err.message));
+                  console.error(err);
                 });
             }}
           >
