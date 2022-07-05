@@ -1,21 +1,25 @@
 import async from 'async';
 
-import { getProduct } from '../../../prisma/products/products';
+import { getSKU } from '../../../prisma/products/sku';
 import handleResponse from '../../../utils/helpers/handleResponse';
+import auth from '../../../utils/middlewares/auth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
+
   if (req.method == 'GET') {
     async.auto(
       {
         main: [
           async () => {
-            const { productId } = req.query;
-            const product = await getProduct(productId);
+            const { skuId } = req.query;
+            const sku = await getSKU(skuId);
 
-            if (product.length != 0) {
+            if (sku.length != 0) {
               return {
-                message: 'Product found',
-                product
+                message: 'SKU found',
+                sku
               };
             }
 
@@ -25,7 +29,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No such product found'
+                    message: 'No such sku found'
                   }
                 }
               })

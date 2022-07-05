@@ -1,21 +1,23 @@
 import async from 'async';
 import Joi from 'joi';
 
-import { searchProducts } from '../../../prisma/products/products';
+import { searchSKUs } from '../../../prisma/products/sku';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
+import auth from '../../../utils/middlewares/auth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
     id: Joi.string().optional(),
-    query: Joi.string().optional(),
     inStock: Joi.boolean().optional(),
     published: Joi.boolean().optional(),
+    priceFrom: Joi.number().optional(),
+    priceTo: Joi.number().optional(),
     supplierId: Joi.string().optional(),
+    productId: Joi.string().optional(),
     categoryId: Joi.string().optional(),
     attributes: Joi.object().optional(),
-    sortBy: Joi.string().optional(),
-    order: Joi.string().allow('desc', 'asc').optional(),
     pagination: Joi.boolean().optional(),
     offset: Joi.number().optional(),
     limit: Joi.number().optional()
@@ -23,6 +25,8 @@ const schema = {
 };
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
+
   if (req.method == 'POST') {
     async.auto(
       {
@@ -46,12 +50,12 @@ const handler = async (req, res) => {
               );
             }
 
-            const products = await searchProducts(body);
+            const skus = await searchSKUs(body);
 
-            if (products) {
+            if (skus.length != 0) {
               return {
-                message: 'Products found',
-                products
+                message: 'SKUs found',
+                skus
               };
             }
 
@@ -61,7 +65,7 @@ const handler = async (req, res) => {
                 body: {
                   status: 404,
                   data: {
-                    message: 'No Product found'
+                    message: 'No SKU found'
                   }
                 }
               })
