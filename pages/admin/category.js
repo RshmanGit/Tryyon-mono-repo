@@ -9,7 +9,8 @@ import {
   Text,
   Textarea,
   useColorModeValue,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react';
 
 import { SearchBar } from '../../ui/components/searchbar';
@@ -40,6 +41,7 @@ const columnsData = [
 ];
 
 export default function CategoryPage() {
+  const toast = useToast();
   const [data, setData] = useState([]);
   const [searchString, setSearchString] = useState('');
 
@@ -62,9 +64,14 @@ export default function CategoryPage() {
 
   const createCategory = async () => {
     console.log(name, description, slug);
-    if (name == '' || description == '' || slug == '')
-      alert('One or more fields are empty!');
-    else {
+    if (name == '' || description == '' || slug == '') {
+      toast({
+        title: 'One or more fields are empty!',
+        status: 'error',
+        duration: 2000,
+        isClosable: true
+      });
+    } else {
       const body = {
         name,
         description,
@@ -89,25 +96,42 @@ export default function CategoryPage() {
 
       if (res.ok) {
         console.log('Category created', await res.json());
-        alert('Category created');
-        router.reload();
+        toast({
+          title: 'Category created',
+          status: 'success',
+          duration: 2000,
+          isClosable: true
+        });
+        setTimeout(() => {
+          router.reload();
+        }, 2000);
       } else {
         if (res.status == 401 || res.status == 403) {
-          alert('Admin not logged in');
-          router.push('/auth/admin/login');
+          // alert('Admin not logged in');
+          router.push(`/auth/admin/login?next=${router.pathname}`);
         }
         const data = await res.json();
         console.error(data.message);
-        alert(data.message);
+        toast({
+          title: data.message,
+          status: 'error',
+          duration: 2000,
+          isClosable: true
+        });
       }
     }
   };
 
   const editCategory = async () => {
     console.log(name, description, slug);
-    if (name == '' || description == '' || slug == '' || id == '')
-      alert('One or more fields are empty!');
-    else {
+    if (name == '' && description == '' && slug == '' && id == '') {
+      toast({
+        title: 'All fields are empty!',
+        status: 'success',
+        duration: 2000,
+        isClosable: true
+      });
+    } else {
       const body = {
         id
       };
@@ -129,7 +153,7 @@ export default function CategoryPage() {
       }
 
       const res = await fetch(
-        `${router.basePath}/api/products/category/create`,
+        `${router.basePath}/api/products/category/update`,
         {
           method: 'POST',
           headers: {
@@ -142,23 +166,41 @@ export default function CategoryPage() {
 
       if (res.ok) {
         console.log('Category updated', await res.json());
-        alert('Category updated');
-        router.reload();
+        toast({
+          title: 'Category updated',
+          status: 'success',
+          duration: 2000,
+          isClosable: true
+        });
+        setTimeout(() => {
+          router.reload();
+        }, 2000);
       } else {
         if (res.status == 401 || res.status == 403) {
-          alert('Admin not logged in');
-          router.push('/auth/admin/login');
+          // alert('Admin not logged in');
+          router.push(`/auth/admin/login?next=${router.pathname}`);
         }
         const data = await res.json();
         console.error(data.message);
-        alert(data.message);
+        toast({
+          title: data.message,
+          status: 'error',
+          duration: 2000,
+          isClosable: true
+        });
       }
     }
   };
 
   const deleteCategory = async () => {
-    if (id == '') alert('ID is missing!');
-    else {
+    if (id == '') {
+      toast({
+        title: 'ID is missing!',
+        status: 'error',
+        duration: 2000,
+        isClosable: true
+      });
+    } else {
       const body = {
         id
       };
@@ -177,16 +219,28 @@ export default function CategoryPage() {
 
       if (res.ok) {
         console.log('Category deleted', await res.json());
-        alert('Category deleted');
-        router.reload();
+        toast({
+          title: 'Category deleted',
+          status: 'success',
+          duration: 2000,
+          isClosable: true
+        });
+        setTimeout(() => {
+          router.reload();
+        }, 2000);
       } else {
         if (res.status == 401 || res.status == 403) {
-          alert('Admin not logged in');
-          router.push('/auth/admin/login');
+          // alert('Admin not logged in');
+          router.push(`/auth/admin/login?next=${router.pathname}`);
         }
         const data = await res.json();
         console.error(data.message);
-        alert(data.message);
+        toast({
+          title: data.message,
+          status: 'error',
+          duration: 2000,
+          isClosable: true
+        });
       }
     }
   };
@@ -262,8 +316,12 @@ export default function CategoryPage() {
         }
 
         if (res.status == 403 || res.status == 401) {
-          alert('Admin not logged in...');
-          router.push('/auth/admin/login');
+          // alert('Admin not logged in...');
+          router.push(`/auth/admin/login?next=${router.pathname}`);
+        }
+
+        if (res.status == 404) {
+          return { categories: [] };
         }
 
         if (res.status == 404) {
@@ -277,8 +335,14 @@ export default function CategoryPage() {
       })
       .catch((err) => {
         console.log(err);
+        toast({
+          title: err,
+          status: 'error',
+          duration: 2000,
+          isClosable: true
+        });
       });
-  }, [router, debouncedSearchString]);
+  }, [router, debouncedSearchString, toast]);
 
   return (
     <>
