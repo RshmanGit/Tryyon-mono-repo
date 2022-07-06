@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 
 import { Formik, Field } from 'formik';
@@ -17,7 +17,8 @@ import {
   InputGroup,
   InputRightElement,
   Text,
-  useColorModeValue
+  useColorModeValue,
+  useToast
 } from '@chakra-ui/react';
 
 // Custom components
@@ -26,8 +27,24 @@ import DefaultAuth from '../../../ui/layouts/auth/Default.js';
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import { useRouter } from 'next/router.js';
 
 function Login() {
+  const router = useRouter();
+  const toast = useToast();
+
+  useEffect(() => {
+    if (router.query.next && router.query.next !== '') {
+      toast({
+        title: 'Login to continue',
+        description: `On successful login, you'll be redirect to ${router.query.next}`,
+        status: 'info',
+        duration: 2000,
+        isClosable: true
+      });
+    }
+  }, [router.query.next, toast]);
+
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
@@ -106,6 +123,9 @@ function Login() {
                   console.log(res);
                   sessionStorage.setItem('adminToken', res.updatedAdmin.token);
                   alert(res.message);
+                  if (router.query.next && router.query.next !== '') {
+                    router.push(router.query.next);
+                  }
                 })
                 .catch((err) => {
                   console.error(err);
