@@ -172,7 +172,7 @@ export default function TableComp(props) {
           <Button disabled={!canPreviousPage} onClick={previousPage}>
             <ChevronLeftIcon />
           </Button>
-          <Text fontSize="14px">
+          <Text mx="16px" fontSize="14px">
             <b>{pageIndex + 1}</b> | {pageCount}
           </Text>
           <Button disabled={!canNextPage} onClick={nextPage}>
