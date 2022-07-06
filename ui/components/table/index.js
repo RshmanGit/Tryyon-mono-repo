@@ -11,7 +11,12 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import {
+  EditIcon,
+  DeleteIcon,
+  ChevronRightIcon,
+  ChevronLeftIcon
+} from '@chakra-ui/icons';
 import React, { useMemo } from 'react';
 import {
   useGlobalFilter,
@@ -45,9 +50,16 @@ export default function TableComp(props) {
     headerGroups,
     page,
     prepareRow,
-    initialState
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize }
   } = tableInstance;
-  // initialState.pageSize = 5;
 
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
@@ -155,6 +167,19 @@ export default function TableComp(props) {
           })}
         </Tbody>
       </Table>
+      {pageCount !== 0 && (
+        <Flex m="auto" alignItems="center">
+          <Button disabled={!canPreviousPage} onClick={previousPage}>
+            <ChevronLeftIcon />
+          </Button>
+          <Text fontSize="14px">
+            <b>{pageIndex + 1}</b> | {pageCount}
+          </Text>
+          <Button disabled={!canNextPage} onClick={nextPage}>
+            <ChevronRightIcon />
+          </Button>
+        </Flex>
+      )}
     </Card>
   );
 }
