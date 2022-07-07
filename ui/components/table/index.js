@@ -17,7 +17,7 @@ import {
   ChevronRightIcon,
   ChevronLeftIcon
 } from '@chakra-ui/icons';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   useGlobalFilter,
   usePagination,
@@ -27,9 +27,11 @@ import {
 
 // Custom components
 import Card from '../card/Card';
+import { useRouter } from 'next/router';
 
 export default function TableComp(props) {
-  const { columnsData, tableData, editEntry, deleteEntry } = props;
+  const { columnsData, tableData, editEntry, deleteEntry, restore_page } =
+    props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -58,11 +60,31 @@ export default function TableComp(props) {
     nextPage,
     previousPage,
     setPageSize,
+    initialState,
     state: { pageIndex, pageSize }
   } = tableInstance;
 
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
+  const router = useRouter();
+
+  initialState.pageIndex =
+    restore_page < pageCount && restore_page > 0 ? restore_page : 0;
+
+  const next = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(`page${router.pathname}`, pageIndex + 1);
+    }
+    nextPage();
+  };
+
+  const prev = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(`page${router.pathname}`, pageIndex - 1);
+    }
+    previousPage();
+  };
+
   return (
     <Card
       direction="column"
@@ -113,17 +135,42 @@ export default function TableComp(props) {
                   let data = '';
                   columns.forEach((col) => {
                     if (cell.column.Header === col.Header) {
-                      data = (
-                        <Flex align="center">
-                          <Text
-                            color={textColor}
-                            fontSize="sm"
-                            fontWeight="400"
-                          >
-                            {cell.value}
-                          </Text>
-                        </Flex>
-                      );
+                      if (cell.column.Header === 'CATEGORIES') {
+                        if (Array.isArray(cell.value)) {
+                          let internal_data = cell.value.map((val, index) => (
+                            <Flex
+                              key={index}
+                              borderRadius="2xl"
+                              bgColor="blue.500"
+                              p="8px 16px"
+                              align="center"
+                            >
+                              <Text
+                                color="white"
+                                fontSize="sm"
+                                fontWeight="700"
+                              >
+                                {val.name}
+                              </Text>
+                            </Flex>
+                          ));
+                          data = <Flex>{internal_data}</Flex>;
+                        }
+                      } else {
+                        data = (
+                          <Flex align="center">
+                            <Text
+                              color={textColor}
+                              fontSize="sm"
+                              fontWeight="400"
+                            >
+                              {typeof cell.value == 'boolean'
+                                ? cell.value.toString()
+                                : cell.value}
+                            </Text>
+                          </Flex>
+                        );
+                      }
                     }
                   });
 
@@ -132,7 +179,14 @@ export default function TableComp(props) {
                       {...cell.getCellProps()}
                       key={index}
                       fontSize={{ sm: '14px' }}
-                      minW={{ sm: '150px', md: '200px', lg: '300px' }}
+                      minW={{
+                        sm: '150px',
+                        md: '200px',
+                        lg:
+                          cell.column.Header == 'DESCRIPTION'
+                            ? '300px'
+                            : '200px'
+                      }}
                       borderColor="transparent"
                     >
                       {data}
@@ -169,13 +223,13 @@ export default function TableComp(props) {
       </Table>
       {pageCount !== 0 && (
         <Flex m="auto" alignItems="center">
-          <Button disabled={!canPreviousPage} onClick={previousPage}>
+          <Button disabled={!canPreviousPage} onClick={prev}>
             <ChevronLeftIcon />
           </Button>
           <Text mx="16px" fontSize="14px">
             <b>{pageIndex + 1}</b> | {pageCount}
           </Text>
-          <Button disabled={!canNextPage} onClick={nextPage}>
+          <Button disabled={!canNextPage} onClick={next}>
             <ChevronRightIcon />
           </Button>
         </Flex>
