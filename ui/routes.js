@@ -1,7 +1,12 @@
 import React from 'react';
 
 import { Icon } from '@chakra-ui/react';
-import { MdHome, MdBarChart, MdEditAttributes } from 'react-icons/md';
+import {
+  MdHome,
+  MdBarChart,
+  MdEditAttributes,
+  MdShoppingBag
+} from 'react-icons/md';
 
 const routes = [
   {
@@ -17,12 +22,18 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />
   },
   {
-    name: 'Attrbutes',
+    name: 'Attributes',
     layout: '/admin',
     path: '/attributes',
     icon: (
       <Icon as={MdEditAttributes} width="20px" height="20px" color="inherit" />
     )
+  },
+  {
+    name: 'Products',
+    layout: '/admin',
+    path: '/products',
+    icon: <Icon as={MdShoppingBag} width="20px" height="20px" color="inherit" />
   }
 ];
 
