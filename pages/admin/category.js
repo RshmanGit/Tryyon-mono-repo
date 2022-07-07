@@ -43,6 +43,7 @@ const columnsData = [
 export default function CategoryPage() {
   const toast = useToast();
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(0);
   const [searchString, setSearchString] = useState('');
 
   const [modalHeading, setModalHeading] = useState('');
@@ -321,10 +322,13 @@ export default function CategoryPage() {
         }
 
         if (res.status == 404) {
-          return { categories: [] };
-        }
-
-        if (res.status == 404) {
+          console.log(res_data.message);
+          toast({
+            title: res_data.message,
+            status: 'error',
+            duration: 2000,
+            isClosable: true
+          });
           return { categories: [] };
         }
         throw new Error(res_data.message);
@@ -343,6 +347,11 @@ export default function CategoryPage() {
         });
       });
   }, [router, debouncedSearchString, toast]);
+
+  useEffect(() => {
+    if (localStorage.page)
+      setPage(parseInt(localStorage.getItem('page/admin/category'), 10));
+  }, []);
 
   return (
     <>
@@ -382,6 +391,7 @@ export default function CategoryPage() {
           deleteEntry={openDelete}
           columnsData={columnsData}
           tableData={data}
+          restore_page={page}
         />
       </Layout>
       {isOpen && (

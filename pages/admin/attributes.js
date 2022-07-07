@@ -39,6 +39,7 @@ const columnsData = [
 export default function AttributePage() {
   const toast = useToast();
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(0);
   const [searchString, setSearchString] = useState('');
 
   const [modalHeading, setModalHeading] = useState('');
@@ -306,6 +307,13 @@ export default function AttributePage() {
         }
 
         if (res.status == 404) {
+          console.log(res_data.message);
+          toast({
+            title: res_data.message,
+            status: 'error',
+            duration: 2000,
+            isClosable: true
+          });
           return { attributes: [] };
         }
         throw new Error(res_data.message);
@@ -324,6 +332,11 @@ export default function AttributePage() {
         });
       });
   }, [router, debouncedSearchString, toast]);
+
+  useEffect(() => {
+    if (localStorage.page)
+      setPage(parseInt(localStorage.getItem('page/admin/attributes'), 10));
+  }, []);
 
   return (
     <>
@@ -363,6 +376,7 @@ export default function AttributePage() {
           deleteEntry={openDelete}
           columnsData={columnsData}
           tableData={data}
+          restore_page={page}
         />
       </Layout>
       {isOpen && (
