@@ -11,10 +11,10 @@ import { prisma } from '../../../prisma/prisma';
 const schema = {
   body: Joi.object({
     slug: Joi.string().required(),
-    quantity: Joi.number(),
+    quantity: Joi.number().required(),
     productId: Joi.string().required(),
     supplierId: Joi.string().optional(),
-    published: Joi.boolean().default(false),
+    published: Joi.boolean().default(false).optional(),
     attributes: Joi.object().required(),
     categoryIds: Joi.array().required(),
     price: Joi.number().required(),
