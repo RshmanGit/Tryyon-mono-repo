@@ -104,7 +104,7 @@ export default function CategoryPage() {
         });
         setTimeout(() => {
           router.reload();
-        }, 2000);
+        }, 800);
       } else {
         if (res.status == 401 || res.status == 403) {
           // alert('Admin not logged in');
@@ -174,7 +174,7 @@ export default function CategoryPage() {
         });
         setTimeout(() => {
           router.reload();
-        }, 2000);
+        }, 800);
       } else {
         if (res.status == 401 || res.status == 403) {
           // alert('Admin not logged in');
@@ -227,7 +227,7 @@ export default function CategoryPage() {
         });
         setTimeout(() => {
           router.reload();
-        }, 2000);
+        }, 800);
       } else {
         if (res.status == 401 || res.status == 403) {
           // alert('Admin not logged in');

@@ -95,7 +95,7 @@ export default function AttributePage() {
         });
         setTimeout(() => {
           router.reload();
-        }, 2000);
+        }, 800);
       } else {
         if (res.status == 401 || res.status == 403) {
           // alert('Admin not logged in');
@@ -154,7 +154,6 @@ export default function AttributePage() {
 
       if (res.ok) {
         console.log('Attribute updated', await res.json());
-        alert('Attribute updated');
         toast({
           title: 'Attribute updated',
           status: 'success',
@@ -163,7 +162,7 @@ export default function AttributePage() {
         });
         setTimeout(() => {
           router.reload();
-        }, 2000);
+        }, 800);
       } else {
         if (res.status == 401 || res.status == 403) {
           // alert('Admin not logged in');
@@ -216,7 +215,7 @@ export default function AttributePage() {
         });
         setTimeout(() => {
           router.reload();
-        }, 2000);
+        }, 800);
       } else {
         if (res.status == 401 || res.status == 403) {
           // alert('Admin not logged in');
