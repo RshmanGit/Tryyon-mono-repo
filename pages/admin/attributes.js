@@ -9,7 +9,8 @@ import {
   Text,
   Textarea,
   useColorModeValue,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react';
 
 import { SearchBar } from '../../ui/components/searchbar';
@@ -36,6 +37,7 @@ const columnsData = [
 ];
 
 export default function AttributePage() {
+  const toast = useToast();
   const [data, setData] = useState([]);
   const [searchString, setSearchString] = useState('');
 
@@ -316,13 +318,13 @@ export default function AttributePage() {
       .catch((err) => {
         console.log(err);
         toast({
-          title: err,
+          title: err.message,
           status: 'error',
           duration: 2000,
           isClosable: true
         });
       });
-  }, [router, debouncedSearchString]);
+  }, [router, debouncedSearchString, toast]);
 
   return (
     <>

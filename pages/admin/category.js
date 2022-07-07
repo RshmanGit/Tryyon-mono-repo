@@ -336,7 +336,7 @@ export default function CategoryPage() {
       .catch((err) => {
         console.log(err);
         toast({
-          title: err,
+          title: err.message,
           status: 'error',
           duration: 2000,
           isClosable: true
