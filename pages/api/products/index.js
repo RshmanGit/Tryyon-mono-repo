@@ -48,7 +48,7 @@ const handler = async (req, res) => {
 
             const products = await searchProducts(body);
 
-            if (products) {
+            if (products.length != 0) {
               return {
                 message: 'Products found',
                 products
