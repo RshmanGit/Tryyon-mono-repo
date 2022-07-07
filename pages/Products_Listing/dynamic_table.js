@@ -22,6 +22,9 @@ import {
   Thead,
   Tbody,
   Tr,
+  EditablePreview,
+  Editable,
+  EditableTextarea,
   Th,
   Td,
   TextBox,
@@ -37,7 +40,9 @@ import {
   Grid,
   GridItem,
   Checkbox,
-  Divider
+  Divider,
+  Tooltip,
+  EditableInput
 } from '@chakra-ui/react';
 
 // Custom components
@@ -56,23 +61,31 @@ import { Formik, Field } from 'formik';
 // maintaining initialState object
 const initialState = {
   filters: {
-    size: new Set(),
-    colour: new Set()
+    Size: new Set(),
+    Colour: new Set()
   }
 };
 
 //default variants and their options
 const variants = {
-  size: ['small', 'medium', 'large'],
-  colour: ['red', 'blue', 'green']
+  Size: ['small', 'medium', 'large'],
+  Colour: ['red', 'blue', 'green']
 };
 let maxy = 0;
+let mp = [];
 
+let flag = true,
+  flag2 = true,
+  flag3 = true;
+let a = 0,
+  b = 0,
+  c = 0;
 function Entry() {
   // Chakra color mode
   const [show, SetShow] = useState(true);
   const textColorSecondary = 'gray.100';
   const [sizzz, setSize] = useState(100);
+  let qsum = 0;
 
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
@@ -119,7 +132,24 @@ function Entry() {
   });
 
   res = permute(arr);
-
+  for (let i = 0; i < res.length; i++) {
+    if (flag === false) {
+      res[i].push(
+        String(
+          parseInt(parseInt(sessionStorage.getItem('quantity')) / res.length)
+        )
+      );
+    }
+    if (flag2 === false) {
+      res[i].push(String(sessionStorage.getItem('price')));
+    }
+    if (flag3 === false) {
+      res[i].push(String(sessionStorage.getItem('disprice')));
+    }
+  }
+  for (let i = 0; i < mp.length; i++) {
+    res[mp[i][0]][mp[i][1]] = mp[i][2];
+  }
   return (
     <>
       {/* <DefaultAuth  > */}
@@ -390,6 +420,10 @@ function Entry() {
                       }
                       if (value.length === 0) {
                         error = 'Field can not be empty';
+                      } else {
+                        sessionStorage.setItem('quantity', value);
+                        flag = false;
+                        SetShow(!show);
                       }
                       return error;
                     }}
@@ -433,8 +467,11 @@ function Entry() {
                       }
                       if (value.length === 0) {
                         error = 'Field can not be empty';
+                      } else {
+                        sessionStorage.setItem('price', value);
+                        flag2 = false;
+                        SetShow(!show);
                       }
-                      sessionStorage.setItem('price', value);
                       return error;
                     }}
                   />
@@ -486,6 +523,10 @@ function Entry() {
                       if (rr >= tt) {
                         error =
                           'Discounted price should be less than the original price';
+                      } else {
+                        sessionStorage.setItem('disprice', value);
+                        flag3 = false;
+                        SetShow(!show);
                       }
 
                       return error;
@@ -551,7 +592,7 @@ function Entry() {
                                         width: '15px',
                                         float: 'right',
                                         position: 'absolute',
-                                        marginLeft: '80px',
+                                        marginLeft: '88px',
                                         marginTop: '-16px'
                                       }}
                                       onClick={(e) => {
@@ -560,8 +601,8 @@ function Entry() {
                                           `Change the name of ${val} variant`
                                         );
                                         if (
-                                          result.length > 0 &&
-                                          result !== null
+                                          result !== null &&
+                                          result.length > 0
                                         ) {
                                           variants[result] = variants[val];
                                           delete variants[val];
@@ -587,7 +628,7 @@ function Entry() {
                                         e.preventDefault();
                                         delete variants[val];
                                         delete initialState.filters[val];
-                                        if (vv.length === 6)
+                                        if (vv.length === 3)
                                           setSize(100 + (maxy - 3) * 50);
                                         else SetShow(!show);
                                       }}
@@ -695,6 +736,102 @@ function Entry() {
                         );
                       })}
 
+                      <GridItem rowSpan={1} colSpan={1}>
+                        <Menu closeOnSelect={false}>
+                          <MenuItemOption
+                            as={Button}
+                            backgroundColor="black"
+                            color="white"
+                            ml="20px"
+                            mt="20px"
+                            minWidth="160px"
+                            width="auto"
+                            _hover={{ bg: 'gray.400' }}
+                            _focus={{ color: 'white' }}
+                          >
+                            <Text float="left" ml="6px">
+                              Quantity
+                            </Text>
+                          </MenuItemOption>
+                          <MenuItemOption
+                            as={Text}
+                            maxWidth="160px"
+                            backgroundColor={textColorSecondary}
+                            ml="30px"
+                            mt="10px"
+                            height="14%"
+                          >
+                            {flag === true
+                              ? ''
+                              : sessionStorage.getItem('quantity')}
+                          </MenuItemOption>
+                        </Menu>
+                      </GridItem>
+
+                      <GridItem rowSpan={1} colSpan={1}>
+                        <Menu closeOnSelect={false}>
+                          <MenuItemOption
+                            as={Button}
+                            backgroundColor="black"
+                            color="white"
+                            ml="20px"
+                            mt="20px"
+                            minWidth="160px"
+                            width="auto"
+                            _hover={{ bg: 'gray.400' }}
+                            _focus={{ color: 'white' }}
+                          >
+                            <Text float="left" ml="13px">
+                              Price
+                            </Text>
+                          </MenuItemOption>
+                          <MenuItemOption
+                            as={Text}
+                            maxWidth="160px"
+                            backgroundColor={textColorSecondary}
+                            ml="30px"
+                            mt="10px"
+                            height="14%"
+                          >
+                            {flag2 === true
+                              ? ''
+                              : sessionStorage.getItem('price')}
+                          </MenuItemOption>
+                        </Menu>
+                      </GridItem>
+
+                      <GridItem rowSpan={1} colSpan={1}>
+                        <Menu closeOnSelect={false}>
+                          <MenuItemOption
+                            as={Button}
+                            backgroundColor="black"
+                            color="white"
+                            ml="20px"
+                            mt="20px"
+                            minWidth="190px"
+                            width="auto"
+                            _hover={{ bg: 'gray.400' }}
+                            _focus={{ color: 'white' }}
+                          >
+                            <Text float="left" ml="-10px">
+                              Discounted Price
+                            </Text>
+                          </MenuItemOption>
+                          <MenuItemOption
+                            as={Text}
+                            maxWidth="160px"
+                            backgroundColor={textColorSecondary}
+                            ml="30px"
+                            mt="10px"
+                            height="14%"
+                          >
+                            {flag3 === true
+                              ? ''
+                              : sessionStorage.getItem('disprice')}
+                          </MenuItemOption>
+                        </Menu>
+                      </GridItem>
+
                       {/* Button for adding more variants limited to max 6 variants */}
                       <GridItem rowSpan={1} colSpan={1}>
                         <Menu closeOnSelect={false}>
@@ -710,13 +847,13 @@ function Entry() {
                               if (
                                 val !== null &&
                                 val.length !== 0 &&
-                                vv.length < 5
+                                vv.length < 2
                               ) {
                                 variants[val] = [];
                                 initialState.filters[val] = new Set();
                                 SetShow(!show);
                               } else if (
-                                vv.length == 5 &&
+                                vv.length == 2 &&
                                 val !== null &&
                                 val.length !== 0
                               ) {
@@ -748,15 +885,60 @@ function Entry() {
                           {vv.map((key1) => {
                             return <Td key={key1}>{key1}</Td>;
                           })}
+                          <Td>Quantity</Td>
+                          <Td>Price</Td>
+                          <Td>Discounted Price</Td>
                         </Tr>
                       </Thead>
                       <Tbody>
-                        {res.map((table) => {
+                        {res.map((table, idx) => {
                           return (
                             <Tr key={table}>
-                              {table.map((entry) => {
-                                return <Td key={entry}>{entry}</Td>;
+                              {table.map((entry, idx2) => {
+                                return (
+                                  <Td
+                                    key={entry}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      let vall = prompt('Change cell value !');
+                                      if (vall !== null && vall.length > 0) {
+                                        mp.push([idx, idx2, vall]);
+                                        SetShow(!show);
+                                      }
+                                    }}
+                                  >
+                                    {entry}
+                                  </Td>
+                                );
                               })}
+
+                              {/* <Td 
+                              >
+                            {flag===true?'':parseInt(parseInt(sessionStorage.getItem('quantity'),10)/res.length)}
+                            </Td>
+<Td onChange={(e)=>{
+  
+  console.log(e.target.value);
+}}>
+                            <Editable defaultValue={flag2===true?'':sessionStorage.getItem('price')}>
+                            <Tooltip label="Click to edit">
+                              <EditablePreview />
+                              </Tooltip>
+                              <EditableTextarea 
+                              maxWidth="100px"
+                              maxHeight="28px"
+                              />
+                            </Editable></Td><Td>
+
+                            <Editable defaultValue={flag3===true?'':sessionStorage.getItem('disprice')}>
+                            <Tooltip label="Click to edit">
+                              <EditablePreview />
+                              </Tooltip>
+                              <EditableTextarea 
+                              maxWidth="100px"
+                              maxHeight="28px"
+                              />
+                            </Editable></Td> */}
                             </Tr>
                           );
                         })}
@@ -780,7 +962,37 @@ function Entry() {
                     mb="18px"
                     mt="20px"
                     ml="430px"
-                    onClick={handleSubmit}
+                    onClick={() => {
+                      let ss = 0,
+                        id;
+                      let yy = true;
+                      for (let i = 0; i < res.length; i++) {
+                        ss += parseInt(res[i][res[i].length - 3]);
+                        let aa = parseInt(res[i][res[i].length - 2]);
+                        let bb = parseInt(res[i][res[i].length - 1]);
+                        if (aa <= bb) {
+                          yy = false;
+                          id = i;
+                        }
+                      }
+                      if (ss < 1000) {
+                        alert(`${1000 - ss} items remaining to add !`);
+                      } else if (ss > 1000) {
+                        alert(
+                          `${
+                            ss - 1000
+                          } items are extra, this can not exceed maximum quantity !`
+                        );
+                      } else if (yy === false) {
+                        alert(
+                          `Price value can not be smaller than Discount price at index ${
+                            id + 1
+                          }`
+                        );
+                      } else {
+                        return handleSubmit();
+                      }
+                    }}
                   >
                     {buttonText}
                   </Button>
