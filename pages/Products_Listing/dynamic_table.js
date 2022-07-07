@@ -220,6 +220,7 @@ function Entry() {
       })
       .then((res) => {
         if (res.message === 'New SKU Created') {
+          // setProg(rrr+ll);
           setTimeout(function () {
             yyyy++;
             if (yyyy === len) {
@@ -248,6 +249,7 @@ function Entry() {
         alignItems="start"
         justifyContent="center"
         px={{ base: '25px', md: '0px' }}
+        // mt={{ base: '40px', md: '14vh' }}
         mt="5px"
         flexDirection="column"
       >
@@ -338,6 +340,7 @@ function Entry() {
                         second: messagee.second + ll
                       });
                     }, 2000);
+
                     {
                       res1.map(async (table, idx) => {
                         check(values, arr2, table, vv, idx + 1, res1.length);
@@ -353,6 +356,7 @@ function Entry() {
                 .catch((err) => {
                   console.error(JSON.parse(err.message));
                 });
+
               delete variants.Quantity;
               delete variants.Price;
               delete variants.DiscountedPrice;
@@ -1133,4 +1137,5 @@ function Entry() {
     </>
   );
 }
+
 export default Entry;
