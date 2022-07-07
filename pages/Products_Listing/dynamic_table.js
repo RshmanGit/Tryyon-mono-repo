@@ -13,6 +13,13 @@ import {
   FormErrorMessage,
   Heading,
   Icon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Input,
   InputGroup,
   InputRightElement,
@@ -42,7 +49,9 @@ import {
   Checkbox,
   Divider,
   Tooltip,
-  EditableInput
+  EditableInput,
+  useDisclosure,
+  Progress
 } from '@chakra-ui/react';
 
 // Custom components
@@ -57,6 +66,9 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 import { Formik, Field } from 'formik';
+import { check } from 'prettier';
+import { delay } from 'lodash';
+import { faStripeS } from '@fortawesome/free-brands-svg-icons';
 
 // maintaining initialState object
 const initialState = {
@@ -65,34 +77,53 @@ const initialState = {
     Colour: new Set()
   }
 };
+let ll = 0;
 
 //default variants and their options
 const variants = {
   Size: ['small', 'medium', 'large'],
   Colour: ['red', 'blue', 'green']
 };
-let maxy = 0;
-let mp = [];
+let maxy = 0,
+  mp = [];
 
 let flag = true,
   flag2 = true,
   flag3 = true;
-let a = 0,
-  b = 0,
-  c = 0;
+
 function Entry() {
   // Chakra color mode
   const [show, SetShow] = useState(true);
   const textColorSecondary = 'gray.100';
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [sizzz, setSize] = useState(100);
-  let qsum = 0;
+
+  //For Progress bar
+  const [time, setTimer] = useState(true);
+  const [stripe, setStr] = useState(true);
+  const [colors, setColor] = useState('twitter');
+  const [anim, setAnim] = useState(true);
+
+  const router = useRouter();
+  useEffect(() => {
+    //After closing modal, get back to the page
+    if (time === false) {
+      router.push('/Products_Listing/dynamic_table');
+      setTimer(true);
+    }
+  });
+  let qsum = 0,
+    yyyy = 0;
+
+  const [messagee, setMess] = useState({ first: [''], second: 0 });
+  // const [rrr,setProg] = useState(0);
 
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
   const brandStars = useColorModeValue('brand.500', 'brand.400');
 
   const [buttonText, setButtonText] = useState('Create');
-  const [signup, setState] = useState(0);
+  // const [signup, setState] = useState(0);
 
   const handleClick = () => setShow(!show);
 
@@ -120,7 +151,7 @@ function Entry() {
     if (variants[vv[i]].length > maxy) maxy = variants[vv[i]].length;
   }
 
-  let res;
+  let res1;
   let arr = [];
 
   kk.map((key) => {
@@ -131,40 +162,92 @@ function Entry() {
     arr.push(s);
   });
 
-  res = permute(arr);
-  for (let i = 0; i < res.length; i++) {
+  res1 = permute(arr);
+  for (let i = 0; i < res1.length; i++) {
     if (flag === false) {
-      res[i].push(
+      res1[i].push(
         String(
-          parseInt(parseInt(sessionStorage.getItem('quantity')) / res.length)
+          parseInt(parseInt(sessionStorage.getItem('quantity')) / res1.length)
         )
       );
     }
     if (flag2 === false) {
-      res[i].push(String(sessionStorage.getItem('price')));
+      res1[i].push(String(sessionStorage.getItem('price')));
     }
     if (flag3 === false) {
-      res[i].push(String(sessionStorage.getItem('disprice')));
+      res1[i].push(String(sessionStorage.getItem('disprice')));
     }
   }
   for (let i = 0; i < mp.length; i++) {
-    res[mp[i][0]][mp[i][1]] = mp[i][2];
+    res1[mp[i][0]][mp[i][1]] = mp[i][2];
+  }
+  function check(values, arr2, table, ent, idx, len) {
+    let arr3 = {};
+    arr3.productId = sessionStorage.getItem('productID');
+    arr3.price = values.price;
+    arr3.discountedPrice = values.discountedPrice;
+    arr3.slug = values.slug;
+    arr3.quantity = arr2.quantity;
+    arr3.categoryIds = [];
+    arr3.attributes = {};
+    let ix = 0;
+    vv.map((kkk) => {
+      arr3.attributes.kkk = table[ix++];
+    });
+
+    fetch('/api/sku/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.token_use}`
+      },
+      body: JSON.stringify(arr3, null, 8)
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.message === 'New SKU Created') {
+          setButtonText('Product & SKUs created !');
+          return res;
+        } else {
+          // alert(res.message);
+          setButtonText('Retry !');
+          throw new Error(
+            JSON.stringify({
+              message: res.message
+            })
+          );
+        }
+      })
+      .then((res) => {
+        if (res.message === 'New SKU Created') {
+          setTimeout(function () {
+            yyyy++;
+            if (yyyy === len) {
+              setMess({
+                first: `Close the tab to go back !  Total SKU entries created: ${yyyy}`,
+                second: messagee.second + ll
+              });
+              setStr(false);
+              setColor('whatsapp');
+              setAnim(false);
+            } else setMess({ first: `${res.message} : Entries count ${yyyy}`, second: messagee.second + ll });
+          }, 4000);
+        }
+      })
+      .catch((err) => {
+        console.error(JSON.parse(err.message));
+      });
   }
   return (
     <>
-      {/* <DefaultAuth  > */}
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w="100%"
-        // mx={{ base: 'auto', lg: '0px' }}
-        // me="auto"
         ml="30px"
         h="100%"
         alignItems="start"
         justifyContent="center"
-        // mb={{ base: '-20px', md: '-20px' }
         px={{ base: '25px', md: '0px' }}
-        // mt={{ base: '40px', md: '14vh' }}
         mt="5px"
         flexDirection="column"
       >
@@ -192,29 +275,47 @@ function Entry() {
               slug: '',
               quantity: '',
               price: '',
-              discountedPrice: ''
+              discountedPrice: '',
+              attributes: {}
             }}
             onSubmit={(values) => {
               //   alert(JSON.stringify(values, null, 2));
               setButtonText('Creating your product...');
+
               let temp = parseInt(values.quantity, 10);
               let temp2 = parseInt(values.price, 10);
               let temp3 = parseInt(values.discountedPrice, 10);
-              values.quantity = temp;
+              // console.log(temp);
+              let arr2 = {};
+              arr2.name = values.name;
+              arr2.description = values.description;
+
+              arr2.shortDescriptions = values.shortDescriptions;
+              arr2.slug = values.slug;
+              arr2.quantity = temp;
+              // arr2.price = temp2;
+              // arr2.discountedPrice = temp3;
+              variants.Quantity = [temp];
+              variants.Price = [temp2];
+              variants.DiscountedPrice = [temp3];
+              arr2.attributes = variants;
+              arr2.categoryIds = [];
+
               values.price = temp2;
               values.discountedPrice = temp3;
+
               fetch('/api/products/create', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${sessionStorage.token_use}`
                 },
-                body: JSON.stringify(values, null, 7)
+                body: JSON.stringify(arr2, null, 8)
               })
                 .then((res) => res.json())
                 .then((res) => {
                   if (res.message === 'New Product Created') {
                     setButtonText('Product created !');
-                    setState(1);
                     return res;
                   } else {
                     alert(res.message);
@@ -226,10 +327,36 @@ function Entry() {
                     );
                   }
                 })
-                .then((res) => alert(res.message))
+                .then((res) => {
+                  if (res.message === 'New Product Created') {
+                    sessionStorage.setItem('productID', res.product.id);
+                    onOpen();
+                    ll = 100 / (res1.length + 1);
+                    setTimeout(function () {
+                      setMess({
+                        first: res.message,
+                        second: messagee.second + ll
+                      });
+                    }, 2000);
+                    {
+                      res1.map(async (table, idx) => {
+                        check(values, arr2, table, vv, idx + 1, res1.length);
+                      });
+                    }
+                  }
+                })
+                .then(() => {
+                  values.quantity = '';
+                  values.price = '';
+                  values.discountedPrice = '';
+                })
                 .catch((err) => {
                   console.error(JSON.parse(err.message));
                 });
+              delete variants.Quantity;
+              delete variants.Price;
+              delete variants.DiscountedPrice;
+              SetShow(!show);
             }}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -891,7 +1018,7 @@ function Entry() {
                         </Tr>
                       </Thead>
                       <Tbody>
-                        {res.map((table, idx) => {
+                        {res1.map((table, idx) => {
                           return (
                             <Tr key={table}>
                               {table.map((entry, idx2) => {
@@ -911,48 +1038,39 @@ function Entry() {
                                   </Td>
                                 );
                               })}
-
-                              {/* <Td 
-                              >
-                            {flag===true?'':parseInt(parseInt(sessionStorage.getItem('quantity'),10)/res.length)}
-                            </Td>
-<Td onChange={(e)=>{
-  
-  console.log(e.target.value);
-}}>
-                            <Editable defaultValue={flag2===true?'':sessionStorage.getItem('price')}>
-                            <Tooltip label="Click to edit">
-                              <EditablePreview />
-                              </Tooltip>
-                              <EditableTextarea 
-                              maxWidth="100px"
-                              maxHeight="28px"
-                              />
-                            </Editable></Td><Td>
-
-                            <Editable defaultValue={flag3===true?'':sessionStorage.getItem('disprice')}>
-                            <Tooltip label="Click to edit">
-                              <EditablePreview />
-                              </Tooltip>
-                              <EditableTextarea 
-                              maxWidth="100px"
-                              maxHeight="28px"
-                              />
-                            </Editable></Td> */}
                             </Tr>
                           );
                         })}
                       </Tbody>
                     </Table>
                   </TableContainer>
+                  <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>Requests Progress Bar</ModalHeader>
+                      <ModalCloseButton
+                        onClick={() => {
+                          setTimer(false);
+                        }}
+                      />
+                      <ModalBody mb="17px">
+                        <Progress
+                          value={100}
+                          minWidth="100%"
+                          max={100}
+                          isIndeterminate={stripe}
+                          colorScheme={colors}
+                          hasStripe={stripe}
+                          isAnimated={anim}
+                          mb="23px"
+                        />
+                        {messagee.first}
+                      </ModalBody>
+                    </ModalContent>
+                  </Modal>
                 </>
 
                 <FormControl>
-                  {/* <Flex justifyContent="space-between" align="center" mb="24px">
-                    <Link href="#">
-                      <a>Forgot password?</a>
-                    </Link>
-                  </Flex> */}
                   <Button
                     fontSize="sm"
                     variant="brand"
@@ -966,21 +1084,25 @@ function Entry() {
                       let ss = 0,
                         id;
                       let yy = true;
-                      for (let i = 0; i < res.length; i++) {
-                        ss += parseInt(res[i][res[i].length - 3]);
-                        let aa = parseInt(res[i][res[i].length - 2]);
-                        let bb = parseInt(res[i][res[i].length - 1]);
+                      let qua = parseInt(
+                        sessionStorage.getItem('quantity'),
+                        10
+                      );
+                      for (let i = 0; i < res1.length; i++) {
+                        ss += parseInt(res1[i][res1[i].length - 3]);
+                        let aa = parseInt(res1[i][res1[i].length - 2]);
+                        let bb = parseInt(res1[i][res1[i].length - 1]);
                         if (aa <= bb) {
                           yy = false;
                           id = i;
                         }
                       }
-                      if (ss < 1000) {
-                        alert(`${1000 - ss} items remaining to add !`);
-                      } else if (ss > 1000) {
+                      if (ss < qua) {
+                        alert(`${qua - ss} items remaining to add !`);
+                      } else if (ss > qua) {
                         alert(
                           `${
-                            ss - 1000
+                            ss - qua
                           } items are extra, this can not exceed maximum quantity !`
                         );
                       } else if (yy === false) {
@@ -1011,5 +1133,4 @@ function Entry() {
     </>
   );
 }
-
 export default Entry;
