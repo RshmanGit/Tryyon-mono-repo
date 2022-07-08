@@ -56,209 +56,211 @@ function Login() {
 
   const handleClick = () => setShow(!show);
   return (
-    <DefaultAuth illustrationBackground={'/auth.png'} image={'/auth.png'}>
-      <Flex
-        maxW={{ base: '100%', md: 'max-content' }}
-        w="100%"
-        mx={{ base: 'auto', lg: '0px' }}
-        me="auto"
-        h="100%"
-        alignItems="start"
-        justifyContent="center"
-        mb={{ base: '30px', md: '60px' }}
-        px={{ base: '25px', md: '0px' }}
-        mt={{ base: '40px', md: '14vh' }}
-        flexDirection="column"
-      >
-        <Box me="auto">
-          <Heading color={textColor} fontSize="36px" mb="10px">
-            Sign In (Admin)
-          </Heading>
-          <Text
-            mb="36px"
-            ms="4px"
-            color={textColorSecondary}
-            fontWeight="400"
-            fontSize="md"
-          >
-            Enter your email and password to sign in!
-          </Text>
-        </Box>
-        <Flex
-          zIndex="2"
-          direction="column"
-          w={{ base: '100%', md: '420px' }}
-          maxW="100%"
-          background="transparent"
-          borderRadius="15px"
-          mx={{ base: 'auto', lg: 'unset' }}
-          me="auto"
-          mb={{ base: '20px', md: 'auto' }}
+    // <DefaultAuth illustrationBackground={'/auth.png'} image={'/auth.png'}>
+    <Flex
+      maxW={{ base: '100%', md: 'max-content' }}
+      w="100%"
+      // mx={{ base: 'auto', lg: '0px' }}
+      // me="auto"
+      h="100%"
+      alignItems="start"
+      justifyContent="center"
+      mb={{ base: '30px', md: '60px' }}
+      px={{ base: '25px', md: '0px' }}
+      mt={{ base: '40px', md: '4vh' }}
+      ml="20px"
+      flexDirection="column"
+    >
+      <Box me="auto">
+        <Heading color={textColor} fontSize="36px" mb="10px">
+          Sign In (Admin)
+        </Heading>
+        <Text
+          mb="36px"
+          ms="4px"
+          color={textColorSecondary}
+          fontWeight="400"
+          fontSize="md"
         >
-          <Formik
-            initialValues={{
-              email: '',
-              password: ''
-            }}
-            onSubmit={(values) => {
-              //   alert(JSON.stringify(values, null, 2));
-              setButtonText('Submitting...');
-              fetch('/api/admin/login', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(values, null, 2)
-              })
-                .then(async (res) => {
-                  const data = await res.json();
-                  if (res.ok) return data;
-
+          Enter your email and password to sign in!
+        </Text>
+      </Box>
+      <Flex
+        zIndex="2"
+        direction="column"
+        w={{ base: '100%', md: '420px' }}
+        maxW="100%"
+        background="transparent"
+        borderRadius="15px"
+        mx={{ base: 'auto', lg: 'unset' }}
+        me="auto"
+        mb={{ base: '20px', md: 'auto' }}
+      >
+        <Formik
+          initialValues={{
+            email: '',
+            password: ''
+          }}
+          onSubmit={(values) => {
+            //   alert(JSON.stringify(values, null, 2));
+            setButtonText('Submitting...');
+            fetch('/api/admin/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(values, null, 2)
+            })
+              .then((res) => res.json())
+              .then((res) => {
+                if (res.message === 'admin Authenticated') {
+                  sessionStorage.setItem('token', 1);
+                  setButtonText('Admin Authenticated');
+                  return res;
+                } else {
                   alert(res.message);
                   setButtonText('Retry');
-                  throw new Error(res.message);
-                })
-                .then((res) => {
-                  setButtonText('Admin Authenticated');
-                  console.log(res);
-                  sessionStorage.setItem('adminToken', res.updatedAdmin.token);
-                  alert(res.message);
-                  if (router.query.next && router.query.next !== '') {
-                    router.push(router.query.next);
-                  }
-                })
-                .catch((err) => {
-                  console.error(err);
-                });
-            }}
-          >
-            {({ handleSubmit, errors, touched }) => (
-              <form>
-                <FormControl
-                  mb="24px"
-                  isInvalid={!!errors.email && touched.email}
+                  throw new Error(
+                    JSON.stringify({
+                      message: res.message,
+                      status: res.status
+                    })
+                  );
+                }
+              })
+              .then((res) => alert(res.message))
+              .catch((err) => {
+                console.error(JSON.parse(err.message));
+              });
+          }}
+        >
+          {({ handleSubmit, errors, touched }) => (
+            <form>
+              <FormControl
+                mb="24px"
+                isInvalid={!!errors.email && touched.email}
+              >
+                <FormLabel
+                  display="flex"
+                  ms="4px"
+                  fontSize="sm"
+                  fontWeight="500"
+                  color={textColor}
+                  mb="8px"
                 >
-                  <FormLabel
-                    display="flex"
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
-                    mb="8px"
-                  >
-                    Email<Text color={brandStars}>*</Text>
-                  </FormLabel>
+                  Email<Text color={brandStars}>*</Text>
+                </FormLabel>
+                <Field
+                  as={Input}
+                  isRequired={true}
+                  id="email"
+                  name="email"
+                  variant="auth"
+                  fontSize="sm"
+                  ms={{ base: '0px', md: '0px' }}
+                  type="email"
+                  placeholder="mail@simmmple.com"
+                  mb="4px"
+                  fontWeight="500"
+                  size="lg"
+                  validate={(value) => {
+                    let error;
+                    let mailformat =
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+                    if (!value.match(mailformat)) {
+                      error = 'Please enter a valid email';
+                    }
+
+                    return error;
+                  }}
+                />
+                <FormErrorMessage>{errors.email}</FormErrorMessage>
+              </FormControl>
+              <FormControl
+                mb="24px"
+                isInvalid={!!errors.password && touched.password}
+              >
+                <FormLabel
+                  ms="4px"
+                  fontSize="sm"
+                  fontWeight="500"
+                  color={textColor}
+                  display="flex"
+                >
+                  Password<Text color={brandStars}>*</Text>
+                </FormLabel>
+                <InputGroup size="md">
                   <Field
                     as={Input}
                     isRequired={true}
-                    id="email"
-                    name="email"
-                    variant="auth"
+                    id="password"
+                    name="password"
                     fontSize="sm"
-                    ms={{ base: '0px', md: '0px' }}
-                    type="email"
-                    placeholder="mail@simmmple.com"
+                    placeholder="Min. 8 characters"
                     mb="4px"
-                    fontWeight="500"
                     size="lg"
+                    type={show ? 'text' : 'password'}
+                    variant="auth"
                     validate={(value) => {
                       let error;
-                      let mailformat =
-                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-                      if (!value.match(mailformat)) {
-                        error = 'Please enter a valid email';
+                      if (value.length < 7) {
+                        error = 'Password must contain at least 8 characters';
                       }
 
                       return error;
                     }}
                   />
-                  <FormErrorMessage>{errors.email}</FormErrorMessage>
-                </FormControl>
-                <FormControl
-                  mb="24px"
-                  isInvalid={!!errors.password && touched.password}
-                >
-                  <FormLabel
-                    ms="4px"
-                    fontSize="sm"
-                    fontWeight="500"
-                    color={textColor}
+                  <InputRightElement
                     display="flex"
+                    alignItems="center"
+                    mt="4px"
                   >
-                    Password<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <InputGroup size="md">
-                    <Field
-                      as={Input}
-                      isRequired={true}
-                      id="password"
-                      name="password"
-                      fontSize="sm"
-                      placeholder="Min. 8 characters"
-                      mb="4px"
-                      size="lg"
-                      type={show ? 'text' : 'password'}
-                      variant="auth"
-                      validate={(value) => {
-                        let error;
-
-                        if (value.length < 7) {
-                          error = 'Password must contain at least 8 characters';
-                        }
-
-                        return error;
-                      }}
+                    <Icon
+                      color={textColorSecondary}
+                      _hover={{ cursor: 'pointer' }}
+                      as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                      onClick={handleClick}
                     />
-                    <InputRightElement
-                      display="flex"
-                      alignItems="center"
-                      mt="4px"
-                    >
-                      <Icon
-                        color={textColorSecondary}
-                        _hover={{ cursor: 'pointer' }}
-                        as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                        onClick={handleClick}
-                      />
-                    </InputRightElement>
-                  </InputGroup>
-                  <FormErrorMessage>{errors.password}</FormErrorMessage>
-                </FormControl>
-                <FormControl>
-                  <Flex justifyContent="space-between" align="center" mb="24px">
-                    <Link href="#">
-                      <a>Forgot password?</a>
-                    </Link>
-                  </Flex>
-                  <Button
-                    fontSize="sm"
-                    variant="brand"
-                    fontWeight="500"
-                    w="100%"
-                    h="50"
-                    mb="24px"
-                    onClick={handleSubmit}
-                  >
-                    {buttonText}
-                  </Button>
-                </FormControl>
-              </form>
-            )}
-          </Formik>
-          <Flex alignItems="start" maxW="100%" mt="0px">
-            <Text color={textColorDetails} fontWeight="400" fontSize="14px">
-              Not registered yet?{' '}
-              <Link href="/auth/admin/signup">
-                <a>
-                  <b>Create an Account</b>
-                </a>
-              </Link>
-            </Text>
-          </Flex>
+                  </InputRightElement>
+                </InputGroup>
+                <FormErrorMessage>{errors.password}</FormErrorMessage>
+              </FormControl>
+              <FormControl>
+                <Flex justifyContent="space-between" align="center" mb="24px">
+                  <Link href="#">
+                    <a>Forgot password?</a>
+                  </Link>
+                </Flex>
+                <Button
+                  fontSize="sm"
+                  variant="brand"
+                  fontWeight="500"
+                  w="100%"
+                  h="50"
+                  mb="24px"
+                  onClick={handleSubmit}
+                >
+                  {buttonText}
+                </Button>
+              </FormControl>
+            </form>
+          )}
+        </Formik>
+        <Flex alignItems="start" maxW="100%" mt="0px">
+          <Text color={textColorDetails} fontWeight="400" fontSize="14px">
+            Not registered yet?{' '}
+            <Link href="/auth/admin/signup">
+              <a>
+                <b>Create an Account</b>
+              </a>
+            </Link>
+          </Text>
         </Flex>
       </Flex>
-    </DefaultAuth>
+    </Flex>
+    // </DefaultAuth>
   );
 }
 
