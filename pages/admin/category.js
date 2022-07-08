@@ -269,19 +269,19 @@ export default function CategoryPage() {
     onOpen();
   };
 
-  const openEdit = (id) => {
+  const openEdit = (cells) => {
     setModalHeading('Edit Category');
     setModalBody('edit');
     setModalFooter('Update');
-    setID(id);
+    setID(cells[0].value);
     onOpen();
   };
 
-  const openDelete = (id) => {
+  const openDelete = (cells) => {
     setModalHeading('Delete Category');
     setModalBody('delete');
     setModalFooter('Delete');
-    setID(id);
+    setID(cells[0].value);
     onOpen();
   };
 

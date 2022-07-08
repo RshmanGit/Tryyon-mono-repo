@@ -254,19 +254,19 @@ export default function AttributePage() {
     onOpen();
   };
 
-  const openEdit = (id) => {
+  const openEdit = (cells) => {
     setModalHeading('Edit Attribute');
     setModalBody('edit');
     setModalFooter('Update');
-    setID(id);
+    setID(cells[0].value);
     onOpen();
   };
 
-  const openDelete = (id) => {
+  const openDelete = (cells) => {
     setModalHeading('Delete Attribute');
     setModalBody('delete');
     setModalFooter('Delete');
-    setID(id);
+    setID(cells[0].value);
     onOpen();
   };
 
