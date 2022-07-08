@@ -143,6 +143,7 @@ export default function TableComp(props) {
                               borderRadius="2xl"
                               bgColor="blue.500"
                               p="8px 16px"
+                              mr="4px"
                               align="center"
                             >
                               <Text
@@ -204,14 +205,14 @@ export default function TableComp(props) {
                     fontSize={{ sm: '14px' }}
                     m="8px"
                     colorScheme="blue"
-                    onClick={() => editEntry(row.cells[0].value)}
+                    onClick={() => editEntry(row.cells)}
                   >
                     <EditIcon />
                   </Button>
                   <Button
                     fontSize={{ sm: '14px' }}
                     colorScheme="red"
-                    onClick={() => deleteEntry(row.cells[0].value)}
+                    onClick={() => deleteEntry(row.cells)}
                   >
                     <DeleteIcon />
                   </Button>
