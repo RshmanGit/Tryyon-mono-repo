@@ -35,6 +35,8 @@ export const searchProducts = async ({
   published,
   supplierId,
   attributes,
+  priceFrom,
+  priceTo,
   sortBy,
   order,
   categoryId,
@@ -79,6 +81,31 @@ export const searchProducts = async ({
       as: 'categories'
     }
   });
+
+  pipeline.push({
+    $lookup: {
+      from: 'SKU',
+      localField: '_id',
+      foreignField: 'productId',
+      as: 'sku'
+    }
+  });
+
+  if (priceFrom || priceTo) {
+    const price = {};
+    if (priceFrom) price.$gte = priceFrom;
+    if (priceTo) price.$lte = priceTo;
+
+    pipeline.push({
+      $match: {
+        sku: {
+          $elemMatch: {
+            price
+          }
+        }
+      }
+    });
+  }
 
   if (Object.keys(sortProducts).length !== 0)
     pipeline.push({ $sort: sortProducts });

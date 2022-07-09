@@ -14,6 +14,8 @@ const schema = {
     supplierId: Joi.string().optional(),
     categoryId: Joi.string().optional(),
     attributes: Joi.object().optional(),
+    priceFrom: Joi.number().optional(),
+    priceTo: Joi.number().optional(),
     sortBy: Joi.string().optional(),
     order: Joi.string().allow('desc', 'asc').optional(),
     pagination: Joi.boolean().optional(),
