@@ -684,8 +684,8 @@ function Entry() {
                     <Grid
                       h="40px"
                       templateRows="repeat(1, 1fr)"
-                      templateColumns="repeat(6, 1fr)"
-                      gap={5}
+                      templateColumns="repeat(8, 1fr)"
+                      gap={4}
                     >
                       <GridItem rowSpan={1} colSpan={2}>
                         <Heading ml="30px">Variants</Heading>
@@ -886,11 +886,11 @@ function Entry() {
                           </MenuItemOption>
                           <MenuItemOption
                             as={Text}
-                            maxWidth="160px"
+                            maxWidth="170px"
                             backgroundColor={textColorSecondary}
                             ml="30px"
                             mt="10px"
-                            height="14%"
+                            height="auto"
                           >
                             {flag === true
                               ? ''
@@ -918,11 +918,11 @@ function Entry() {
                           </MenuItemOption>
                           <MenuItemOption
                             as={Text}
-                            maxWidth="160px"
+                            maxWidth="170px"
                             backgroundColor={textColorSecondary}
                             ml="30px"
                             mt="10px"
-                            height="14%"
+                            height="auto"
                           >
                             {flag2 === true
                               ? ''
@@ -945,16 +945,16 @@ function Entry() {
                             _focus={{ color: 'white' }}
                           >
                             <Text float="left" ml="-10px">
-                              Discounted Price
+                              Discount Price
                             </Text>
                           </MenuItemOption>
                           <MenuItemOption
                             as={Text}
-                            maxWidth="160px"
+                            maxWidth="170px"
                             backgroundColor={textColorSecondary}
                             ml="30px"
                             mt="10px"
-                            height="14%"
+                            height="auto"
                           >
                             {flag3 === true
                               ? ''
@@ -963,7 +963,7 @@ function Entry() {
                         </Menu>
                       </GridItem>
 
-                      {/* Button for adding more variants limited to max 6 variants */}
+                      {/* Button for adding more variants limited to max 8 variants */}
                       <GridItem rowSpan={1} colSpan={1}>
                         <Menu closeOnSelect={false}>
                           <MenuButton
@@ -984,13 +984,15 @@ function Entry() {
                                 initialState.filters[val] = new Set();
                                 SetShow(!show);
                               } else if (
-                                vv.length == 2 &&
+                                vv.length >= 2 &&
+                                vv.length <= 4 &&
                                 val !== null &&
                                 val.length !== 0
                               ) {
                                 variants[val] = [];
                                 initialState.filters[val] = new Set();
-                                setSize(sizzz + 100);
+                                if (vv.length == 2) setSize(sizzz + 120);
+                                else SetShow(!show);
                               } else if (val !== null && val.length !== 0)
                                 alert('No more variants can be added !!');
                             }}
@@ -1016,9 +1018,9 @@ function Entry() {
                           {vv.map((key1) => {
                             return <Td key={key1}>{key1}</Td>;
                           })}
-                          <Td>Quantity</Td>
-                          <Td>Price</Td>
-                          <Td>Discounted Price</Td>
+                          <Td mr="12px">Quantity</Td>
+                          <Td mr="12px">Price</Td>
+                          <Td mr="12px">Discount Price</Td>
                         </Tr>
                       </Thead>
                       <Tbody>
