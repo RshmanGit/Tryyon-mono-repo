@@ -98,6 +98,7 @@ function Login() {
               .then((res) => {
                 if (res.message === 'admin Authenticated') {
                   sessionStorage.setItem('token', 1);
+                  // alert(res.message);
                   setButtonText('Admin Authenticated');
                   return res;
                 } else {
