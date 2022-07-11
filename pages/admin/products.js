@@ -597,7 +597,7 @@ export default function ProductPage() {
   ]);
 
   useEffect(() => {
-    if (localStorage.page)
+    if (localStorage.getItem('page/admin/products'))
       setPage(parseInt(localStorage.getItem('page/admin/products'), 10));
   }, []);
 

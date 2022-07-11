@@ -334,7 +334,7 @@ export default function AttributePage() {
   }, [router, debouncedSearchString, toast]);
 
   useEffect(() => {
-    if (localStorage.page)
+    if (localStorage.getItem('page/admin/attributes'))
       setPage(parseInt(localStorage.getItem('page/admin/attributes'), 10));
   }, []);
 

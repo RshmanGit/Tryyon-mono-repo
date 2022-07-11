@@ -388,7 +388,7 @@ export default function CategoryPage() {
   }, [router, debouncedSearchString, toast]);
 
   useEffect(() => {
-    if (localStorage.page)
+    if (localStorage.getItem('page/admin/category'))
       setPage(parseInt(localStorage.getItem('page/admin/category'), 10));
   }, []);
 
