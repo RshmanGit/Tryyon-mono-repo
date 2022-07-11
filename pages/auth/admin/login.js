@@ -112,7 +112,13 @@ function Login() {
                   );
                 }
               })
-              .then((res) => alert(res.message))
+              .then((res) => {
+                alert(res.message);
+                if (res.message === 'admin Authenticated') {
+                  sessionStorage.setItem('token_admin', res.updatedAdmin.token);
+                  // solve(res.updatedUser.token);
+                }
+              })
               .catch((err) => {
                 console.error(JSON.parse(err.message));
               });
