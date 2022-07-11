@@ -466,109 +466,126 @@ export default function ProductPage() {
   };
 
   useEffect(() => {
-    let query = {},
-      rest = '';
+    if (!sessionStorage.adminToken) {
+      toast({
+        title: 'Unauthorised admin',
+        status: 'error',
+        duration: 2000,
+        isClosable: true
+      });
 
-    const accepted_values = [
-      'id',
-      'inStock',
-      'published',
-      'supplierId',
-      'priceFrom',
-      'priceTo'
-    ];
+      router.push(`/auth/admin/login?next=${router.pathname}`);
+    } else {
+      let query = {},
+        rest = '';
 
-    const q = debouncedSearchString.split(/\s+/);
+      const accepted_values = [
+        'id',
+        'inStock',
+        'published',
+        'supplierId',
+        'priceFrom',
+        'priceTo'
+      ];
 
-    q.forEach((e) => {
-      let a = e.split(':');
-      if (a.length == 2 && accepted_values.indexOf(a[0]) != -1) {
-        if (a[0] == 'inStock' || a[0] == 'published') {
-          query[a[0]] = a[1] == 'true';
-        } else if (a[0] == 'priceFrom' || a[0] == 'priceTo') {
-          try {
-            query[a[0]] = parseInt(a[1], 10);
-          } catch (err) {
+      const q = debouncedSearchString.split(/\s+/);
+
+      q.forEach((e) => {
+        let a = e.split(':');
+        if (a.length == 2 && accepted_values.indexOf(a[0]) != -1) {
+          if (a[0] == 'inStock' || a[0] == 'published') {
+            query[a[0]] = a[1] == 'true';
+          } else if (a[0] == 'priceFrom' || a[0] == 'priceTo') {
+            try {
+              query[a[0]] = parseInt(a[1], 10);
+            } catch (err) {
+              toast({
+                title: err.message,
+                status: 'error',
+                duration: 2000,
+                isClosable: true
+              });
+            }
+          } else query[a[0]] = a[1];
+        } else {
+          if (rest != '') rest += ' ';
+          rest += e;
+        }
+      });
+
+      if (rest) {
+        query.query = rest;
+      }
+
+      if (debouncedCategoryQuery != '') {
+        query.categoryId = debouncedCategoryQuery.id;
+      }
+
+      if (debouncedAttributesQuery != {}) {
+        query.attributes = debouncedAttributesQuery;
+      }
+
+      if (debouncedPriceFrom > 0) {
+        query.priceFrom = debouncedPriceFrom;
+      }
+
+      if (debouncedPriceTo > 0) {
+        query.priceTo = debouncedPriceTo;
+      }
+
+      console.log(query);
+      fetch(`${router.basePath}/api/products`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.adminToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(query)
+      })
+        .then(async (res) => {
+          const res_data = await res.json();
+          if (res.ok) {
+            console.log(res_data);
+            return res_data;
+          }
+
+          if (res.status == 403 || res.status == 401) {
+            // alert('Admin not logged in...');
             toast({
-              title: err.message,
+              title: 'Unauthorised admin',
               status: 'error',
               duration: 2000,
               isClosable: true
             });
+            router.push(`/auth/admin/login?next=${router.pathname}`);
           }
-        } else query[a[0]] = a[1];
-      } else {
-        if (rest != '') rest += ' ';
-        rest += e;
-      }
-    });
 
-    if (rest) {
-      query.query = rest;
-    }
-
-    if (debouncedCategoryQuery != '') {
-      query.categoryId = debouncedCategoryQuery.id;
-    }
-
-    if (debouncedAttributesQuery != {}) {
-      query.attributes = debouncedAttributesQuery;
-    }
-
-    if (debouncedPriceFrom > 0) {
-      query.priceFrom = debouncedPriceFrom;
-    }
-
-    if (debouncedPriceTo > 0) {
-      query.priceTo = debouncedPriceTo;
-    }
-
-    console.log(query);
-    fetch(`${router.basePath}/api/products`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.adminToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(query)
-    })
-      .then(async (res) => {
-        const res_data = await res.json();
-        if (res.ok) {
-          console.log(res_data);
-          return res_data;
-        }
-
-        if (res.status == 403 || res.status == 401) {
-          // alert('Admin not logged in...');
-          router.push(`/auth/admin/login?next=${router.pathname}`);
-        }
-
-        if (res.status == 404) {
-          console.log(res_data.message);
+          if (res.status == 404) {
+            console.log(res_data.message);
+            toast({
+              title: res_data.message,
+              status: 'error',
+              duration: 2000,
+              isClosable: true
+            });
+            return { products: [] };
+          }
+          throw new Error(res_data.message);
+        })
+        .then((res) => {
+          setData(res.products);
+          // console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
           toast({
-            title: res_data.message,
+            title: err.message,
             status: 'error',
             duration: 2000,
             isClosable: true
           });
-          return { products: [] };
-        }
-        throw new Error(res_data.message);
-      })
-      .then((res) => {
-        setData(res.products);
-        // console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast({
-          title: err.message,
-          status: 'error',
-          duration: 2000,
-          isClosable: true
         });
-      });
+    }
   }, [
     router,
     debouncedSearchString,
