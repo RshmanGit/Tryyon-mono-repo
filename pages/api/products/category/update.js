@@ -16,7 +16,8 @@ const schema = {
     name: Joi.string().optional(),
     description: Joi.string().optional(),
     slug: Joi.string().optional(),
-    parentCategoryId: Joi.string().optional()
+    parentCategoryId: Joi.string().optional(),
+    root: Joi.boolean().optional()
   })
 };
 

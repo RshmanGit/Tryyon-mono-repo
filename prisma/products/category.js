@@ -71,12 +71,13 @@ export const searchCategory = async ({
 
 // update
 export const updateCategory = async (id, updateData) => {
-  const { parentCategoryId } = updateData;
+  const { parentCategoryId, root } = updateData;
 
-  if (parentCategoryId) {
+  if (root != undefined && root) {
+    updateData.parentCategory = { disconnect: true };
+  } else {
     updateData.parentCategory = { connect: { id: parentCategoryId } };
     delete updateData.parentCategoryId;
-    updateData.root = false;
   }
 
   const category = await prisma.category.update({

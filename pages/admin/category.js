@@ -10,12 +10,20 @@ import {
   Textarea,
   useColorModeValue,
   useDisclosure,
-  useToast
+  useToast,
+  Switch,
+  Select,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton
 } from '@chakra-ui/react';
 
 import { SearchBar } from '../../ui/components/searchbar';
 import useDebounce from '../../utils/hooks/useDebounce';
-import ModalComp from '../../ui/components/modal';
 
 const columnsData = [
   {
@@ -37,6 +45,10 @@ const columnsData = [
   {
     Header: 'SLUG',
     accessor: 'slug'
+  },
+  {
+    Header: 'ROOT',
+    accessor: 'root'
   }
 ];
 
@@ -53,7 +65,8 @@ export default function CategoryPage() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [slug, setSlug] = useState('');
-  const [parent, setParent] = useState('');
+  const [parent, setParent] = useState(false);
+  const [parentId, setParentId] = useState('');
   const [id, setID] = useState('');
 
   const debouncedSearchString = useDebounce(searchString, 800);
@@ -72,16 +85,20 @@ export default function CategoryPage() {
         duration: 2000,
         isClosable: true
       });
+    } else if (parent && parentId == '') {
+      toast({
+        title: 'Parent ID not selected',
+        status: 'error',
+        duration: 2000,
+        isClosable: true
+      });
     } else {
       const body = {
         name,
         description,
-        slug
+        slug,
+        parentCategoryId: parentId
       };
-
-      if (parent != '') {
-        body.parentCategoryId = parent;
-      }
 
       const res = await fetch(
         `${router.basePath}/api/products/category/create`,
@@ -132,7 +149,21 @@ export default function CategoryPage() {
         duration: 2000,
         isClosable: true
       });
-    } else {
+    } else if (parent && !parentId) {
+      toast({
+        title: 'Parent ID not selected',
+        status: 'error',
+        duration: 2000,
+        isClosable: true
+      });
+    } else if (parent && parentId == id)
+      toast({
+        title: 'Parent ID should not be same as the category Id for a category',
+        status: 'error',
+        duration: 2000,
+        isClosable: true
+      });
+    else {
       const body = {
         id
       };
@@ -149,9 +180,11 @@ export default function CategoryPage() {
         body.slug = slug;
       }
 
-      if (parent != '') {
-        body.parentCategoryId = parent;
+      if (parent) {
+        body.parentCategoryId = parentId;
       }
+
+      body.root = !parent;
 
       const res = await fetch(
         `${router.basePath}/api/products/category/update`,
@@ -256,15 +289,14 @@ export default function CategoryPage() {
     setName('');
     setDescription('');
     setSlug('');
-    setParent('');
+    setParent(false);
+    setParentId('');
     onClose();
   };
 
   const openCreate = () => {
     setModalHeading('Create Category');
-
     setModalBody('create');
-
     setModalFooter('Create');
     onOpen();
   };
@@ -274,6 +306,13 @@ export default function CategoryPage() {
     setModalBody('edit');
     setModalFooter('Update');
     setID(cells[0].value);
+
+    setName(cells[1].value);
+    setDescription(cells[2].value);
+    setSlug(cells[4].value);
+    setParent(!!cells[3].value);
+    setParentId(cells[3].value);
+
     onOpen();
   };
 
@@ -395,96 +434,90 @@ export default function CategoryPage() {
         />
       </Layout>
       {isOpen && (
-        <ModalComp
-          isOpen={isOpen}
-          onOpen={onOpen}
-          onClose={resetForm}
-          footer={modalFooter}
-          heading={modalHeading}
-          handleSubmit={handler[modalBody]}
-        >
-          {modalBody == 'create' && (
-            <>
-              <Text fontSize="14px" fontWeight={500}>
-                Name*
-              </Text>
-              <Input
-                mb="8px"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <Text fontSize="14px" fontWeight={500}>
-                Description*
-              </Text>
-              <Textarea
-                mb="8px"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              <Text fontSize="14px" fontWeight={500}>
-                Slug*
-              </Text>
-              <Input
-                mb="8px"
-                value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-              />
-              <Text fontSize="14px" fontWeight={500}>
-                Parent Category ID
-              </Text>
-              <Input
-                mb="8px"
-                value={parent}
-                onChange={(e) => setParent(e.target.value)}
-              />
-            </>
-          )}
+        <Modal isOpen={isOpen} onClose={resetForm}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>{modalHeading}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              {(modalBody == 'create' || modalBody == 'edit') && (
+                <>
+                  <Text fontSize="14px" fontWeight={500}>
+                    {modalBody == 'create' ? 'Name*' : 'Name'}
+                  </Text>
+                  <Input
+                    mb="8px"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <Text fontSize="14px" fontWeight={500}>
+                    {modalBody == 'create' ? 'Description*' : 'Description'}
+                  </Text>
+                  <Textarea
+                    mb="8px"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                  <Text fontSize="14px" fontWeight={500}>
+                    {modalBody == 'create' ? 'Slug*' : 'Slug'}
+                  </Text>
+                  <Input
+                    mb="8px"
+                    value={slug}
+                    onChange={(e) => setSlug(e.target.value)}
+                  />
+                  <Text fontSize="14px" fontWeight={500}>
+                    Set Parent
+                  </Text>
+                  <Switch
+                    mb="8px"
+                    isChecked={parent}
+                    onChange={() => setParent((prev) => !prev)}
+                  />
+                  {parent && (
+                    <>
+                      <Text fontSize="14px" fontWeight={500}>
+                        Parent Category ID
+                      </Text>
+                      <Select
+                        placeholder="Select parent category"
+                        onChange={(e) => {
+                          setParentId(
+                            e.target.options[e.target.selectedIndex].value
+                          );
+                        }}
+                      >
+                        {data.map((category, index) => (
+                          <option key={index} value={category.id}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </Select>
+                    </>
+                  )}
+                </>
+              )}
 
-          {modalBody == 'edit' && (
-            <>
-              <Text fontSize="14px" fontWeight={500}>
-                Name
-              </Text>
-              <Input
-                mb="8px"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <Text fontSize="14px" fontWeight={500}>
-                Description
-              </Text>
-              <Textarea
-                mb="8px"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              <Text fontSize="14px" fontWeight={500}>
-                Slug
-              </Text>
-              <Input
-                mb="8px"
-                value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-              />
-              <Text fontSize="14px" fontWeight={500}>
-                Parent Category ID
-              </Text>
-              <Input
-                mb="8px"
-                value={parent}
-                onChange={(e) => setParent(e.target.value)}
-              />
-            </>
-          )}
+              {modalBody == 'delete' && (
+                <>
+                  <Text fontSize="14px" fontWeight={500}>
+                    Are you sure?
+                  </Text>
+                </>
+              )}
+            </ModalBody>
 
-          {modalBody == 'delete' && (
-            <>
-              <Text fontSize="14px" fontWeight={500}>
-                Are you sure?
-              </Text>
-            </>
-          )}
-        </ModalComp>
+            <ModalFooter>
+              <Button
+                fontSize={{ sm: '14px' }}
+                colorScheme="blue"
+                onClick={handler[modalBody]}
+              >
+                {modalFooter}
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       )}
     </>
   );
