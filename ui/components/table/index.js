@@ -15,7 +15,9 @@ import {
   EditIcon,
   DeleteIcon,
   ChevronRightIcon,
-  ChevronLeftIcon
+  ChevronLeftIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
 } from '@chakra-ui/icons';
 import React, { useEffect, useMemo } from 'react';
 import {
@@ -107,9 +109,17 @@ export default function TableComp(props) {
                     justify="space-between"
                     align="center"
                     fontSize={{ sm: '10px', lg: '12px' }}
-                    color="gray.400"
+                    color="gray.500"
                   >
-                    {column.render('Header')}
+                    <Text>{column.render('Header')}</Text>
+                    {column.isSortedDesc === true && <ChevronUpIcon />}
+                    {column.isSortedDesc === false && <ChevronDownIcon />}
+                    {column.isSortedDesc === undefined && (
+                      <Flex direction="column">
+                        <ChevronUpIcon />
+                        <ChevronDownIcon />
+                      </Flex>
+                    )}
                   </Flex>
                 </Th>
               ))}
@@ -118,7 +128,7 @@ export default function TableComp(props) {
                   justify="space-between"
                   align="center"
                   fontSize={{ sm: '10px', lg: '12px' }}
-                  color="gray.400"
+                  color="gray.500"
                 >
                   ACTION
                 </Flex>
