@@ -54,9 +54,6 @@ import {
   Progress
 } from '@chakra-ui/react';
 
-// Custom components
-import DefaultAuth from '../../ui/layouts/auth/Default.js';
-
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
@@ -108,7 +105,7 @@ function Entry() {
   useEffect(() => {
     //After closing modal, get back to the page
     if (time === false) {
-      router.push('/Products_Listing/dynamic_table');
+      router.push('/admin/Product');
       setTimer(true);
     }
   });
@@ -684,7 +681,7 @@ function Entry() {
                     <Grid
                       h="40px"
                       templateRows="repeat(1, 1fr)"
-                      templateColumns="repeat(8, 1fr)"
+                      templateColumns="repeat(6, 1fr)"
                       gap={4}
                     >
                       <GridItem rowSpan={1} colSpan={2}>
@@ -1026,7 +1023,7 @@ function Entry() {
                       <Tbody>
                         {res1.map((table, idx) => {
                           return (
-                            <Tr key={table}>
+                            <Tr key={table} height="auto">
                               {table.map((entry, idx2) => {
                                 return (
                                   <Td
