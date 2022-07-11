@@ -17,7 +17,8 @@ import {
   InputGroup,
   InputRightElement,
   Text,
-  useColorModeValue
+  useColorModeValue,
+  useToast
 } from '@chakra-ui/react';
 
 // Custom components
@@ -28,6 +29,7 @@ import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { useRouter } from 'next/router.js';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 function Login() {
   // Chakra color mode
@@ -35,6 +37,9 @@ function Login() {
   const textColorSecondary = 'gray.400';
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
   const brandStars = useColorModeValue('brand.500', 'brand.400');
+
+  const toast = useToast();
+  const [status, setStatus] = useState('success');
 
   const [show, setShow] = React.useState(false);
   const [buttonText, setButtonText] = React.useState('Sign in');
@@ -147,12 +152,23 @@ function Login() {
                 // console.log(res);
                 if (res.message === 'User Authenticated') {
                   sessionStorage.clear();
-                  alert(res.message);
+                  // alert(res.message);
+                  // setStatus('success');
+                  toast({
+                    title: `${res.message}`,
+                    status: 'success',
+                    isClosable: true
+                  });
                   setButtonText('User Authenticated');
                   return res;
                 } else {
-                  sessionStorage.clear();
-                  alert(res.message);
+                  // sessionStorage.clear();
+                  // setStatus('error');
+                  toast({
+                    title: `${res.message}`,
+                    status: 'error',
+                    isClosable: true
+                  });
                   setButtonText('Retry');
                   throw new Error(
                     JSON.stringify({

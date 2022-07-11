@@ -50,7 +50,7 @@ function Login() {
   const textColorSecondary = 'gray.400';
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
   const brandStars = useColorModeValue('brand.500', 'brand.400');
-
+  const toast = useToast();
   const [show, setShow] = React.useState(false);
   const [buttonText, setButtonText] = React.useState('Sign in');
 
@@ -114,12 +114,24 @@ function Login() {
               .then((res) => res.json())
               .then((res) => {
                 if (res.message === 'admin Authenticated') {
+                  sessionStorage.clear();
                   sessionStorage.setItem('token', 1);
+                  // sessionStorage.setItem('token_admin', res.updatedAdmin.token);
                   // alert(res.message);
+                  toast({
+                    title: `${res.message}`,
+                    status: 'success',
+                    isClosable: true
+                  });
                   setButtonText('Admin Authenticated');
                   return res;
                 } else {
-                  alert(res.message);
+                  // alert(res.message);
+                  toast({
+                    title: `${res.message}`,
+                    status: 'error',
+                    isClosable: true
+                  });
                   setButtonText('Retry');
                   throw new Error(
                     JSON.stringify({
@@ -130,9 +142,10 @@ function Login() {
                 }
               })
               .then((res) => {
-                alert(res.message);
+                // alert(res.message);
                 if (res.message === 'admin Authenticated') {
                   sessionStorage.setItem('token_admin', res.updatedAdmin.token);
+                  setShow(!show);
                   // solve(res.updatedUser.token);
                 }
               })

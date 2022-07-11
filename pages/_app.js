@@ -12,10 +12,7 @@ import { useState } from 'react';
 function MyApp({ Component, pageProps }) {
   const [comp, setComp] = useState(0);
   useEffect(() => {
-    if (
-      sessionStorage.getItem('token_use') !== null ||
-      sessionStorage.getItem('token') !== null
-    ) {
+    if (sessionStorage.getItem('token_use') !== null) {
       setComp(1);
     } else {
       setComp(0);
