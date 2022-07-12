@@ -20,48 +20,39 @@ import {
   useColorModeValue,
   useToast
 } from '@chakra-ui/react';
-import Router from 'next/router.js';
 import { useRouter } from 'next/router.js';
-import { useEffect } from 'react';
-// Custom components
-import DefaultAuth from '../../../ui/layouts/auth/Default.js';
 
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
-import { useRouter } from 'next/router.js';
 
 function Login() {
   const router = useRouter();
   const toast = useToast();
-
-  useEffect(() => {
-    if (router.query.next && router.query.next !== '') {
-      toast({
-        title: 'Login to continue',
-        description: `On successful login, you'll be redirect to ${router.query.next}`,
-        status: 'info',
-        duration: 2000,
-        isClosable: true
-      });
-    }
-  }, [router.query.next, toast]);
 
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
   const brandStars = useColorModeValue('brand.500', 'brand.400');
-  const toast = useToast();
   const [show, setShow] = React.useState(false);
   const [buttonText, setButtonText] = React.useState('Sign in');
-  const router = useRouter();
   useEffect(() => {
-    sessionStorage.clear();
-  }, []);
+    if (router.query.next && router.query.next !== '') {
+      toast({
+        title: 'Login to continue',
+        description: `On successful login, you'll be redirected to ${router.query.next}`,
+        status: 'info',
+        isClosable: true
+      });
+    }
+  }, [router.query.next, toast]);
 
   useEffect(() => {
-    if (sessionStorage.token_admin) {
+    if (
+      (sessionStorage.token_admin && !router.query.next) ||
+      router.query.next === ''
+    ) {
       router.push('/admin/Product');
     }
   });
@@ -126,7 +117,7 @@ function Login() {
               .then((res) => res.json())
               .then((res) => {
                 if (res.message === 'admin Authenticated') {
-                  sessionStorage.clear();
+                  // sessionStorage.clear();
                   sessionStorage.setItem('token', 1);
                   // sessionStorage.setItem('token_admin', res.updatedAdmin.token);
                   // alert(res.message);
@@ -157,8 +148,14 @@ function Login() {
                 // alert(res.message);
                 if (res.message === 'admin Authenticated') {
                   sessionStorage.setItem('token_admin', res.updatedAdmin.token);
+                  sessionStorage.setItem('adminToken', res.updatedAdmin.token);
                   setShow(!show);
                   // solve(res.updatedUser.token);
+                }
+              })
+              .then((res) => {
+                if (router.query.next && router.query.next !== '') {
+                  router.push(router.query.next);
                 }
               })
               .catch((err) => {
