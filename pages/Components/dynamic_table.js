@@ -96,6 +96,7 @@ function Entry() {
   const textColorSecondary = 'gray.100';
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [sizzz, setSize] = useState(100);
+  const [supplier, setSupp] = useState('');
 
   //For Progress bar
   const [time, setTimer] = useState(true);
@@ -103,6 +104,10 @@ function Entry() {
   const [colors, setColor] = useState('twitter');
   const [anim, setAnim] = useState(true);
   const [array, setArray] = useState([]);
+  const [cat, setCat] = useState([]);
+  const [pizz, setPizz] = useState(25);
+  const [tyu, setTYU] = useState(false);
+  const [categ, setCateg] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -127,8 +132,37 @@ function Entry() {
       })
       .then((res) => {
         if (res.message === 'Tenants found') {
-          console.log(res.tenants);
+          // console.log(res.tenants);
           setArray(res.tenants);
+        }
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+
+    fetch('/api/products/category/', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.token_admin}`
+      }
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.message === 'Categories found') {
+          return res;
+        } else {
+          // alert(res.message);
+          throw new Error(
+            JSON.stringify({
+              message: res.message
+            })
+          );
+        }
+      })
+      .then((res) => {
+        if (res.message === 'Categories found') {
+          console.log(res.categories);
+          setCat(res.categories);
         }
       })
       .catch((err) => {
@@ -146,6 +180,11 @@ function Entry() {
       router.push('/admin/Product');
       setTimer(true);
     }
+    if (tyu === true) {
+      setPizz(cat.length * 55);
+    } else if (tyu === false) {
+      setPizz(25);
+    }
   });
   let qsum = 0,
     yyyy = 0;
@@ -160,7 +199,7 @@ function Entry() {
   const [buttonText, setButtonText] = useState('Create');
   // const [signup, setState] = useState(0);
 
-  const handleClick = () => setShow(!show);
+  const handleClick = () => SetShow(!show);
 
   let vv = Object.keys(variants);
   let kk = Object.keys(initialState.filters);
@@ -224,8 +263,10 @@ function Entry() {
     arr3.discountedPrice = values.discountedPrice;
     arr3.slug = values.slug;
     arr3.quantity = arr2.quantity;
-    arr3.categoryIds = [];
     arr3.attributes = {};
+    arr3.supplierId = arr2.supplierId;
+    arr3.categoryIds = arr2.categoryIds;
+    // console.log("BYE",arr3.categoryIds )
     let ix = 0;
     vv.map((kkk) => {
       arr3.attributes.kkk = table[ix++];
@@ -237,7 +278,7 @@ function Entry() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionStorage.token_admin}`
       },
-      body: JSON.stringify(arr3, null, 8)
+      body: JSON.stringify(arr3, null)
     })
       .then((res) => res.json())
       .then((res) => {
@@ -268,7 +309,7 @@ function Entry() {
               setColor('whatsapp');
               setAnim(false);
             } else setMess({ first: `${res.message} : Entries count ${yyyy}`, second: messagee.second + ll });
-          }, 4000);
+          }, 5000);
         }
       })
       .catch((err) => {
@@ -288,6 +329,12 @@ function Entry() {
         // mt={{ base: '40px', md: '14vh' }}
         mt="5px"
         flexDirection="column"
+        // onClick={(e)=>{
+        //   e.preventDefault();
+        //   if(tyu==true){
+        //     setTYU(false)
+        //   }
+        // }}
       >
         <Box me="auto">
           <Heading color={textColor} fontSize="34px" mb="16px">
@@ -331,13 +378,15 @@ function Entry() {
               arr2.shortDescriptions = values.shortDescriptions;
               arr2.slug = values.slug;
               arr2.quantity = temp;
+              arr2.supplierId = supplier;
+              arr2.categoryIds = categ;
+              // console.log("HELLO",categ);
               // arr2.price = temp2;
               // arr2.discountedPrice = temp3;
               variants.Quantity = [temp];
               variants.Price = [temp2];
               variants.DiscountedPrice = [temp3];
               arr2.attributes = variants;
-              arr2.categoryIds = [];
 
               values.price = temp2;
               values.discountedPrice = temp3;
@@ -348,7 +397,7 @@ function Entry() {
                   'Content-Type': 'application/json',
                   Authorization: `Bearer ${sessionStorage.token_admin}`
                 },
-                body: JSON.stringify(arr2, null, 8)
+                body: JSON.stringify(arr2, null, 9)
               })
                 .then((res) => res.json())
                 .then((res) => {
@@ -375,10 +424,10 @@ function Entry() {
                         first: res.message,
                         second: messagee.second + ll
                       });
-                    }, 2000);
+                    }, 1000);
 
                     {
-                      res1.map(async (table, idx) => {
+                      res1.map((table, idx) => {
                         check(values, arr2, table, vv, idx + 1, res1.length);
                       });
                     }
@@ -390,13 +439,13 @@ function Entry() {
                   values.discountedPrice = '';
                 })
                 .catch((err) => {
-                  console.error(JSON.parse(err.message));
+                  console.error(err.message);
                 });
 
               delete variants.Quantity;
               delete variants.Price;
               delete variants.DiscountedPrice;
-              SetShow(!show);
+              // SetShow(!show);
             }}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -705,26 +754,86 @@ function Entry() {
                 <>
                   <Select mt="10px" placeholder="Select supplier">
                     {array.map((obj) => (
-                      <option key={obj} value={obj.id}>
+                      <option
+                        key={obj}
+                        value={obj.id}
+                        onClick={(e) => {
+                          // console.log(e.target.value)
+                          setSupp(e.target.value);
+                        }}
+                      >
                         {obj.name}
                       </option>
                     ))}
                   </Select>
 
-                  <Menu closeOnSelect={false}>
+                  {/* <Menu isOpen={tyu}>
                     <MenuButton
                       as={Button}
                       mt="13px"
                       colorScheme="blue"
                       minWidth="420px"
+                      onClick={(e)=>{
+                        // e.preventDefault();
+                        setTYU(!tyu);
+                      }}
                     >
-                      Select category
+                      Select supplier
                     </MenuButton>
                     <MenuList>
                       <MenuOptionGroup title="Categories" type="checkbox">
-                        <MenuItemOption value="email">Email</MenuItemOption>
-                        <MenuItemOption value="phone">Phone</MenuItemOption>
-                        <MenuItemOption value="country">Country</MenuItemOption>
+                      {cat.map((obj) => (
+                        <MenuItemOption key={obj} value={obj.id}>{obj.name}</MenuItemOption>
+                    ))}
+                      </MenuOptionGroup>
+                    </MenuList>
+                  </Menu> */}
+
+                  <Menu isOpen={tyu} flip={false}>
+                    <MenuButton
+                      as={Button}
+                      mt="13px"
+                      colorScheme="blue"
+                      minWidth="420px"
+                      onClick={(e) => {
+                        // e.preventDefault();
+
+                        setTYU(!tyu);
+                      }}
+                      flip={false}
+                    >
+                      Select category
+                    </MenuButton>
+                    <MenuList flip={false}>
+                      <MenuOptionGroup
+                        title="Categories"
+                        type="checkbox"
+                        flip={false}
+                      >
+                        {cat.map((obj) => (
+                          <MenuItemOption
+                            key={obj.id}
+                            value={obj.id}
+                            as={Checkbox}
+                            onChange={(e) => {
+                              // e.preventDefault();
+
+                              if (e.target.checked === true) {
+                                categ.push(e.target.value);
+                              } else {
+                                categ.map((check, idx) => {
+                                  if (check === e.target.value) {
+                                    categ.splice(idx, 1);
+                                  }
+                                });
+                              }
+                              console.log(categ);
+                              setCateg(categ);
+                            }}
+                          >
+                            {obj.name}
+                          </MenuItemOption>
+                        ))}
                       </MenuOptionGroup>
                     </MenuList>
                   </Menu>
@@ -740,7 +849,7 @@ function Entry() {
                     mb={{ base: '30px', md: '20px' }}
                     px={{ base: '25px', md: '0px' }}
                     pb={`${sizzz}px`}
-                    mt={{ base: '10px', md: '30px' }}
+                    mt={`${pizz}px`}
                     flexDirection="column"
                   >
                     <Grid
@@ -835,6 +944,7 @@ function Entry() {
                                     key={item}
                                     onChange={(e) => {
                                       e.preventDefault();
+                                      console.log(e.target);
                                       if (e.target.checked === true) {
                                         if (
                                           initialState.filters.hasOwnProperty(

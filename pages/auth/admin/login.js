@@ -34,18 +34,6 @@ function Login() {
   const router = useRouter();
   const toast = useToast();
 
-  useEffect(() => {
-    if (router.query.next && router.query.next !== '') {
-      toast({
-        title: 'Login to continue',
-        description: `On successful login, you'll be redirect to ${router.query.next}`,
-        status: 'info',
-        duration: 2000,
-        isClosable: true
-      });
-    }
-  }, [router.query.next, toast]);
-
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
@@ -56,11 +44,21 @@ function Login() {
   const [buttonText, setButtonText] = React.useState('Sign in');
 
   useEffect(() => {
-    sessionStorage.clear();
-  }, []);
+    if (router.query.next && router.query.next !== '') {
+      toast({
+        title: 'Login to continue',
+        description: `On successful login, you'll be redirected to ${router.query.next}`,
+        status: 'info',
+        isClosable: true
+      });
+    }
+  }, [router.query.next, toast]);
 
   useEffect(() => {
-    if (sessionStorage.token_admin) {
+    if (
+      (sessionStorage.token_admin && !router.query.next) ||
+      router.query.next === ''
+    ) {
       router.push('/admin/Product');
     }
   });
@@ -125,7 +123,7 @@ function Login() {
               .then((res) => res.json())
               .then((res) => {
                 if (res.message === 'admin Authenticated') {
-                  sessionStorage.clear();
+                  // sessionStorage.clear();
                   sessionStorage.setItem('token', 1);
                   // sessionStorage.setItem('token_admin', res.updatedAdmin.token);
                   // alert(res.message);
@@ -152,25 +150,16 @@ function Login() {
                   );
                 }
               })
-              .then(async (res) => {
+              .then((res) => {
                 // alert(res.message);
                 if (res.message === 'admin Authenticated') {
                   sessionStorage.setItem('token_admin', res.updatedAdmin.token);
+                  sessionStorage.setItem('adminToken', res.updatedAdmin.token);
                   setShow(!show);
                   // solve(res.updatedUser.token);
                 }
-                const data = await res.json();
-                if (res.ok) return data;
-
-                alert(res.message);
-                setButtonText('Retry');
-                throw new Error(res.message);
               })
               .then((res) => {
-                setButtonText('Admin Authenticated');
-                console.log(res);
-                sessionStorage.setItem('adminToken', res.updatedAdmin.token);
-                alert(res.message);
                 if (router.query.next && router.query.next !== '') {
                   router.push(router.query.next);
                 }
