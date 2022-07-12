@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 
 import { Formik, Field } from 'formik';
@@ -21,25 +21,40 @@ import {
   useToast
 } from '@chakra-ui/react';
 import Router from 'next/router.js';
-import { useRouter } from 'next/router.js';
-import { useEffect } from 'react';
+
 // Custom components
 import DefaultAuth from '../../../ui/layouts/auth/Default.js';
 
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import { useRouter } from 'next/router.js';
 
 function Login() {
+  const router = useRouter();
+  const toast = useToast();
+
+  useEffect(() => {
+    if (router.query.next && router.query.next !== '') {
+      toast({
+        title: 'Login to continue',
+        description: `On successful login, you'll be redirect to ${router.query.next}`,
+        status: 'info',
+        duration: 2000,
+        isClosable: true
+      });
+    }
+  }, [router.query.next, toast]);
+
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
   const brandStars = useColorModeValue('brand.500', 'brand.400');
-  const toast = useToast();
+
   const [show, setShow] = React.useState(false);
   const [buttonText, setButtonText] = React.useState('Sign in');
-  const router = useRouter();
+
   useEffect(() => {
     sessionStorage.clear();
   }, []);
@@ -137,16 +152,31 @@ function Login() {
                   );
                 }
               })
-              .then((res) => {
+              .then(async (res) => {
                 // alert(res.message);
                 if (res.message === 'admin Authenticated') {
                   sessionStorage.setItem('token_admin', res.updatedAdmin.token);
                   setShow(!show);
                   // solve(res.updatedUser.token);
                 }
+                const data = await res.json();
+                if (res.ok) return data;
+
+                alert(res.message);
+                setButtonText('Retry');
+                throw new Error(res.message);
+              })
+              .then((res) => {
+                setButtonText('Admin Authenticated');
+                console.log(res);
+                sessionStorage.setItem('adminToken', res.updatedAdmin.token);
+                alert(res.message);
+                if (router.query.next && router.query.next !== '') {
+                  router.push(router.query.next);
+                }
               })
               .catch((err) => {
-                console.error(JSON.parse(err.message));
+                console.error(err.message);
               });
           }}
         >

@@ -35,6 +35,8 @@ export const searchProducts = async ({
   published,
   supplierId,
   attributes,
+  priceFrom,
+  priceTo,
   sortBy,
   order,
   categoryId,
@@ -42,47 +44,75 @@ export const searchProducts = async ({
   offset,
   limit
 }) => {
-  const condition = { $and: [] },
+  const condition = {},
     sortProducts = {},
-    options = {};
+    pipeline = [];
 
   let total_count;
 
   if (attributes) {
-    const attr = {};
-
     for (let prop in attributes) {
-      attr[`attributes.${prop}`] = { $elemMatch: { $eq: attributes[prop] } };
+      condition[`attributes.${prop}`] = {
+        $elemMatch: { $eq: attributes[prop] }
+      };
     }
-
-    condition.$and.push(attr);
-    console.log(attr);
   }
 
-  if (id) condition.$and.push({ _id: { $eq: { $oid: id } } });
-  if (supplierId)
-    condition.$and.push({ supplierId: { $eq: { $oid: supplierId } } });
-  if (query) condition.$and.push({ name: { $regex: query, $options: 'i' } });
-  if (inStock == true) condition.$and.push({ quantity: { $gt: 0 } });
-  if (published != undefined) condition.$and.push({ published: published });
+  if (id) condition._id = { $eq: { $oid: id } };
+  if (supplierId) condition.supplierId = { $eq: { $oid: supplierId } };
+  if (query) condition.name = { $regex: query, $options: 'i' };
+  if (inStock == true) condition.quantity = { $gt: 0 };
+  else if (inStock == false) condition.quantity = { $eq: 0 };
+
+  if (published != undefined) condition.published = published;
   if (categoryId)
-    condition.$and.push({
-      categoryIds: { $elemMatch: { $eq: { $oid: categoryId } } }
-    });
+    condition.categoryIds = { $elemMatch: { $eq: { $oid: categoryId } } };
 
   if (sortBy) {
     sortProducts[sortBy] = order == 'desc' ? -1 : 1;
-    options.sort = sortProducts;
-    console.log(options);
   }
 
-  if (condition.$and.length == 0) {
-    delete condition.$and;
+  pipeline.push({ $match: condition });
+  pipeline.push({
+    $lookup: {
+      from: 'Category',
+      localField: 'categoryIds',
+      foreignField: '_id',
+      as: 'categories'
+    }
+  });
+
+  pipeline.push({
+    $lookup: {
+      from: 'SKU',
+      localField: '_id',
+      foreignField: 'productId',
+      as: 'sku'
+    }
+  });
+
+  if (priceFrom || priceTo) {
+    const price = {};
+    if (priceFrom) price.$gte = priceFrom;
+    if (priceTo) price.$lte = priceTo;
+
+    pipeline.push({
+      $match: {
+        sku: {
+          $elemMatch: {
+            price
+          }
+        }
+      }
+    });
   }
+
+  if (Object.keys(sortProducts).length !== 0)
+    pipeline.push({ $sort: sortProducts });
 
   if (pagination) {
-    options.skip = offset;
-    options.limit = limit;
+    if (offset) pipeline.push({ $skip: offset });
+    if (limit) pipeline.push({ $skip: limit });
 
     total_count = await prisma.$runCommandRaw({
       count: 'Product',
@@ -90,9 +120,26 @@ export const searchProducts = async ({
     });
   }
 
-  const products = await prisma.product.findRaw({
-    filter: condition,
-    options
+  pipeline.push({
+    $project: {
+      _id: 1,
+      name: 1,
+      description: 1,
+      shortDescriptions: 1,
+      slug: 1,
+      quantity: 1,
+      supplierId: 1,
+      published: 1,
+      attributes: 1,
+      categoryIds: 1,
+      'categories.name': 1,
+      'categories.description': 1,
+      'categories.slug': 1
+    }
+  });
+
+  const products = await prisma.product.aggregateRaw({
+    pipeline
   });
 
   let res = products.map((product) => {
@@ -100,22 +147,26 @@ export const searchProducts = async ({
     delete product._id;
     product.id = tmpId;
 
-    let tmp = product.supplierId.$oid;
-    delete product.supplierId;
+    if (product.supplierId) {
+      let tmp = product.supplierId.$oid;
+      delete product.supplierId;
 
-    product.supplierId = tmp;
+      product.supplierId = tmp;
+    }
 
-    let tmpArr = product.categoryIds.map((e) => e.$oid);
-    delete product.categoryIds;
+    if (Array.isArray(product.categoryIds)) {
+      let tmpArr = product.categoryIds.map((e) => e.$oid);
+      delete product.categoryIds;
 
-    product.categoryIds = tmpArr;
+      product.categoryIds = tmpArr;
+    }
 
     return product;
   });
 
   if (pagination) {
     return {
-      skus: res,
+      products: res,
       pagination: {
         total_count: total_count.n,
         limit,
