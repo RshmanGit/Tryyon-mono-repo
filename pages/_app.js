@@ -12,7 +12,13 @@ import { useState } from 'react';
 function MyApp({ Component, pageProps }) {
   const [comp, setComp] = useState(0);
   useEffect(() => {
-    if (sessionStorage.getItem('token_use') !== null) {
+    sessionStorage.clear();
+  }, []);
+  useEffect(() => {
+    if (
+      sessionStorage.getItem('token_use') !== null ||
+      sessionStorage.getItem('token_admin') !== null
+    ) {
       setComp(1);
     } else {
       setComp(0);

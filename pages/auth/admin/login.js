@@ -20,7 +20,9 @@ import {
   useColorModeValue,
   useToast
 } from '@chakra-ui/react';
-
+import Router from 'next/router.js';
+import { useRouter } from 'next/router.js';
+import { useEffect } from 'react';
 // Custom components
 import DefaultAuth from '../../../ui/layouts/auth/Default.js';
 
@@ -53,6 +55,16 @@ function Login() {
   const toast = useToast();
   const [show, setShow] = React.useState(false);
   const [buttonText, setButtonText] = React.useState('Sign in');
+  const router = useRouter();
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+
+  useEffect(() => {
+    if (sessionStorage.token_admin) {
+      router.push('/admin/Product');
+    }
+  });
 
   const handleClick = () => setShow(!show);
   return (
