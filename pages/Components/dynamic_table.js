@@ -21,6 +21,7 @@ import {
   ModalBody,
   ModalCloseButton,
   Input,
+  Select,
   InputGroup,
   InputRightElement,
   Text,
@@ -52,6 +53,7 @@ import {
   EditableInput,
   useDisclosure,
   Progress,
+  Option,
   useToast
 } from '@chakra-ui/react';
 
@@ -88,7 +90,6 @@ let maxy = 0,
 let flag = true,
   flag2 = true,
   flag3 = true;
-
 function Entry() {
   // Chakra color mode
   const [show, SetShow] = useState(true);
@@ -101,10 +102,46 @@ function Entry() {
   const [stripe, setStr] = useState(true);
   const [colors, setColor] = useState('twitter');
   const [anim, setAnim] = useState(true);
-
+  const [array, setArray] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    fetch('/api/tenant/', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.token_admin}`
+      }
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.message === 'Tenants found') {
+          return res;
+        } else {
+          // alert(res.message);
+          throw new Error(
+            JSON.stringify({
+              message: res.message
+            })
+          );
+        }
+      })
+      .then((res) => {
+        if (res.message === 'Tenants found') {
+          console.log(res.tenants);
+          setArray(res.tenants);
+        }
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }, []);
+
   useEffect(() => {
     //After closing modal, get back to the page
+    if (!sessionStorage.token_admin) {
+      alert('Login first !');
+      router.push('/auth/admin/login');
+    }
     if (time === false) {
       router.push('/admin/Product');
       setTimer(true);
@@ -179,6 +216,7 @@ function Entry() {
   for (let i = 0; i < mp.length; i++) {
     res1[mp[i][0]][mp[i][1]] = mp[i][2];
   }
+
   function check(values, arr2, table, ent, idx, len) {
     let arr3 = {};
     arr3.productId = sessionStorage.getItem('productID');
@@ -197,7 +235,7 @@ function Entry() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.token_use}`
+        Authorization: `Bearer ${sessionStorage.token_admin}`
       },
       body: JSON.stringify(arr3, null, 8)
     })
@@ -308,7 +346,7 @@ function Entry() {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  Authorization: `Bearer ${sessionStorage.token_use}`
+                  Authorization: `Bearer ${sessionStorage.token_admin}`
                 },
                 body: JSON.stringify(arr2, null, 8)
               })
@@ -665,6 +703,32 @@ function Entry() {
                 </FormControl>
 
                 <>
+                  <Select mt="10px" placeholder="Select supplier">
+                    {array.map((obj) => (
+                      <option key={obj} value={obj.id}>
+                        {obj.name}
+                      </option>
+                    ))}
+                  </Select>
+
+                  <Menu closeOnSelect={false}>
+                    <MenuButton
+                      as={Button}
+                      mt="13px"
+                      colorScheme="blue"
+                      minWidth="420px"
+                    >
+                      Select category
+                    </MenuButton>
+                    <MenuList>
+                      <MenuOptionGroup title="Categories" type="checkbox">
+                        <MenuItemOption value="email">Email</MenuItemOption>
+                        <MenuItemOption value="phone">Phone</MenuItemOption>
+                        <MenuItemOption value="country">Country</MenuItemOption>
+                      </MenuOptionGroup>
+                    </MenuList>
+                  </Menu>
+
                   <Flex
                     maxW={{ base: '100%', md: 'max-content' }}
                     w="100%"
