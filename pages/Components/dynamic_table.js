@@ -79,6 +79,8 @@ const initialState = {
 };
 let ll = 0;
 
+const categories = {};
+let tar = 30;
 //default variants and their options
 const variants = {
   Size: ['small', 'medium', 'large'],
@@ -111,64 +113,71 @@ function Entry() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch('/api/tenant/', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.token_admin}`
-      }
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.message === 'Tenants found') {
-          return res;
-        } else {
-          // alert(res.message);
-          throw new Error(
-            JSON.stringify({
-              message: res.message
-            })
-          );
+    Promise.all([
+      fetch('/api/tenant/', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.token_admin}`
         }
       })
-      .then((res) => {
-        if (res.message === 'Tenants found') {
-          // console.log(res.tenants);
-          setArray(res.tenants);
-        }
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message === 'Tenants found') {
+            return res;
+          } else {
+            // alert(res.message);
+            throw new Error(
+              JSON.stringify({
+                message: res.message
+              })
+            );
+          }
+        })
+        .then((res) => {
+          if (res.message === 'Tenants found') {
+            // console.log(res.tenants);
+            setArray(res.tenants);
+          }
+        })
+        .catch((err) => {
+          console.error(err.message);
+        }),
 
-    fetch('/api/products/category/', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.token_admin}`
-      }
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.message === 'Categories found') {
-          return res;
-        } else {
-          // alert(res.message);
-          throw new Error(
-            JSON.stringify({
-              message: res.message
-            })
-          );
+      fetch('/api/products/category/', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.token_admin}`
         }
       })
-      .then((res) => {
-        if (res.message === 'Categories found') {
-          console.log(res.categories);
-          setCat(res.categories);
-        }
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message === 'Categories found') {
+            return res;
+          } else {
+            // alert(res.message);
+            throw new Error(
+              JSON.stringify({
+                message: res.message
+              })
+            );
+          }
+        })
+        .then((res) => {
+          if (res.message === 'Categories found') {
+            console.log(res.categories);
+            categories['Root Category'] = res.categories;
+            setPizz(res.categories.length * 42);
+            setCat(res.categories);
+            // console.log(categories["Root Category"]);
+          }
+        })
+        .catch((err) => {
+          console.error(err.message);
+        })
+    ]);
   }, []);
+
+  // console.log(categories);
 
   useEffect(() => {
     //After closing modal, get back to the page
@@ -180,12 +189,12 @@ function Entry() {
       router.push('/admin/Product');
       setTimer(true);
     }
-    if (tyu === true) {
-      setPizz(cat.length * 55);
-    } else if (tyu === false) {
-      setPizz(25);
-    }
-  });
+    // if (tyu === true) {
+    //   setPizz(cat.length * 55);
+    // } else if (tyu === false) {
+    //   setPizz(25);
+    // }
+  }, [time, router, cat.length]);
   let qsum = 0,
     yyyy = 0;
 
@@ -202,6 +211,7 @@ function Entry() {
   const handleClick = () => SetShow(!show);
 
   let vv = Object.keys(variants);
+  let cc = Object.keys(categories);
   let kk = Object.keys(initialState.filters);
 
   //function to generate permutations of all possible entries dynamically
@@ -256,7 +266,48 @@ function Entry() {
     res1[mp[i][0]][mp[i][1]] = mp[i][2];
   }
 
-  function check(values, arr2, table, ent, idx, len) {
+  function solve_cat(id_c, id_name) {
+    console.log(id_name);
+    fetch(`/api/products/category?id=${id_c}&includeChildren=true`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.token_admin}`
+      }
+      // Params:{
+      //   id: id_c,
+      //   includeChildren: true
+      // }
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.message === 'Categories found') {
+          return res;
+        } else {
+          // alert(res.message);
+          throw new Error(
+            JSON.stringify({
+              message: res.message
+            })
+          );
+        }
+      })
+      .then((res) => {
+        if (res.message === 'Categories found') {
+          // console.log(res);
+          if (res.categories[0].children.length > 0) {
+            // console.log("HELLO");
+            categories[id_name] = res.categories[0].children;
+            setCat(res.categories[0].children);
+          }
+          // console.log(categories["Root Category"]);
+        }
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }
+
+  async function check(values, arr2, table, ent, idx, len) {
     let arr3 = {};
     arr3.productId = sessionStorage.getItem('productID');
     arr3.price = values.price;
@@ -271,14 +322,14 @@ function Entry() {
     vv.map((kkk) => {
       arr3.attributes.kkk = table[ix++];
     });
-
-    fetch('/api/sku/create', {
+    console.log(arr3);
+    await fetch('/api/sku/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionStorage.token_admin}`
       },
-      body: JSON.stringify(arr3, null)
+      body: JSON.stringify(arr3, null, 8)
     })
       .then((res) => res.json())
       .then((res) => {
@@ -288,6 +339,7 @@ function Entry() {
         } else {
           // alert(res.message);
           setButtonText('Retry !');
+          // return false;
           throw new Error(
             JSON.stringify({
               message: res.message
@@ -298,22 +350,27 @@ function Entry() {
       .then((res) => {
         if (res.message === 'New SKU Created') {
           // setProg(rrr+ll);
-          setTimeout(function () {
-            yyyy++;
-            if (yyyy === len) {
-              setMess({
-                first: `Close the tab to go back !  Total SKU entries created: ${yyyy}`,
-                second: messagee.second + ll
-              });
-              setStr(false);
-              setColor('whatsapp');
-              setAnim(false);
-            } else setMess({ first: `${res.message} : Entries count ${yyyy}`, second: messagee.second + ll });
-          }, 5000);
+          // setTimeout(function () {
+          yyyy++;
+          console.log(yyyy);
+          if (yyyy === len) {
+            setMess({
+              first: `Close the tab to go back !  Total SKU entries created: ${yyyy}`,
+              second: messagee.second + ll
+            });
+            setStr(false);
+            setColor('whatsapp');
+            setAnim(false);
+          } else
+            setMess({
+              first: `${res.message} : Entries count ${yyyy}`,
+              second: messagee.second + ll
+            });
+          // }, 1000);
         }
       })
       .catch((err) => {
-        console.error(JSON.parse(err.message));
+        console.error(err.message);
       });
   }
   return (
@@ -397,7 +454,7 @@ function Entry() {
                   'Content-Type': 'application/json',
                   Authorization: `Bearer ${sessionStorage.token_admin}`
                 },
-                body: JSON.stringify(arr2, null, 9)
+                body: JSON.stringify(arr2, null)
               })
                 .then((res) => res.json())
                 .then((res) => {
@@ -419,19 +476,26 @@ function Entry() {
                     sessionStorage.setItem('productID', res.product.id);
                     onOpen();
                     ll = 100 / (res1.length + 1);
-                    setTimeout(function () {
-                      setMess({
-                        first: res.message,
-                        second: messagee.second + ll
-                      });
-                    }, 1000);
-
-                    {
-                      res1.map((table, idx) => {
-                        check(values, arr2, table, vv, idx + 1, res1.length);
-                      });
-                    }
+                    // setTimeout(function () {
+                    setMess({
+                      first: res.message,
+                      second: messagee.second + ll
+                    });
                   }
+                })
+                .then(() => {
+                  res1.map(async (table, idx) => {
+                    // setTimeout(() => {
+                    await check(
+                      values,
+                      arr2,
+                      table,
+                      vv,
+                      idx + 1,
+                      res1.length
+                    ).then(() => console.log('idx'));
+                    // }, 4000);
+                  });
                 })
                 .then(() => {
                   values.quantity = '';
@@ -445,7 +509,7 @@ function Entry() {
               delete variants.Quantity;
               delete variants.Price;
               delete variants.DiscountedPrice;
-              // SetShow(!show);
+              SetShow(!show);
             }}
           >
             {({ handleSubmit, errors, touched }) => (
@@ -789,22 +853,146 @@ function Entry() {
                     </MenuList>
                   </Menu> */}
 
-                  <Menu isOpen={tyu} flip={false}>
+                  {/* <Menu isOpen={tyu} flip={false}> */}
+                  <Menu>
                     <MenuButton
                       as={Button}
                       mt="13px"
                       colorScheme="blue"
                       minWidth="420px"
-                      onClick={(e) => {
-                        // e.preventDefault();
+                      // onClick={(e) => {
+                      //   e.preventDefault();
 
-                        setTYU(!tyu);
-                      }}
-                      flip={false}
+                      //   // setTYU(!tyu);
+                      // }}
                     >
                       Select category
                     </MenuButton>
-                    <MenuList flip={false}>
+                  </Menu>
+                  <Flex
+                    maxW={{ base: '100%', md: 'max-content' }}
+                    w="100%"
+                    mx={{ base: 'auto', lg: '0px' }}
+                    me="auto"
+                    h="auto"
+                    alignItems="start"
+                    justifyContent="left"
+                    mb={{ base: '30px', md: '20px' }}
+                    px={{ base: '25px', md: '0px' }}
+                    // pb={`${sizzz}px`}
+                    // mt={`${pizz}px`}
+                    flexDirection="column"
+                  >
+                    <Grid
+                      h="150px"
+                      templateRows="repeat(1, 1fr)"
+                      templateColumns="repeat(6, 1fr)"
+                      gap={4}
+                    >
+                      {cc.map((val) => {
+                        return (
+                          <GridItem rowSpan={1} colSpan={1} key={val}>
+                            <Menu closeOnSelect={false}>
+                              <MenuItemOption
+                                as={Button}
+                                backgroundColor="black"
+                                color="white"
+                                ml="20px"
+                                mt="20px"
+                                minWidth="160px"
+                                width="auto"
+                                _hover={{ bg: 'gray.400' }}
+                                _focus={{ color: 'white' }}
+                              >
+                                <Text float="left" key={val} ml="-20px">
+                                  {val}
+                                </Text>
+                              </MenuItemOption>
+                              {categories[val].map((item) => {
+                                // setPizz(pizz+37);
+                                // console.log("HH",categories[val]);
+                                return (
+                                  <MenuItemOption
+                                    key={item.id}
+                                    // onChange={(e) => {
+                                    //   e.preventDefault();
+                                    //   console.log(e.target);
+                                    //   if (e.target.checked === true) {
+                                    //     if (
+                                    //       initialState.filters.hasOwnProperty(
+                                    //         val
+                                    //       ) !== true
+                                    //     ) {
+                                    //       initialState.filters[val] = new Set();
+                                    //     }
+                                    //     initialState.filters[val].add(
+                                    //       e.target.value
+                                    //     );
+                                    //   } else {
+                                    //     initialState.filters[val].delete(
+                                    //       e.target.value
+                                    //     );
+                                    //   }
+                                    //   SetShow(!show);
+                                    // }}
+                                    as={Checkbox}
+                                    onChange={(e) => {
+                                      e.preventDefault();
+                                      if (e.target.checked === true) {
+                                        categ.push(e.target.value);
+                                        solve_cat(item.id, item.name);
+                                      } else {
+                                        categ.splice(
+                                          categ.indexOf(e.target.value),
+                                          1
+                                        );
+                                        delete categories[item.name];
+                                      }
+                                      console.log(categ);
+                                      SetShow(!show);
+                                    }}
+                                    value={item.id}
+                                    backgroundColor={textColorSecondary}
+                                    ml="10px"
+                                    mt="10px"
+                                  >
+                                    <Text key={item.id} mt="-37px" ml="10px">
+                                      {item.name}
+                                    </Text>
+                                  </MenuItemOption>
+                                );
+                              })}
+                            </Menu>
+                          </GridItem>
+                        );
+                      })}
+                    </Grid>
+                  </Flex>
+                  {/* {vv.map((val) => {
+                        return (
+                          <GridItem rowSpan={1} colSpan={1} key={val}>
+                            <Menu closeOnSelect={false}>
+                              <MenuItemOption
+                                as={Button}
+                                backgroundColor="black"
+                                color="white"
+                                ml="20px"
+                                mt="20px"
+                                minWidth="160px"
+                                width="auto"
+                                _hover={{ bg: 'gray.400' }}
+                                _focus={{ color: 'white' }}
+                              >
+                                <Text float="left" key={val} ml="-20px">
+                                  {val}
+                                  </Text>
+                                  </MenuItemOption>
+                                  </Menu>
+                                  </GridItem>
+                            </Grid>
+                              </Flex> */}
+
+                  {/* <MenuList flip={false}>
                       <MenuOptionGroup
                         title="Categories"
                         type="checkbox"
@@ -821,11 +1009,7 @@ function Entry() {
                               if (e.target.checked === true) {
                                 categ.push(e.target.value);
                               } else {
-                                categ.map((check, idx) => {
-                                  if (check === e.target.value) {
-                                    categ.splice(idx, 1);
-                                  }
-                                });
+                                categ.splice(categ.indexOf(e.target.value),1);
                               }
                               console.log(categ);
                               setCateg(categ);
@@ -836,7 +1020,7 @@ function Entry() {
                         ))}
                       </MenuOptionGroup>
                     </MenuList>
-                  </Menu>
+                  </Menu> */}
 
                   <Flex
                     maxW={{ base: '100%', md: 'max-content' }}

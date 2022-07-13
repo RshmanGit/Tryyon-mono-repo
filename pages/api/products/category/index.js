@@ -14,7 +14,6 @@ const handler = async (req, res) => {
         read: [
           async () => {
             const { id, query, isRoot, includeChildren } = req.query;
-
             const categories = await searchCategory({
               id,
               query,

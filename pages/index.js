@@ -5,12 +5,9 @@ import { useState } from 'react';
 
 export default function Home() {
   // const [show,setShow] = useState(0);
-  // useEffect(() => {
-  //   if(sessionStorage.length>0){
-  //     sessionStorage.clear();
-  //     setShow(!show);
-  //   }
-  // });
+  useEffect(() => {
+    sessionStorage.clear();
+  });
   return (
     <div className={styles.container}>
       <main className={styles.main}>

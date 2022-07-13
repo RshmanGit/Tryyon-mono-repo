@@ -12,9 +12,6 @@ import { useState } from 'react';
 function MyApp({ Component, pageProps }) {
   const [comp, setComp] = useState(0);
   useEffect(() => {
-    sessionStorage.clear();
-  }, []);
-  useEffect(() => {
     if (
       sessionStorage.getItem('token_use') !== null ||
       sessionStorage.getItem('token_admin') !== null
