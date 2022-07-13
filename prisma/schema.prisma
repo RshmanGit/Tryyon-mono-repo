@@ -99,6 +99,7 @@ model Tenant {
   Associations Associations[]
   Product      Product[]
   SKU          SKU[]
+  Location     Location[]
 }
 
 model Company {
@@ -142,4 +143,15 @@ model Associations {
   tenant   Tenant  @relation(fields: [tenantId], references: [id])
   tenantId String  @db.ObjectId
   approval Boolean @default(false)
+}
+
+model Location {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  address  String
+  pincode  String
+  state    String
+  country  String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tenantId String @db.ObjectId
 }
