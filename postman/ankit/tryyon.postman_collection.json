@@ -11132,6 +11132,1255 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "As admin",
+					"item": [
+						{
+							"name": "/api/location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Locations found\") { ",
+											"    tests[\"Error in finding Locations TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/location?query={{locationTitle}}&paginated=true&count=2&offset=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{locationId}}",
+											"disabled": true
+										},
+										{
+											"key": "query",
+											"value": "{{locationTitle}}"
+										},
+										{
+											"key": "pincode",
+											"value": "{{pincode}}",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "{{locationState}}",
+											"disabled": true
+										},
+										{
+											"key": "country",
+											"value": "{{locationCountry}}",
+											"disabled": true
+										},
+										{
+											"key": "tenantId",
+											"value": "{{locationTenantId}}",
+											"disabled": true
+										},
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "2"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/location?query={{locationTitle}}&paginated=true&count=2&offset=0",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{locationId}}",
+													"disabled": true
+												},
+												{
+													"key": "query",
+													"value": "{{locationTitle}}"
+												},
+												{
+													"key": "pincode",
+													"value": "{{pincode}}",
+													"disabled": true
+												},
+												{
+													"key": "state",
+													"value": "{{locationState}}",
+													"disabled": true
+												},
+												{
+													"key": "country",
+													"value": "{{locationCountry}}",
+													"disabled": true
+												},
+												{
+													"key": "tenantId",
+													"value": "{{locationTenantId}}",
+													"disabled": true
+												},
+												{
+													"key": "paginated",
+													"value": "true"
+												},
+												{
+													"key": "count",
+													"value": "2"
+												},
+												{
+													"key": "offset",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"124-nKyzOxrnh70fLiRXg9w8LUHzmt4\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "292"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 12 Jul 2022 12:10:27 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Locations found\",\n    \"locations\": {\n        \"locations\": [\n            {\n                \"id\": \"62cd627b28f6c3643bf2cf46\",\n                \"title\": \"vero ut et\",\n                \"address\": \"7595 Aliyah Parks\",\n                \"pincode\": \"170125\",\n                \"state\": \"Watsonborough\",\n                \"country\": \"Peru\",\n                \"tenantId\": \"62b97af7190404e5c50e045d\"\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 2,\n            \"total_count\": 1\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Location Created\") { ",
+											"    tests[\"Location creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"locationId\",res.location.id);",
+											"pm.environment.set(\"locationTitle\",res.location.title);",
+											"pm.environment.set(\"locationAddress\",res.location.address);",
+											"pm.environment.set(\"locationPincode\",res.location.pincode);",
+											"pm.environment.set(\"locationState\",res.location.state);",
+											"pm.environment.set(\"locationCountry\",res.location.country);",
+											"pm.environment.set(\"locationTenantId\",res.location.tenantId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var pincode = Math.floor(Math.random()*1000000)",
+											"",
+											"pm.environment.set('pincode', pincode)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"{{$randomLoremWords}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"pincode\": \"{{pincode}}\",\n    \"state\": \"{{$randomCity}}\",\n    \"country\": \"{{$randomCountry}}\",\n    \"tenantId\": \"{{tenantId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"{{$randomLoremWords}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"pincode\": \"{{pincode}}\",\n    \"state\": \"{{$randomCity}}\",\n    \"country\": \"{{$randomCountry}}\",\n    \"tenantId\": \"{{tenantId}}\"\n  }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"225-0G8s0BTLTrKvi/a+rZU3bG2dE28\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "549"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 12 Jul 2022 12:01:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Location Created\",\n    \"location\": {\n        \"id\": \"62cd627b28f6c3643bf2cf46\",\n        \"title\": \"vero ut et\",\n        \"address\": \"7595 Aliyah Parks\",\n        \"pincode\": \"170125\",\n        \"state\": \"Watsonborough\",\n        \"country\": \"Peru\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"tenant\": {\n            \"id\": \"62b97af7190404e5c50e045d\",\n            \"name\": \"Will, Watsica and Reilly\",\n            \"description\": \"Debitis fuga quo. Iste ut ipsam rem dolorum aut. Error quas amet rerum occaecati consequatur neque consequuntur consectetur. Hic deserunt voluptatem doloremque voluptas. Rem iure voluptas.\",\n            \"companyId\": \"62b93b57190404e5c50e045c\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"location updated\") { ",
+											"    tests[\"Location updation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"tenantName\",res.tenant.name);",
+											"pm.environment.set(\"tenantDescription\",res.tenant.description);",
+											"pm.environment.set(\"companyId\",res.tenant.companyId);",
+											"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"\",",
+											"//     \"title\": \"\",",
+											"//     \"address\": \"\",",
+											"//     \"pincode\": \"\",",
+											"//     \"state\": \"\",",
+											"//     \"country\": \"\",",
+											"//     \"tenantId\": \"\"",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{locationId}}\",\n    \"title\": \"New location\",\n    \"address\": \"add\",\n    \"tenantId\": \"{{tenantId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{locationId}}\",\n    \"title\": \"New location\",\n    \"address\": \"add\",\n    \"tenantId\": \"{{tenantId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"215-UgL7sH+DchOdJXtohWPjHjWAcw8\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "533"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:31:52 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"location updated\",\n    \"location\": {\n        \"id\": \"62cd627b28f6c3643bf2cf46\",\n        \"title\": \"New location\",\n        \"address\": \"add\",\n        \"pincode\": \"170125\",\n        \"state\": \"Watsonborough\",\n        \"country\": \"Peru\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"tenant\": {\n            \"id\": \"62b97af7190404e5c50e045d\",\n            \"name\": \"Will, Watsica and Reilly\",\n            \"description\": \"Debitis fuga quo. Iste ut ipsam rem dolorum aut. Error quas amet rerum occaecati consequatur neque consequuntur consectetur. Hic deserunt voluptatem doloremque voluptas. Rem iure voluptas.\",\n            \"companyId\": \"62b93b57190404e5c50e045c\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Location deleted\") { ",
+											"    tests[\"Location not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{locationId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{locationId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"d2-/fIWnRfKKKuY8Ugysp/ufAKySI0\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "210"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:34:11 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Location deleted\",\n    \"tenant\": {\n        \"id\": \"62cd627b28f6c3643bf2cf46\",\n        \"title\": \"New location\",\n        \"address\": \"add\",\n        \"pincode\": \"170125\",\n        \"state\": \"Watsonborough\",\n        \"country\": \"Peru\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\"\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "As user",
+					"item": [
+						{
+							"name": "/api/location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Locations found\") { ",
+											"    tests[\"Error in finding Locations TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/location?paginated=true&count=1&offset=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{locationId}}",
+											"disabled": true
+										},
+										{
+											"key": "query",
+											"value": "{{locationTitle}}",
+											"disabled": true
+										},
+										{
+											"key": "pincode",
+											"value": "{{pincode}}",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "{{locationState}}",
+											"disabled": true
+										},
+										{
+											"key": "country",
+											"value": "{{locationCountry}}",
+											"disabled": true
+										},
+										{
+											"key": "tenantId",
+											"value": "{{locationTenantId}}",
+											"disabled": true
+										},
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/location?paginated=true&count=1&offset=0",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{locationId}}",
+													"disabled": true
+												},
+												{
+													"key": "query",
+													"value": "{{locationTitle}}",
+													"disabled": true
+												},
+												{
+													"key": "pincode",
+													"value": "{{pincode}}",
+													"disabled": true
+												},
+												{
+													"key": "state",
+													"value": "{{locationState}}",
+													"disabled": true
+												},
+												{
+													"key": "country",
+													"value": "{{locationCountry}}",
+													"disabled": true
+												},
+												{
+													"key": "tenantId",
+													"value": "{{locationTenantId}}",
+													"disabled": true
+												},
+												{
+													"key": "paginated",
+													"value": "true"
+												},
+												{
+													"key": "count",
+													"value": "1"
+												},
+												{
+													"key": "offset",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"127-aIZ6q7nLtIxhEZ7KvM/MKLotnAA\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "295"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:40:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Locations found\",\n    \"locations\": {\n        \"locations\": [\n            {\n                \"id\": \"62cd623d28f6c3643bf2cf45\",\n                \"title\": \"esse quam rem\",\n                \"address\": \"515 Rachel Place\",\n                \"pincode\": \"981697\",\n                \"state\": \"East Ubaldo\",\n                \"country\": \"Mayotte\",\n                \"tenantId\": \"62b97af7190404e5c50e045d\"\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 3\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Location Created\") { ",
+											"    tests[\"Location creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"userLocationId\",res.location.id);",
+											"pm.environment.set(\"userLocationTitle\",res.location.title);",
+											"pm.environment.set(\"userLocationAddress\",res.location.address);",
+											"pm.environment.set(\"userLocationPincode\",res.location.pincode);",
+											"pm.environment.set(\"userLocationState\",res.location.state);",
+											"pm.environment.set(\"userLocationCountry\",res.location.country);",
+											"pm.environment.set(\"userLocationTenantId\",res.location.tenantId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var pincode = Math.floor(Math.random()*1000000)",
+											"",
+											"pm.environment.set('userPincode', pincode)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"{{$randomLoremWords}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"pincode\": \"{{userPincode}}\",\n    \"state\": \"{{$randomCity}}\",\n    \"country\": \"{{$randomCountry}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"{{$randomLoremWords}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"pincode\": \"{{pincode}}\",\n    \"state\": \"{{$randomCity}}\",\n    \"country\": \"{{$randomCountry}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"22e-P+Yqx1m5OqFF389GNyYklkcGBBc\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "558"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:36:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Location Created\",\n    \"location\": {\n        \"id\": \"62ce67f3698c1556f9b39102\",\n        \"title\": \"sit autem omnis\",\n        \"address\": \"7542 Marlene Court\",\n        \"pincode\": \"170125\",\n        \"state\": \"New Freddieside\",\n        \"country\": \"Egypt\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"tenant\": {\n            \"id\": \"62b97af7190404e5c50e045d\",\n            \"name\": \"Will, Watsica and Reilly\",\n            \"description\": \"Debitis fuga quo. Iste ut ipsam rem dolorum aut. Error quas amet rerum occaecati consequatur neque consequuntur consectetur. Hic deserunt voluptatem doloremque voluptas. Rem iure voluptas.\",\n            \"companyId\": \"62b93b57190404e5c50e045c\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"location updated\") { ",
+											"    tests[\"Location updation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"tenantName\",res.tenant.name);",
+											"pm.environment.set(\"tenantDescription\",res.tenant.description);",
+											"pm.environment.set(\"companyId\",res.tenant.companyId);",
+											"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"\",",
+											"//     \"title\": \"\",",
+											"//     \"address\": \"\",",
+											"//     \"pincode\": \"\",",
+											"//     \"state\": \"\",",
+											"//     \"country\": \"\",",
+											"//     \"tenantId\": \"\"",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{userLocationId}}\",\n    \"title\": \"New\",\n    \"address\": \"New address\",\n    \"country\": \"Wano\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{userLocationId}}\",\n    \"title\": \"New\",\n    \"address\": \"New address\",\n    \"country\": \"Wano\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"218-K74SPyFIoxoq3FA5lhULWHMzyAY\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "536"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:42:34 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"location updated\",\n    \"location\": {\n        \"id\": \"62ce68bc698c1556f9b39103\",\n        \"title\": \"New\",\n        \"address\": \"New address\",\n        \"pincode\": \"917453\",\n        \"state\": \"Cartwrightborough\",\n        \"country\": \"Wano\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"tenant\": {\n            \"id\": \"62b97af7190404e5c50e045d\",\n            \"name\": \"Will, Watsica and Reilly\",\n            \"description\": \"Debitis fuga quo. Iste ut ipsam rem dolorum aut. Error quas amet rerum occaecati consequatur neque consequuntur consectetur. Hic deserunt voluptatem doloremque voluptas. Rem iure voluptas.\",\n            \"companyId\": \"62b93b57190404e5c50e045c\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Location deleted\") { ",
+											"    tests[\"Location not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{userLocationId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{userLocationId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"d5-opYk5EQWi8rYb6ApwaXE3mvhse0\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "213"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:45:11 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Location deleted\",\n    \"tenant\": {\n        \"id\": \"62ce68bc698c1556f9b39103\",\n        \"title\": \"New\",\n        \"address\": \"New address\",\n        \"pincode\": \"917453\",\n        \"state\": \"Cartwrightborough\",\n        \"country\": \"Wano\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\"\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{userToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{userToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
 		}
 	]
 }

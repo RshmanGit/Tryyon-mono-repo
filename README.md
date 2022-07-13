@@ -24,7 +24,7 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 Built on Next.js and Prisma ORM.
 
-## **Admin Routes**
+## Admin Routes
 
 - **/api/admin/register**
   - Unprotected route
@@ -184,7 +184,7 @@ Built on Next.js and Prisma ORM.
     }
     ```
 
-## User **Routes**
+## User Routes
 
 - Unprotected
   - **/api/user/register**
@@ -565,10 +565,12 @@ Built on Next.js and Prisma ORM.
       }
       ```
 
-## Company **Routes**
+## Company Routes
 
 - For admin
+
   - **/api/company**
+
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Query format -
@@ -581,6 +583,7 @@ Built on Next.js and Prisma ORM.
       id: companyId
       ```
     - Successful Response -
+
       ```
       // paginated
       {
@@ -660,6 +663,7 @@ Built on Next.js and Prisma ORM.
           ]
       }
       ```
+
   - **/api/company/create**
     - Protected route - bearer token needed
     - Accepted method - `POST`
@@ -757,6 +761,7 @@ Built on Next.js and Prisma ORM.
           }
       }
       ```
+
 - For user
   - **/api/company**
     - Protected route - bearer token needed
@@ -885,7 +890,7 @@ Built on Next.js and Prisma ORM.
       }
       ```
 
-## Tenant **Routes**
+Tenant Routes
 
 - For admin
   - **/api/tenant**
@@ -1063,7 +1068,7 @@ Built on Next.js and Prisma ORM.
       }
       ```
 
-## Associations **Routes**
+Associations **Routes**
 
 - For admin
   - **/api/association**
@@ -2339,5 +2344,267 @@ Built on Next.js and Prisma ORM.
               "price": 346.1,
               "discountedPrice": 848.22
           }
+      }
+      ```
+
+## Location routes
+
+- For admin -
+  - **/api/location/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      title: string, required
+      address: string, required
+      pincode: string, required
+      state: string, required
+      country: string, required
+      tenantId: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Location Created",
+        "location": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "vero ut et",
+          "address": "7595 Aliyah Parks",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "tenant": {
+            "id": "62b97af7190404e5c50e045d",
+            "name": "Will, Watsica and Reilly",
+            "description": "...",
+            "companyId": "62b93b57190404e5c50e045c"
+          }
+        }
+      }
+      ```
+  - **/api/location**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Query format -
+      ```
+      id: string, optional
+      query: string, optional, will be searched in title and address
+      pincode: string, optional
+      state: string, optional
+      country: string, optional
+      tenantId: string, optional
+      paginated: boolean, optional
+      count: integer, required if paginated is true
+      offset: integer, required if paginated is true
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Locations found",
+        "locations": {
+          "locations": [
+            {
+              "id": "62cd627b28f6c3643bf2cf46",
+              "title": "vero ut et",
+              "address": "7595 Aliyah Parks",
+              "pincode": "170125",
+              "state": "Watsonborough",
+              "country": "Peru",
+              "tenantId": "62b97af7190404e5c50e045d"
+            }
+          ],
+          "pagination": {
+            "offset": 0,
+            "count": 2,
+            "total_count": 1
+          }
+        }
+      }
+      ```
+  - **/api/location/update**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      {
+        id: string, required
+        title: string, optional
+        address: string, optional
+        pincode: string, optional
+        state: string, optional
+        country: string, optional
+        tenantId: string, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "location updated",
+        "location": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "New location",
+          "address": "add",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "tenant": {
+            "id": "62b97af7190404e5c50e045d",
+            "name": "Will, Watsica and Reilly",
+            "description": "...",
+            "companyId": "62b93b57190404e5c50e045c"
+          }
+        }
+      }
+      ```
+  - **/api/location/delete**
+    - Protected route - bearer token needed
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Location deleted",
+        "tenant": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "New location",
+          "address": "add",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d"
+        }
+      }
+      ```
+- For user -
+  - **/api/location/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      title: string, required
+      address: string, required
+      pincode: string, required
+      state: string, required
+      country: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Location Created",
+        "location": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "vero ut et",
+          "address": "7595 Aliyah Parks",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "tenant": {
+            "id": "62b97af7190404e5c50e045d",
+            "name": "Will, Watsica and Reilly",
+            "description": "...",
+            "companyId": "62b93b57190404e5c50e045c"
+          }
+        }
+      }
+      ```
+  - **/api/location**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Query format -
+      ```
+      id: string, optional
+      query: string, optional, will be searched in title and address
+      pincode: string, optional
+      state: string, optional
+      country: string, optional
+      paginated: boolean, optional
+      count: integer, required if paginated is true
+      offset: integer, required if paginated is true
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Locations found",
+        "locations": {
+          "locations": [
+            {
+              "id": "62cd627b28f6c3643bf2cf46",
+              "title": "vero ut et",
+              "address": "7595 Aliyah Parks",
+              "pincode": "170125",
+              "state": "Watsonborough",
+              "country": "Peru",
+              "tenantId": "62b97af7190404e5c50e045d"
+            }
+          ],
+          "pagination": {
+            "offset": 0,
+            "count": 2,
+            "total_count": 1
+          }
+        }
+      }
+      ```
+  - **/api/location/update**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      {
+        id: string, required
+        title: string, optional
+        address: string, optional
+        pincode: string, optional
+        state: string, optional
+        country: string, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "location updated",
+        "location": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "New location",
+          "address": "add",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "tenant": {
+            "id": "62b97af7190404e5c50e045d",
+            "name": "Will, Watsica and Reilly",
+            "description": "...",
+            "companyId": "62b93b57190404e5c50e045c"
+          }
+        }
+      }
+      ```
+  - **/api/location/delete**
+    - Protected route - bearer token needed
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Location deleted",
+        "tenant": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "New location",
+          "address": "add",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d"
+        }
       }
       ```
