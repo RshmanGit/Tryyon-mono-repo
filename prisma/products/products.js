@@ -2,13 +2,20 @@ import { prisma } from '../prisma';
 
 // Create Product
 export const createProduct = async (data) => {
-  const { supplierId, categoryIds, ...rest } = data;
+  const { supplierId, categoryIds, locationIds, ...rest } = data;
 
   if (supplierId) rest.supplier = { connect: { id: supplierId } };
   if (categoryIds && categoryIds.length != 0) {
     rest.categories = { connect: [] };
     categoryIds.forEach((id) => {
       rest.categories.connect.push({ id });
+    });
+  }
+
+  if (locationIds && locationIds.length != 0) {
+    rest.locations = { connect: [] };
+    locationIds.forEach((id) => {
+      rest.locations.connect.push({ id });
     });
   }
 
@@ -40,6 +47,15 @@ export const searchProducts = async ({
   sortBy,
   order,
   categoryId,
+  manufacturer,
+  locationId,
+  countryOfOrigin,
+  trending,
+  featuredFrom,
+  featuredTo,
+  guestCheckout,
+  private_product,
+  marketPlace,
   pagination,
   offset,
   limit
@@ -61,12 +77,53 @@ export const searchProducts = async ({
   if (id) condition._id = { $eq: { $oid: id } };
   if (supplierId) condition.supplierId = { $eq: { $oid: supplierId } };
   if (query) condition.name = { $regex: query, $options: 'i' };
+  if (manufacturer)
+    condition.manufacturer = { $regex: manufacturer, $options: 'i' };
+  if (countryOfOrigin)
+    condition.countryOfOrigin = { $regex: countryOfOrigin, $options: 'i' };
+
+  if (featuredFrom && featuredTo) {
+    condition.$expr = {
+      $and: [
+        {
+          $gte: [
+            '$featuredFrom',
+            { $dateFromString: { dateString: featuredFrom } }
+          ]
+        },
+        {
+          $lte: ['$featuredTo', { $dateFromString: { dateString: featuredTo } }]
+        }
+      ]
+    };
+  } else {
+    if (featuredFrom)
+      condition.$expr = {
+        $gte: [
+          '$featuredFrom',
+          { $dateFromString: { dateString: featuredFrom } }
+        ]
+      };
+    if (featuredTo)
+      condition.$expr = {
+        $lte: ['$featuredTo', { $dateFromString: { dateString: featuredTo } }]
+      };
+  }
+
   if (inStock == true) condition.quantity = { $gt: 0 };
   else if (inStock == false) condition.quantity = { $eq: 0 };
 
   if (published != undefined) condition.published = published;
+  if (trending != undefined) condition.trending = trending;
+  if (guestCheckout != undefined) condition.guestCheckout = guestCheckout;
+  if (private_product != undefined) condition.private_product = private_product;
+  if (marketPlace != undefined) condition.marketPlace = marketPlace;
+
   if (categoryId)
     condition.categoryIds = { $elemMatch: { $eq: { $oid: categoryId } } };
+
+  if (locationId)
+    condition.locationIds = { $elemMatch: { $eq: { $oid: locationId } } };
 
   if (sortBy) {
     sortProducts[sortBy] = order == 'desc' ? -1 : 1;
@@ -112,7 +169,7 @@ export const searchProducts = async ({
 
   if (pagination) {
     if (offset) pipeline.push({ $skip: offset });
-    if (limit) pipeline.push({ $skip: limit });
+    if (limit) pipeline.push({ $limit: limit });
 
     total_count = await prisma.$runCommandRaw({
       count: 'Product',
@@ -134,7 +191,16 @@ export const searchProducts = async ({
       categoryIds: 1,
       'categories.name': 1,
       'categories.description': 1,
-      'categories.slug': 1
+      'categories.slug': 1,
+      manufacturer: 1,
+      locationIds: 1,
+      countryOfOrigin: 1,
+      trending: 1,
+      featuredFrom: 1,
+      featuredTo: 1,
+      guestCheckout: 1,
+      private_product: 1,
+      marketPlace: 1
     }
   });
 
@@ -161,6 +227,20 @@ export const searchProducts = async ({
       product.categoryIds = tmpArr;
     }
 
+    if (product.featuredFrom) {
+      let tmpFeaturedFrom = product.featuredFrom.$date;
+      delete product.featuredFrom;
+
+      product.featuredFrom = tmpFeaturedFrom;
+    }
+
+    if (product.featuredTo) {
+      let tmpFeaturedTo = product.featuredTo.$date;
+      delete product.featuredTo;
+
+      product.featuredTo = tmpFeaturedTo;
+    }
+
     return product;
   });
 
@@ -180,7 +260,7 @@ export const searchProducts = async ({
 
 // Update Product
 export const updateProduct = async (id, updateData) => {
-  const { supplierId, categoryIds, ...rest } = updateData;
+  const { supplierId, categoryIds, locationIds, ...rest } = updateData;
 
   if (supplierId) rest.supplier = { connect: { id: supplierId } };
 
@@ -188,6 +268,13 @@ export const updateProduct = async (id, updateData) => {
     rest.categories = { connect: [] };
     categoryIds.forEach((id) => {
       rest.categories.connect.push({ id });
+    });
+  }
+
+  if (locationIds && locationIds.length != 0) {
+    rest.locations = { connect: [] };
+    locationIds.forEach((id) => {
+      rest.locations.connect.push({ id });
     });
   }
 
