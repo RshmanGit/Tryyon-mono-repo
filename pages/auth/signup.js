@@ -67,7 +67,7 @@ function Signup() {
       px={{ base: '25px', md: '0px' }}
       mt={{ base: '40px', md: '16vh' }}
       flexDirection="column"
-      ml="20px"
+      ml="480px"
     >
       <Box me="auto">
         <Heading color={textColor} fontSize="34px" mb="2px" mt="-75px">

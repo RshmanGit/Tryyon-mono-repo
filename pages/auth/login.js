@@ -48,6 +48,20 @@ function Login() {
   useEffect(() => {
     sessionStorage.clear();
   }, []);
+
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      if (event.key === 'Enter') {
+        document.getElementById('12').click();
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  });
   useEffect(() => {
     if (company === 1) {
       router.push('/auth/create/tenant');
@@ -104,7 +118,7 @@ function Login() {
       mb={{ base: '30px', md: '60px' }}
       px={{ base: '25px', md: '0px' }}
       mt={{ base: '40px', md: '4vh' }}
-      ml="20px"
+      ml="480px"
       flexDirection="column"
     >
       <Box me="auto">
@@ -295,6 +309,7 @@ function Login() {
                   w="100%"
                   h="50"
                   mb="24px"
+                  id="12"
                   onClick={handleSubmit}
                 >
                   {buttonText}
