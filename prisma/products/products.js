@@ -141,6 +141,15 @@ export const searchProducts = async ({
 
   pipeline.push({
     $lookup: {
+      from: 'Location',
+      localField: 'locationIds',
+      foreignField: '_id',
+      as: 'locations'
+    }
+  });
+
+  pipeline.push({
+    $lookup: {
       from: 'SKU',
       localField: '_id',
       foreignField: 'productId',
@@ -192,6 +201,10 @@ export const searchProducts = async ({
       'categories.name': 1,
       'categories.description': 1,
       'categories.slug': 1,
+      'locations.name': 1,
+      'locations.address': 1,
+      'locations.state': 1,
+      'locations.country': 1,
       manufacturer: 1,
       locationIds: 1,
       countryOfOrigin: 1,
@@ -225,6 +238,13 @@ export const searchProducts = async ({
       delete product.categoryIds;
 
       product.categoryIds = tmpArr;
+    }
+
+    if (Array.isArray(product.locationIds)) {
+      let tmpArr = product.locationIds.map((e) => e.$oid);
+      delete product.locationIds;
+
+      product.locationIds = tmpArr;
     }
 
     if (product.featuredFrom) {
