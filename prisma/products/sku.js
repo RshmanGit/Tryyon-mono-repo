@@ -20,6 +20,32 @@ export const createSKU = async (data) => {
   return sku;
 };
 
+export const bulkCreateSKU = async (dataArr) => {
+  const res = [];
+
+  for (let i = 0; i < dataArr.length; i++) {
+    const data = dataArr[i];
+    const { productId, supplierId, categoryIds, ...rest } = data;
+
+    if (productId) rest.product = { connect: { id: productId } };
+    if (supplierId) rest.supplier = { connect: { id: supplierId } };
+    if (categoryIds && categoryIds.length != 0) {
+      rest.categories = { connect: [] };
+      categoryIds.forEach((id) => {
+        rest.categories.connect.push({ id });
+      });
+    }
+
+    const sku = await prisma.sKU.create({
+      data: rest
+    });
+
+    res.push(sku);
+  }
+
+  return res;
+};
+
 // Read SKU
 export const getSKU = async (id) => {
   const skus = await prisma.sKU.findMany({
