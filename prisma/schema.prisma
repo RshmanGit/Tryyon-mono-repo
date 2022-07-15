@@ -157,7 +157,7 @@ model Associations {
 
 model Location {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
+  name       String
   address    String
   pincode    String
   state      String

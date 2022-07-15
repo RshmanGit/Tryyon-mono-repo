@@ -52,7 +52,7 @@ export const searchLocations = async ({
   if (id) condition.id = id;
   if (query) {
     condition.OR = [
-      { title: { contains: query, mode: 'insensitive' } },
+      { name: { contains: query, mode: 'insensitive' } },
       { address: { contains: query, mode: 'insensitive' } }
     ];
   }

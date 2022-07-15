@@ -10,7 +10,7 @@ import runMiddleware from '../../../utils/helpers/runMiddleware';
 
 const schema = {
   body: Joi.object({
-    title: Joi.string().required(),
+    name: Joi.string().required(),
     address: Joi.string().required(),
     pincode: Joi.string().required(),
     state: Joi.string().required(),

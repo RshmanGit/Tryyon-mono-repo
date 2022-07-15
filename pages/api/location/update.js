@@ -14,7 +14,7 @@ import {
 const schema = {
   body: Joi.object({
     id: Joi.string().required(),
-    title: Joi.string().optional(),
+    name: Joi.string().optional(),
     address: Joi.string().optional(),
     pincode: Joi.string().optional(),
     state: Joi.string().optional(),
