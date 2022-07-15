@@ -20,7 +20,16 @@ const schema = {
     order: Joi.string().allow('desc', 'asc').optional(),
     pagination: Joi.boolean().optional(),
     offset: Joi.number().optional(),
-    limit: Joi.number().optional()
+    limit: Joi.number().optional(),
+    locationIds: Joi.array().optional(),
+    manufacturer: Joi.string().optional(),
+    countryOfOrigin: Joi.string().optional(),
+    trending: Joi.boolean().optional(),
+    featuredFrom: Joi.date().optional(),
+    featuredTo: Joi.date().optional(),
+    guestCheckout: Joi.boolean().optional(),
+    private_product: Joi.boolean().optional(),
+    marketPlace: Joi.boolean().optional()
   })
 };
 

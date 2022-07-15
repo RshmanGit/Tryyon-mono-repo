@@ -24,7 +24,7 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 Built on Next.js and Prisma ORM.
 
-## **Admin Routes**
+## Admin Routes
 
 - **/api/admin/register**
   - Unprotected route
@@ -184,7 +184,7 @@ Built on Next.js and Prisma ORM.
     }
     ```
 
-## User **Routes**
+## User Routes
 
 - Unprotected
   - **/api/user/register**
@@ -565,10 +565,12 @@ Built on Next.js and Prisma ORM.
       }
       ```
 
-## Company **Routes**
+## Company Routes
 
 - For admin
+
   - **/api/company**
+
     - Protected route - bearer token needed
     - Accepted method - `GET`
     - Query format -
@@ -581,6 +583,7 @@ Built on Next.js and Prisma ORM.
       id: companyId
       ```
     - Successful Response -
+
       ```
       // paginated
       {
@@ -660,6 +663,7 @@ Built on Next.js and Prisma ORM.
           ]
       }
       ```
+
   - **/api/company/create**
     - Protected route - bearer token needed
     - Accepted method - `POST`
@@ -757,6 +761,7 @@ Built on Next.js and Prisma ORM.
           }
       }
       ```
+
 - For user
   - **/api/company**
     - Protected route - bearer token needed
@@ -885,7 +890,7 @@ Built on Next.js and Prisma ORM.
       }
       ```
 
-## Tenant **Routes**
+Tenant Routes
 
 - For admin
   - **/api/tenant**
@@ -1063,7 +1068,7 @@ Built on Next.js and Prisma ORM.
       }
       ```
 
-## Associations **Routes**
+Associations **Routes**
 
 - For admin
   - **/api/association**
@@ -1455,35 +1460,54 @@ Built on Next.js and Prisma ORM.
       published: boolean, default - false
       attributes: object, required, structure - {key: [...arr]}
       categoryIds: array, required
+      locationIds: array, required
+      manufacturer: string, required
+      countryOfOrigin: string, required
+      trending: boolean, required
+      featuredFrom: date, required
+      featuredTo: date, required
+      guestCheckout: boolean, required
+      private_product: boolean, required
+      marketPlace: boolean, required
       ```
     - Successful Response -
       ```
       {
-          "message": "New Product Created",
-          "product": {
-              "id": "62c00dcad49389ce1fc48ac0",
-              "name": "Handmade Cotton Pants",
-              "description": "...",
-              "shortDescriptions": "...",
-              "slug": "explicabo-aspernatur-dolorem",
-              "quantity": 157,
-              "supplierId": "62b97af7190404e5c50e045d",
-              "published": true,
-              "attributes": {
-                  "size": [
-                      "l",
-                      "m",
-                      "s"
-                  ],
-                  "color": [
-                      "red",
-                      "blue"
-                  ]
-              },
-              "categoryIds": [
-                  "62c00b39d49389ce1fc48abd"
-              ]
-          }
+        "message": "New Product Created",
+        "product": {
+          "id": "62d1159c504963bf2f1d4c58",
+          "name": "Sleek Rubber Pizza",
+          "description": "...",
+          "slug": "esse-dolores-libero",
+          "quantity": 608,
+          "supplierId": "62b97af7190404e5c50e045d",
+          "published": true,
+          "attributes": {
+            "size": [
+              "l",
+              "m",
+              "s"
+            ],
+            "color": [
+              "red",
+              "blue"
+            ]
+          },
+          "categoryIds": [
+            "62c010ebd49389ce1fc48ac9"
+          ],
+          "manufacturer": "ABC Industries",
+          "locationIds": [
+            "62cebef175a4f7a690b8ead2"
+          ],
+          "countryOfOrigin": "India",
+          "trending": false,
+          "featuredFrom": "2022-07-15T07:22:03.556Z",
+          "featuredTo": "2022-07-15T07:22:03.556Z",
+          "guestCheckout": false,
+          "private_product": true,
+          "marketPlace": true
+        }
       }
       ```
   - **/api/products**
@@ -1503,68 +1527,129 @@ Built on Next.js and Prisma ORM.
       pagination: boolean, optional
       offset: number, optional
       limit: number, optional
+      locationIds: array, optional
+      manufacturer: string, optional
+      countryOfOrigin: string, optional
+      trending: boolean, optional
+      featuredFrom: date, optional
+      featuredTo: date, optional
+      guestCheckout: boolean, optional
+      private_product: boolean, optional
+      marketPlace: boolean, optional
       ```
     - Successful Response -
       ```
       {
-          "message": "Products found",
-          "products": {
-              "skus": [
+        "message": "Products found",
+        "products": {
+          "products": [
+            {
+              "name": "Rustic Granite Pants",
+              "description": "Esse consequatur nulla. Qui aspernatur nulla reprehenderit veritatis consequatur cum porro. Sequi adipisci atque error hic officiis minima. Id laborum qui quia dolorem facilis hic et eaque aperiam. Mollitia voluptatum optio dolorem. Ab minus eum.",
+              "shortDescriptions": "Corporis deleniti non vero et.",
+              "slug": "est-vel-velit",
+              "quantity": 980,
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "manufacturer": "ABC Industries",
+              "countryOfOrigin": "India",
+              "trending": true,
+              "guestCheckout": true,
+              "private_product": true,
+              "marketPlace": false,
+              "categories": [
                   {
-                      "name": "Ergonomic Frozen Gloves",
-                      "description": "...",
-                      "shortDescriptions": "...",
-                      "slug": "ducimus-non-id",
-                      "quantity": 790,
-                      "published": false,
-                      "attributes": {
-                          "size": [
-                              "l",
-                              "m",
-                              "s"
-                          ],
-                          "color": [
-                              "red",
-                              "blue"
-                          ]
-                      },
-                      "id": "62bec14cb39f92c3e0a3199b",
-                      "supplierId": "62b97af7190404e5c50e045d",
-                      "categoryIds": [
-                          "62bd634d0a9de06da86e291a"
-                      ]
-                  },
-                  {
-                      "name": "Ergonomic Frozen Shoes",
-                      "description": "...",
-                      "shortDescriptions": "...",
-                      "slug": "repellendus-delectus-sit",
-                      "quantity": 599,
-                      "published": false,
-                      "attributes": {
-                          "size": [
-                              "l",
-                              "m",
-                              "s"
-                          ],
-                          "color": [
-                              "red",
-                              "blue"
-                          ]
-                      },
-                      "id": "62c013d2d49389ce1fc48ad1",
-                      "supplierId": "62b97af7190404e5c50e045d",
-                      "categoryIds": [
-                          "62c010ebd49389ce1fc48ac9"
-                      ]
+                      "name": "Awesome",
+                      "description": "Aut qui ut debitis enim molestias incidunt. Incidunt voluptatem vero. Numquam animi consequatur qui. Ut dolore in error officiis voluptatem.",
+                      "slug": "nam-quia-voluptatem"
                   }
               ],
-              "pagination": {
-                  "total_count": 5,
-                  "limit": 2,
-                  "offset": 1
-              }
+              "locations": [
+                  {
+                      "name": "est sit rerum",
+                      "address": "63250 Pamela Ridges",
+                      "state": "North Katharinaburgh",
+                      "country": "Venezuela"
+                  }
+              ],
+              "id": "62d119f9d1ec38d5d0dcbb78",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "categoryIds": [
+                  "62c010ebd49389ce1fc48ac9"
+              ],
+              "locationIds": [
+                  "62d119e1d1ec38d5d0dcbb75"
+              ],
+              "featuredFrom": "2022-07-15T07:40:41.748Z",
+              "featuredTo": "2022-07-15T07:40:41.748Z"
+            },
+            {
+              "name": "Rustic Metal Computer",
+              "description": "Impedit vitae est. Ut nesciunt voluptas vel expedita necessitatibus tenetur reprehenderit. Vero excepturi aut sunt debitis dolores deleniti. Aut enim nostrum. Quis est rerum.",
+              "shortDescriptions": "Eum voluptates et voluptas voluptate nihil vitae aut molestiae.",
+              "slug": "ea-consectetur-quia",
+              "quantity": 875,
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "manufacturer": "ABC Industries",
+              "countryOfOrigin": "India",
+              "trending": false,
+              "guestCheckout": true,
+              "private_product": true,
+              "marketPlace": true,
+              "categories": [
+                  {
+                      "name": "Awesome",
+                      "description": "Aut qui ut debitis enim molestias incidunt. Incidunt voluptatem vero. Numquam animi consequatur qui. Ut dolore in error officiis voluptatem.",
+                      "slug": "nam-quia-voluptatem"
+                  }
+              ],
+              "locations": [
+                  {
+                      "name": "est sit rerum",
+                      "address": "63250 Pamela Ridges",
+                      "state": "North Katharinaburgh",
+                      "country": "Venezuela"
+                  }
+              ],
+              "id": "62d119eed1ec38d5d0dcbb76",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "categoryIds": [
+                  "62c010ebd49389ce1fc48ac9"
+              ],
+              "locationIds": [
+                  "62d119e1d1ec38d5d0dcbb75"
+              ],
+              "featuredFrom": "2022-07-15T07:40:29.540Z",
+              "featuredTo": "2022-07-15T07:40:29.540Z"
+            }
+          ],
+          "pagination": {
+              "total_count": 14,
+              "limit": 2,
+              "offset": 7
           }
+        }
       }
       ```
   - **/api/products/{{productId}}**
@@ -1616,36 +1701,58 @@ Built on Next.js and Prisma ORM.
         quantity: number, optional
         attributes: object, optional, structure - {key: [...arr]}
         categoryIds: array, optional
+        locationIds: array, optional
+        categories: object, optional, can be used to specify connect or disconnect object
+        locations: object, optional, can be used to specify connect or disconnect object
+        manufacturer: string, optional
+        countryOfOrigin: string, optional
+        trending: boolean, optional
+        featuredFrom: date, ISO Timestamp, optional
+        featuredTo: date, ISO Timestamp, optional
+        guestCheckout: boolean, optional
+        private_product: boolean, optional
+        marketPlace: boolean, optional
       }
       ```
     - Successful Response -
       ```
       {
-          "message": "Product updated",
-          "product": {
-              "id": "62c00dcad49389ce1fc48ac0",
-              "name": "Ergonomic Wooden Salad",
-              "description": "...",
-              "shortDescriptions": "...",
-              "slug": "explicabo-aspernatur-dolorem",
-              "quantity": 142,
-              "supplierId": "62b97af7190404e5c50e045d",
-              "published": true,
-              "attributes": {
-                  "size": [
-                      "l",
-                      "m",
-                      "s"
-                  ],
-                  "color": [
-                      "red",
-                      "blue"
-                  ]
-              },
-              "categoryIds": [
-                  "62c00b39d49389ce1fc48abd"
-              ]
-          }
+        "message": "Product updated",
+        "product": {
+          "id": "62d1159c504963bf2f1d4c58",
+          "name": "Small Plastic Soap",
+          "description": "Laborum id voluptatem repellendus itaque ipsa ipsum repellendus. Error id molestias libero tempora temporibus facere molestias. Blanditiis dolor earum magnam magnam vero enim aut et.",
+          "shortDescriptions": "Dicta exercitationem vero quae odit dolor.",
+          "slug": "esse-dolores-libero",
+          "quantity": 611,
+          "supplierId": "62b97af7190404e5c50e045d",
+          "published": true,
+          "attributes": {
+            "size": [
+              "l",
+              "m",
+              "s"
+            ],
+            "color": [
+              "red",
+              "blue"
+            ]
+          },
+          "categoryIds": [
+            "62c010ebd49389ce1fc48ac9"
+          ],
+          "manufacturer": "ABC Industries",
+          "locationIds": [
+            "62cebef175a4f7a690b8ead2"
+          ],
+          "countryOfOrigin": "India",
+          "trending": false,
+          "featuredFrom": "2022-07-15T07:22:03.556Z",
+          "featuredTo": "2022-07-15T07:22:03.556Z",
+          "guestCheckout": false,
+          "private_product": true,
+          "marketPlace": true
+        }
       }
       ```
   - **/api/products/delete**
@@ -1698,36 +1805,55 @@ Built on Next.js and Prisma ORM.
       quantity: number, default - 0
       published: boolean, default - false
       attributes: object, required, structure - {key: [...arr]}
-      categoryIds: array, required
+      categoryIds: array, required,
+      locationIds: array, required
+      manufacturer: string, required
+      countryOfOrigin: string, required
+      trending: boolean, required
+      featuredFrom: date, required
+      featuredTo: date, required
+      guestCheckout: boolean, required
+      private_product: boolean, required
+      marketPlace: boolean, required
       ```
     - Successful Response -
       ```
       {
-          "message": "New Product Created",
-          "product": {
-              "id": "62c00dcad49389ce1fc48ac0",
-              "name": "Handmade Cotton Pants",
-              "description": "...",
-              "shortDescriptions": "...",
-              "slug": "explicabo-aspernatur-dolorem",
-              "quantity": 157,
-              "supplierId": "62b97af7190404e5c50e045d",
-              "published": true,
-              "attributes": {
-                  "size": [
-                      "l",
-                      "m",
-                      "s"
-                  ],
-                  "color": [
-                      "red",
-                      "blue"
-                  ]
-              },
-              "categoryIds": [
-                  "62c00b39d49389ce1fc48abd"
-              ]
-          }
+        "message": "New Product Created",
+        "product": {
+          "id": "62d1159c504963bf2f1d4c58",
+          "name": "Sleek Rubber Pizza",
+          "description": "...",
+          "slug": "esse-dolores-libero",
+          "quantity": 608,
+          "supplierId": "62b97af7190404e5c50e045d",
+          "published": true,
+          "attributes": {
+            "size": [
+              "l",
+              "m",
+              "s"
+            ],
+            "color": [
+              "red",
+              "blue"
+            ]
+          },
+          "categoryIds": [
+            "62c010ebd49389ce1fc48ac9"
+          ],
+          "manufacturer": "ABC Industries",
+          "locationIds": [
+            "62cebef175a4f7a690b8ead2"
+          ],
+          "countryOfOrigin": "India",
+          "trending": false,
+          "featuredFrom": "2022-07-15T07:22:03.556Z",
+          "featuredTo": "2022-07-15T07:22:03.556Z",
+          "guestCheckout": false,
+          "private_product": true,
+          "marketPlace": true
+        }
       }
       ```
   - **/api/products**
@@ -1747,68 +1873,129 @@ Built on Next.js and Prisma ORM.
       pagination: boolean, optional
       offset: number, optional
       limit: number, optional
+      locationIds: array, optional
+      manufacturer: string, optional
+      countryOfOrigin: string, optional
+      trending: boolean, optional
+      featuredFrom: date, optional
+      featuredTo: date, optional
+      guestCheckout: boolean, optional
+      private_product: boolean, optional
+      marketPlace: boolean, optional
       ```
     - Successful Response -
       ```
       {
-          "message": "Products found",
-          "products": {
-              "skus": [
+        "message": "Products found",
+        "products": {
+          "products": [
+            {
+              "name": "Rustic Granite Pants",
+              "description": "Esse consequatur nulla. Qui aspernatur nulla reprehenderit veritatis consequatur cum porro. Sequi adipisci atque error hic officiis minima. Id laborum qui quia dolorem facilis hic et eaque aperiam. Mollitia voluptatum optio dolorem. Ab minus eum.",
+              "shortDescriptions": "Corporis deleniti non vero et.",
+              "slug": "est-vel-velit",
+              "quantity": 980,
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "manufacturer": "ABC Industries",
+              "countryOfOrigin": "India",
+              "trending": true,
+              "guestCheckout": true,
+              "private_product": true,
+              "marketPlace": false,
+              "categories": [
                   {
-                      "name": "Ergonomic Frozen Gloves",
-                      "description": "...",
-                      "shortDescriptions": "...",
-                      "slug": "ducimus-non-id",
-                      "quantity": 790,
-                      "published": false,
-                      "attributes": {
-                          "size": [
-                              "l",
-                              "m",
-                              "s"
-                          ],
-                          "color": [
-                              "red",
-                              "blue"
-                          ]
-                      },
-                      "id": "62bec14cb39f92c3e0a3199b",
-                      "supplierId": "62b97af7190404e5c50e045d",
-                      "categoryIds": [
-                          "62bd634d0a9de06da86e291a"
-                      ]
-                  },
-                  {
-                      "name": "Ergonomic Frozen Shoes",
-                      "description": "...",
-                      "shortDescriptions": "...",
-                      "slug": "repellendus-delectus-sit",
-                      "quantity": 599,
-                      "published": false,
-                      "attributes": {
-                          "size": [
-                              "l",
-                              "m",
-                              "s"
-                          ],
-                          "color": [
-                              "red",
-                              "blue"
-                          ]
-                      },
-                      "id": "62c013d2d49389ce1fc48ad1",
-                      "supplierId": "62b97af7190404e5c50e045d",
-                      "categoryIds": [
-                          "62c010ebd49389ce1fc48ac9"
-                      ]
+                      "name": "Awesome",
+                      "description": "Aut qui ut debitis enim molestias incidunt. Incidunt voluptatem vero. Numquam animi consequatur qui. Ut dolore in error officiis voluptatem.",
+                      "slug": "nam-quia-voluptatem"
                   }
               ],
-              "pagination": {
-                  "total_count": 5,
-                  "limit": 2,
-                  "offset": 1
-              }
+              "locations": [
+                  {
+                      "name": "est sit rerum",
+                      "address": "63250 Pamela Ridges",
+                      "state": "North Katharinaburgh",
+                      "country": "Venezuela"
+                  }
+              ],
+              "id": "62d119f9d1ec38d5d0dcbb78",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "categoryIds": [
+                  "62c010ebd49389ce1fc48ac9"
+              ],
+              "locationIds": [
+                  "62d119e1d1ec38d5d0dcbb75"
+              ],
+              "featuredFrom": "2022-07-15T07:40:41.748Z",
+              "featuredTo": "2022-07-15T07:40:41.748Z"
+            },
+            {
+              "name": "Rustic Metal Computer",
+              "description": "Impedit vitae est. Ut nesciunt voluptas vel expedita necessitatibus tenetur reprehenderit. Vero excepturi aut sunt debitis dolores deleniti. Aut enim nostrum. Quis est rerum.",
+              "shortDescriptions": "Eum voluptates et voluptas voluptate nihil vitae aut molestiae.",
+              "slug": "ea-consectetur-quia",
+              "quantity": 875,
+              "published": true,
+              "attributes": {
+                  "size": [
+                      "l",
+                      "m",
+                      "s"
+                  ],
+                  "color": [
+                      "red",
+                      "blue"
+                  ]
+              },
+              "manufacturer": "ABC Industries",
+              "countryOfOrigin": "India",
+              "trending": false,
+              "guestCheckout": true,
+              "private_product": true,
+              "marketPlace": true,
+              "categories": [
+                  {
+                      "name": "Awesome",
+                      "description": "Aut qui ut debitis enim molestias incidunt. Incidunt voluptatem vero. Numquam animi consequatur qui. Ut dolore in error officiis voluptatem.",
+                      "slug": "nam-quia-voluptatem"
+                  }
+              ],
+              "locations": [
+                  {
+                      "name": "est sit rerum",
+                      "address": "63250 Pamela Ridges",
+                      "state": "North Katharinaburgh",
+                      "country": "Venezuela"
+                  }
+              ],
+              "id": "62d119eed1ec38d5d0dcbb76",
+              "supplierId": "62b97af7190404e5c50e045d",
+              "categoryIds": [
+                  "62c010ebd49389ce1fc48ac9"
+              ],
+              "locationIds": [
+                  "62d119e1d1ec38d5d0dcbb75"
+              ],
+              "featuredFrom": "2022-07-15T07:40:29.540Z",
+              "featuredTo": "2022-07-15T07:40:29.540Z"
+            }
+          ],
+          "pagination": {
+              "total_count": 14,
+              "limit": 2,
+              "offset": 7
           }
+        }
       }
       ```
   - **/api/products/{{productId}}**
@@ -1861,36 +2048,58 @@ Built on Next.js and Prisma ORM.
         quantity: number, optional
         attributes: object, optional, structure - {key: [...arr]}
         categoryIds: array, optional
+        locationIds: array, optional
+        categories: object, optional, can be used to specify connect or disconnect object
+        locations: object, optional, can be used to specify connect or disconnect object
+        manufacturer: string, optional
+        countryOfOrigin: string, optional
+        trending: boolean, optional
+        featuredFrom: date, ISO Timestamp, optional
+        featuredTo: date, ISO Timestamp, optional
+        guestCheckout: boolean, optional
+        private_product: boolean, optional
+        marketPlace: boolean, optional
       }
       ```
     - Successful Response -
       ```
       {
-          "message": "Product updated",
-          "product": {
-              "id": "62c00dcad49389ce1fc48ac0",
-              "name": "Ergonomic Wooden Salad",
-              "description": "...",
-              "shortDescriptions": "...",
-              "slug": "explicabo-aspernatur-dolorem",
-              "quantity": 142,
-              "supplierId": "62b97af7190404e5c50e045d",
-              "published": true,
-              "attributes": {
-                  "size": [
-                      "l",
-                      "m",
-                      "s"
-                  ],
-                  "color": [
-                      "red",
-                      "blue"
-                  ]
-              },
-              "categoryIds": [
-                  "62c00b39d49389ce1fc48abd"
-              ]
-          }
+        "message": "Product updated",
+        "product": {
+          "id": "62d1159c504963bf2f1d4c58",
+          "name": "Small Plastic Soap",
+          "description": "Laborum id voluptatem repellendus itaque ipsa ipsum repellendus. Error id molestias libero tempora temporibus facere molestias. Blanditiis dolor earum magnam magnam vero enim aut et.",
+          "shortDescriptions": "Dicta exercitationem vero quae odit dolor.",
+          "slug": "esse-dolores-libero",
+          "quantity": 611,
+          "supplierId": "62b97af7190404e5c50e045d",
+          "published": true,
+          "attributes": {
+            "size": [
+              "l",
+              "m",
+              "s"
+            ],
+            "color": [
+              "red",
+              "blue"
+            ]
+          },
+          "categoryIds": [
+            "62c010ebd49389ce1fc48ac9"
+          ],
+          "manufacturer": "ABC Industries",
+          "locationIds": [
+            "62cebef175a4f7a690b8ead2"
+          ],
+          "countryOfOrigin": "India",
+          "trending": false,
+          "featuredFrom": "2022-07-15T07:22:03.556Z",
+          "featuredTo": "2022-07-15T07:22:03.556Z",
+          "guestCheckout": false,
+          "private_product": true,
+          "marketPlace": true
+        }
       }
       ```
   - **/api/products/delete**
@@ -1973,6 +2182,82 @@ Built on Next.js and Prisma ORM.
           }
       }
       ```
+  - **/api/sku/bulk-create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      // req.body -
+      {
+        body: [
+          {
+            slug: string, required
+            quantity: number, default - 0
+            productId: string, required
+            supplierId: string, required
+            published: boolean, default - false
+            attributes: object, required, structure - {key: [...arr]}
+            categoryIds: array, required
+            price: number, required
+            discountedPrice: number, required
+          },
+          {
+            slug: string, required
+            quantity: number, default - 0
+            productId: string, required
+            supplierId: string, required
+            published: boolean, default - false
+            attributes: object, required, structure - {key: [...arr]}
+            categoryIds: array, required
+            price: number, required
+            discountedPrice: number, required
+          },
+          ...
+        ]
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New SKUs Created",
+        "sku": [
+          {
+            "id": "62d1257dd1ec38d5d0dcbb7d",
+            "slug": "quod-corrupti-ut",
+            "quantity": 113,
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "supplierId": "62b97af7190404e5c50e045d",
+            "published": true,
+            "attributes": {
+              "size": "l",
+              "color": "red"
+            },
+            "categoryIds": [
+              "62c010ebd49389ce1fc48ac9"
+            ],
+            "price": 729.88,
+            "discountedPrice": 188.29
+          },
+          {
+            "id": "62d1257dd1ec38d5d0dcbb7e",
+            "slug": "facere-minus-harum",
+            "quantity": 445,
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "supplierId": "62b97af7190404e5c50e045d",
+            "published": false,
+            "attributes": {
+              "size": "m",
+              "color": "blue"
+            },
+            "categoryIds": [
+              "62c010ebd49389ce1fc48ac9"
+            ],
+            "price": 701.61,
+            "discountedPrice": 157.66
+          }
+        ]
+      }
+      ```
   - **/api/sku**
     - Protected route - bearer token needed
     - Accepted method - `POST`
@@ -2137,7 +2422,9 @@ Built on Next.js and Prisma ORM.
       }
       ```
 - For user -
+
   - **/api/sku/create**
+
     - Protected route - bearer token needed
     - Accepted method - `POST`
     - Body format -
@@ -2172,6 +2459,83 @@ Built on Next.js and Prisma ORM.
               "price": 966.88,
               "discountedPrice": 962.11
           }
+      }
+      ```
+
+  - **/api/sku/bulk-create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      // req.body -
+      {
+        body: [
+          {
+            slug: string, required
+            quantity: number, default - 0
+            productId: string, required
+            supplierId: string, required
+            published: boolean, default - false
+            attributes: object, required, structure - {key: [...arr]}
+            categoryIds: array, required
+            price: number, required
+            discountedPrice: number, required
+          },
+          {
+            slug: string, required
+            quantity: number, default - 0
+            productId: string, required
+            supplierId: string, required
+            published: boolean, default - false
+            attributes: object, required, structure - {key: [...arr]}
+            categoryIds: array, required
+            price: number, required
+            discountedPrice: number, required
+          },
+          ...
+        ]
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New SKUs Created",
+        "sku": [
+          {
+            "id": "62d1257dd1ec38d5d0dcbb7d",
+            "slug": "quod-corrupti-ut",
+            "quantity": 113,
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "supplierId": "62b97af7190404e5c50e045d",
+            "published": true,
+            "attributes": {
+              "size": "l",
+              "color": "red"
+            },
+            "categoryIds": [
+              "62c010ebd49389ce1fc48ac9"
+            ],
+            "price": 729.88,
+            "discountedPrice": 188.29
+          },
+          {
+            "id": "62d1257dd1ec38d5d0dcbb7e",
+            "slug": "facere-minus-harum",
+            "quantity": 445,
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "supplierId": "62b97af7190404e5c50e045d",
+            "published": false,
+            "attributes": {
+              "size": "m",
+              "color": "blue"
+            },
+            "categoryIds": [
+              "62c010ebd49389ce1fc48ac9"
+            ],
+            "price": 701.61,
+            "discountedPrice": 157.66
+          }
+        ]
       }
       ```
   - **/api/sku**
@@ -2339,5 +2703,267 @@ Built on Next.js and Prisma ORM.
               "price": 346.1,
               "discountedPrice": 848.22
           }
+      }
+      ```
+
+## Location routes
+
+- For admin -
+  - **/api/location/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      title: string, required
+      address: string, required
+      pincode: string, required
+      state: string, required
+      country: string, required
+      tenantId: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Location Created",
+        "location": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "vero ut et",
+          "address": "7595 Aliyah Parks",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "tenant": {
+            "id": "62b97af7190404e5c50e045d",
+            "name": "Will, Watsica and Reilly",
+            "description": "...",
+            "companyId": "62b93b57190404e5c50e045c"
+          }
+        }
+      }
+      ```
+  - **/api/location**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Query format -
+      ```
+      id: string, optional
+      query: string, optional, will be searched in title and address
+      pincode: string, optional
+      state: string, optional
+      country: string, optional
+      tenantId: string, optional
+      paginated: boolean, optional
+      count: integer, required if paginated is true
+      offset: integer, required if paginated is true
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Locations found",
+        "locations": {
+          "locations": [
+            {
+              "id": "62cd627b28f6c3643bf2cf46",
+              "title": "vero ut et",
+              "address": "7595 Aliyah Parks",
+              "pincode": "170125",
+              "state": "Watsonborough",
+              "country": "Peru",
+              "tenantId": "62b97af7190404e5c50e045d"
+            }
+          ],
+          "pagination": {
+            "offset": 0,
+            "count": 2,
+            "total_count": 1
+          }
+        }
+      }
+      ```
+  - **/api/location/update**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      {
+        id: string, required
+        title: string, optional
+        address: string, optional
+        pincode: string, optional
+        state: string, optional
+        country: string, optional
+        tenantId: string, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "location updated",
+        "location": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "New location",
+          "address": "add",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "tenant": {
+            "id": "62b97af7190404e5c50e045d",
+            "name": "Will, Watsica and Reilly",
+            "description": "...",
+            "companyId": "62b93b57190404e5c50e045c"
+          }
+        }
+      }
+      ```
+  - **/api/location/delete**
+    - Protected route - bearer token needed
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Location deleted",
+        "tenant": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "New location",
+          "address": "add",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d"
+        }
+      }
+      ```
+- For user -
+  - **/api/location/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      title: string, required
+      address: string, required
+      pincode: string, required
+      state: string, required
+      country: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Location Created",
+        "location": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "vero ut et",
+          "address": "7595 Aliyah Parks",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "tenant": {
+            "id": "62b97af7190404e5c50e045d",
+            "name": "Will, Watsica and Reilly",
+            "description": "...",
+            "companyId": "62b93b57190404e5c50e045c"
+          }
+        }
+      }
+      ```
+  - **/api/location**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Query format -
+      ```
+      id: string, optional
+      query: string, optional, will be searched in title and address
+      pincode: string, optional
+      state: string, optional
+      country: string, optional
+      paginated: boolean, optional
+      count: integer, required if paginated is true
+      offset: integer, required if paginated is true
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Locations found",
+        "locations": {
+          "locations": [
+            {
+              "id": "62cd627b28f6c3643bf2cf46",
+              "title": "vero ut et",
+              "address": "7595 Aliyah Parks",
+              "pincode": "170125",
+              "state": "Watsonborough",
+              "country": "Peru",
+              "tenantId": "62b97af7190404e5c50e045d"
+            }
+          ],
+          "pagination": {
+            "offset": 0,
+            "count": 2,
+            "total_count": 1
+          }
+        }
+      }
+      ```
+  - **/api/location/update**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      {
+        id: string, required
+        title: string, optional
+        address: string, optional
+        pincode: string, optional
+        state: string, optional
+        country: string, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "location updated",
+        "location": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "New location",
+          "address": "add",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "tenant": {
+            "id": "62b97af7190404e5c50e045d",
+            "name": "Will, Watsica and Reilly",
+            "description": "...",
+            "companyId": "62b93b57190404e5c50e045c"
+          }
+        }
+      }
+      ```
+  - **/api/location/delete**
+    - Protected route - bearer token needed
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Location deleted",
+        "tenant": {
+          "id": "62cd627b28f6c3643bf2cf46",
+          "title": "New location",
+          "address": "add",
+          "pincode": "170125",
+          "state": "Watsonborough",
+          "country": "Peru",
+          "tenantId": "62b97af7190404e5c50e045d"
+        }
       }
       ```

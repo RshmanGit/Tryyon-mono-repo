@@ -36,7 +36,7 @@ const handler = async (req, res) => {
 
               throw new Error(
                 JSON.stringify({
-                  errorkey: 'verification',
+                  errorkey: 'read',
                   body: {
                     status: 404,
                     data: {

@@ -19,7 +19,18 @@ const schema = {
       quantity: Joi.number(),
       published: Joi.boolean().optional(),
       attributes: Joi.object().optional(),
-      categoryIds: Joi.array().optional()
+      categoryIds: Joi.array().optional(),
+      locationIds: Joi.array().optional(),
+      categories: Joi.object().optional(),
+      locations: Joi.object().optional(),
+      manufacturer: Joi.string().optional(),
+      countryOfOrigin: Joi.string().optional(),
+      trending: Joi.boolean().optional(),
+      featuredFrom: Joi.date().iso().optional(),
+      featuredTo: Joi.date().iso().optional(),
+      guestCheckout: Joi.boolean().optional(),
+      private_product: Joi.boolean().optional(),
+      marketPlace: Joi.boolean().optional()
     })
   })
 };
