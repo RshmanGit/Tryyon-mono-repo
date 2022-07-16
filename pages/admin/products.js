@@ -76,6 +76,42 @@ const columnsData = [
   {
     Header: 'CATEGORIES',
     accessor: 'categories'
+  },
+  {
+    Header: 'MANUFACTURER',
+    accessor: 'manufacturer'
+  },
+  {
+    Header: 'LOCATIONS',
+    accessor: 'locations'
+  },
+  {
+    Header: 'COUNTRY OF ORIGIN',
+    accessor: 'countryOfOrigin'
+  },
+  {
+    Header: 'TRENDING',
+    accessor: 'trending'
+  },
+  {
+    Header: 'FEATURED FROM',
+    accessor: 'featuredFrom'
+  },
+  {
+    Header: 'FEATURED TO',
+    accessor: 'featuredTo'
+  },
+  {
+    Header: 'GUEST CHECKOUT',
+    accessor: 'guestCheckout'
+  },
+  {
+    Header: 'PRIVATE',
+    accessor: 'private_product'
+  },
+  {
+    Header: 'MARKET PLACE',
+    accessor: 'marketPlace'
   }
 ];
 

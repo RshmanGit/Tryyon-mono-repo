@@ -4131,7 +4131,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"]\n}",
+									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"locationIds\": [\"{{locationId}}\"],\n    \"manufacturer\": \"ABC Industries\",\n    \"countryOfOrigin\": \"India\",\n    \"trending\": {{$randomBoolean}},\n    \"featuredFrom\": \"{{$isoTimestamp}}\",\n    \"featuredTo\": \"{{$isoTimestamp}}\",\n    \"guestCheckout\": {{$randomBoolean}},\n    \"private_product\": {{$randomBoolean}},\n    \"marketPlace\": {{$randomBoolean}}\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4160,7 +4160,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"]\n}",
+											"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"locationIds\": [\"{{locationId}}\"],\n    \"manufacturer\": \"ABC Industries\",\n    \"countryOfOrigin\": \"India\",\n    \"trending\": {{$randomBoolean}},\n    \"featuredFrom\": \"{{$isoTimestamp}}\",\n    \"featuredTo\": \"{{$isoTimestamp}}\",\n    \"guestCheckout\": {{$randomBoolean}},\n    \"private_product\": {{$randomBoolean}},\n    \"marketPlace\": {{$randomBoolean}}\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -4191,11 +4191,11 @@
 										},
 										{
 											"key": "ETag",
-											"value": "\"24f-p4Q0cfjczpbzRHejwcRg6bHyNLA\""
+											"value": "\"344-GVfQffyONmAmrG+HMcdZHDFM+vo\""
 										},
 										{
 											"key": "Content-Length",
-											"value": "591"
+											"value": "836"
 										},
 										{
 											"key": "Vary",
@@ -4203,7 +4203,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sat, 02 Jul 2022 09:20:11 GMT"
+											"value": "Fri, 15 Jul 2022 07:22:05 GMT"
 										},
 										{
 											"key": "Connection",
@@ -4215,7 +4215,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62c00dcad49389ce1fc48ac0\",\n        \"name\": \"Handmade Cotton Pants\",\n        \"description\": \"Perferendis omnis dolor suscipit vel eligendi. Consectetur fuga est. Inventore voluptate enim sint necessitatibus sed quos sapiente. Consequatur ratione eum quia et dicta et.\",\n        \"shortDescriptions\": \"Quis est voluptatum nobis non sint natus enim voluptatem.\",\n        \"slug\": \"explicabo-aspernatur-dolorem\",\n        \"quantity\": 157,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c00b39d49389ce1fc48abd\"\n        ]\n    }\n}"
+									"body": "{\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62d1159c504963bf2f1d4c58\",\n        \"name\": \"Sleek Rubber Pizza\",\n        \"description\": \"Laborum id voluptatem repellendus itaque ipsa ipsum repellendus. Error id molestias libero tempora temporibus facere molestias. Blanditiis dolor earum magnam magnam vero enim aut et.\",\n        \"shortDescriptions\": \"Dicta exercitationem vero quae odit dolor.\",\n        \"slug\": \"esse-dolores-libero\",\n        \"quantity\": 608,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"manufacturer\": \"ABC Industries\",\n        \"locationIds\": [\n            \"62cebef175a4f7a690b8ead2\"\n        ],\n        \"countryOfOrigin\": \"India\",\n        \"trending\": false,\n        \"featuredFrom\": \"2022-07-15T07:22:03.556Z\",\n        \"featuredTo\": \"2022-07-15T07:22:03.556Z\",\n        \"guestCheckout\": false,\n        \"private_product\": true,\n        \"marketPlace\": true\n    }\n}"
 								}
 							]
 						},
@@ -4259,7 +4259,16 @@
 											"// \"attributes\": {",
 											"//         \"size\": \"l\",",
 											"//         \"color\": \"red\"",
-											"//     },"
+											"//     },",
+											"// \"locationId\": \"{{locationId}}\",",
+											"// \"manufacturer\": \"ABC Industries\",",
+											"// \"countryOfOrigin\": \"India\",",
+											"// \"trending\": {{$randomBoolean}},",
+											"// \"featuredFrom\": \"{{$isoTimestamp}}\",",
+											"// \"featuredTo\": \"{{$isoTimestamp}}\",",
+											"// \"guestCheckout\": {{$randomBoolean}},",
+											"// \"private_product\": {{$randomBoolean}},",
+											"// \"marketPlace\": {{$randomBoolean}}"
 										],
 										"type": "text/javascript"
 									}
@@ -4270,7 +4279,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"query\": \"g\",\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"sortBy\": \"name\",\n    \"order\": \"asc\"\n}",
+									"raw": "{\n    \"pagination\": true,\n    \"offset\": 7,\n    \"limit\": 2,\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"sortBy\": \"name\",\n    \"order\": \"asc\",\n    \"featuredTo\": \"{{$isoTimestamp}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4300,7 +4309,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"query\": \"g\",\n    \"pagination\": true,\n    \"offset\": 1,\n    \"limit\": 2,\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"sortBy\": \"name\",\n    \"order\": \"asc\"\n}",
+											"raw": "{\n    \"pagination\": true,\n    \"offset\": 7,\n    \"limit\": 2,\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"sortBy\": \"name\",\n    \"order\": \"asc\",\n    \"featuredTo\": \"{{$isoTimestamp}}\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -4331,7 +4340,7 @@
 										},
 										{
 											"key": "ETag",
-											"value": "\"470-VyZZCjaCTmZLFatu83VaSIZy2RU\""
+											"value": "\"98b-G6G6lcoIzSvoe//b4UebzFwV0ak\""
 										},
 										{
 											"key": "Vary",
@@ -4343,7 +4352,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sat, 02 Jul 2022 11:06:47 GMT"
+											"value": "Fri, 15 Jul 2022 08:49:37 GMT"
 										},
 										{
 											"key": "Connection",
@@ -4359,7 +4368,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"message\": \"Products found\",\n    \"products\": {\n        \"skus\": [\n            {\n                \"name\": \"Ergonomic Frozen Gloves\",\n                \"description\": \"Et voluptatum aut maiores qui doloribus ducimus sed impedit ex. Sed rem illum qui et quia aliquam et. Et aut laudantium aut corrupti amet rerum explicabo.\",\n                \"shortDescriptions\": \"Corrupti delectus enim fugiat et sapiente explicabo mollitia quis.\",\n                \"slug\": \"ducimus-non-id\",\n                \"quantity\": 790,\n                \"published\": false,\n                \"attributes\": {\n                    \"size\": [\n                        \"l\",\n                        \"m\",\n                        \"s\"\n                    ],\n                    \"color\": [\n                        \"red\",\n                        \"blue\"\n                    ]\n                },\n                \"id\": \"62bec14cb39f92c3e0a3199b\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62bd634d0a9de06da86e291a\"\n                ]\n            },\n            {\n                \"name\": \"Ergonomic Frozen Shoes\",\n                \"description\": \"Aut perspiciatis consectetur. Sit quia deleniti ratione eum aut eos. Molestias nostrum corrupti occaecati tempora sit a cumque molestiae consequatur. Quae sit non.\",\n                \"shortDescriptions\": \"Labore ut architecto sit quia.\",\n                \"slug\": \"repellendus-delectus-sit\",\n                \"quantity\": 599,\n                \"published\": false,\n                \"attributes\": {\n                    \"size\": [\n                        \"l\",\n                        \"m\",\n                        \"s\"\n                    ],\n                    \"color\": [\n                        \"red\",\n                        \"blue\"\n                    ]\n                },\n                \"id\": \"62c013d2d49389ce1fc48ad1\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62c010ebd49389ce1fc48ac9\"\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"total_count\": 5,\n            \"limit\": 2,\n            \"offset\": 1\n        }\n    }\n}"
+									"body": "{\n    \"message\": \"Products found\",\n    \"products\": {\n        \"products\": [\n            {\n                \"name\": \"Rustic Granite Pants\",\n                \"description\": \"Esse consequatur nulla. Qui aspernatur nulla reprehenderit veritatis consequatur cum porro. Sequi adipisci atque error hic officiis minima. Id laborum qui quia dolorem facilis hic et eaque aperiam. Mollitia voluptatum optio dolorem. Ab minus eum.\",\n                \"shortDescriptions\": \"Corporis deleniti non vero et.\",\n                \"slug\": \"est-vel-velit\",\n                \"quantity\": 980,\n                \"published\": true,\n                \"attributes\": {\n                    \"size\": [\n                        \"l\",\n                        \"m\",\n                        \"s\"\n                    ],\n                    \"color\": [\n                        \"red\",\n                        \"blue\"\n                    ]\n                },\n                \"manufacturer\": \"ABC Industries\",\n                \"countryOfOrigin\": \"India\",\n                \"trending\": true,\n                \"guestCheckout\": true,\n                \"private_product\": true,\n                \"marketPlace\": false,\n                \"categories\": [\n                    {\n                        \"name\": \"Awesome\",\n                        \"description\": \"Aut qui ut debitis enim molestias incidunt. Incidunt voluptatem vero. Numquam animi consequatur qui. Ut dolore in error officiis voluptatem.\",\n                        \"slug\": \"nam-quia-voluptatem\"\n                    }\n                ],\n                \"locations\": [\n                    {\n                        \"name\": \"est sit rerum\",\n                        \"address\": \"63250 Pamela Ridges\",\n                        \"state\": \"North Katharinaburgh\",\n                        \"country\": \"Venezuela\"\n                    }\n                ],\n                \"id\": \"62d119f9d1ec38d5d0dcbb78\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62c010ebd49389ce1fc48ac9\"\n                ],\n                \"locationIds\": [\n                    \"62d119e1d1ec38d5d0dcbb75\"\n                ],\n                \"featuredFrom\": \"2022-07-15T07:40:41.748Z\",\n                \"featuredTo\": \"2022-07-15T07:40:41.748Z\"\n            },\n            {\n                \"name\": \"Rustic Metal Computer\",\n                \"description\": \"Impedit vitae est. Ut nesciunt voluptas vel expedita necessitatibus tenetur reprehenderit. Vero excepturi aut sunt debitis dolores deleniti. Aut enim nostrum. Quis est rerum.\",\n                \"shortDescriptions\": \"Eum voluptates et voluptas voluptate nihil vitae aut molestiae.\",\n                \"slug\": \"ea-consectetur-quia\",\n                \"quantity\": 875,\n                \"published\": true,\n                \"attributes\": {\n                    \"size\": [\n                        \"l\",\n                        \"m\",\n                        \"s\"\n                    ],\n                    \"color\": [\n                        \"red\",\n                        \"blue\"\n                    ]\n                },\n                \"manufacturer\": \"ABC Industries\",\n                \"countryOfOrigin\": \"India\",\n                \"trending\": false,\n                \"guestCheckout\": true,\n                \"private_product\": true,\n                \"marketPlace\": true,\n                \"categories\": [\n                    {\n                        \"name\": \"Awesome\",\n                        \"description\": \"Aut qui ut debitis enim molestias incidunt. Incidunt voluptatem vero. Numquam animi consequatur qui. Ut dolore in error officiis voluptatem.\",\n                        \"slug\": \"nam-quia-voluptatem\"\n                    }\n                ],\n                \"locations\": [\n                    {\n                        \"name\": \"est sit rerum\",\n                        \"address\": \"63250 Pamela Ridges\",\n                        \"state\": \"North Katharinaburgh\",\n                        \"country\": \"Venezuela\"\n                    }\n                ],\n                \"id\": \"62d119eed1ec38d5d0dcbb76\",\n                \"supplierId\": \"62b97af7190404e5c50e045d\",\n                \"categoryIds\": [\n                    \"62c010ebd49389ce1fc48ac9\"\n                ],\n                \"locationIds\": [\n                    \"62d119e1d1ec38d5d0dcbb75\"\n                ],\n                \"featuredFrom\": \"2022-07-15T07:40:29.540Z\",\n                \"featuredTo\": \"2022-07-15T07:40:29.540Z\"\n            }\n        ],\n        \"pagination\": {\n            \"total_count\": 14,\n            \"limit\": 2,\n            \"offset\": 7\n        }\n    }\n}"
 								}
 							]
 						},
@@ -4482,6 +4491,40 @@
 										],
 										"type": "text/javascript"
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"{{productId}}\",",
+											"//     \"updateData\": {",
+											"//         \"name\": \"{{$randomProductName}}\",",
+											"//         \"description\": \"{{$randomLoremParagraph}}\",",
+											"//         \"shortDescriptions\": \"{{$randomLoremSentence}}\",",
+											"//         \"slug\": \"{{$randomLoremSlug}}\",",
+											"//         \"quantity\": {{$randomInt}},",
+											"//         \"supplierId\": \"{{tenantId}}\",",
+											"//         \"published\": {{$randomBoolean}},",
+											"//         \"attributes\": {",
+											"//             \"size\": [\"l\", \"m\", \"s\"],",
+											"//             \"color\": [\"red\", \"blue\"]",
+											"//         },",
+											"//         \"categoryIds\": [\"{{categoryId}}\"],",
+											"//         \"locationIds\": [\"{{locationId}}\"],",
+											"//         \"manufacturer\": \"ABC Industries\",",
+											"//         \"countryOfOrigin\": \"India\",",
+											"//         \"trending\": {{$randomBoolean}},",
+											"//         \"featuredFrom\": \"{{$isoTimestamp}}\",",
+											"//         \"featuredTo\": \"{{$isoTimestamp}}\",",
+											"//         \"guestCheckout\": {{$randomBoolean}},",
+											"//         \"private_product\": {{$randomBoolean}},",
+											"//         \"marketPlace\": {{$randomBoolean}}",
+											"//     }",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
 								}
 							],
 							"request": {
@@ -4489,7 +4532,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"quantity\": {{$randomInt}}\n    }\n}",
+									"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"quantity\": {{$randomInt}},\n        \"locationIds\": [\"{{locationId}}\"]\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4518,7 +4561,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"quantity\": {{$randomInt}}\n    }\n}",
+											"raw": "{\n    \"id\": \"{{productId}}\",\n    \"updateData\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"quantity\": {{$randomInt}},\n        \"locationIds\": [\"{{locationId}}\"]\n    }\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -4549,11 +4592,11 @@
 										},
 										{
 											"key": "ETag",
-											"value": "\"24c-L6AKh0DTjVgOsayi/S8iikS5TgU\""
+											"value": "\"340-nSYwFimuA9v8J1p2PSmD7zRydic\""
 										},
 										{
 											"key": "Content-Length",
-											"value": "588"
+											"value": "832"
 										},
 										{
 											"key": "Vary",
@@ -4561,7 +4604,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sat, 02 Jul 2022 09:22:46 GMT"
+											"value": "Fri, 15 Jul 2022 07:24:12 GMT"
 										},
 										{
 											"key": "Connection",
@@ -4573,7 +4616,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62c00dcad49389ce1fc48ac0\",\n        \"name\": \"Ergonomic Wooden Salad\",\n        \"description\": \"Perferendis omnis dolor suscipit vel eligendi. Consectetur fuga est. Inventore voluptate enim sint necessitatibus sed quos sapiente. Consequatur ratione eum quia et dicta et.\",\n        \"shortDescriptions\": \"Quis est voluptatum nobis non sint natus enim voluptatem.\",\n        \"slug\": \"explicabo-aspernatur-dolorem\",\n        \"quantity\": 142,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c00b39d49389ce1fc48abd\"\n        ]\n    }\n}"
+									"body": "{\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": \"62d1159c504963bf2f1d4c58\",\n        \"name\": \"Small Plastic Soap\",\n        \"description\": \"Laborum id voluptatem repellendus itaque ipsa ipsum repellendus. Error id molestias libero tempora temporibus facere molestias. Blanditiis dolor earum magnam magnam vero enim aut et.\",\n        \"shortDescriptions\": \"Dicta exercitationem vero quae odit dolor.\",\n        \"slug\": \"esse-dolores-libero\",\n        \"quantity\": 611,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"manufacturer\": \"ABC Industries\",\n        \"locationIds\": [\n            \"62cebef175a4f7a690b8ead2\"\n        ],\n        \"countryOfOrigin\": \"India\",\n        \"trending\": false,\n        \"featuredFrom\": \"2022-07-15T07:22:03.556Z\",\n        \"featuredTo\": \"2022-07-15T07:22:03.556Z\",\n        \"guestCheckout\": false,\n        \"private_product\": true,\n        \"marketPlace\": true\n    }\n}"
 								}
 							]
 						},
@@ -6532,6 +6575,122 @@
 							]
 						},
 						{
+							"name": "/api/sku/bulk-create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New SKUs Created\") { ",
+											"    tests[\"SKUs creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"body\": [\n        {\n            \"slug\": \"{{$randomLoremSlug}}\",\n            \"quantity\": {{$randomInt}},\n            \"supplierId\": \"{{tenantId}}\",\n            \"productId\": \"{{productId}}\",\n            \"published\": {{$randomBoolean}},\n            \"attributes\": {\n                \"size\": \"l\",\n                \"color\": \"red\"\n            },\n            \"categoryIds\": [\"{{categoryId}}\"],\n            \"price\": {{$randomPrice}},\n            \"discountedPrice\": {{$randomPrice}}\n        },\n        {\n            \"slug\": \"{{$randomLoremSlug}}\",\n            \"quantity\": {{$randomInt}},\n            \"supplierId\": \"{{tenantId}}\",\n            \"productId\": \"{{productId}}\",\n            \"published\": {{$randomBoolean}},\n            \"attributes\": {\n                \"size\": \"m\",\n                \"color\": \"blue\"\n            },\n            \"categoryIds\": [\"{{categoryId}}\"],\n            \"price\": {{$randomPrice}},\n            \"discountedPrice\": {{$randomPrice}}\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/bulk-create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"bulk-create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/sku/bulk-create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"body\": [\n        {\n            \"slug\": \"{{$randomLoremSlug}}\",\n            \"quantity\": {{$randomInt}},\n            \"supplierId\": \"{{tenantId}}\",\n            \"productId\": \"{{productId}}\",\n            \"published\": {{$randomBoolean}},\n            \"attributes\": {\n                \"size\": \"l\",\n                \"color\": \"red\"\n            },\n            \"categoryIds\": [\"{{categoryId}}\"],\n            \"price\": {{$randomPrice}},\n            \"discountedPrice\": {{$randomPrice}}\n        },\n        {\n            \"slug\": \"{{$randomLoremSlug}}\",\n            \"quantity\": {{$randomInt}},\n            \"supplierId\": \"{{tenantId}}\",\n            \"productId\": \"{{productId}}\",\n            \"published\": {{$randomBoolean}},\n            \"attributes\": {\n                \"size\": \"m\",\n                \"color\": \"blue\"\n            },\n            \"categoryIds\": [\"{{categoryId}}\"],\n            \"price\": {{$randomPrice}},\n            \"discountedPrice\": {{$randomPrice}}\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/bulk-create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"bulk-create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"276-nuzXqoQ70a1+CgY5rhqWeYoq6PQ\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "630"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 15 Jul 2022 08:29:50 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New SKUs Created\",\n    \"sku\": [\n        {\n            \"id\": \"62d1257dd1ec38d5d0dcbb7d\",\n            \"slug\": \"quod-corrupti-ut\",\n            \"quantity\": 113,\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": true,\n            \"attributes\": {\n                \"size\": \"l\",\n                \"color\": \"red\"\n            },\n            \"categoryIds\": [\n                \"62c010ebd49389ce1fc48ac9\"\n            ],\n            \"price\": 729.88,\n            \"discountedPrice\": 188.29\n        },\n        {\n            \"id\": \"62d1257dd1ec38d5d0dcbb7e\",\n            \"slug\": \"facere-minus-harum\",\n            \"quantity\": 445,\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": false,\n            \"attributes\": {\n                \"size\": \"m\",\n                \"color\": \"blue\"\n            },\n            \"categoryIds\": [\n                \"62c010ebd49389ce1fc48ac9\"\n            ],\n            \"price\": 701.61,\n            \"discountedPrice\": 157.66\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
 							"name": "/api/sku",
 							"event": [
 								{
@@ -7148,6 +7307,122 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"New SKU Created\",\n    \"sku\": {\n        \"id\": \"62c012e6d49389ce1fc48ad0\",\n        \"slug\": \"magnam-veritatis-consectetur\",\n        \"quantity\": 194,\n        \"productId\": \"62c012a5d49389ce1fc48acf\",\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": \"l\",\n            \"color\": \"red\"\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"price\": 174.13,\n        \"discountedPrice\": 539.2\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/sku/bulk-create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New SKUs Created\") { ",
+											"    tests[\"SKU creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"body\": [\n        {\n            \"slug\": \"{{$randomLoremSlug}}\",\n            \"quantity\": {{$randomInt}},\n            \"supplierId\": \"{{tenantId}}\",\n            \"productId\": \"{{productId}}\",\n            \"published\": {{$randomBoolean}},\n            \"attributes\": {\n                \"size\": \"l\",\n                \"color\": \"red\"\n            },\n            \"categoryIds\": [\"{{categoryId}}\"],\n            \"price\": {{$randomPrice}},\n            \"discountedPrice\": {{$randomPrice}}\n        },\n        {\n            \"slug\": \"{{$randomLoremSlug}}\",\n            \"quantity\": {{$randomInt}},\n            \"supplierId\": \"{{tenantId}}\",\n            \"productId\": \"{{productId}}\",\n            \"published\": {{$randomBoolean}},\n            \"attributes\": {\n                \"size\": \"m\",\n                \"color\": \"blue\"\n            },\n            \"categoryIds\": [\"{{categoryId}}\"],\n            \"price\": {{$randomPrice}},\n            \"discountedPrice\": {{$randomPrice}}\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/sku/bulk-create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"sku",
+										"bulk-create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/sku/bulk-create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"body\": [\n        {\n            \"slug\": \"{{$randomLoremSlug}}\",\n            \"quantity\": {{$randomInt}},\n            \"supplierId\": \"{{tenantId}}\",\n            \"productId\": \"{{productId}}\",\n            \"published\": {{$randomBoolean}},\n            \"attributes\": {\n                \"size\": \"l\",\n                \"color\": \"red\"\n            },\n            \"categoryIds\": [\"{{categoryId}}\"],\n            \"price\": {{$randomPrice}},\n            \"discountedPrice\": {{$randomPrice}}\n        },\n        {\n            \"slug\": \"{{$randomLoremSlug}}\",\n            \"quantity\": {{$randomInt}},\n            \"supplierId\": \"{{tenantId}}\",\n            \"productId\": \"{{productId}}\",\n            \"published\": {{$randomBoolean}},\n            \"attributes\": {\n                \"size\": \"m\",\n                \"color\": \"blue\"\n            },\n            \"categoryIds\": [\"{{categoryId}}\"],\n            \"price\": {{$randomPrice}},\n            \"discountedPrice\": {{$randomPrice}}\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/sku/bulk-create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"sku",
+												"bulk-create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"286-SS2oCpRUrkPAoLZUVVhQbIta1Yo\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "646"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 15 Jul 2022 08:58:07 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New SKUs Created\",\n    \"sku\": [\n        {\n            \"id\": \"62d12c1dbdc48b0b17fbdfcf\",\n            \"slug\": \"minus-repudiandae-eaque\",\n            \"quantity\": 916,\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": false,\n            \"attributes\": {\n                \"size\": \"l\",\n                \"color\": \"red\"\n            },\n            \"categoryIds\": [\n                \"62c010ebd49389ce1fc48ac9\"\n            ],\n            \"price\": 712.17,\n            \"discountedPrice\": 326.49\n        },\n        {\n            \"id\": \"62d12c1ebdc48b0b17fbdfd0\",\n            \"slug\": \"libero-doloremque-sapiente\",\n            \"quantity\": 882,\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"supplierId\": \"62b97af7190404e5c50e045d\",\n            \"published\": false,\n            \"attributes\": {\n                \"size\": \"m\",\n                \"color\": \"blue\"\n            },\n            \"categoryIds\": [\n                \"62c010ebd49389ce1fc48ac9\"\n            ],\n            \"price\": 766.09,\n            \"discountedPrice\": 863.99\n        }\n    ]\n}"
 								}
 							]
 						},
@@ -11108,6 +11383,1258 @@
 					{
 						"key": "token",
 						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "As admin",
+					"item": [
+						{
+							"name": "/api/location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Locations found\") { ",
+											"    tests[\"Error in finding Locations TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/location?query={{locationTitle}}&paginated=true&count=2&offset=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{locationId}}",
+											"disabled": true
+										},
+										{
+											"key": "query",
+											"value": "{{locationTitle}}"
+										},
+										{
+											"key": "pincode",
+											"value": "{{pincode}}",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "{{locationState}}",
+											"disabled": true
+										},
+										{
+											"key": "country",
+											"value": "{{locationCountry}}",
+											"disabled": true
+										},
+										{
+											"key": "tenantId",
+											"value": "{{locationTenantId}}",
+											"disabled": true
+										},
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "2"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/location?query={{locationTitle}}&paginated=true&count=2&offset=0",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{locationId}}",
+													"disabled": true
+												},
+												{
+													"key": "query",
+													"value": "{{locationTitle}}"
+												},
+												{
+													"key": "pincode",
+													"value": "{{pincode}}",
+													"disabled": true
+												},
+												{
+													"key": "state",
+													"value": "{{locationState}}",
+													"disabled": true
+												},
+												{
+													"key": "country",
+													"value": "{{locationCountry}}",
+													"disabled": true
+												},
+												{
+													"key": "tenantId",
+													"value": "{{locationTenantId}}",
+													"disabled": true
+												},
+												{
+													"key": "paginated",
+													"value": "true"
+												},
+												{
+													"key": "count",
+													"value": "2"
+												},
+												{
+													"key": "offset",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"124-nKyzOxrnh70fLiRXg9w8LUHzmt4\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "292"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 12 Jul 2022 12:10:27 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Locations found\",\n    \"locations\": {\n        \"locations\": [\n            {\n                \"id\": \"62cd627b28f6c3643bf2cf46\",\n                \"title\": \"vero ut et\",\n                \"address\": \"7595 Aliyah Parks\",\n                \"pincode\": \"170125\",\n                \"state\": \"Watsonborough\",\n                \"country\": \"Peru\",\n                \"tenantId\": \"62b97af7190404e5c50e045d\"\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 2,\n            \"total_count\": 1\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Location Created\") { ",
+											"    tests[\"Location creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"locationId\",res.location.id);",
+											"pm.environment.set(\"locationTitle\",res.location.title);",
+											"pm.environment.set(\"locationAddress\",res.location.address);",
+											"pm.environment.set(\"locationPincode\",res.location.pincode);",
+											"pm.environment.set(\"locationState\",res.location.state);",
+											"pm.environment.set(\"locationCountry\",res.location.country);",
+											"pm.environment.set(\"locationTenantId\",res.location.tenantId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var pincode = Math.floor(Math.random()*1000000)",
+											"",
+											"pm.environment.set('pincode', pincode)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomLoremWords}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"pincode\": \"{{pincode}}\",\n    \"state\": \"{{$randomCity}}\",\n    \"country\": \"{{$randomCountry}}\",\n    \"tenantId\": \"{{tenantId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{$randomLoremWords}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"pincode\": \"{{pincode}}\",\n    \"state\": \"{{$randomCity}}\",\n    \"country\": \"{{$randomCountry}}\",\n    \"tenantId\": \"{{tenantId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"233-A0VHoCfmMlqauTczc0/dSvKLAJA\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "563"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 15 Jul 2022 07:39:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Location Created\",\n    \"location\": {\n        \"id\": \"62d11997d1ec38d5d0dcbb73\",\n        \"name\": \"natus vero et\",\n        \"address\": \"870 Fay Highway\",\n        \"pincode\": \"80134\",\n        \"state\": \"Otiliafort\",\n        \"country\": \"Sweden\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productIds\": [],\n        \"tenant\": {\n            \"id\": \"62b97af7190404e5c50e045d\",\n            \"name\": \"Will, Watsica and Reilly\",\n            \"description\": \"Debitis fuga quo. Iste ut ipsam rem dolorum aut. Error quas amet rerum occaecati consequatur neque consequuntur consectetur. Hic deserunt voluptatem doloremque voluptas. Rem iure voluptas.\",\n            \"companyId\": \"62b93b57190404e5c50e045c\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"location updated\") { ",
+											"    tests[\"Location updation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"locationId\",res.location.id);",
+											"pm.environment.set(\"locationTitle\",res.location.title);",
+											"pm.environment.set(\"locationAddress\",res.location.address);",
+											"pm.environment.set(\"locationPincode\",res.location.pincode);",
+											"pm.environment.set(\"locationState\",res.location.state);",
+											"pm.environment.set(\"locationCountry\",res.location.country);",
+											"pm.environment.set(\"locationTenantId\",res.location.tenantId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"\",",
+											"//     \"name\": \"\",",
+											"//     \"address\": \"\",",
+											"//     \"pincode\": \"\",",
+											"//     \"state\": \"\",",
+											"//     \"country\": \"\",",
+											"//     \"tenantId\": \"\"",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{locationId}}\",\n    \"name\": \"New location\",\n    \"address\": \"add\",\n    \"tenantId\": \"{{tenantId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{locationId}}\",\n    \"title\": \"New location\",\n    \"address\": \"add\",\n    \"tenantId\": \"{{tenantId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"215-UgL7sH+DchOdJXtohWPjHjWAcw8\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "533"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:31:52 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"location updated\",\n    \"location\": {\n        \"id\": \"62cd627b28f6c3643bf2cf46\",\n        \"title\": \"New location\",\n        \"address\": \"add\",\n        \"pincode\": \"170125\",\n        \"state\": \"Watsonborough\",\n        \"country\": \"Peru\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"tenant\": {\n            \"id\": \"62b97af7190404e5c50e045d\",\n            \"name\": \"Will, Watsica and Reilly\",\n            \"description\": \"Debitis fuga quo. Iste ut ipsam rem dolorum aut. Error quas amet rerum occaecati consequatur neque consequuntur consectetur. Hic deserunt voluptatem doloremque voluptas. Rem iure voluptas.\",\n            \"companyId\": \"62b93b57190404e5c50e045c\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Location deleted\") { ",
+											"    tests[\"Location not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{locationId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{locationId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"d2-/fIWnRfKKKuY8Ugysp/ufAKySI0\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "210"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:34:11 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Location deleted\",\n    \"tenant\": {\n        \"id\": \"62cd627b28f6c3643bf2cf46\",\n        \"title\": \"New location\",\n        \"address\": \"add\",\n        \"pincode\": \"170125\",\n        \"state\": \"Watsonborough\",\n        \"country\": \"Peru\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\"\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "As user",
+					"item": [
+						{
+							"name": "/api/location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Locations found\") { ",
+											"    tests[\"Error in finding Locations TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/location?paginated=true&count=1&offset=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{locationId}}",
+											"disabled": true
+										},
+										{
+											"key": "query",
+											"value": "{{locationTitle}}",
+											"disabled": true
+										},
+										{
+											"key": "pincode",
+											"value": "{{pincode}}",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "{{locationState}}",
+											"disabled": true
+										},
+										{
+											"key": "country",
+											"value": "{{locationCountry}}",
+											"disabled": true
+										},
+										{
+											"key": "tenantId",
+											"value": "{{locationTenantId}}",
+											"disabled": true
+										},
+										{
+											"key": "paginated",
+											"value": "true"
+										},
+										{
+											"key": "count",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/location?paginated=true&count=1&offset=0",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{locationId}}",
+													"disabled": true
+												},
+												{
+													"key": "query",
+													"value": "{{locationTitle}}",
+													"disabled": true
+												},
+												{
+													"key": "pincode",
+													"value": "{{pincode}}",
+													"disabled": true
+												},
+												{
+													"key": "state",
+													"value": "{{locationState}}",
+													"disabled": true
+												},
+												{
+													"key": "country",
+													"value": "{{locationCountry}}",
+													"disabled": true
+												},
+												{
+													"key": "tenantId",
+													"value": "{{locationTenantId}}",
+													"disabled": true
+												},
+												{
+													"key": "paginated",
+													"value": "true"
+												},
+												{
+													"key": "count",
+													"value": "1"
+												},
+												{
+													"key": "offset",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"127-aIZ6q7nLtIxhEZ7KvM/MKLotnAA\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "295"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:40:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Locations found\",\n    \"locations\": {\n        \"locations\": [\n            {\n                \"id\": \"62cd623d28f6c3643bf2cf45\",\n                \"title\": \"esse quam rem\",\n                \"address\": \"515 Rachel Place\",\n                \"pincode\": \"981697\",\n                \"state\": \"East Ubaldo\",\n                \"country\": \"Mayotte\",\n                \"tenantId\": \"62b97af7190404e5c50e045d\"\n            }\n        ],\n        \"pagination\": {\n            \"offset\": 0,\n            \"count\": 1,\n            \"total_count\": 3\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Location Created\") { ",
+											"    tests[\"Location creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"userLocationId\",res.location.id);",
+											"pm.environment.set(\"userLocationTitle\",res.location.title);",
+											"pm.environment.set(\"userLocationAddress\",res.location.address);",
+											"pm.environment.set(\"userLocationPincode\",res.location.pincode);",
+											"pm.environment.set(\"userLocationState\",res.location.state);",
+											"pm.environment.set(\"userLocationCountry\",res.location.country);",
+											"pm.environment.set(\"userLocationTenantId\",res.location.tenantId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var pincode = Math.floor(Math.random()*1000000)",
+											"",
+											"pm.environment.set('userPincode', pincode)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"{{$randomLoremWords}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"pincode\": \"{{userPincode}}\",\n    \"state\": \"{{$randomCity}}\",\n    \"country\": \"{{$randomCountry}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"{{$randomLoremWords}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"pincode\": \"{{pincode}}\",\n    \"state\": \"{{$randomCity}}\",\n    \"country\": \"{{$randomCountry}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"22e-P+Yqx1m5OqFF389GNyYklkcGBBc\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "558"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:36:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Location Created\",\n    \"location\": {\n        \"id\": \"62ce67f3698c1556f9b39102\",\n        \"title\": \"sit autem omnis\",\n        \"address\": \"7542 Marlene Court\",\n        \"pincode\": \"170125\",\n        \"state\": \"New Freddieside\",\n        \"country\": \"Egypt\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"tenant\": {\n            \"id\": \"62b97af7190404e5c50e045d\",\n            \"name\": \"Will, Watsica and Reilly\",\n            \"description\": \"Debitis fuga quo. Iste ut ipsam rem dolorum aut. Error quas amet rerum occaecati consequatur neque consequuntur consectetur. Hic deserunt voluptatem doloremque voluptas. Rem iure voluptas.\",\n            \"companyId\": \"62b93b57190404e5c50e045c\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"location updated\") { ",
+											"    tests[\"Location updation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"tenantName\",res.tenant.name);",
+											"pm.environment.set(\"tenantDescription\",res.tenant.description);",
+											"pm.environment.set(\"companyId\",res.tenant.companyId);",
+											"pm.environment.set(\"tenantOwnerId\",res.tenant.ownerId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"\",",
+											"//     \"title\": \"\",",
+											"//     \"address\": \"\",",
+											"//     \"pincode\": \"\",",
+											"//     \"state\": \"\",",
+											"//     \"country\": \"\",",
+											"//     \"tenantId\": \"\"",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{userLocationId}}\",\n    \"title\": \"New\",\n    \"address\": \"New address\",\n    \"country\": \"Wano\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{userLocationId}}\",\n    \"title\": \"New\",\n    \"address\": \"New address\",\n    \"country\": \"Wano\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"218-K74SPyFIoxoq3FA5lhULWHMzyAY\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "536"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:42:34 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"location updated\",\n    \"location\": {\n        \"id\": \"62ce68bc698c1556f9b39103\",\n        \"title\": \"New\",\n        \"address\": \"New address\",\n        \"pincode\": \"917453\",\n        \"state\": \"Cartwrightborough\",\n        \"country\": \"Wano\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"tenant\": {\n            \"id\": \"62b97af7190404e5c50e045d\",\n            \"name\": \"Will, Watsica and Reilly\",\n            \"description\": \"Debitis fuga quo. Iste ut ipsam rem dolorum aut. Error quas amet rerum occaecati consequatur neque consequuntur consectetur. Hic deserunt voluptatem doloremque voluptas. Rem iure voluptas.\",\n            \"companyId\": \"62b93b57190404e5c50e045c\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/location/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Location deleted\") { ",
+											"    tests[\"Location not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{userLocationId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/location/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"location",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/location/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{userLocationId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/location/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"location",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"d5-opYk5EQWi8rYb6ApwaXE3mvhse0\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "213"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 13 Jul 2022 06:45:11 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Location deleted\",\n    \"tenant\": {\n        \"id\": \"62ce68bc698c1556f9b39103\",\n        \"title\": \"New\",\n        \"address\": \"New address\",\n        \"pincode\": \"917453\",\n        \"state\": \"Cartwrightborough\",\n        \"country\": \"Wano\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\"\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{userToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{userToken}}",
 						"type": "string"
 					}
 				]

@@ -145,28 +145,22 @@ export default function TableComp(props) {
                   let data = '';
                   columns.forEach((col) => {
                     if (cell.column.Header === col.Header) {
-                      if (cell.column.Header === 'CATEGORIES') {
-                        if (Array.isArray(cell.value)) {
-                          let internal_data = cell.value.map((val, index) => (
-                            <Flex
-                              key={index}
-                              borderRadius="2xl"
-                              bgColor="blue.500"
-                              p="8px 16px"
-                              mr="4px"
-                              align="center"
-                            >
-                              <Text
-                                color="white"
-                                fontSize="sm"
-                                fontWeight="700"
-                              >
-                                {val.name}
-                              </Text>
-                            </Flex>
-                          ));
-                          data = <Flex>{internal_data}</Flex>;
-                        }
+                      if (Array.isArray(cell.value)) {
+                        let internal_data = cell.value.map((val, index) => (
+                          <Flex
+                            key={index}
+                            borderRadius="2xl"
+                            bgColor="blue.500"
+                            p="8px 16px"
+                            mr="4px"
+                            align="center"
+                          >
+                            <Text color="white" fontSize="sm" fontWeight="700">
+                              {val.name}
+                            </Text>
+                          </Flex>
+                        ));
+                        data = <Flex>{internal_data}</Flex>;
                       } else {
                         data = (
                           <Flex align="center">

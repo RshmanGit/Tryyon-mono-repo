@@ -50,6 +50,16 @@ model Product {
   categories        Category[] @relation(fields: [categoryIds], references: [id])
   categoryIds       String[]   @db.ObjectId
   SKU               SKU[]
+  manufacturer      String
+  locations         Location[] @relation(fields: [locationIds], references: [id])
+  locationIds       String[]   @db.ObjectId
+  countryOfOrigin   String
+  trending          Boolean    @default(false)
+  featuredFrom      DateTime
+  featuredTo        DateTime
+  guestCheckout     Boolean    @default(false)
+  private_product   Boolean    @default(false)
+  marketPlace       Boolean    @default(false)
 }
 
 model SKU {
@@ -99,6 +109,7 @@ model Tenant {
   Associations Associations[]
   Product      Product[]
   SKU          SKU[]
+  Location     Location[]
 }
 
 model Company {
@@ -142,4 +153,17 @@ model Associations {
   tenant   Tenant  @relation(fields: [tenantId], references: [id])
   tenantId String  @db.ObjectId
   approval Boolean @default(false)
+}
+
+model Location {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  address    String
+  pincode    String
+  state      String
+  country    String
+  tenant     Tenant    @relation(fields: [tenantId], references: [id])
+  tenantId   String    @db.ObjectId
+  products   Product[] @relation(fields: [productIds], references: [id])
+  productIds String[]  @db.ObjectId
 }

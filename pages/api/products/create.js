@@ -18,7 +18,16 @@ const schema = {
     supplierId: Joi.string().optional(),
     published: Joi.boolean().default(false).optional(),
     attributes: Joi.object().required(),
-    categoryIds: Joi.array().required()
+    categoryIds: Joi.array().required(),
+    locationIds: Joi.array().required(),
+    manufacturer: Joi.string().required(),
+    countryOfOrigin: Joi.string().required(),
+    trending: Joi.boolean().required(),
+    featuredFrom: Joi.date().required(),
+    featuredTo: Joi.date().required(),
+    guestCheckout: Joi.boolean().required(),
+    private_product: Joi.boolean().required(),
+    marketPlace: Joi.boolean().required()
   })
 };
 
