@@ -42,7 +42,6 @@ function Login() {
 
   const [show, setShow] = React.useState(false);
   const [buttonText, setButtonText] = React.useState('Sign in');
-  const [subm, setSub] = React.useState('');
   useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === 'Enter') {
