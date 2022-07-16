@@ -1,7 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-
+import { DatePicker } from 'chakra-ui-date-input';
+import { Calendar, CalendarDefaultTheme } from '@uselessdev/datepicker';
+import moment from 'moment';
 // import your icons
 import { faPencil, faBan } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -54,7 +56,8 @@ import {
   useDisclosure,
   Progress,
   Option,
-  useToast
+  useToast,
+  Switch
 } from '@chakra-ui/react';
 
 // Assets
@@ -80,6 +83,7 @@ const initialState = {
 let ll = 0;
 
 const categories = {};
+const locat = {};
 let tar = 30;
 //default variants and their options
 const variants = {
@@ -99,7 +103,11 @@ function Entry() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [sizzz, setSize] = useState(100);
   const [supplier, setSupp] = useState('');
-
+  const [Trend, setTrend] = useState(false);
+  const [Check, setCheck] = useState(false);
+  const [Prod, setProd] = useState(false);
+  const [Mark, setMark] = useState(false);
+  const [play, setPlay] = useState([]);
   //For Progress bar
   const [time, setTimer] = useState(true);
   const [stripe, setStr] = useState(true);
@@ -108,9 +116,22 @@ function Entry() {
   const [array, setArray] = useState([]);
   const [cat, setCat] = useState([]);
   const [pizz, setPizz] = useState(25);
+  const [mazz, setMazz] = useState(25);
   const [tyu, setTYU] = useState(false);
   const [categ, setCateg] = useState([]);
+  const [rrrr, setRRRR] = useState([]);
+  const [dat, setDat] = useState(new Date().toISOString());
+  const [dat2, setDat2] = useState(new Date().toISOString());
+  const [loc, setLoc] = useState([]);
+  const handleSelectEndDate = (date) =>
+    setDates((dates) => ({ ...dates, end: date }));
+  const handleSelectStartDate = (date) =>
+    setDates((dates) => ({ ...dates, start: date }));
   const router = useRouter();
+  const toast = useToast();
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
 
   useEffect(() => {
     Promise.all([
@@ -175,6 +196,38 @@ function Entry() {
           console.error(err.message);
         })
     ]);
+
+    fetch('/api/location/', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.token_admin}`
+      }
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.message === 'Locations found') {
+          return res;
+        } else {
+          // alert(res.message);
+          throw new Error(
+            JSON.stringify({
+              message: res.message
+            })
+          );
+        }
+      })
+      .then((res) => {
+        if (res.message === 'Locations found') {
+          // console.log(res.locations)
+          locat['Locations'] = res.locations;
+          setMazz(res.locations.length * 33);
+          setLoc(res.locations);
+          // console.log(categories["Root Category"]);
+        }
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
   }, []);
 
   // console.log(categories);
@@ -212,6 +265,7 @@ function Entry() {
 
   let vv = Object.keys(variants);
   let cc = Object.keys(categories);
+  let dd = Object.keys(locat);
   let kk = Object.keys(initialState.filters);
 
   //function to generate permutations of all possible entries dynamically
@@ -307,33 +361,19 @@ function Entry() {
       });
   }
 
-  async function check(values, arr2, table, ent, idx, len) {
-    let arr3 = {};
-    arr3.productId = sessionStorage.getItem('productID');
-    arr3.price = values.price;
-    arr3.discountedPrice = values.discountedPrice;
-    arr3.slug = values.slug;
-    arr3.quantity = arr2.quantity;
-    arr3.attributes = {};
-    arr3.supplierId = arr2.supplierId;
-    arr3.categoryIds = arr2.categoryIds;
-    // console.log("BYE",arr3.categoryIds )
-    let ix = 0;
-    vv.map((kkk) => {
-      arr3.attributes.kkk = table[ix++];
-    });
-    console.log(arr3);
-    await fetch('/api/sku/create', {
+  function check2() {
+    console.log(play);
+    fetch('/api/sku/bulk-create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionStorage.token_admin}`
       },
-      body: JSON.stringify(arr3, null, 8)
+      body: JSON.stringify({ body: play })
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.message === 'New SKU Created') {
+        if (res.message === 'New SKUs Created') {
           setButtonText('Product & SKUs created !');
           return res;
         } else {
@@ -348,30 +388,45 @@ function Entry() {
         }
       })
       .then((res) => {
-        if (res.message === 'New SKU Created') {
+        if (res.message === 'New SKUs Created') {
           // setProg(rrr+ll);
           // setTimeout(function () {
-          yyyy++;
-          console.log(yyyy);
-          if (yyyy === len) {
-            setMess({
-              first: `Close the tab to go back !  Total SKU entries created: ${yyyy}`,
-              second: messagee.second + ll
-            });
-            setStr(false);
-            setColor('whatsapp');
-            setAnim(false);
-          } else
-            setMess({
-              first: `${res.message} : Entries count ${yyyy}`,
-              second: messagee.second + ll
-            });
+          // if (yyyy === len) {
+          // setTimeout(() => {
+          setMess({
+            first: `Close the tab to go back !  Total SKU entries created: ${play.length}`,
+            second: messagee.second + ll
+          });
+          setStr(false);
+          setColor('whatsapp');
+          setAnim(false);
+          // }, 3000);
+          // }
           // }, 1000);
         }
       })
       .catch((err) => {
         console.error(err.message);
       });
+  }
+
+  function check(values, arr2, table, ent, idx, len) {
+    let arr3 = {};
+    arr3.productId = sessionStorage.getItem('productID');
+    arr3.price = values.price;
+    arr3.discountedPrice = values.discountedPrice;
+    arr3.slug = values.slug;
+    arr3.quantity = arr2.quantity;
+    arr3.attributes = {};
+    arr3.supplierId = arr2.supplierId;
+    arr3.categoryIds = arr2.categoryIds;
+    // console.log("BYE",arr3.categoryIds )
+    let ix = 0;
+    vv.map((kkk) => {
+      arr3.attributes[kkk] = table[ix++];
+    });
+    play.push(arr3);
+    setPlay(play);
   }
   return (
     <>
@@ -418,12 +473,18 @@ function Entry() {
               quantity: '',
               price: '',
               discountedPrice: '',
-              attributes: {}
+              attributes: {},
+              manufacturer: '',
+              countryOfOrigin: '',
+              trending: false,
+              guestCheckout: false,
+              private_product: false,
+              marketPlace: false
             }}
             onSubmit={(values) => {
               //   alert(JSON.stringify(values, null, 2));
-              setButtonText('Creating your product...');
 
+              console.log(loc);
               let temp = parseInt(values.quantity, 10);
               let temp2 = parseInt(values.price, 10);
               let temp3 = parseInt(values.discountedPrice, 10);
@@ -431,12 +492,48 @@ function Entry() {
               let arr2 = {};
               arr2.name = values.name;
               arr2.description = values.description;
-
+              arr2.locationIds = [];
+              console.log(rrrr);
+              rrrr.map((item) => {
+                arr2.locationIds.push(item);
+              });
               arr2.shortDescriptions = values.shortDescriptions;
               arr2.slug = values.slug;
               arr2.quantity = temp;
               arr2.supplierId = supplier;
+              if (supplier.length === 0) {
+                toast({
+                  title: `Select supplier ID`,
+                  status: 'error',
+                  isClosable: true
+                });
+                return;
+              }
               arr2.categoryIds = categ;
+              arr2.manufacturer = values.manufacturer;
+              arr2.countryOfOrigin = values.countryOfOrigin;
+              arr2.trending = Trend;
+              arr2.featuredFrom = dat;
+              arr2.featuredTo = dat2;
+              arr2.guestCheckout = Check;
+              arr2.private_product = Prod;
+              arr2.marketPlace = Mark;
+              if (arr2.categoryIds.length === 0) {
+                toast({
+                  title: `Select categories`,
+                  status: 'error',
+                  isClosable: true
+                });
+                return;
+              }
+              if (arr2.locationIds.length === 0) {
+                toast({
+                  title: `Select locations`,
+                  status: 'error',
+                  isClosable: true
+                });
+                return;
+              }
               // console.log("HELLO",categ);
               // arr2.price = temp2;
               // arr2.discountedPrice = temp3;
@@ -447,7 +544,7 @@ function Entry() {
 
               values.price = temp2;
               values.discountedPrice = temp3;
-
+              setButtonText('Creating your product...');
               fetch('/api/products/create', {
                 method: 'POST',
                 headers: {
@@ -484,26 +581,23 @@ function Entry() {
                   }
                 })
                 .then(() => {
-                  res1.map(async (table, idx) => {
+                  res1.map((table, idx) => {
                     // setTimeout(() => {
-                    await check(
-                      values,
-                      arr2,
-                      table,
-                      vv,
-                      idx + 1,
-                      res1.length
-                    ).then(() => console.log('idx'));
+                    check(values, arr2, table, vv, idx + 1, res1.length);
                     // }, 4000);
                   });
+                })
+                .then(() => {
+                  check2();
                 })
                 .then(() => {
                   values.quantity = '';
                   values.price = '';
                   values.discountedPrice = '';
+                  setPlay([]);
                 })
                 .catch((err) => {
-                  console.error(err.message);
+                  console.log(err.message);
                 });
 
               delete variants.Quantity;
@@ -815,6 +909,261 @@ function Entry() {
                   <FormErrorMessage>{errors.discountedPrice}</FormErrorMessage>
                 </FormControl>
 
+                <FormControl
+                  mb="4px"
+                  isInvalid={!!errors.manufacturer && touched.manufacturer}
+                >
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    Manufacturer<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  {/* <InputGroup size="md"> */}
+                  <Field
+                    as={Input}
+                    isRequired={true}
+                    id="manufacturer"
+                    name="manufacturer"
+                    variant="auth"
+                    fontSize="sm"
+                    ms={{ base: '0px', md: '0px' }}
+                    mb="3px"
+                    fontWeight="500"
+                    size="md"
+                    validate={(value) => {
+                      let error;
+                      if (value.length === 0) {
+                        error = 'Field can not be empty';
+                      }
+                      return error;
+                    }}
+                  />
+                  <FormErrorMessage>{errors.manufacturer}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl
+                  mb="4px"
+                  isInvalid={
+                    !!errors.countryOfOrigin && touched.countryOfOrigin
+                  }
+                >
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    Country of Origin<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  {/* <InputGroup size="md"> */}
+                  <Field
+                    as={Input}
+                    isRequired={true}
+                    id="countryOfOrigin"
+                    name="countryOfOrigin"
+                    variant="auth"
+                    fontSize="sm"
+                    ms={{ base: '0px', md: '0px' }}
+                    mb="3px"
+                    fontWeight="500"
+                    size="md"
+                    validate={(value) => {
+                      let error;
+                      if (value.length === 0) {
+                        error = 'Field can not be empty';
+                      }
+                      return error;
+                    }}
+                  />
+                  <FormErrorMessage>{errors.countryOfOrigin}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl
+                  mt="12px"
+                  mb="10px"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <FormLabel
+                    htmlFor="trending"
+                    mt="8px"
+                    mb="10px"
+                    name="trending"
+                  >
+                    Trending ?
+                  </FormLabel>
+                  <Switch
+                    id="trending"
+                    name="trending"
+                    size="lg"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      if (e.target.checked === true) setTrend(true);
+                      else setTrend(false);
+                    }}
+                  />
+                </FormControl>
+
+                <FormControl
+                  mt="12px"
+                  mb="10px"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <FormLabel
+                    htmlFor="guestCheckout"
+                    mt="8px"
+                    mb="10px"
+                    name="guestCheckout"
+                  >
+                    Guest Checkout ?
+                  </FormLabel>
+                  <Switch
+                    id="guestCheckout"
+                    name="guestCheckout"
+                    size="lg"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      if (e.target.checked === true) setCheck(true);
+                      else setCheck(false);
+                    }}
+                  />
+                </FormControl>
+
+                <FormControl
+                  mt="12px"
+                  mb="10px"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <FormLabel
+                    htmlFor="private_product"
+                    mt="8px"
+                    mb="10px"
+                    name="private_product"
+                  >
+                    Private Product ?
+                  </FormLabel>
+                  <Switch
+                    id="private_product"
+                    name="private_product"
+                    size="lg"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      if (e.target.checked === true) setProd(true);
+                      else setProd(false);
+                    }}
+                  />
+                </FormControl>
+
+                <FormControl
+                  mt="12px"
+                  mb="10px"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <FormLabel
+                    htmlFor="marketPlace"
+                    mt="8px"
+                    mb="10px"
+                    name="marketPlace"
+                  >
+                    Market Place ?
+                  </FormLabel>
+                  <Switch
+                    id="marketPlace"
+                    name="marketPlace"
+                    size="lg"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      if (e.target.checked === true) setMark(true);
+                      else setMark(false);
+                    }}
+                  />
+                </FormControl>
+
+                <FormControl
+                  mb="4px"
+                  isInvalid={!!errors.featuredFrom && touched.featuredFrom}
+                >
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    Featured From<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  {/* <InputGroup size="md"> */}
+                  <Field
+                    as={DatePicker}
+                    isRequired={true}
+                    id="featuredFrom"
+                    name="featuredFrom"
+                    placeholder={new Date().toISOString()}
+                    variant="auth"
+                    fontSize="sm"
+                    ms={{ base: '0px', md: '0px' }}
+                    mb="3px"
+                    fontWeight="500"
+                    size="md"
+                    onChange={(date1) => {
+                      const [month, date, year] = date1.split('/');
+                      const isoStr = `${year}-${padTo2Digits(
+                        month
+                      )}-${padTo2Digits(date)}T00:00:00.000Z`;
+                      // setDates(isoStr);
+                      // let tty = new Date(date);
+                      console.log(isoStr);
+                    }}
+                  />
+                  <FormErrorMessage>{errors.featuredFrom}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl
+                  mb="4px"
+                  isInvalid={!!errors.featuredTo && touched.featuredTo}
+                >
+                  <FormLabel
+                    ms="4px"
+                    fontSize="sm"
+                    fontWeight="500"
+                    color={textColor}
+                    display="flex"
+                  >
+                    Featured To<Text color={brandStars}>*</Text>
+                  </FormLabel>
+                  {/* <InputGroup size="md"> */}
+                  <Field
+                    as={DatePicker}
+                    isRequired={true}
+                    id="featuredTo"
+                    name="featuredTo"
+                    placeholder={new Date().toISOString()}
+                    variant="auth"
+                    fontSize="sm"
+                    ms={{ base: '0px', md: '0px' }}
+                    mb="3px"
+                    fontWeight="500"
+                    size="md"
+                    onChange={(date1) => {
+                      const [month, date, year] = date1.split('/');
+                      const isoStr = `${year}-${padTo2Digits(
+                        month
+                      )}-${padTo2Digits(date)}T00:00:00.000Z`;
+                      // setDates(isoStr);
+                      // let tty = new Date(date);
+                      console.log(isoStr);
+                    }}
+                  />
+                  <FormErrorMessage>{errors.featuredTo}</FormErrorMessage>
+                </FormControl>
                 <>
                   <Select mt="10px" placeholder="Select supplier">
                     {array.map((obj) => (
@@ -854,6 +1203,7 @@ function Entry() {
                   </Menu> */}
 
                   {/* <Menu isOpen={tyu} flip={false}> */}
+
                   <Menu>
                     <MenuButton
                       as={Button}
@@ -866,7 +1216,121 @@ function Entry() {
                       //   // setTYU(!tyu);
                       // }}
                     >
-                      Select category
+                      Select locations
+                    </MenuButton>
+                  </Menu>
+
+                  <Flex
+                    maxW={{ base: '100%', md: 'max-content' }}
+                    w="100%"
+                    mx={{ base: 'auto', lg: '0px' }}
+                    me="auto"
+                    h="auto"
+                    alignItems="start"
+                    justifyContent="left"
+                    mb={{ base: '30px', md: '20px' }}
+                    px={{ base: '25px', md: '0px' }}
+                    // pb={`${sizzz}px`}
+                    // mt={`${pizz}px`}
+                    flexDirection="column"
+                  >
+                    <Grid
+                      h="150px"
+                      templateRows="repeat(1, 1fr)"
+                      templateColumns="repeat(6, 1fr)"
+                      gap={4}
+                    >
+                      {dd.map((val) => {
+                        return (
+                          <GridItem rowSpan={1} colSpan={1} key={val}>
+                            <Menu closeOnSelect={false}>
+                              <MenuItemOption
+                                as={Button}
+                                backgroundColor="black"
+                                color="white"
+                                ml="20px"
+                                mt="20px"
+                                minWidth="160px"
+                                width="auto"
+                                _hover={{ bg: 'gray.400' }}
+                                _focus={{ color: 'white' }}
+                              >
+                                <Text float="left" key={val} ml="-20px">
+                                  {val}
+                                </Text>
+                              </MenuItemOption>
+                              {locat[val].map((item) => {
+                                // setPizz(pizz+37);
+                                // console.log("HH",categories[val]);
+                                return (
+                                  <MenuItemOption
+                                    key={item.id}
+                                    // onChange={(e) => {
+                                    //   e.preventDefault();
+                                    //   console.log(e.target);
+                                    //   if (e.target.checked === true) {
+                                    //     if (
+                                    //       initialState.filters.hasOwnProperty(
+                                    //         val
+                                    //       ) !== true
+                                    //     ) {
+                                    //       initialState.filters[val] = new Set();
+                                    //     }
+                                    //     initialState.filters[val].add(
+                                    //       e.target.value
+                                    //     );
+                                    //   } else {
+                                    //     initialState.filters[val].delete(
+                                    //       e.target.value
+                                    //     );
+                                    //   }
+                                    //   SetShow(!show);
+                                    // }}
+                                    as={Checkbox}
+                                    onChange={(e) => {
+                                      e.preventDefault();
+                                      if (e.target.checked === true) {
+                                        rrrr.push(e.target.value);
+                                      } else {
+                                        rrrr.splice(
+                                          rrrr.indexOf(e.target.value),
+                                          1
+                                        );
+                                      }
+                                      console.log(rrrr);
+                                      SetShow(!show);
+                                    }}
+                                    value={item.id}
+                                    backgroundColor={textColorSecondary}
+                                    ml="10px"
+                                    mt="10px"
+                                  >
+                                    <Text key={item.id} mt="-37px" ml="10px">
+                                      {item.name}
+                                    </Text>
+                                  </MenuItemOption>
+                                );
+                              })}
+                            </Menu>
+                          </GridItem>
+                        );
+                      })}
+                    </Grid>
+                  </Flex>
+
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      mt={`${mazz}px`}
+                      colorScheme="blue"
+                      minWidth="420px"
+                      // onClick={(e) => {
+                      //   e.preventDefault();
+
+                      //   // setTYU(!tyu);
+                      // }}
+                    >
+                      Select categories
                     </MenuButton>
                   </Menu>
                   <Flex
