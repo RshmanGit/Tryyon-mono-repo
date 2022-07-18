@@ -1,7 +1,13 @@
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Home() {
+  // const [show,setShow] = useState(0);
+  useEffect(() => {
+    sessionStorage.clear();
+  });
   return (
     <div className={styles.container}>
       <main className={styles.main}>
