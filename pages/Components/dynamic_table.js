@@ -108,6 +108,8 @@ function Entry() {
   const [Prod, setProd] = useState(false);
   const [Mark, setMark] = useState(false);
   const [play, setPlay] = useState([]);
+  const [okay, setOkay] = useState('Select Supplier');
+  const [rtyu, setRtyu] = useState('25px');
   //For Progress bar
   const [time, setTimer] = useState(true);
   const [stripe, setStr] = useState(true);
@@ -220,7 +222,8 @@ function Entry() {
         if (res.message === 'Locations found') {
           // console.log(res.locations)
           locat['Locations'] = res.locations;
-          setMazz(res.locations.length * 33);
+          setMazz(res.locations.length * 28);
+          setRtyu(res.locations.length * 28);
           setLoc(res.locations);
           // console.log(categories["Root Category"]);
         }
@@ -501,6 +504,7 @@ function Entry() {
               arr2.slug = values.slug;
               arr2.quantity = temp;
               arr2.supplierId = supplier;
+              console.log(supplier);
               if (supplier.length === 0) {
                 toast({
                   title: `Select supplier ID`,
@@ -1165,20 +1169,47 @@ function Entry() {
                   <FormErrorMessage>{errors.featuredTo}</FormErrorMessage>
                 </FormControl>
                 <>
-                  <Select mt="10px" placeholder="Select supplier">
+                  {/* <Select mt="10px" placeholder="Select supplier">
                     {array.map((obj) => (
                       <option
                         key={obj}
                         value={obj.id}
                         onClick={(e) => {
-                          // console.log(e.target.value)
-                          setSupp(e.target.value);
+                          e.preventDefault();
+                          console.log("HELLO")
+                          // setSupp(e.target.value);
                         }}
                       >
                         {obj.name}
                       </option>
                     ))}
-                  </Select>
+                  </Select> */}
+
+                  <Menu flip={false} strategy="fixed">
+                    <MenuButton
+                      as={Button}
+                      mt="13px"
+                      border="1px"
+                      minWidth="420px"
+                    >
+                      {okay}
+                    </MenuButton>
+                    <MenuList flip={false}>
+                      {/* MenuItems are not rendered unless Menu is open */}
+                      {array.map((obj) => (
+                        <MenuItem
+                          key={obj}
+                          value={obj.id}
+                          onClick={(e) => {
+                            setSupp(e.target.value);
+                            setOkay(`Supplier:  ${obj.name}`);
+                          }}
+                        >
+                          {obj.name}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Menu>
 
                   {/* <Menu isOpen={tyu}>
                     <MenuButton
@@ -1203,22 +1234,6 @@ function Entry() {
                   </Menu> */}
 
                   {/* <Menu isOpen={tyu} flip={false}> */}
-
-                  <Menu>
-                    <MenuButton
-                      as={Button}
-                      mt="13px"
-                      colorScheme="blue"
-                      minWidth="420px"
-                      // onClick={(e) => {
-                      //   e.preventDefault();
-
-                      //   // setTYU(!tyu);
-                      // }}
-                    >
-                      Select locations
-                    </MenuButton>
-                  </Menu>
 
                   <Flex
                     maxW={{ base: '100%', md: 'max-content' }}
@@ -1289,6 +1304,7 @@ function Entry() {
                                     as={Checkbox}
                                     onChange={(e) => {
                                       e.preventDefault();
+                                      // console.log(e.target.checked)
                                       if (e.target.checked === true) {
                                         rrrr.push(e.target.value);
                                       } else {
@@ -1318,21 +1334,6 @@ function Entry() {
                     </Grid>
                   </Flex>
 
-                  <Menu>
-                    <MenuButton
-                      as={Button}
-                      mt={`${mazz}px`}
-                      colorScheme="blue"
-                      minWidth="420px"
-                      // onClick={(e) => {
-                      //   e.preventDefault();
-
-                      //   // setTYU(!tyu);
-                      // }}
-                    >
-                      Select categories
-                    </MenuButton>
-                  </Menu>
                   <Flex
                     maxW={{ base: '100%', md: 'max-content' }}
                     w="100%"
@@ -1344,7 +1345,7 @@ function Entry() {
                     mb={{ base: '30px', md: '20px' }}
                     px={{ base: '25px', md: '0px' }}
                     // pb={`${sizzz}px`}
-                    // mt={`${pizz}px`}
+                    mt={`${rtyu}px`}
                     flexDirection="column"
                   >
                     <Grid
@@ -1507,7 +1508,7 @@ function Entry() {
                       gap={4}
                     >
                       <GridItem rowSpan={1} colSpan={2}>
-                        <Heading ml="30px">Variants</Heading>
+                        <Heading ml="-6px">Variants</Heading>
                       </GridItem>
                     </Grid>
                     <Grid
