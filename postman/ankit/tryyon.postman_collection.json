@@ -6451,6 +6451,1139 @@
 			]
 		},
 		{
+			"name": "Product Imports",
+			"item": [
+				{
+					"name": "As admin",
+					"item": [
+						{
+							"name": "/api/product_imports/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Product Import Created\") { ",
+											"    tests[\"Product Import creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"productImportId\",res.productImport.id);",
+											"pm.environment.set(\"productImportProductId\",res.productImport.productId);",
+											"pm.environment.set(\"productImportTenantId\",res.productImport.tenantId);",
+											"pm.environment.set(\"productImportStatus\",res.productImport.status);",
+											"pm.environment.set(\"productImportOverride\",res.productImport.override);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": \"{{productId}}\",\n    \"tenantId\": \"{{tenantId}}\",\n    \"status\": {{$randomBoolean}},\n    \"override\": {}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"productId\": \"{{productId}}\",\n    \"tenantId\": \"{{tenantId}}\",\n    \"status\": {{$randomBoolean}},\n    \"override\": {}\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"c3-Nn1zOjvf3vA0oemU2WCRoEGNxcQ\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "195"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 18 Jul 2022 06:24:39 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Product Import Created\",\n    \"productImport\": {\n        \"id\": \"62d4fca697014ba74a22aa3b\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n        \"status\": true,\n        \"override\": {}\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Imports found\") { ",
+											"    tests[\"No product import found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{productImportId}}",
+											"disabled": true
+										},
+										{
+											"key": "tenantId",
+											"value": "{{productImportTenantId}}",
+											"disabled": true
+										},
+										{
+											"key": "productId",
+											"value": "{{productImportProductId}}",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "{{$randomBoolean}}",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Query params: paginated, count, offset"
+							},
+							"response": [
+								{
+									"name": "/api/product_imports",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												""
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{productImportId}}",
+													"disabled": true
+												},
+												{
+													"key": "tenantId",
+													"value": "{{productImportTenantId}}",
+													"disabled": true
+												},
+												{
+													"key": "productId",
+													"value": "{{productImportProductId}}",
+													"disabled": true
+												},
+												{
+													"key": "status",
+													"value": "{{$randomBoolean}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"1d8-jJbWJxXHMjaFtlp77+F8lVWxvMo\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "472"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 18 Jul 2022 06:32:01 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product Imports found\",\n    \"productImports\": [\n        {\n            \"id\": \"62d4fc9897014ba74a22aa3a\",\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"status\": true,\n            \"override\": {}\n        },\n        {\n            \"id\": \"62d4fca697014ba74a22aa3b\",\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"status\": true,\n            \"override\": {}\n        },\n        {\n            \"id\": \"62d4fcb197014ba74a22aa3c\",\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"status\": false,\n            \"override\": {}\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product updated\") { ",
+											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"{{productImportId}}\",",
+											"//     \"updateData\": {",
+											"//         \"tenantId\": \"...\"",
+											"//         \"productId\": \"...\"",
+											"//         \"status\": bool",
+											"//         \"override\": {...}",
+											"//     }",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productImportId}}\",\n    \"updateData\": {\n        \"status\": false\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productImportId}}\",\n    \"updateData\": {\n        \"status\": false\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"c0-7Dk6EXBATv0Bw9tO14KeBaY8SgI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "192"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 18 Jul 2022 06:34:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product updated\",\n    \"updatedProductImport\": {\n        \"id\": \"62d4fcb197014ba74a22aa3c\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n        \"status\": false,\n        \"override\": {}\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Import deleted\") { ",
+											"    tests[\"Product Import not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productImportId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productImportId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"b9-5pzX68wX8FP7Xj1xZBfi1SB2niI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "185"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 18 Jul 2022 07:10:12 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product deleted\",\n    \"productImport\": {\n        \"id\": \"62d4fcb197014ba74a22aa3c\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n        \"status\": false,\n        \"override\": {}\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "As user",
+					"item": [
+						{
+							"name": "/api/product_imports/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Product Import Created\") { ",
+											"    tests[\"Product Import creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"productImportId\",res.productImport.id);",
+											"pm.environment.set(\"productImportProductId\",res.productImport.productId);",
+											"pm.environment.set(\"productImportTenantId\",res.productImport.tenantId);",
+											"pm.environment.set(\"productImportStatus\",res.productImport.status);",
+											"pm.environment.set(\"productImportOverride\",res.productImport.override);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": \"{{productId}}\",\n    \"status\": {{$randomBoolean}},\n    \"override\": {}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"productId\": \"{{productId}}\",\n    \"status\": {{$randomBoolean}},\n    \"override\": {}\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"c4-keVrXAfwnqrXtxGYEb3mbilSh20\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "196"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 18 Jul 2022 06:24:49 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Product Import Created\",\n    \"productImport\": {\n        \"id\": \"62d4fcb197014ba74a22aa3c\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n        \"status\": false,\n        \"override\": {}\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Products found\") { ",
+											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// \"count\": 10,",
+											"// \"offset\": 0,",
+											"// \"id\": \"{{productId}}\",",
+											"// \"query\": \"{{productName}}\",",
+											"// \"inStock\": {{$randomBoolean}},",
+											"// \"published\": {{$randomBoolean}},",
+											"// \"supplierId\": \"{{tenantId}}\",",
+											"// \"categoryId\": \"{{categoryId}}\",",
+											"// \"sortBy\": \"name\",",
+											"// \"order\": \"asc\",",
+											"// \"attributes\": {",
+											"//         \"size\": \"l\",",
+											"//         \"color\": \"red\"",
+											"//     },"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{productImportId}}",
+											"disabled": true
+										},
+										{
+											"key": "tenantId",
+											"value": "{{productImportTenantId}}",
+											"disabled": true
+										},
+										{
+											"key": "productId",
+											"value": "{{productImportProductId}}",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "{{$randomBoolean}}",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Query params: paginated, count, offset"
+							},
+							"response": [
+								{
+									"name": "/api/product_imports",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												""
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{productImportId}}",
+													"disabled": true
+												},
+												{
+													"key": "tenantId",
+													"value": "{{productImportTenantId}}",
+													"disabled": true
+												},
+												{
+													"key": "productId",
+													"value": "{{productImportProductId}}",
+													"disabled": true
+												},
+												{
+													"key": "status",
+													"value": "{{$randomBoolean}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"1d8-jJbWJxXHMjaFtlp77+F8lVWxvMo\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "472"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 18 Jul 2022 06:32:33 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product Imports found\",\n    \"productImports\": [\n        {\n            \"id\": \"62d4fc9897014ba74a22aa3a\",\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"status\": true,\n            \"override\": {}\n        },\n        {\n            \"id\": \"62d4fca697014ba74a22aa3b\",\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"status\": true,\n            \"override\": {}\n        },\n        {\n            \"id\": \"62d4fcb197014ba74a22aa3c\",\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n            \"status\": false,\n            \"override\": {}\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product updated\") { ",
+											"    tests[\"Product not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"{{productImportId}}\",",
+											"//     \"updateData\": {",
+											"//         \"productId\": \"...\"",
+											"//         \"status\": bool",
+											"//         \"override\": {...}",
+											"//     }",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productImportId}}\",\n    \"updateData\": {\n        \"status\": false\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productImportId}}\",\n    \"updateData\": {\n        \"status\": false\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"c0-7Dk6EXBATv0Bw9tO14KeBaY8SgI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "192"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 18 Jul 2022 06:35:44 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product updated\",\n    \"updatedProductImport\": {\n        \"id\": \"62d4fcb197014ba74a22aa3c\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n        \"status\": false,\n        \"override\": {}\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Import deleted\") { ",
+											"    tests[\"Product Import not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productImportId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productImportId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"b8-mo9ohcwlIdvHt9gwbJx3MdUpbVc\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "184"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 18 Jul 2022 07:10:37 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product deleted\",\n    \"productImport\": {\n        \"id\": \"62d5076797014ba74a22aa3d\",\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62d119f9d1ec38d5d0dcbb78\",\n        \"status\": true,\n        \"override\": {}\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{userToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "SKUs",
 			"item": [
 				{
