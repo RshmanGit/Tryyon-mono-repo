@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
     } else {
       setComp(0);
     }
-  });
+  }, []);
 
   return (
     <>
