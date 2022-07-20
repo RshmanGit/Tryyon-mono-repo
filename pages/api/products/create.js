@@ -23,11 +23,17 @@ const schema = {
     manufacturer: Joi.string().required(),
     countryOfOrigin: Joi.string().required(),
     trending: Joi.boolean().required(),
-    featuredFrom: Joi.date().required(),
-    featuredTo: Joi.date().required(),
+    featuredFrom: Joi.date().iso().required(),
+    featuredTo: Joi.date().iso().required(),
     guestCheckout: Joi.boolean().required(),
     private_product: Joi.boolean().required(),
-    marketPlace: Joi.boolean().required()
+    marketPlace: Joi.boolean().required(),
+    reseller: Joi.object({
+      allowed: Joi.boolean().required(),
+      type: Joi.string().allow('commission', 'discount').required(),
+      commission: Joi.number().optional().min(0).max(100),
+      discount: Joi.number().optional().min(0).max(100)
+    }).required()
   })
 };
 

@@ -61,6 +61,7 @@ model Product {
   private_product   Boolean          @default(false)
   marketPlace       Boolean          @default(false)
   ProductImports    ProductImports[]
+  reseller          Json?
 }
 
 model SKU {
