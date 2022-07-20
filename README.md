@@ -1469,6 +1469,12 @@ Associations **Routes**
       guestCheckout: boolean, required
       private_product: boolean, required
       marketPlace: boolean, required
+      reseller: {
+        allowed: boolean, required
+        type: string, allowed values - ('commission', 'discount'), required if allowed is true
+        discount: number, min - 0, max - 100
+        commission: number, min - 0, max - 100
+      }
       ```
     - Successful Response -
       ```
@@ -1536,6 +1542,12 @@ Associations **Routes**
       guestCheckout: boolean, optional
       private_product: boolean, optional
       marketPlace: boolean, optional
+      reseller: {
+        allowed: boolean, optional
+        type: string, allowed values - ('commission', 'discount'), optional
+        discount: number, min - 0, max - 100
+        commission: number, min - 0, max - 100
+      }
       ```
     - Successful Response -
       ```
@@ -1711,7 +1723,13 @@ Associations **Routes**
         featuredTo: date, ISO Timestamp, optional
         guestCheckout: boolean, optional
         private_product: boolean, optional
-        marketPlace: boolean, optional
+        marketPlace: boolean, optional,
+        reseller: {
+          allowed: boolean, required
+          type: string, allowed values - ('commission', 'discount'), required
+          discount: number, min - 0, max - 100
+          commission: number, min - 0, max - 100
+        }
       }
       ```
     - Successful Response -
@@ -1814,7 +1832,13 @@ Associations **Routes**
       featuredTo: date, required
       guestCheckout: boolean, required
       private_product: boolean, required
-      marketPlace: boolean, required
+      marketPlace: boolean, required,
+      reseller: {
+        allowed: boolean, required
+        type: string, allowed values - ('commission', 'discount'), required if allowed is true
+        discount: number, min - 0, max - 100
+        commission: number, min - 0, max - 100
+      }
       ```
     - Successful Response -
       ```
@@ -1881,7 +1905,13 @@ Associations **Routes**
       featuredTo: date, optional
       guestCheckout: boolean, optional
       private_product: boolean, optional
-      marketPlace: boolean, optional
+      marketPlace: boolean, optional,
+      reseller: {
+        allowed: boolean, optional
+        type: string, allowed values - ('commission', 'discount'), optional
+        discount: number, min - 0, max - 100
+        commission: number, min - 0, max - 100
+      }
       ```
     - Successful Response -
       ```
@@ -2058,7 +2088,13 @@ Associations **Routes**
         featuredTo: date, ISO Timestamp, optional
         guestCheckout: boolean, optional
         private_product: boolean, optional
-        marketPlace: boolean, optional
+        marketPlace: boolean, optional,
+        reseller: {
+          allowed: boolean, required
+          type: string, allowed values - ('commission', 'discount'), required
+          discount: number, min - 0, max - 100
+          commission: number, min - 0, max - 100
+        }
       }
       ```
     - Successful Response -

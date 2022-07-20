@@ -30,7 +30,7 @@ const schema = {
     marketPlace: Joi.boolean().required(),
     reseller: Joi.object({
       allowed: Joi.boolean().required(),
-      type: Joi.string().allow('commission', 'discount').required(),
+      type: Joi.string().allow('commission', 'discount').optional(),
       commission: Joi.number().optional().min(0).max(100),
       discount: Joi.number().optional().min(0).max(100)
     }).required()
@@ -45,6 +45,20 @@ const handler = async (req, res) => {
       {
         verify: async () => {
           const { body } = req;
+
+          if (body.reseller.allowed && !body.reseller.type) {
+            throw new Error(
+              JSON.stringify({
+                errorKey: 'create',
+                body: {
+                  status: 409,
+                  data: {
+                    message: 'Reseller type not provided'
+                  }
+                }
+              })
+            );
+          }
 
           if (req.admin) {
             if (!body.supplierId) {
