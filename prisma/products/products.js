@@ -56,6 +56,7 @@ export const searchProducts = async ({
   guestCheckout,
   private_product,
   marketPlace,
+  reseller,
   pagination,
   offset,
   limit
@@ -71,6 +72,12 @@ export const searchProducts = async ({
       condition[`attributes.${prop}`] = {
         $elemMatch: { $eq: attributes[prop] }
       };
+    }
+  }
+
+  if (reseller) {
+    for (let prop in reseller) {
+      condition[`reseller.${prop}`] = { $eq: reseller[prop] };
     }
   }
 
@@ -197,6 +204,7 @@ export const searchProducts = async ({
       supplierId: 1,
       published: 1,
       attributes: 1,
+      reseller: 1,
       categoryIds: 1,
       'categories.name': 1,
       'categories.description': 1,

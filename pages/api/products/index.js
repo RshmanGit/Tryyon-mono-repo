@@ -24,6 +24,12 @@ const schema = {
     locationIds: Joi.array().optional(),
     manufacturer: Joi.string().optional(),
     countryOfOrigin: Joi.string().optional(),
+    reseller: Joi.object({
+      allowed: Joi.boolean().optional(),
+      type: Joi.string().allow('commission', 'discount').optional(),
+      discount: Joi.number().min(0).max(100),
+      commission: Joi.number().min(0).max(100)
+    }).optional(),
     trending: Joi.boolean().optional(),
     featuredFrom: Joi.date().optional(),
     featuredTo: Joi.date().optional(),
