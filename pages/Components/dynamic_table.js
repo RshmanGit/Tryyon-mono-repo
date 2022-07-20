@@ -1,5 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { DatePicker } from 'chakra-ui-date-input';
 import { useFormik } from 'formik';
 
@@ -13,10 +14,12 @@ import {
   FormLabel,
   FormErrorMessage,
   Heading,
+
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
+
   ModalBody,
   ModalCloseButton,
   Input,
@@ -27,6 +30,7 @@ import {
   Thead,
   Tbody,
   Tr,
+
   Td,
   TableContainer,
   Menu,
@@ -34,6 +38,7 @@ import {
   MenuList,
   MenuItem,
   MenuItemOption,
+
   Grid,
   GridItem,
   Checkbox,
@@ -58,6 +63,7 @@ const initialState = {
   }
 };
 let ll = 0;
+
 const locat = {};
 
 //default variants and their options
@@ -86,6 +92,7 @@ function Entry() {
   const [play, setPlay] = useState([]);
   const [okay, setOkay] = useState('Select Supplier');
   const [categories, setCategories] = useState({});
+
   //For Progress bar
   const [time, setTimer] = useState(true);
   const [stripe, setStr] = useState(true);
@@ -300,6 +307,7 @@ function Entry() {
       })
       .then((res) => {
         if (res.message === 'Categories found') {
+
           if (res.categories[0].children.length > 0) {
             categories[id_name] = res.categories[0].children;
             setCat(res.categories[0].children);
@@ -362,7 +370,7 @@ function Entry() {
     arr3.supplierId = arr2.supplierId;
     arr3.categoryIds = arr2.categoryIds;
 
-    let ix = 0;
+let ix = 0;
     vv.map((kkk) => {
       arr3.attributes[kkk] = table[ix++];
     });
@@ -420,7 +428,6 @@ function Entry() {
               let temp = parseInt(values.quantity, 10);
               let temp2 = parseInt(values.price, 10);
               let temp3 = parseInt(values.discountedPrice, 10);
-
               let arr2 = {};
               arr2.name = values.name;
               arr2.description = values.description;
@@ -431,6 +438,7 @@ function Entry() {
               });
               arr2.shortDescriptions = values.shortDescriptions;
               arr2.slug = values.slug;
+
               arr2.reseller = { allowed: reseller.allowed };
               if (reseller.allowed) {
                 if (
@@ -461,6 +469,7 @@ function Entry() {
                   status: 'error',
                   isClosable: true
                 });
+
                 throw new Error(
                   JSON.stringify({
                     message: 'Supplier ID not selected'
