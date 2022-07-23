@@ -1727,21 +1727,31 @@ function Entry() {
                         return (
                           <Tr key={idx} height="auto">
                             {table.map((entry, idx2) => {
-                              return (
-                                <Td
-                                  key={idx2}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    let vall = prompt('Change cell value !');
-                                    if (vall !== null && vall.length > 0) {
-                                      mp.push([idx, idx2, vall]);
-                                      SetShow(!show);
-                                    }
-                                  }}
-                                >
-                                  {entry}
-                                </Td>
-                              );
+                              if (table.length > vv.length) {
+                                if (idx2 < vv.length)
+                                  return <Td key={idx2}>{entry}</Td>;
+                                else {
+                                  return (
+                                    <Td
+                                      key={idx2}
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        let vall = prompt(
+                                          'Change cell value !'
+                                        );
+                                        if (vall !== null && vall.length > 0) {
+                                          mp.push([idx, idx2, vall]);
+                                          SetShow(!show);
+                                        }
+                                      }}
+                                    >
+                                      {entry}
+                                    </Td>
+                                  );
+                                }
+                              } else {
+                                return <Td key={idx2}>{entry}</Td>;
+                              }
                             })}
                           </Tr>
                         );
