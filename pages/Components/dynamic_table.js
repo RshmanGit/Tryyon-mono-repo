@@ -1,9 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { DatePicker } from 'chakra-ui-date-input';
-import { useFormik } from 'formik';
-
 // import your icons
 import { faPencil, faBan } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -14,12 +11,10 @@ import {
   FormLabel,
   FormErrorMessage,
   Heading,
-
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-
   ModalBody,
   ModalCloseButton,
   Input,
@@ -30,7 +25,6 @@ import {
   Thead,
   Tbody,
   Tr,
-
   Td,
   TableContainer,
   Menu,
@@ -38,7 +32,6 @@ import {
   MenuList,
   MenuItem,
   MenuItemOption,
-
   Grid,
   GridItem,
   Checkbox,
@@ -46,12 +39,14 @@ import {
   Progress,
   useToast,
   Switch,
-  Select
+  Select,
+  RadioGroup,
+  Radio
 } from '@chakra-ui/react';
 
 import { useRouter } from 'next/router.js';
 import { useEffect } from 'react';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 import { Formik, Field } from 'formik';
 
@@ -91,7 +86,8 @@ function Entry() {
   const [Mark, setMark] = useState(false);
   const [play, setPlay] = useState([]);
   const [okay, setOkay] = useState('Select Supplier');
-  const [categories, setCategories] = useState({});
+  const [categories, setCategories] = useState({ root: [] });
+  const [cat, setCat] = useState(['root']);
 
   //For Progress bar
   const [time, setTimer] = useState(true);
@@ -99,9 +95,8 @@ function Entry() {
   const [colors, setColor] = useState('twitter');
   const [anim, setAnim] = useState(true);
   const [array, setArray] = useState([]);
-  const [cat, setCat] = useState([]);
 
-  const [categ, setCateg] = useState([]);
+  const [categ, setCateg] = useState('root');
   const [rrrr, setRRRR] = useState([]);
   const [dat, setDat] = useState('');
   const [dat2, setDat2] = useState('');
@@ -121,10 +116,6 @@ function Entry() {
     type: '',
     value: 0
   });
-
-  function padTo2Digits(num) {
-    return num.toString().padStart(2, '0');
-  }
 
   useEffect(() => {
     fetch('/api/tenant/', {
@@ -154,7 +145,7 @@ function Entry() {
         console.error(err.message);
       });
 
-    fetch('/api/products/category/', {
+    fetch('/api/products/category?isRoot=true', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${sessionStorage.token_admin}`
@@ -173,14 +164,14 @@ function Entry() {
         }
       })
       .then((res) => {
-        if (res.message === 'Categories found') {
-          console.log(res.categories);
-          setCategories((prev) => ({
-            ...prev,
-            'Root Category': res.categories
-          }));
-          setCat(res.categories);
-        }
+        console.log(res.categories);
+
+        setCategories((prev) => {
+          prev.root = res.categories;
+          return prev;
+        });
+
+        // setCat(res.categories);
       })
       .catch((err) => {
         console.error(err.message);
@@ -228,7 +219,6 @@ function Entry() {
   }, [time, router, cat.length]);
 
   let vv = Object.keys(variants);
-  let cc = Object.keys(categories);
   let dd = Object.keys(locat);
   let kk = Object.keys(initialState.filters);
 
@@ -284,39 +274,53 @@ function Entry() {
     res1[mp[i][0]][mp[i][1]] = mp[i][2];
   }
 
-  function solve_cat(id_c, id_name) {
-    console.log(id_name);
-    fetch(`/api/products/category?id=${id_c}&includeChildren=true`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${sessionStorage.token_admin}`
-      }
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.message === 'Categories found') {
-          return res;
-        } else {
-          // alert(res.message);
-          throw new Error(
-            JSON.stringify({
-              message: res.message
-            })
-          );
+  function solve_cat(id_c, index) {
+    if (!categories[id_c]) {
+      fetch(`/api/products/category?id=${id_c}&includeChildren=true`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.token_admin}`
         }
       })
-      .then((res) => {
-        if (res.message === 'Categories found') {
-
-          if (res.categories[0].children.length > 0) {
-            categories[id_name] = res.categories[0].children;
-            setCat(res.categories[0].children);
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message === 'Categories found') {
+            return res;
+          } else {
+            throw new Error(
+              JSON.stringify({
+                message: res.message
+              })
+            );
           }
-        }
-      })
-      .catch((err) => {
-        console.error(err.message);
+        })
+        .then((res) => {
+          if (
+            res.categories[0].children &&
+            res.categories[0].children.length != 0
+          ) {
+            setCategories((prev) => {
+              prev[id_c] = res.categories[0].children;
+              return prev;
+            });
+          }
+
+          setCat((prev) => {
+            if (index < prev.length) prev = prev.slice(0, index + 1);
+            prev.push(id_c);
+            return prev;
+          });
+        })
+        .catch((err) => {
+          console.error(err.message);
+        });
+    } else {
+      setCat((prev) => {
+        if (index < prev.length) prev = prev.slice(0, index + 1);
+        prev.push(id_c);
+        return prev;
       });
+    }
   }
 
   function check2() {
@@ -370,7 +374,7 @@ function Entry() {
     arr3.supplierId = arr2.supplierId;
     arr3.categoryIds = arr2.categoryIds;
 
-let ix = 0;
+    let ix = 0;
     vv.map((kkk) => {
       arr3.attributes[kkk] = table[ix++];
     });
@@ -461,7 +465,6 @@ let ix = 0;
                 arr2.reseller[reseller.type] = reseller.value;
               }
               arr2.quantity = temp;
-              arr2.supplierId = supplier;
               console.log(supplier);
               if (supplier.length === 0) {
                 toast({
@@ -475,8 +478,22 @@ let ix = 0;
                     message: 'Supplier ID not selected'
                   })
                 );
-              }
-              arr2.categoryIds = categ;
+              } else arr2.supplierId = supplier;
+
+              if (categ == 'root') {
+                toast({
+                  title: `Select Category`,
+                  status: 'error',
+                  isClosable: true
+                });
+
+                throw new Error(
+                  JSON.stringify({
+                    message: 'Category not selected'
+                  })
+                );
+              } else arr2.categoryIds = [categ];
+
               arr2.manufacturer = values.manufacturer;
               arr2.countryOfOrigin = values.countryOfOrigin;
               arr2.trending = Trend;
@@ -998,67 +1015,6 @@ let ix = 0;
 
                     <FormControl
                       mb="4px"
-                      isInvalid={!!errors.reseller && touched.reseller}
-                    >
-                      <Flex ms="4px" mt="12px" justifyContent="space-between">
-                        <FormLabel
-                          fontSize="sm"
-                          fontWeight="500"
-                          color={textColor}
-                          display="flex"
-                        >
-                          Reseller
-                        </FormLabel>
-                        <Switch
-                          id="reseller_allowed"
-                          name="reseller_allowed"
-                          checked={reseller.allowed}
-                          onChange={(e) =>
-                            setReseller((reseller) => {
-                              const { allowed, ...rest } = reseller;
-                              return { allowed: !allowed, ...rest };
-                            })
-                          }
-                        />
-                      </Flex>
-                      {reseller.allowed && (
-                        <Flex gap="12px" my="8px">
-                          <Field
-                            as={Select}
-                            id="reseller_type"
-                            name="reseller_type"
-                            minW="300px"
-                            placeholder="Select reseller type"
-                            onChange={(e) =>
-                              setReseller((prev) => {
-                                prev.type = e.target.selectedOptions[0].value;
-                                return prev;
-                              })
-                            }
-                          >
-                            <option value="commission">Commission</option>
-                            <option value="discount">Discount</option>
-                          </Field>
-                          <Field
-                            as={Input}
-                            type="number"
-                            id="reseller_type_value"
-                            name="reseller_type_value"
-                            placeholder="0"
-                            onChange={(e) =>
-                              setReseller((prev) => {
-                                prev.value = e.target.value;
-                                return prev;
-                              })
-                            }
-                          />
-                        </Flex>
-                      )}
-                      <FormErrorMessage>{errors.reseller}</FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl
-                      mb="4px"
                       isInvalid={!!errors.featuredFrom && touched.featuredFrom}
                     >
                       <FormLabel
@@ -1255,18 +1211,18 @@ let ix = 0;
                       p="32px"
                       flexDirection="column"
                     >
+                      <Text
+                        fontSize="sm"
+                        fontWeight="700"
+                        color={textColor}
+                        display="flex"
+                      >
+                        Select locations*
+                      </Text>
                       <Flex>
                         {dd.map((val, index) => {
                           return (
                             <Flex direction="column" key={index}>
-                              <FormLabel
-                                fontSize="sm"
-                                fontWeight="700"
-                                color={textColor}
-                                display="flex"
-                              >
-                                {val}
-                              </FormLabel>
                               {locat[val].map((item, index) => {
                                 return (
                                   <Checkbox
@@ -1311,55 +1267,42 @@ let ix = 0;
                       mt="32px"
                       flexDirection="column"
                     >
-                      <Flex>
-                        {cc.map((val, index) => {
+                      <Text
+                        fontSize="sm"
+                        fontWeight="700"
+                        color={textColor}
+                        display="flex"
+                      >
+                        Select category*
+                      </Text>
+                      <Flex gap="16px">
+                        {cat.map((val, index) => {
+                          console.log(cat);
                           return (
-                            <Flex direction="column" key={index}>
-                              <FormLabel
-                                fontSize="sm"
-                                fontWeight="700"
-                                color={textColor}
-                                display="flex"
-                              >
-                                {val}
-                              </FormLabel>
-                              {categories[val].map((item, index) => {
-                                return (
-                                  <Checkbox
-                                    key={index}
-                                    mt="10px"
-                                    w="max-content"
-                                    onChange={(e) => {
-                                      e.preventDefault();
-                                      if (e.target.checked === true) {
-                                        setCateg((categ) => [
-                                          ...categ,
-                                          e.target.value
-                                        ]);
-                                        solve_cat(item.id, item.name);
-                                      } else {
-                                        setCateg((categ) => {
-                                          categ.splice(
-                                            categ.indexOf(e.target.value),
-                                            1
-                                          );
-                                          return categ;
-                                        });
-                                        setCategories((c) => {
-                                          delete c[item.name];
-                                          return c;
-                                        });
-                                      }
-                                      console.log(categ);
-                                      SetShow(!show);
-                                    }}
-                                    value={item.id}
-                                  >
-                                    {item.name}
-                                  </Checkbox>
-                                );
-                              })}
-                            </Flex>
+                            <RadioGroup
+                              key={index}
+                              onChange={(value) => {
+                                setCateg(cat[cat.length - 1]);
+                                solve_cat(value, index);
+                                console.log(categ);
+                              }}
+                            >
+                              <Flex direction="column">
+                                {Array.isArray(categories[val]) &&
+                                  categories[val].map((item, index) => {
+                                    return (
+                                      <Radio
+                                        key={index}
+                                        mt="10px"
+                                        w="max-content"
+                                        value={item.id}
+                                      >
+                                        {item.name}
+                                      </Radio>
+                                    );
+                                  })}
+                              </Flex>
+                            </RadioGroup>
                           );
                         })}
                       </Flex>
@@ -1700,6 +1643,65 @@ let ix = 0;
                       </Menu>
                     </GridItem>
                   </Grid>
+                </Flex>
+
+                <Flex direction="column" my="28px">
+                  <Flex alignContent="center" justifyContent="space-between">
+                    <Text
+                      fontSize="2xl"
+                      fontWeight="700"
+                      color={textColor}
+                      display="flex"
+                    >
+                      Reseller
+                    </Text>
+                    <Switch
+                      mt="4px"
+                      ml="16px"
+                      id="reseller_allowed"
+                      name="reseller_allowed"
+                      checked={reseller.allowed}
+                      onChange={(e) =>
+                        setReseller((reseller) => {
+                          const { allowed, ...rest } = reseller;
+                          return { allowed: !allowed, ...rest };
+                        })
+                      }
+                    />
+                  </Flex>
+                  {reseller.allowed && (
+                    <Flex gap="12px" my="8px">
+                      <Field
+                        as={Select}
+                        id="reseller_type"
+                        name="reseller_type"
+                        minW="300px"
+                        placeholder="Select reseller type"
+                        onChange={(e) =>
+                          setReseller((prev) => {
+                            prev.type = e.target.selectedOptions[0].value;
+                            return prev;
+                          })
+                        }
+                      >
+                        <option value="commission">Commission</option>
+                        <option value="discount">Discount</option>
+                      </Field>
+                      <Field
+                        as={Input}
+                        type="number"
+                        id="reseller_type_value"
+                        name="reseller_type_value"
+                        placeholder="0"
+                        onChange={(e) =>
+                          setReseller((prev) => {
+                            prev.value = e.target.value;
+                            return prev;
+                          })
+                        }
+                      />
+                    </Flex>
+                  )}
                 </Flex>
 
                 {/* For generating table entries dynamically */}
