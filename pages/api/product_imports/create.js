@@ -1,7 +1,10 @@
 import async from 'async';
 import Joi from 'joi';
 
-import { createProductImport } from '../../../prisma/products/product_imports';
+import {
+  createProductImport,
+  searchProductImport
+} from '../../../prisma/products/product_imports';
 import handleResponse from '../../../utils/helpers/handleResponse';
 import validate from '../../../utils/middlewares/validation';
 import auth from '../../../utils/middlewares/auth';
@@ -10,10 +13,15 @@ import { prisma } from '../../../prisma/prisma';
 
 const schema = {
   body: Joi.object({
+    type: Joi.string().required().allow('discount', 'commission'),
+    skuIds: Joi.array().required(),
     productId: Joi.string().required(),
     tenantId: Joi.string().optional(),
     status: Joi.boolean().required(),
-    override: Joi.object().default({})
+    override: Joi.object({
+      price: Joi.number().optional(),
+      sellingPrice: Joi.number().optional()
+    }).default({})
   })
 };
 
@@ -25,74 +33,24 @@ const handler = async (req, res) => {
       {
         verify: async () => {
           const { body } = req;
-          const { productId, tenantId } = body;
+          const { productId, tenantId, type, skuIds, override } = body;
 
-          const productCheck = await prisma.product.findMany({
-            where: { id: productId }
-          });
-
-          if (productCheck.length == 0) {
-            throw new Error(
-              JSON.stringify({
-                errorKey: 'create',
-                body: {
-                  status: 404,
-                  data: {
-                    message: 'Product not found'
-                  }
-                }
-              })
-            );
-          }
-
-          if (req.admin) {
-            if (!tenantId) {
-              throw new Error(
-                JSON.stringify({
-                  errorKey: 'create',
-                  body: {
-                    status: 404,
-                    data: {
-                      message: 'Tenant ID not provided'
-                    }
-                  }
-                })
-              );
-            }
-
+          if (!req.admin) {
+            const ownerId = req.user.id;
             const tenantCheck = await prisma.tenant.findMany({
-              where: { id: tenantId }
+              where: {
+                company: {
+                  ownerId
+                }
+              }
             });
 
             if (tenantCheck.length == 0) {
               throw new Error(
                 JSON.stringify({
-                  errorKey: 'create',
+                  errorKey: 'verify',
                   body: {
-                    status: 404,
-                    data: {
-                      message: 'Tenant not found'
-                    }
-                  }
-                })
-              );
-            }
-          } else {
-            const { id } = req.user;
-            const tenant = await prisma.tenant.findMany({
-              where: {
-                company: {
-                  ownerId: id
-                }
-              }
-            });
-
-            if (tenant.length == 0) {
-              throw new Error(
-                JSON.stringify({
-                  errorKey: 'create',
-                  body: {
-                    status: 404,
+                    status: 409,
                     data: {
                       message: 'User does not have a tenant'
                     }
@@ -101,7 +59,123 @@ const handler = async (req, res) => {
               );
             }
 
-            body.tenantId = tenant[0].id;
+            body.tenantId = tenantCheck[0].id;
+          } else {
+            if (!tenantId) {
+              throw new Error(
+                JSON.stringify({
+                  errorKey: 'verify',
+                  body: {
+                    status: 409,
+                    data: {
+                      message: 'Tenant ID not provided'
+                    }
+                  }
+                })
+              );
+            }
+          }
+
+          const productImportCheck = await searchProductImport({
+            productId,
+            tenantId
+          });
+
+          if (productImportCheck.length != 0) {
+            throw new Error(
+              JSON.stringify({
+                errorKey: 'verify',
+                body: {
+                  status: 409,
+                  data: {
+                    message:
+                      'A product import with same product ID already exists in the tenant'
+                  }
+                }
+              })
+            );
+          }
+
+          const productCheck = await prisma.product.findRaw({
+            filter: {
+              _id: {
+                $eq: { $oid: productId }
+              },
+              'reseller.allowed': true,
+              'reseller.type': type
+            }
+          });
+
+          if (productCheck.length == 0) {
+            console.log(productCheck);
+            throw new Error(
+              JSON.stringify({
+                errorKey: 'verify',
+                body: {
+                  status: 409,
+                  data: {
+                    message: `Product not allowed for reselling as ${type}`
+                  }
+                }
+              })
+            );
+          }
+
+          const skuCheck = await prisma.sKU.findMany({
+            where: {
+              id: {
+                in: skuIds
+              },
+              productId
+            }
+          });
+
+          if (skuCheck.length != skuIds.length) {
+            throw new Error(
+              JSON.stringify({
+                errorKey: 'verify',
+                body: {
+                  status: 409,
+                  data: {
+                    message: 'One or more SKUs are not valid'
+                  }
+                }
+              })
+            );
+          }
+
+          if (
+            type == 'discount' &&
+            (!override.price || !override.sellingPrice)
+          ) {
+            throw new Error(
+              JSON.stringify({
+                errorKey: 'verify',
+                body: {
+                  status: 409,
+                  data: {
+                    message:
+                      'Both price and selling price is required for discount type'
+                  }
+                }
+              })
+            );
+          } else if (type == 'commission') {
+            if (override != undefined)
+              throw new Error(
+                JSON.stringify({
+                  errorKey: 'verify',
+                  body: {
+                    status: 409,
+                    data: {
+                      message: 'Override option not allowed for commission type'
+                    }
+                  }
+                })
+              );
+            else {
+              body.override = {};
+            }
           }
 
           return {

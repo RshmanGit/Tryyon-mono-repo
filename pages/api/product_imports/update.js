@@ -15,10 +15,13 @@ const schema = {
   body: Joi.object({
     id: Joi.string().required(),
     updateData: Joi.object({
-      productId: Joi.string().optional(),
-      tenantId: Joi.string().optional(),
+      skuIds: Joi.array().optional(),
+      skus: Joi.object().optional(),
       status: Joi.boolean().optional(),
-      override: Joi.object().optional()
+      override: Joi.object({
+        price: Joi.number().optional(),
+        sellingPrice: Joi.number().optional()
+      })
     })
   })
 };
@@ -31,67 +34,73 @@ const handler = async (req, res) => {
       {
         verification: async () => {
           const { id, updateData } = req.body;
+          const { skuIds, override } = updateData;
 
-          if (req.admin) {
-            const productImportCheck = await getProductImport({ id });
+          const productImportCheck = await getProductImport({ id });
 
-            if (productImportCheck.length == 0) {
-              throw new Error(
-                JSON.stringify({
-                  errorkey: 'verification',
-                  body: {
-                    status: 404,
-                    data: {
-                      message: 'No such product import found'
-                    }
-                  }
-                })
-              );
-            }
-
-            return {
-              message: 'Product Import found',
-              id,
-              updateData
-            };
-          } else {
-            const ownerId = req.user.id;
-
-            if (updateData.tenantId) {
-              delete updateData.tenantId;
-            }
-
-            const productImportCheck = await prisma.productImports.findMany({
-              where: {
-                id,
-                tenant: {
-                  company: {
-                    ownerId
+          if (productImportCheck.length == 0) {
+            throw new Error(
+              JSON.stringify({
+                errorkey: 'verification',
+                body: {
+                  status: 404,
+                  data: {
+                    message: 'No such product import found'
                   }
                 }
+              })
+            );
+          }
+
+          if (skuIds && skuIds.length != 0) {
+            const skuCheck = await prisma.sKU.findMany({
+              where: {
+                id: {
+                  in: skuIds
+                },
+                productId: productImportCheck[0].productId
               }
             });
 
-            if (productImportCheck.length == 0) {
+            if (skuCheck.length != skuIds.length) {
               throw new Error(
                 JSON.stringify({
-                  errorkey: 'verification',
+                  errorKey: 'verify',
                   body: {
-                    status: 404,
+                    status: 409,
                     data: {
-                      message: 'No such product import found'
+                      message: 'One or more SKUs are not valid'
                     }
                   }
                 })
               );
             }
-
-            return {
-              message: 'Product Import found',
-              id,
-              updateData
-            };
           }
+
+          if (
+            override !== undefined &&
+            (override.price || override.sellingPrice)
+          ) {
+            if (productImportCheck[0].type != 'discount') {
+              throw new Error(
+                JSON.stringify({
+                  errorKey: 'verify',
+                  body: {
+                    status: 409,
+                    data: {
+                      message: 'Override option not allowed'
+                    }
+                  }
+                })
+              );
+            }
+          }
+
+          return {
+            message: 'Product Import found',
+            id,
+            updateData
+          };
         },
         update: [
           'verification',

@@ -2,8 +2,14 @@ import { prisma } from '../prisma';
 
 // create
 export const createProductImport = async (data) => {
-  const { tenantId, productId, ...rest } = data;
+  const { tenantId, productId, skuIds, ...rest } = data;
 
+  if (skuIds && Array.isArray(skuIds) && skuIds.length != 0) {
+    rest.skus = { connect: [] };
+    skuIds.forEach((id) => {
+      rest.skus.connect.push({ id });
+    });
+  }
   if (tenantId) rest.tenant = { connect: { id: tenantId } };
   if (productId) rest.product = { connect: { id: productId } };
 
@@ -15,14 +21,22 @@ export const createProductImport = async (data) => {
 };
 
 // read
-export const getProductImport = async ({ id, tenantId, productId }) => {
-  if (!id && !tenantId && !productId) return [];
+export const getProductImport = async ({
+  id,
+  tenantId,
+  productId,
+  type,
+  skuId
+}) => {
+  if (!id && !tenantId && !productId && !type && !skuId) return [];
 
   const condition = { OR: [] };
 
   if (id) condition.OR.push({ id });
-  if (tenantId) condition.OR.push({ tenantIds: { contains: tenantId } });
+  if (tenantId) condition.OR.push({ tenantId });
+  if (skuId) condition.OR.push({ skuIds: { contains: skuId } });
   if (productId) condition.OR.push({ productId });
+  if (type) condition.OR.push({ type });
 
   const productImports = await prisma.productImports.findMany({
     where: condition
@@ -35,9 +49,19 @@ export const searchProductImport = async ({
   id,
   tenantId,
   productId,
-  status
+  status,
+  type,
+  skuId,
+  ownerId
 }) => {
-  if (!id && !tenantId && !productId && status === undefined) {
+  if (
+    !id &&
+    !tenantId &&
+    !productId &&
+    status === undefined &&
+    !type &&
+    !skuId
+  ) {
     const productImports = await prisma.productImports.findMany({
       where: {}
     });
@@ -51,6 +75,9 @@ export const searchProductImport = async ({
   if (tenantId) condition.AND.push({ tenantId });
   if (productId) condition.AND.push({ productId });
   if (status != undefined) condition.AND.push({ status });
+  if (skuId) condition.AND.push({ skuIds: { has: skuId } });
+  if (type) condition.AND.push({ type });
+  if (ownerId) condition.AND.push({ tenant: { company: { ownerId } } });
 
   const productImports = await prisma.productImports.findMany({
     where: condition
@@ -61,10 +88,16 @@ export const searchProductImport = async ({
 
 // update
 export const updateProductImport = async (id, updateData) => {
-  const { tenantId, productId, ...rest } = updateData;
+  const { tenantId, productId, skuIds, ...rest } = updateData;
 
   if (tenantId) rest.tenant = { connect: { id: tenantId } };
   if (productId) rest.product = { connect: { id: productId } };
+  if (skuIds && Array.isArray(skuIds) && skuIds.length != 0) {
+    rest.skus = { connect: [] };
+    skuIds.forEach((id) => {
+      rest.skus.connect.push({ id });
+    });
+  }
 
   const productImport = await prisma.productImports.update({
     where: { id },

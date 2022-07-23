@@ -2,8 +2,13 @@ import async from 'async';
 
 import { searchProductImport } from '../../../prisma/products/product_imports';
 import handleResponse from '../../../utils/helpers/handleResponse';
+import auth from '../../../utils/middlewares/auth';
+import runMiddleware from '../../../utils/helpers/runMiddleware';
+import { prisma } from '../../../prisma/prisma';
 
 const handler = async (req, res) => {
+  await runMiddleware(req, res, auth);
+
   if (req.method == 'GET') {
     async.auto(
       {
@@ -13,6 +18,10 @@ const handler = async (req, res) => {
 
             if (status) {
               req.query.status = status == 'true';
+            }
+
+            if (!req.admin) {
+              req.query.ownerId = req.user.id;
             }
 
             const productImports = await searchProductImport(req.query);
