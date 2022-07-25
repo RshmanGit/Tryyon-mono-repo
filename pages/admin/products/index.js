@@ -1,5 +1,5 @@
-import Layout from '../../ui/layouts/admin';
-import TableComp from '../../ui/components/table';
+import Layout from '../../../ui/layouts/admin';
+import TableComp from '../../../ui/components/table';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import {
@@ -36,9 +36,9 @@ import {
 
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
-import { SearchBar } from '../../ui/components/searchbar';
-import useDebounce from '../../utils/hooks/useDebounce';
-import Facet from '../../ui/components/facet';
+import { SearchBar } from '../../../ui/components/searchbar';
+import useDebounce from '../../../utils/hooks/useDebounce';
+import Facet from '../../../ui/components/facet';
 
 const columnsData = [
   {
@@ -664,7 +664,7 @@ export default function ProductPage() {
             <Button
               fontSize={{ sm: '14px' }}
               colorScheme="blue"
-              onClick={openCreate}
+              onClick={() => router.push('/admin/products/create')}
             >
               Create
             </Button>
