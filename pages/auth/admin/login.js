@@ -63,15 +63,6 @@ function Login() {
     }
   }, [router.query.next, toast]);
 
-  useEffect(() => {
-    if (
-      (sessionStorage.token_admin && !router.query.next) ||
-      router.query.next === ''
-    ) {
-      router.push('/admin/Product');
-    }
-  });
-
   const handleClick = () => setShow(!show);
   return (
     // <DefaultAuth illustrationBackground={'/auth.png'} image={'/auth.png'}>
@@ -171,7 +162,7 @@ function Login() {
               .then((res) => {
                 if (router.query.next && router.query.next !== '') {
                   router.push(router.query.next);
-                }
+                } else router.push('/admin');
               })
               .catch((err) => {
                 console.error(JSON.parse(err.message));
