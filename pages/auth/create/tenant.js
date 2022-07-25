@@ -44,7 +44,7 @@ function Register() {
   let router = useRouter();
 
   useEffect(() => {
-    if (!sessionStorage.token_use) {
+    if (!sessionStorage.userToken) {
       alert('Login first !');
       router.push('/auth/login');
     } else if (
@@ -59,7 +59,7 @@ function Register() {
     }
     if (dashboard === 1) {
       sessionStorage.setItem('tenant', 'ok');
-      router.push('/auth/dashboard');
+      router.push('/dashboard');
     }
   });
 
@@ -117,7 +117,7 @@ function Register() {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${sessionStorage.token_use}`
+                Authorization: `Bearer ${sessionStorage.userToken}`
               },
               body: JSON.stringify(values, null, 4)
             })

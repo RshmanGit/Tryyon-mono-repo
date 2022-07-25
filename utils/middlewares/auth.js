@@ -32,8 +32,8 @@ const auth = (req, res, next) => {
     console.log('Not an authenticated user');
   }
 
-  if (!isAdmin & !isAuthenticatedUser) {
-    return res.status(401).json({ message: 'Unauthorised Admin' });
+  if (!isAdmin && !isAuthenticatedUser) {
+    return res.status(401).json({ message: 'Unauthorized Access' });
   }
 
   return next();
