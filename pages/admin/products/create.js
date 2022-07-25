@@ -425,6 +425,38 @@ function CreateProduct() {
                 throw new Error('SKUs not generated');
               }
 
+              let totalSKUQuantity = 0;
+              tableData.forEach((row) => {
+                totalSKUQuantity += row.quantity;
+              });
+
+              if (totalSKUQuantity != values.quantity) {
+                let details = '',
+                  title = '';
+
+                if (totalSKUQuantity > values.quantity) {
+                  details =
+                    'Total SKU quantity not equal to the product quantity. Decrease the quantity for some SKUs or increase the product quantity.';
+                  title = `Excess SKU quantity: ${Math.abs(
+                    totalSKUQuantity - values.quantity
+                  )}`;
+                } else {
+                  details =
+                    'Total SKU quantity not equal to the product quantity. Increase the quantity for some SKUs or decrease the product quantity.';
+                  title = `Excess product quantity: ${Math.abs(
+                    totalSKUQuantity - values.quantity
+                  )}`;
+                }
+
+                toast({
+                  title: title,
+                  description: details,
+                  status: 'error',
+                  isClosable: true
+                });
+                throw new Error(`${title} ${details}`);
+              }
+
               const { price, discountedPrice, ...body } = values;
 
               if (supplier == '') {
@@ -1556,7 +1588,7 @@ function CreateProduct() {
                           >
                             {({ handleSubmit, errors, touched, values }) => (
                               <form>
-                                <Flex>
+                                <>
                                   <Flex direction="column">
                                     <FormControl
                                       mb="4px"
@@ -1585,7 +1617,6 @@ function CreateProduct() {
                                         fontSize="sm"
                                         mb="3px"
                                         fontWeight="500"
-                                        size="md"
                                         validate={(value) => {
                                           if (value == 0) {
                                             return 'Field can not be empty';
@@ -1623,7 +1654,6 @@ function CreateProduct() {
                                         fontSize="sm"
                                         mb="3px"
                                         fontWeight="500"
-                                        size="md"
                                         validate={(value) => {
                                           if (value == 0) {
                                             return 'Field can not be empty';
@@ -1663,7 +1693,6 @@ function CreateProduct() {
                                         fontSize="sm"
                                         mb="3px"
                                         fontWeight="500"
-                                        size="md"
                                         validate={(value) => {
                                           if (value == 0) {
                                             return 'Field can not be empty';
@@ -1677,17 +1706,18 @@ function CreateProduct() {
                                         {errors.discountedPrice}
                                       </FormErrorMessage>
                                     </FormControl>
-                                    <Button
-                                      colorScheme="blue"
-                                      onClick={() => {
-                                        handleSubmit();
-                                        onClose();
-                                      }}
-                                    >
-                                      Update
-                                    </Button>
                                   </Flex>
-                                </Flex>
+                                  <Button
+                                    colorScheme="blue"
+                                    mt="16px"
+                                    onClick={() => {
+                                      handleSubmit();
+                                      onClose();
+                                    }}
+                                  >
+                                    Update
+                                  </Button>
+                                </>
                               </form>
                             )}
                           </Formik>
