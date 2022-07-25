@@ -680,6 +680,7 @@ export default function ProductPage() {
           priceTo={priceTo}
           setPriceFrom={setPriceFrom}
           setPriceTo={setPriceTo}
+          token={typeof window !== 'undefined' ? sessionStorage.adminToken : ''}
         />
 
         <TableComp

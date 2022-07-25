@@ -5,24 +5,11 @@ import {
   Flex,
   Input,
   Text,
-  Textarea,
-  useColorModeValue,
-  useDisclosure,
   useToast,
-  Checkbox,
-  FormLabel,
   Select,
-  HStack,
   Tag,
   TagCloseButton,
   TagLabel,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Menu,
   MenuButton,
   MenuList,
@@ -49,7 +36,8 @@ export default function Facet(props) {
     priceFrom,
     setPriceFrom,
     priceTo,
-    setPriceTo
+    setPriceTo,
+    token
   } = props;
 
   const [availableCategories, setAvailableCategories] = useState([]);
@@ -77,7 +65,7 @@ export default function Facet(props) {
     fetch(`${router.basePath}/api/products/category`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${sessionStorage.adminToken}`
+        Authorization: `Bearer ${token}`
       }
     })
       .then(async (res) => {
@@ -89,7 +77,7 @@ export default function Facet(props) {
 
         if (res.status == 403 || res.status == 401) {
           // alert('Admin not logged in...');
-          router.push(`/auth/admin/login?next=${router.pathname}`);
+          router.push(`/auth/login?next=${router.pathname}`);
         }
 
         if (res.status == 404) {
@@ -121,7 +109,7 @@ export default function Facet(props) {
     fetch(`${router.basePath}/api/products/attribute`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${sessionStorage.adminToken}`
+        Authorization: `Bearer ${token}`
       }
     })
       .then(async (res) => {
@@ -133,7 +121,7 @@ export default function Facet(props) {
 
         if (res.status == 403 || res.status == 401) {
           // alert('Admin not logged in...');
-          router.push(`/auth/admin/login?next=${router.pathname}`);
+          router.push(`/auth/login?next=${router.pathname}`);
         }
 
         if (res.status == 404) {
@@ -161,7 +149,7 @@ export default function Facet(props) {
           isClosable: true
         });
       });
-  }, [router, toast]);
+  }, [router, toast, token]);
 
   useEffect(() => {
     let attr = {};
