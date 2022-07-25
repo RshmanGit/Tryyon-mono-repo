@@ -1,6 +1,6 @@
 import Sidebar from '../../components/sidebar/sidebar';
 import SidebarLinks from '../../components/sidebar/links';
-import routes from '../../routes/admin';
+import routes from '../../routes/user';
 import { Box } from '@chakra-ui/react';
 
 function Layout({ children }) {

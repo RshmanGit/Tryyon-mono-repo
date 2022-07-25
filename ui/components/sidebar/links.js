@@ -3,7 +3,14 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 // chakra imports
-import { Box, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  HStack,
+  Text,
+  useColorModeValue,
+  VStack
+} from '@chakra-ui/react';
 
 export function SidebarLinks(props) {
   //   Chakra color mode
@@ -21,18 +28,18 @@ export function SidebarLinks(props) {
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
-    return router.pathname.includes(routeName);
+    return router.pathname === routeName;
   };
 
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (routes) => {
     return routes.map((route, index) => {
-      if (route.layout === '/admin') {
-        return (
+      return (
+        <Box>
           <Link key={index} href={route.layout + route.path}>
             <a>
               {route.icon ? (
-                <Box>
+                <Box borderLeft="2px" borderColor="gray.300">
                   <HStack
                     spacing={
                       activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
@@ -40,7 +47,7 @@ export function SidebarLinks(props) {
                     py="5px"
                     ps="10px"
                   >
-                    <Flex w="100%" alignItems="center" justifyContent="center">
+                    <Flex w="100%" alignItems="center">
                       <Box
                         color={
                           activeRoute(route.path.toLowerCase())
@@ -80,7 +87,7 @@ export function SidebarLinks(props) {
                   </HStack>
                 </Box>
               ) : (
-                <Box>
+                <Box borderLeft="2px" borderColor="gray.300">
                   <HStack
                     spacing={
                       activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
@@ -88,29 +95,44 @@ export function SidebarLinks(props) {
                     py="5px"
                     ps="10px"
                   >
-                    <Text
-                      me="auto"
-                      color={
+                    <Flex w="100%" alignItems="center">
+                      <Text
+                        color={
+                          activeRoute(route.path.toLowerCase())
+                            ? activeColor
+                            : textColor
+                        }
+                        fontWeight={
+                          activeRoute(route.path.toLowerCase())
+                            ? 'bold'
+                            : 'normal'
+                        }
+                      >
+                        {route.name}
+                      </Text>
+                    </Flex>
+                    <Box
+                      h="36px"
+                      w="4px"
+                      bg={
                         activeRoute(route.path.toLowerCase())
-                          ? activeColor
-                          : inactiveColor
+                          ? brandColor
+                          : 'transparent'
                       }
-                      fontWeight={
-                        activeRoute(route.path.toLowerCase())
-                          ? 'bold'
-                          : 'normal'
-                      }
-                    >
-                      {route.name}
-                    </Text>
-                    <Box h="36px" w="4px" bg="brand.400" borderRadius="5px" />
+                      borderRadius="5px"
+                    />
                   </HStack>
                 </Box>
               )}
             </a>
           </Link>
-        );
-      }
+          <Box pl="48px">
+            {route.items &&
+              Array.isArray(route.items) &&
+              createLinks(route.items)}
+          </Box>
+        </Box>
+      );
     });
   };
   //  BRAND
