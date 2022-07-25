@@ -677,7 +677,7 @@ export default function UserProducts() {
           priceTo={priceTo}
           setPriceFrom={setPriceFrom}
           setPriceTo={setPriceTo}
-          token={sessionStorage.userToken}
+          token={typeof window !== 'undefined' ? sessionStorage.userToken : ''}
         />
 
         <TableComp
