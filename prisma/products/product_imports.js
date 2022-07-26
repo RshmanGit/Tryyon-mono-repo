@@ -14,7 +14,10 @@ export const createProductImport = async (data) => {
   if (productId) rest.product = { connect: { id: productId } };
 
   const productImport = await prisma.productImports.create({
-    data: rest
+    data: rest,
+    include: {
+      product: true
+    }
   });
 
   return productImport;
@@ -63,7 +66,10 @@ export const searchProductImport = async ({
     !skuId
   ) {
     const productImports = await prisma.productImports.findMany({
-      where: {}
+      where: {},
+      include: {
+        product: true
+      }
     });
 
     return productImports;
@@ -80,7 +86,10 @@ export const searchProductImport = async ({
   if (ownerId) condition.AND.push({ tenant: { company: { ownerId } } });
 
   const productImports = await prisma.productImports.findMany({
-    where: condition
+    where: condition,
+    include: {
+      product: true
+    }
   });
 
   return productImports;

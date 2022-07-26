@@ -115,9 +115,82 @@ const columnsData = [
   }
 ];
 
+const ImportsColumnsData = [
+  {
+    Header: 'ID',
+    accessor: 'id'
+  },
+  {
+    Header: 'TYPE',
+    accessor: 'type'
+  },
+  {
+    Header: 'PRICE',
+    accessor: 'override.price'
+  },
+  {
+    Header: 'SELLING PRICE',
+    accessor: 'override.sellingPrice'
+  },
+  {
+    Header: 'STATUS',
+    accessor: 'status'
+  },
+  {
+    Header: 'PRODUCT ID',
+    accessor: 'product.id'
+  },
+  {
+    Header: 'PRODUCT NAME',
+    accessor: 'product.name'
+  },
+  {
+    Header: 'PRODUCT DESCRIPTION',
+    accessor: 'product.description'
+  },
+  {
+    Header: 'PRODUCT SHORT DESCRIPTIONS',
+    accessor: 'product.shortDescriptions'
+  },
+  {
+    Header: 'PRODUCT SLUG',
+    accessor: 'product.slug'
+  },
+  {
+    Header: 'PRODUCT QUANTITY',
+    accessor: 'product.quantity'
+  },
+  {
+    Header: 'PRODUCT PUBLISHED',
+    accessor: 'product.published'
+  },
+  {
+    Header: 'PRODUCT SUPPLIER ID',
+    accessor: 'product.supplierId'
+  },
+  {
+    Header: 'PRODUCT CATEGORIES',
+    accessor: 'product.categories'
+  },
+  {
+    Header: 'PRODUCT MANUFACTURER',
+    accessor: 'product.manufacturer'
+  },
+  {
+    Header: 'PRODUCT LOCATIONS',
+    accessor: 'product.locations'
+  },
+  {
+    Header: 'PRODUCT COUNTRY OF ORIGIN',
+    accessor: 'product.countryOfOrigin'
+  }
+];
+
 export default function UserProducts() {
   const toast = useToast();
   const [data, setData] = useState([]);
+  const [importsData, setImportsData] = useState([]);
+
   const [page, setPage] = useState(0);
   const [searchString, setSearchString] = useState('');
   const [categoryQuery, setCategoryQuery] = useState('');
@@ -619,6 +692,48 @@ export default function UserProducts() {
             isClosable: true
           });
         });
+
+      fetch(`${router.basePath}/api/product_imports`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.userToken}`
+        }
+      })
+        .then(async (res) => {
+          const res_data = await res.json();
+          if (res.ok) {
+            console.log(res_data);
+            return res_data;
+          }
+
+          if (res.status == 403 || res.status == 401) {
+            router.push(`/auth/login?next=${router.pathname}`);
+          }
+
+          if (res.status == 404) {
+            console.log(res_data.message);
+            toast({
+              title: res_data.message,
+              status: 'error',
+              duration: 2000,
+              isClosable: true
+            });
+            return { products: [] };
+          }
+          throw new Error(res_data.message);
+        })
+        .then((res) => {
+          setImportsData(res.productImports);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast({
+            title: err.message,
+            status: 'error',
+            duration: 2000,
+            isClosable: true
+          });
+        });
     }
   }, [
     router,
@@ -688,6 +803,8 @@ export default function UserProducts() {
           tableData={data}
           restore_page={page}
         />
+
+        <TableComp columnsData={ImportsColumnsData} tableData={importsData} />
       </Layout>
       {isOpen && (
         <Modal
