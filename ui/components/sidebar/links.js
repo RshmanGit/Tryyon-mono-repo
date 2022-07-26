@@ -3,14 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 // chakra imports
-import {
-  Box,
-  Flex,
-  HStack,
-  Text,
-  useColorModeValue,
-  VStack
-} from '@chakra-ui/react';
+import { Box, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react';
 
 export function SidebarLinks(props) {
   //   Chakra color mode
@@ -42,7 +35,11 @@ export function SidebarLinks(props) {
                 <Box borderLeft="2px" borderColor="gray.300">
                   <HStack
                     spacing={
-                      activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
+                      activeRoute(
+                        route.layout.toLowerCase() + route.path.toLowerCase()
+                      )
+                        ? '22px'
+                        : '26px'
                     }
                     py="5px"
                     ps="10px"
@@ -50,7 +47,10 @@ export function SidebarLinks(props) {
                     <Flex w="100%" alignItems="center">
                       <Box
                         color={
-                          activeRoute(route.path.toLowerCase())
+                          activeRoute(
+                            route.layout.toLowerCase() +
+                              route.path.toLowerCase()
+                          )
                             ? activeIcon
                             : textColor
                         }
@@ -61,12 +61,18 @@ export function SidebarLinks(props) {
                       <Text
                         me="auto"
                         color={
-                          activeRoute(route.path.toLowerCase())
+                          activeRoute(
+                            route.layout.toLowerCase() +
+                              route.path.toLowerCase()
+                          )
                             ? activeColor
                             : textColor
                         }
                         fontWeight={
-                          activeRoute(route.path.toLowerCase())
+                          activeRoute(
+                            route.layout.toLowerCase() +
+                              route.path.toLowerCase()
+                          )
                             ? 'bold'
                             : 'normal'
                         }
@@ -78,7 +84,9 @@ export function SidebarLinks(props) {
                       h="36px"
                       w="4px"
                       bg={
-                        activeRoute(route.path.toLowerCase())
+                        activeRoute(
+                          route.layout.toLowerCase() + route.path.toLowerCase()
+                        )
                           ? brandColor
                           : 'transparent'
                       }
@@ -90,7 +98,11 @@ export function SidebarLinks(props) {
                 <Box borderLeft="2px" borderColor="gray.300">
                   <HStack
                     spacing={
-                      activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
+                      activeRoute(
+                        route.layout.toLowerCase() + route.path.toLowerCase()
+                      )
+                        ? '22px'
+                        : '26px'
                     }
                     py="5px"
                     ps="10px"
@@ -98,12 +110,18 @@ export function SidebarLinks(props) {
                     <Flex w="100%" alignItems="center">
                       <Text
                         color={
-                          activeRoute(route.path.toLowerCase())
+                          activeRoute(
+                            route.layout.toLowerCase() +
+                              route.path.toLowerCase()
+                          )
                             ? activeColor
                             : textColor
                         }
                         fontWeight={
-                          activeRoute(route.path.toLowerCase())
+                          activeRoute(
+                            route.layout.toLowerCase() +
+                              route.path.toLowerCase()
+                          )
                             ? 'bold'
                             : 'normal'
                         }
@@ -115,7 +133,9 @@ export function SidebarLinks(props) {
                       h="36px"
                       w="4px"
                       bg={
-                        activeRoute(route.path.toLowerCase())
+                        activeRoute(
+                          route.layout.toLowerCase() + route.path.toLowerCase()
+                        )
                           ? brandColor
                           : 'transparent'
                       }
