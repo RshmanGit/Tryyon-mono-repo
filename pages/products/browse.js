@@ -5,42 +5,31 @@ import { useRouter } from 'next/router';
 import {
   Button,
   Flex,
-  Input,
   Text,
-  Textarea,
   useColorModeValue,
   useDisclosure,
   useToast,
-  Checkbox,
-  FormLabel,
-  Select,
-  HStack,
-  Tag,
-  TagCloseButton,
-  TagLabel,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  VStack,
-  Code,
-  Box
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  CheckboxGroup,
+  Checkbox,
+  Switch
 } from '@chakra-ui/react';
 
-import { ChevronDownIcon, DownloadIcon } from '@chakra-ui/icons';
+import { DownloadIcon } from '@chakra-ui/icons';
 
 import { SearchBar } from '../../ui/components/searchbar';
 import useDebounce from '../../utils/hooks/useDebounce';
 import Facet from '../../ui/components/facet';
-import { MdOutlineImportContacts, MdOutlineImportExport } from 'react-icons/md';
-import { override } from 'joi';
+import { Field, Formik } from 'formik';
 
 const columnsData = [
   {
@@ -138,14 +127,21 @@ export default function UserProducts() {
   const [attributesQuery, setAttributesQuery] = useState({});
   const [priceFrom, setPriceFrom] = useState(0);
   const [priceTo, setPriceTo] = useState(0);
-
-  const [createdImport, setCreatedImport] = useState({});
+  const [skus, setSKUs] = useState([]);
 
   const debouncedSearchString = useDebounce(searchString, 1500);
   const debouncedCategoryQuery = useDebounce(categoryQuery, 1500);
   const debouncedAttributesQuery = useDebounce(attributesQuery, 1500);
   const debouncedPriceFrom = useDebounce(priceFrom, 1500);
   const debouncedPriceTo = useDebounce(priceTo, 1500);
+
+  const [modalHeader, setModalHeader] = useState('');
+  const [modalBody, setModalBody] = useState('');
+
+  const [importProductId, setImportProductId] = useState('');
+  const [importType, setImportType] = useState('');
+  const [importValue, setImportValue] = useState(0);
+  const [importIndex, setImportIndex] = useState(-1);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -221,6 +217,9 @@ export default function UserProducts() {
         query.priceTo = debouncedPriceTo;
       }
 
+      query.reseller = { allowed: true };
+      query.excludeTenant = sessionStorage.tenantId;
+
       console.log(query);
       fetch(`${router.basePath}/api/products`, {
         method: 'POST',
@@ -287,6 +286,56 @@ export default function UserProducts() {
       setPage(parseInt(localStorage.getItem('page/products/browse'), 10));
   }, []);
 
+  function createProductImport(type, productId, value, index) {
+    setImportProductId(productId);
+    setImportType(type);
+    setImportValue(value);
+    setImportIndex(index);
+
+    fetch('/api/sku', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.userToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ productId })
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          return await res.json();
+        }
+
+        if (res.status == 403 || res.status == 401) {
+          toast({
+            title: 'Unauthorised user',
+            status: 'error',
+            duration: 2000,
+            isClosable: true
+          });
+          router.push(`/auth/login?next=${router.pathname}`);
+        }
+
+        const err = await res.json();
+        throw new Error(err.message);
+      })
+      .then((res) => {
+        setSKUs(res.skus);
+      })
+      .catch((err) => {
+        console.error(err.message);
+        toast({
+          title: err.message,
+          status: 'error',
+          duration: 2000,
+          isClosable: true
+        });
+      });
+
+    setModalBody('import');
+    setModalHeader('Import Product');
+    onOpen();
+  }
+
   return (
     <>
       <Layout>
@@ -342,57 +391,12 @@ export default function UserProducts() {
                 cells[18].value == 'discount' ||
                 cells[18].value == 'commission'
               ) {
-                const body = {
-                  type: cells[18].value,
-                  skuIds: [],
-                  productId: cells[0].value,
-                  status: false
-                };
-
-                if (cells[18].value == 'discount') {
-                  const override = {};
-                  let v = prompt('Enter price');
-
-                  override.price = v;
-                  override.sellingPrice =
-                    v + (parseInt(cells[20].value) * v) / 100;
-
-                  body.override = override;
-                }
-
-                fetch('/api/product_imports/create', {
-                  method: 'POST',
-                  headers: {
-                    Authorization: `Bearer ${sessionStorage.userToken}`,
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(body)
-                })
-                  .then(async (res) => {
-                    if (res.ok) return await res.json();
-
-                    if (res.status == 403 || res.status == 401) {
-                      router.push(`/auth/login?next=${router.pathname}`);
-                    }
-
-                    const err = await res.json();
-                    console.log(err);
-                    throw new Error(err.message);
-                  })
-                  .then((res) => {
-                    onOpen();
-                    setCreatedImport(res.productImport);
-                  })
-                  .catch((err) => {
-                    toast({
-                      title: err.message,
-                      status: 'error',
-                      duration: 2000,
-                      isClosable: true
-                    });
-
-                    console.error(err.message);
-                  });
+                createProductImport(
+                  cells[18].value,
+                  cells[0].value,
+                  cells[20].value ? cells[20].value : cells[19].value,
+                  cells[0].row.index
+                );
               } else {
                 toast({
                   title: 'Import not allowed',
@@ -418,10 +422,211 @@ export default function UserProducts() {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>New Product Imported</ModalHeader>
+            <ModalHeader>{modalHeader}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              Imported product: {createdImport.product.name}
+              {modalBody == 'import' && (
+                <Formik
+                  initialValues={{
+                    skuIds: [],
+                    status: false,
+                    price: null
+                  }}
+                  onSubmit={(values) => {
+                    const body = {
+                      type: importType,
+                      productId: importProductId,
+                      status: values.status,
+                      skuIds: values.skuIds
+                    };
+
+                    if (importType == 'discount') {
+                      body.override = {
+                        price: values.price,
+                        sellingPrice:
+                          values.price +
+                          (parseInt(importValue) * values.price) / 100
+                      };
+                    }
+
+                    fetch('/api/product_imports/create', {
+                      method: 'POST',
+                      headers: {
+                        Authorization: `Bearer ${sessionStorage.userToken}`,
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(body)
+                    })
+                      .then(async (res) => {
+                        if (res.ok) return await res.json();
+
+                        if (res.status == 403 || res.status == 401) {
+                          router.push(`/auth/login?next=${router.pathname}`);
+                        }
+
+                        const err = await res.json();
+                        console.log(err);
+                        throw new Error(err.message);
+                      })
+                      .then((res) => {
+                        toast({
+                          title: `Imported Product: ${res.productImport.product.name}`,
+                          status: 'success',
+                          isClosable: true
+                        });
+
+                        setData((prev) => {
+                          const newArr = [...prev];
+                          newArr.splice(importIndex, 1);
+
+                          return newArr;
+                        });
+
+                        setImportProductId('');
+                        setImportType('');
+                        setImportValue(0);
+                        setImportIndex(-1);
+
+                        onClose();
+                      })
+                      .catch((err) => {
+                        toast({
+                          title: err.message,
+                          status: 'error',
+                          duration: 2000,
+                          isClosable: true
+                        });
+
+                        console.error(err.message);
+                      });
+                  }}
+                >
+                  {({ handleSubmit, errors, touched, values, setValues }) => (
+                    <form>
+                      <Flex direction="column">
+                        {importType == 'discount' && (
+                          <>
+                            <FormControl
+                              mb="4px"
+                              isInvalid={!!errors.quantity && touched.quantity}
+                            >
+                              <FormLabel
+                                display="flex"
+                                ms="4px"
+                                fontSize="sm"
+                                fontWeight="500"
+                                color={textColor}
+                                mb="5px"
+                              >
+                                Price*
+                              </FormLabel>
+                              <Field
+                                as={Input}
+                                isRequired={true}
+                                id="price"
+                                name="price"
+                                type="number"
+                                variant="auth"
+                                fontSize="sm"
+                                mb="3px"
+                                fontWeight="500"
+                                validate={(value) => {
+                                  if (value == 0) {
+                                    return 'Field can not be empty';
+                                  }
+                                }}
+                              />
+                              <FormErrorMessage>
+                                {errors.price}
+                              </FormErrorMessage>
+                            </FormControl>
+
+                            <FormControl
+                              mb="4px"
+                              isInvalid={!!errors.quantity && touched.quantity}
+                            >
+                              <FormLabel
+                                display="flex"
+                                ms="4px"
+                                fontSize="sm"
+                                fontWeight="500"
+                                color={textColor}
+                                mb="5px"
+                              >
+                                Selling Price
+                              </FormLabel>
+                              <Field
+                                as={Input}
+                                value={
+                                  values.price +
+                                  (parseInt(importValue) * values.price) / 100
+                                }
+                                disabled
+                                type="number"
+                                variant="auth"
+                                fontSize="sm"
+                                mb="3px"
+                                fontWeight="500"
+                              />
+                            </FormControl>
+                          </>
+                        )}
+
+                        <FormLabel>SKUs</FormLabel>
+
+                        <CheckboxGroup
+                          onChange={(skuIds) =>
+                            setValues((prev) => ({ ...prev, skuIds }))
+                          }
+                        >
+                          {skus.map((sku, index) => (
+                            <Checkbox key={index} mb="8px" value={sku.id}>
+                              <Flex gap="4px">
+                                {Object.keys(sku.attributes).map((e, idx) => (
+                                  <Text key={idx}>
+                                    {`${e}: ${sku.attributes[e]},`}
+                                  </Text>
+                                ))}
+                              </Flex>
+                            </Checkbox>
+                          ))}
+                        </CheckboxGroup>
+
+                        <FormControl
+                          mt="12px"
+                          display="flex"
+                          alignItems="center"
+                        >
+                          <FormLabel htmlFor="marketPlace" name="marketPlace">
+                            Status
+                          </FormLabel>
+                          <Field
+                            as={Switch}
+                            id="status"
+                            name="status"
+                            variant="auth"
+                            fontSize="sm"
+                            mb="3px"
+                            fontWeight="500"
+                            size="md"
+                          />
+                        </FormControl>
+                      </Flex>
+                      <Button
+                        colorScheme="blue"
+                        mt="12px"
+                        mb="16px"
+                        float="right"
+                        onClick={() => {
+                          handleSubmit();
+                        }}
+                      >
+                        Create
+                      </Button>
+                    </form>
+                  )}
+                </Formik>
+              )}
             </ModalBody>
           </ModalContent>
         </Modal>

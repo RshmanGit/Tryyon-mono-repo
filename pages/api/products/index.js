@@ -35,7 +35,8 @@ const schema = {
     featuredTo: Joi.date().optional(),
     guestCheckout: Joi.boolean().optional(),
     private_product: Joi.boolean().optional(),
-    marketPlace: Joi.boolean().optional()
+    marketPlace: Joi.boolean().optional(),
+    excludeTenant: Joi.string().optional()
   })
 };
 

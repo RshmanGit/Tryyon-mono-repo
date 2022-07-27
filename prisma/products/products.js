@@ -57,6 +57,7 @@ export const searchProducts = async ({
   private_product,
   marketPlace,
   reseller,
+  excludeTenant,
   pagination,
   offset,
   limit
@@ -83,6 +84,11 @@ export const searchProducts = async ({
 
   if (id) condition._id = { $eq: { $oid: id } };
   if (supplierId) condition.supplierId = { $eq: { $oid: supplierId } };
+  if (excludeTenant)
+    condition.supplierId = {
+      ...condition.supplierId,
+      $ne: { $oid: excludeTenant }
+    };
   if (query) condition.name = { $regex: query, $options: 'i' };
   if (manufacturer)
     condition.manufacturer = { $regex: manufacturer, $options: 'i' };
@@ -163,6 +169,33 @@ export const searchProducts = async ({
       as: 'sku'
     }
   });
+
+  pipeline.push({
+    $lookup: {
+      from: 'ProductImports',
+      localField: '_id',
+      foreignField: 'productId',
+      as: 'productImport'
+    }
+  });
+
+  if (excludeTenant) {
+    pipeline.push({
+      $match: {
+        productImport: {
+          $not: {
+            $elemMatch: {
+              tenantId: {
+                $eq: {
+                  $oid: excludeTenant
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+  }
 
   if (priceFrom || priceTo) {
     const price = {};
