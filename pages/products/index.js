@@ -669,7 +669,6 @@ export default function UserProducts() {
           }
 
           if (res.status == 404) {
-            console.log(res_data.message);
             toast({
               title: res_data.message,
               status: 'error',
@@ -796,6 +795,16 @@ export default function UserProducts() {
           token={typeof window !== 'undefined' ? sessionStorage.userToken : ''}
         />
 
+        <Text
+          color={textColor}
+          fontSize="24px"
+          fontWeight="700"
+          lineHeight="100%"
+          mt="24px"
+          mb="8px"
+        >
+          Products
+        </Text>
         <TableComp
           editEntry={openEdit}
           deleteEntry={openDelete}
@@ -804,7 +813,62 @@ export default function UserProducts() {
           restore_page={page}
         />
 
-        <TableComp columnsData={ImportsColumnsData} tableData={importsData} />
+        <Text
+          color={textColor}
+          fontSize="24px"
+          fontWeight="700"
+          lineHeight="100%"
+          mt="24px"
+          mb="8px"
+        >
+          Product Imports
+        </Text>
+        <TableComp
+          columnsData={ImportsColumnsData}
+          tableData={importsData}
+          deleteEntry={(cells) => {
+            fetch('/api/product_imports/delete', {
+              method: 'DELETE',
+              headers: {
+                Authorization: `Bearer ${sessionStorage.userToken}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ id: cells[0].value })
+            })
+              .then(async (res) => {
+                if (res.ok) {
+                  return await res.json();
+                }
+
+                const err = await res.json();
+                throw new Error(err.message);
+              })
+              .then((res) => {
+                toast({
+                  title: res.message,
+                  status: 'success',
+                  isClosable: true
+                });
+
+                setImportsData((prev) => {
+                  const newArr = [...prev];
+
+                  newArr.splice(cells[0].row.index, 1);
+
+                  return newArr;
+                });
+              })
+              .catch((err) => {
+                toast({
+                  title: err.message,
+                  status: 'error',
+                  isClosable: true
+                });
+
+                console.error(err.message);
+              });
+          }}
+        />
       </Layout>
       {isOpen && (
         <Modal
