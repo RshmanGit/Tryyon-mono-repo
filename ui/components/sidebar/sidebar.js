@@ -33,7 +33,7 @@ function Sidebar(props) {
         overflowX="hidden"
         boxShadow={shadow}
       >
-        <SidebarBrand />
+        {/* <SidebarBrand /> */}
         {children}
       </Box>
     </Box>

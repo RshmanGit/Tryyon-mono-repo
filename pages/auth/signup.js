@@ -23,9 +23,6 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 
-// Custom components
-import DefaultAuth from '../../ui/layouts/auth/Default.js';
-
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
