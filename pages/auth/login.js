@@ -68,7 +68,7 @@ function Login() {
     } else if (company === 2) {
       router.push('/auth/create/company');
     } else if (company === 3) {
-      router.push('/auth/dashboard');
+      router.push('/dashboard');
     }
   });
 
@@ -88,6 +88,7 @@ function Login() {
         if (res.progress.company && res.progress.tenant) {
           sessionStorage.setItem('company', 'ok');
           sessionStorage.setItem('tenant', 'ok');
+          sessionStorage.setItem('tenantId', res.progress.tenant.id);
           setCompany(3);
           return res;
         } else if (res.progress.company) {
@@ -194,7 +195,7 @@ function Login() {
               })
               .then((res) => {
                 if (res.message === 'User Authenticated') {
-                  sessionStorage.setItem('token_use', res.updatedUser.token);
+                  sessionStorage.setItem('userToken', res.updatedUser.token);
                   solve(res.updatedUser.token);
                 }
               })

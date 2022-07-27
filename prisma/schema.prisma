@@ -37,45 +37,49 @@ model Role {
 }
 
 model Product {
-  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
   name              String
   description       String?
   shortDescriptions String?
   slug              String
-  quantity          Int        @default(0)
-  supplier          Tenant     @relation(fields: [supplierId], references: [id])
-  supplierId        String     @db.ObjectId
-  published         Boolean    @default(false)
+  quantity          Int              @default(0)
+  supplier          Tenant           @relation(fields: [supplierId], references: [id])
+  supplierId        String           @db.ObjectId
+  published         Boolean          @default(false)
   attributes        Json
-  categories        Category[] @relation(fields: [categoryIds], references: [id])
-  categoryIds       String[]   @db.ObjectId
+  categories        Category[]       @relation(fields: [categoryIds], references: [id])
+  categoryIds       String[]         @db.ObjectId
   SKU               SKU[]
   manufacturer      String
-  locations         Location[] @relation(fields: [locationIds], references: [id])
-  locationIds       String[]   @db.ObjectId
+  locations         Location[]       @relation(fields: [locationIds], references: [id])
+  locationIds       String[]         @db.ObjectId
   countryOfOrigin   String
-  trending          Boolean    @default(false)
+  trending          Boolean          @default(false)
   featuredFrom      DateTime
   featuredTo        DateTime
-  guestCheckout     Boolean    @default(false)
-  private_product   Boolean    @default(false)
-  marketPlace       Boolean    @default(false)
+  guestCheckout     Boolean          @default(false)
+  private_product   Boolean          @default(false)
+  marketPlace       Boolean          @default(false)
+  ProductImports    ProductImports[]
+  reseller          Json?
 }
 
 model SKU {
-  id              String     @id @default(auto()) @map("_id") @db.ObjectId
-  slug            String
-  quantity        Int        @default(0)
-  product         Product    @relation(fields: [productId], references: [id])
-  productId       String     @db.ObjectId
-  supplier        Tenant     @relation(fields: [supplierId], references: [id])
-  supplierId      String     @db.ObjectId
-  published       Boolean    @default(false)
-  attributes      Json
-  categories      Category[] @relation(fields: [categoryIds], references: [id])
-  categoryIds     String[]   @db.ObjectId
-  price           Float
-  discountedPrice Float
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  slug             String
+  quantity         Int              @default(0)
+  product          Product          @relation(fields: [productId], references: [id])
+  productId        String           @db.ObjectId
+  supplier         Tenant           @relation(fields: [supplierId], references: [id])
+  supplierId       String           @db.ObjectId
+  published        Boolean          @default(false)
+  attributes       Json
+  categories       Category[]       @relation(fields: [categoryIds], references: [id])
+  categoryIds      String[]         @db.ObjectId
+  price            Float
+  discountedPrice  Float
+  ProductImports   ProductImports[] @relation(fields: [productImportIds], references: [id])
+  productImportIds String[]         @db.ObjectId
 }
 
 model Category {
@@ -101,15 +105,16 @@ model Attribute {
 }
 
 model Tenant {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  description  String?
-  company      Company        @relation(fields: [companyId], references: [id])
-  companyId    String         @unique @db.ObjectId
-  Associations Associations[]
-  Product      Product[]
-  SKU          SKU[]
-  Location     Location[]
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  description    String?
+  company        Company          @relation(fields: [companyId], references: [id])
+  companyId      String           @unique @db.ObjectId
+  Associations   Associations[]
+  Product        Product[]
+  SKU            SKU[]
+  Location       Location[]
+  productImports ProductImports[]
 }
 
 model Company {
@@ -166,4 +171,17 @@ model Location {
   tenantId   String    @db.ObjectId
   products   Product[] @relation(fields: [productIds], references: [id])
   productIds String[]  @db.ObjectId
+}
+
+model ProductImports {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  type      String
+  skus      SKU[]    @relation(fields: [skuIds], references: [id])
+  skuIds    String[] @db.ObjectId
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  String   @db.ObjectId
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String   @db.ObjectId
+  status    Boolean  @default(false)
+  override  Json
 }

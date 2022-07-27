@@ -23,11 +23,17 @@ const schema = {
     manufacturer: Joi.string().required(),
     countryOfOrigin: Joi.string().required(),
     trending: Joi.boolean().required(),
-    featuredFrom: Joi.date().required(),
-    featuredTo: Joi.date().required(),
+    featuredFrom: Joi.date().iso().required(),
+    featuredTo: Joi.date().iso().required(),
     guestCheckout: Joi.boolean().required(),
     private_product: Joi.boolean().required(),
-    marketPlace: Joi.boolean().required()
+    marketPlace: Joi.boolean().required(),
+    reseller: Joi.object({
+      allowed: Joi.boolean().required(),
+      type: Joi.string().allow('commission', 'discount').optional(),
+      commission: Joi.number().optional().min(0).max(100),
+      discount: Joi.number().optional().min(0).max(100)
+    }).required()
   })
 };
 
@@ -39,6 +45,20 @@ const handler = async (req, res) => {
       {
         verify: async () => {
           const { body } = req;
+
+          if (body.reseller.allowed && !body.reseller.type) {
+            throw new Error(
+              JSON.stringify({
+                errorKey: 'create',
+                body: {
+                  status: 409,
+                  data: {
+                    message: 'Reseller type not provided'
+                  }
+                }
+              })
+            );
+          }
 
           if (req.admin) {
             if (!body.supplierId) {

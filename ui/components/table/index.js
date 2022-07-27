@@ -32,8 +32,15 @@ import Card from '../card/Card';
 import { useRouter } from 'next/router';
 
 export default function TableComp(props) {
-  const { columnsData, tableData, editEntry, deleteEntry, restore_page } =
-    props;
+  const {
+    columnsData,
+    tableData,
+    editEntry,
+    deleteEntry,
+    actions,
+    actionButtons,
+    restore_page
+  } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -88,144 +95,163 @@ export default function TableComp(props) {
   };
 
   return (
-    <Card
-      direction="column"
-      w="100%"
-      px="0px"
-      overflowX={{ sm: 'scroll', lg: 'scroll' }}
-    >
-      <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
-        <Thead>
-          {headerGroups.map((headerGroup, index) => (
-            <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column, index) => (
-                <Th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe="10px"
-                  key={index}
-                  borderColor={borderColor}
-                >
+    <Card direction="column" w="100%" px="0px">
+      <Flex overflowX={{ sm: 'scroll', lg: 'scroll' }}>
+        <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
+          <Thead>
+            {headerGroups.map((headerGroup, index) => (
+              <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                {headerGroup.headers.map((column, index) => (
+                  <Th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    pe="10px"
+                    key={index}
+                    borderColor={borderColor}
+                  >
+                    <Flex
+                      justify="space-between"
+                      align="center"
+                      fontSize={{ sm: '10px', lg: '12px' }}
+                      color="gray.500"
+                    >
+                      <Text>{column.render('Header')}</Text>
+                      {column.isSortedDesc === true && <ChevronUpIcon />}
+                      {column.isSortedDesc === false && <ChevronDownIcon />}
+                      {column.isSortedDesc === undefined && (
+                        <Flex direction="column">
+                          <ChevronUpIcon />
+                          <ChevronDownIcon />
+                        </Flex>
+                      )}
+                    </Flex>
+                  </Th>
+                ))}
+                <Th pe="10px" borderColor={borderColor} key="ACTION">
                   <Flex
                     justify="space-between"
                     align="center"
                     fontSize={{ sm: '10px', lg: '12px' }}
                     color="gray.500"
                   >
-                    <Text>{column.render('Header')}</Text>
-                    {column.isSortedDesc === true && <ChevronUpIcon />}
-                    {column.isSortedDesc === false && <ChevronDownIcon />}
-                    {column.isSortedDesc === undefined && (
-                      <Flex direction="column">
-                        <ChevronUpIcon />
-                        <ChevronDownIcon />
-                      </Flex>
-                    )}
+                    ACTION
                   </Flex>
                 </Th>
-              ))}
-              <Th pe="10px" borderColor={borderColor} key="ACTION">
-                <Flex
-                  justify="space-between"
-                  align="center"
-                  fontSize={{ sm: '10px', lg: '12px' }}
-                  color="gray.500"
-                >
-                  ACTION
-                </Flex>
-              </Th>
-            </Tr>
-          ))}
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
-            prepareRow(row);
-            return (
-              <Tr {...row.getRowProps()} key={index}>
-                {row.cells.map((cell, index) => {
-                  let data = '';
-                  columns.forEach((col) => {
-                    if (cell.column.Header === col.Header) {
-                      if (Array.isArray(cell.value)) {
-                        let internal_data = cell.value.map((val, index) => (
-                          <Flex
-                            key={index}
-                            borderRadius="2xl"
-                            bgColor="blue.500"
-                            p="8px 16px"
-                            mr="4px"
-                            align="center"
-                          >
-                            <Text color="white" fontSize="sm" fontWeight="700">
-                              {val.name}
-                            </Text>
-                          </Flex>
-                        ));
-                        data = <Flex>{internal_data}</Flex>;
-                      } else {
-                        data = (
-                          <Flex align="center">
-                            <Text
-                              color={textColor}
-                              fontSize="sm"
-                              fontWeight="400"
-                            >
-                              {typeof cell.value == 'boolean'
-                                ? cell.value.toString()
-                                : cell.value}
-                            </Text>
-                          </Flex>
-                        );
-                      }
-                    }
-                  });
-
-                  return (
-                    <Td
-                      {...cell.getCellProps()}
-                      key={index}
-                      fontSize={{ sm: '14px' }}
-                      minW={{
-                        sm: '150px',
-                        md: '200px',
-                        lg:
-                          cell.column.Header == 'DESCRIPTION'
-                            ? '300px'
-                            : '200px'
-                      }}
-                      borderColor="transparent"
-                    >
-                      {data}
-                    </Td>
-                  );
-                })}
-                <Td
-                  display="flex"
-                  alignItems="center"
-                  minW={{ sm: '150px', md: '200px', lg: 'auto' }}
-                  borderColor="transparent"
-                  key="ACTION"
-                >
-                  <Button
-                    fontSize={{ sm: '14px' }}
-                    m="8px"
-                    colorScheme="blue"
-                    onClick={() => editEntry(row.cells)}
-                  >
-                    <EditIcon />
-                  </Button>
-                  <Button
-                    fontSize={{ sm: '14px' }}
-                    colorScheme="red"
-                    onClick={() => deleteEntry(row.cells)}
-                  >
-                    <DeleteIcon />
-                  </Button>
-                </Td>
               </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
+            ))}
+          </Thead>
+          <Tbody {...getTableBodyProps()}>
+            {page.map((row, index) => {
+              prepareRow(row);
+              return (
+                <Tr {...row.getRowProps()} key={index}>
+                  {row.cells.map((cell, index) => {
+                    let data = '';
+                    columns.forEach((col) => {
+                      if (cell.column.Header === col.Header) {
+                        if (Array.isArray(cell.value)) {
+                          let internal_data = cell.value.map((val, index) => (
+                            <Flex
+                              key={index}
+                              borderRadius="2xl"
+                              bgColor="blue.500"
+                              p="8px 16px"
+                              mr="4px"
+                              align="center"
+                            >
+                              <Text
+                                color="white"
+                                fontSize="sm"
+                                fontWeight="700"
+                              >
+                                {val.name}
+                              </Text>
+                            </Flex>
+                          ));
+                          data = <Flex>{internal_data}</Flex>;
+                        } else {
+                          data = (
+                            <Flex align="center">
+                              <Text
+                                color={textColor}
+                                fontSize="sm"
+                                fontWeight="400"
+                              >
+                                {typeof cell.value == 'boolean'
+                                  ? cell.value.toString()
+                                  : cell.value}
+                              </Text>
+                            </Flex>
+                          );
+                        }
+                      }
+                    });
+
+                    return (
+                      <Td
+                        {...cell.getCellProps()}
+                        key={index}
+                        fontSize={{ sm: '14px' }}
+                        minW={{
+                          sm: '150px',
+                          md: '200px',
+                          lg:
+                            cell.column.Header == 'DESCRIPTION'
+                              ? '300px'
+                              : '200px'
+                        }}
+                        borderColor="transparent"
+                      >
+                        {data}
+                      </Td>
+                    );
+                  })}
+                  <Td
+                    display="flex"
+                    alignItems="center"
+                    minW={{ sm: '150px', md: '200px', lg: 'auto' }}
+                    borderColor="transparent"
+                    key="ACTION"
+                  >
+                    {editEntry && (
+                      <Button
+                        fontSize={{ sm: '14px' }}
+                        m="8px"
+                        colorScheme="blue"
+                        onClick={() => editEntry(row.cells)}
+                      >
+                        <EditIcon />
+                      </Button>
+                    )}
+
+                    {deleteEntry && (
+                      <Button
+                        fontSize={{ sm: '14px' }}
+                        colorScheme="red"
+                        onClick={() => deleteEntry(row.cells)}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    )}
+
+                    {actions &&
+                      Array.isArray(actions) &&
+                      actions.map((action, index) => (
+                        <Button
+                          key={index}
+                          fontSize={{ sm: '14px' }}
+                          colorScheme="blue"
+                          onClick={() => action(row.cells)}
+                        >
+                          {actionButtons[index]}
+                        </Button>
+                      ))}
+                  </Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </Flex>
       {pageCount !== 0 && (
         <Flex m="auto" alignItems="center">
           <Button disabled={!canPreviousPage} onClick={prev}>

@@ -56,6 +56,8 @@ export const searchProducts = async ({
   guestCheckout,
   private_product,
   marketPlace,
+  reseller,
+  excludeTenant,
   pagination,
   offset,
   limit
@@ -74,8 +76,19 @@ export const searchProducts = async ({
     }
   }
 
+  if (reseller) {
+    for (let prop in reseller) {
+      condition[`reseller.${prop}`] = { $eq: reseller[prop] };
+    }
+  }
+
   if (id) condition._id = { $eq: { $oid: id } };
   if (supplierId) condition.supplierId = { $eq: { $oid: supplierId } };
+  if (excludeTenant)
+    condition.supplierId = {
+      ...condition.supplierId,
+      $ne: { $oid: excludeTenant }
+    };
   if (query) condition.name = { $regex: query, $options: 'i' };
   if (manufacturer)
     condition.manufacturer = { $regex: manufacturer, $options: 'i' };
@@ -157,6 +170,33 @@ export const searchProducts = async ({
     }
   });
 
+  pipeline.push({
+    $lookup: {
+      from: 'ProductImports',
+      localField: '_id',
+      foreignField: 'productId',
+      as: 'productImport'
+    }
+  });
+
+  if (excludeTenant) {
+    pipeline.push({
+      $match: {
+        productImport: {
+          $not: {
+            $elemMatch: {
+              tenantId: {
+                $eq: {
+                  $oid: excludeTenant
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
   if (priceFrom || priceTo) {
     const price = {};
     if (priceFrom) price.$gte = priceFrom;
@@ -197,6 +237,7 @@ export const searchProducts = async ({
       supplierId: 1,
       published: 1,
       attributes: 1,
+      reseller: 1,
       categoryIds: 1,
       'categories.name': 1,
       'categories.description': 1,

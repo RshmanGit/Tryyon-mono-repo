@@ -20,15 +20,12 @@ import {
   useColorModeValue,
   useToast
 } from '@chakra-ui/react';
-import Router from 'next/router.js';
 
-// Custom components
-import DefaultAuth from '../../../ui/layouts/auth/Default.js';
+import { useRouter } from 'next/router.js';
 
 // Assets
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
-import { useRouter } from 'next/router.js';
 
 function Login() {
   const router = useRouter();
@@ -39,7 +36,6 @@ function Login() {
   const textColorSecondary = 'gray.400';
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
   const brandStars = useColorModeValue('brand.500', 'brand.400');
-
   const [show, setShow] = React.useState(false);
   const [buttonText, setButtonText] = React.useState('Sign in');
   useEffect(() => {
@@ -66,15 +62,6 @@ function Login() {
       });
     }
   }, [router.query.next, toast]);
-
-  useEffect(() => {
-    if (
-      (sessionStorage.token_admin && !router.query.next) ||
-      router.query.next === ''
-    ) {
-      router.push('/admin/Product');
-    }
-  });
 
   const handleClick = () => setShow(!show);
   return (
@@ -175,10 +162,10 @@ function Login() {
               .then((res) => {
                 if (router.query.next && router.query.next !== '') {
                   router.push(router.query.next);
-                }
+                } else router.push('/admin');
               })
               .catch((err) => {
-                console.error(err.message);
+                console.error(JSON.parse(err.message));
               });
           }}
         >

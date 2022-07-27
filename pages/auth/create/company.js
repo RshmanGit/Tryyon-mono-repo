@@ -44,7 +44,7 @@ function Register() {
   let router = useRouter();
 
   useEffect(() => {
-    if (!sessionStorage.token_use) {
+    if (!sessionStorage.userToken) {
       alert('Login first !');
       router.push('/auth/login');
     } else if (
@@ -123,7 +123,7 @@ function Register() {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${sessionStorage.token_use}`
+                Authorization: `Bearer ${sessionStorage.userToken}`
               },
               body: JSON.stringify(values, null, 5)
             })
@@ -262,18 +262,23 @@ function Register() {
                 >
                   GST Certificate<Text color={brandStars}>*</Text>
                 </FormLabel>
+                <Field
+                  as={Input}
+                  isRequired={true}
+                  id="gstCertificate"
+                  name="gstCertificate"
+                  fontSize="sm"
+                  mb="6px"
+                  size="md"
+                  variant="auth"
+                />
                 <Button
                   fontSize="sm"
                   variant="brand"
                   fontWeight="500"
-                  id="gstCertificate"
-                  name="gstCertificate"
                   w="30%"
                   h="27"
                   mb="8px"
-                  // mt="13px"
-                  // ml="75px"
-                  // onClick={}
                 >
                   Upload
                 </Button>
@@ -320,11 +325,6 @@ function Register() {
               </FormControl>
 
               <FormControl mb="4px">
-                {/* <Flex justifyContent="space-between" align="center" mb="24px">
-                    <Link href="#">
-                      <a>Forgot password?</a>
-                    </Link>
-                  </Flex> */}
                 <FormLabel
                   ms="4px"
                   fontSize="sm"
@@ -334,18 +334,23 @@ function Register() {
                 >
                   PAN Card<Text color={brandStars}>*</Text>
                 </FormLabel>
+                <Field
+                  as={Input}
+                  isRequired={true}
+                  id="panCard"
+                  name="panCard"
+                  fontSize="sm"
+                  mb="6px"
+                  size="md"
+                  variant="auth"
+                />
                 <Button
                   fontSize="sm"
                   variant="brand"
                   fontWeight="500"
-                  id="panCard"
-                  name="panCard"
                   w="30%"
                   h="27"
                   mb="8px"
-                  // mt="13px"
-                  // ml="75px"
-                  // onClick={}
                 >
                   Upload
                 </Button>
@@ -391,11 +396,6 @@ function Register() {
               </FormControl>
 
               <FormControl mb="4px">
-                {/* <Flex justifyContent="space-between" align="center" mb="24px">
-                    <Link href="#">
-                      <a>Forgot password?</a>
-                    </Link>
-                  </Flex> */}
                 <FormLabel
                   ms="4px"
                   fontSize="sm"
@@ -405,18 +405,23 @@ function Register() {
                 >
                   Aadhar Card<Text color={brandStars}>*</Text>
                 </FormLabel>
+                <Field
+                  as={Input}
+                  isRequired={true}
+                  id="aadharCard"
+                  name="aadharCard"
+                  fontSize="sm"
+                  mb="6px"
+                  size="md"
+                  variant="auth"
+                />
                 <Button
                   fontSize="sm"
                   variant="brand"
                   fontWeight="500"
-                  id="aadharCard"
-                  name="aadharCard"
                   w="30%"
                   h="27"
                   mb="8px"
-                  // mt="13px"
-                  // ml="75px"
-                  // onClick={}
                 >
                   Upload
                 </Button>

@@ -1,4 +1,4 @@
-import Layout from '../../ui/layouts/admin';
+import Layout from '../../ui/layouts/user';
 import TableComp from '../../ui/components/table';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
@@ -115,9 +115,82 @@ const columnsData = [
   }
 ];
 
-export default function ProductPage() {
+const ImportsColumnsData = [
+  {
+    Header: 'ID',
+    accessor: 'id'
+  },
+  {
+    Header: 'TYPE',
+    accessor: 'type'
+  },
+  {
+    Header: 'PRICE',
+    accessor: 'override.price'
+  },
+  {
+    Header: 'SELLING PRICE',
+    accessor: 'override.sellingPrice'
+  },
+  {
+    Header: 'STATUS',
+    accessor: 'status'
+  },
+  {
+    Header: 'PRODUCT ID',
+    accessor: 'product.id'
+  },
+  {
+    Header: 'PRODUCT NAME',
+    accessor: 'product.name'
+  },
+  {
+    Header: 'PRODUCT DESCRIPTION',
+    accessor: 'product.description'
+  },
+  {
+    Header: 'PRODUCT SHORT DESCRIPTIONS',
+    accessor: 'product.shortDescriptions'
+  },
+  {
+    Header: 'PRODUCT SLUG',
+    accessor: 'product.slug'
+  },
+  {
+    Header: 'PRODUCT QUANTITY',
+    accessor: 'product.quantity'
+  },
+  {
+    Header: 'PRODUCT PUBLISHED',
+    accessor: 'product.published'
+  },
+  {
+    Header: 'PRODUCT SUPPLIER ID',
+    accessor: 'product.supplierId'
+  },
+  {
+    Header: 'PRODUCT CATEGORIES',
+    accessor: 'product.categories'
+  },
+  {
+    Header: 'PRODUCT MANUFACTURER',
+    accessor: 'product.manufacturer'
+  },
+  {
+    Header: 'PRODUCT LOCATIONS',
+    accessor: 'product.locations'
+  },
+  {
+    Header: 'PRODUCT COUNTRY OF ORIGIN',
+    accessor: 'product.countryOfOrigin'
+  }
+];
+
+export default function UserProducts() {
   const toast = useToast();
   const [data, setData] = useState([]);
+  const [importsData, setImportsData] = useState([]);
+
   const [page, setPage] = useState(0);
   const [searchString, setSearchString] = useState('');
   const [categoryQuery, setCategoryQuery] = useState('');
@@ -183,7 +256,7 @@ export default function ProductPage() {
       const res = await fetch(`${router.basePath}/api/products/create`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${sessionStorage.adminToken}`,
+          Authorization: `Bearer ${sessionStorage.userToken}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
@@ -203,7 +276,7 @@ export default function ProductPage() {
       } else {
         if (res.status == 401 || res.status == 403) {
           // alert('Admin not logged in');
-          router.push(`/auth/admin/login?next=${router.pathname}`);
+          router.push(`/auth/login?next=${router.pathname}`);
         }
         const data = await res.json();
         console.error(data.message);
@@ -242,7 +315,7 @@ export default function ProductPage() {
     const res = await fetch(`${router.basePath}/api/products/update`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${sessionStorage.adminToken}`,
+        Authorization: `Bearer ${sessionStorage.userToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
@@ -263,7 +336,7 @@ export default function ProductPage() {
     } else {
       if (res.status == 401 || res.status == 403) {
         // alert('Admin not logged in');
-        router.push(`/auth/admin/login?next=${router.pathname}`);
+        router.push(`/auth/login?next=${router.pathname}`);
       }
       const data = await res.json();
       console.error(data.message);
@@ -292,7 +365,7 @@ export default function ProductPage() {
       const res = await fetch(`${router.basePath}/api/products/delete`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${sessionStorage.adminToken}`,
+          Authorization: `Bearer ${sessionStorage.userToken}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
@@ -301,7 +374,7 @@ export default function ProductPage() {
       if (res.ok) {
         console.log('Product deleted', await res.json());
         toast({
-          title: 'Category deleted',
+          title: 'Product deleted',
           status: 'success',
           duration: 2000,
           isClosable: true
@@ -311,8 +384,7 @@ export default function ProductPage() {
         }, 2000);
       } else {
         if (res.status == 401 || res.status == 403) {
-          // alert('Admin not logged in');
-          router.push(`/auth/admin/login?next=${router.pathname}`);
+          router.push(`/auth/login?next=${router.pathname}`);
         }
         const data = await res.json();
         console.error(data.message);
@@ -351,7 +423,7 @@ export default function ProductPage() {
     await fetch(`${router.basePath}/api/products/category`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${sessionStorage.adminToken}`
+        Authorization: `Bearer ${sessionStorage.userToken}`
       }
     })
       .then(async (res) => {
@@ -363,7 +435,7 @@ export default function ProductPage() {
 
         if (res.status == 403 || res.status == 401) {
           // alert('Admin not logged in...');
-          router.push(`/auth/admin/login?next=${router.pathname}`);
+          router.push(`/auth/login?next=${router.pathname}`);
         }
 
         if (res.status == 404) {
@@ -395,7 +467,7 @@ export default function ProductPage() {
     await fetch(`${router.basePath}/api/products/attribute`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${sessionStorage.adminToken}`
+        Authorization: `Bearer ${sessionStorage.userToken}`
       }
     })
       .then(async (res) => {
@@ -407,7 +479,7 @@ export default function ProductPage() {
 
         if (res.status == 403 || res.status == 401) {
           // alert('Admin not logged in...');
-          router.push(`/auth/admin/login?next=${router.pathname}`);
+          router.push(`/auth/login?next=${router.pathname}`);
         }
 
         if (res.status == 404) {
@@ -502,15 +574,15 @@ export default function ProductPage() {
   };
 
   useEffect(() => {
-    if (!sessionStorage.adminToken) {
+    if (!sessionStorage.userToken) {
       toast({
-        title: 'Unauthorised admin',
+        title: 'Unauthorised user',
         status: 'error',
         duration: 2000,
         isClosable: true
       });
 
-      router.push(`/auth/admin/login?next=${router.pathname}`);
+      router.push(`/auth/login?next=${router.pathname}`);
     } else {
       let query = {},
         rest = '';
@@ -519,7 +591,6 @@ export default function ProductPage() {
         'id',
         'inStock',
         'published',
-        'supplierId',
         'priceFrom',
         'priceTo'
       ];
@@ -569,11 +640,13 @@ export default function ProductPage() {
         query.priceTo = debouncedPriceTo;
       }
 
+      if (sessionStorage.tenantId) query.supplierId = sessionStorage.tenantId;
+
       console.log(query);
       fetch(`${router.basePath}/api/products`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${sessionStorage.adminToken}`,
+          Authorization: `Bearer ${sessionStorage.userToken}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(query)
@@ -586,14 +659,54 @@ export default function ProductPage() {
           }
 
           if (res.status == 403 || res.status == 401) {
-            // alert('Admin not logged in...');
             toast({
-              title: 'Unauthorised admin',
+              title: 'Unauthorised user',
               status: 'error',
               duration: 2000,
               isClosable: true
             });
-            router.push(`/auth/admin/login?next=${router.pathname}`);
+            router.push(`/auth/login?next=${router.pathname}`);
+          }
+
+          if (res.status == 404) {
+            toast({
+              title: res_data.message,
+              status: 'error',
+              duration: 2000,
+              isClosable: true
+            });
+            return { products: [] };
+          }
+          throw new Error(res_data.message);
+        })
+        .then((res) => {
+          setData(res.products);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast({
+            title: err.message,
+            status: 'error',
+            duration: 2000,
+            isClosable: true
+          });
+        });
+
+      fetch(`${router.basePath}/api/product_imports`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.userToken}`
+        }
+      })
+        .then(async (res) => {
+          const res_data = await res.json();
+          if (res.ok) {
+            console.log(res_data);
+            return res_data;
+          }
+
+          if (res.status == 403 || res.status == 401) {
+            router.push(`/auth/login?next=${router.pathname}`);
           }
 
           if (res.status == 404) {
@@ -609,8 +722,7 @@ export default function ProductPage() {
           throw new Error(res_data.message);
         })
         .then((res) => {
-          setData(res.products);
-          // console.log(data);
+          setImportsData(res.productImports);
         })
         .catch((err) => {
           console.log(err);
@@ -633,8 +745,8 @@ export default function ProductPage() {
   ]);
 
   useEffect(() => {
-    if (localStorage.getItem('page/admin/products'))
-      setPage(parseInt(localStorage.getItem('page/admin/products'), 10));
+    if (localStorage.getItem('page/products'))
+      setPage(parseInt(localStorage.getItem('page/products'), 10));
   }, []);
 
   return (
@@ -653,7 +765,7 @@ export default function ProductPage() {
             fontWeight="700"
             lineHeight="100%"
           >
-            Products Table
+            Your Products
           </Text>
           <SearchBar
             background={bgColor}
@@ -664,7 +776,7 @@ export default function ProductPage() {
             <Button
               fontSize={{ sm: '14px' }}
               colorScheme="blue"
-              onClick={openCreate}
+              onClick={() => router.push('/products/create')}
             >
               Create
             </Button>
@@ -680,14 +792,82 @@ export default function ProductPage() {
           priceTo={priceTo}
           setPriceFrom={setPriceFrom}
           setPriceTo={setPriceTo}
+          token={typeof window !== 'undefined' ? sessionStorage.userToken : ''}
         />
 
+        <Text
+          color={textColor}
+          fontSize="24px"
+          fontWeight="700"
+          lineHeight="100%"
+          mt="24px"
+          mb="8px"
+        >
+          Products
+        </Text>
         <TableComp
           editEntry={openEdit}
           deleteEntry={openDelete}
           columnsData={columnsData}
           tableData={data}
           restore_page={page}
+        />
+
+        <Text
+          color={textColor}
+          fontSize="24px"
+          fontWeight="700"
+          lineHeight="100%"
+          mt="24px"
+          mb="8px"
+        >
+          Product Imports
+        </Text>
+        <TableComp
+          columnsData={ImportsColumnsData}
+          tableData={importsData}
+          deleteEntry={(cells) => {
+            fetch('/api/product_imports/delete', {
+              method: 'DELETE',
+              headers: {
+                Authorization: `Bearer ${sessionStorage.userToken}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ id: cells[0].value })
+            })
+              .then(async (res) => {
+                if (res.ok) {
+                  return await res.json();
+                }
+
+                const err = await res.json();
+                throw new Error(err.message);
+              })
+              .then((res) => {
+                toast({
+                  title: res.message,
+                  status: 'success',
+                  isClosable: true
+                });
+
+                setImportsData((prev) => {
+                  const newArr = [...prev];
+
+                  newArr.splice(cells[0].row.index, 1);
+
+                  return newArr;
+                });
+              })
+              .catch((err) => {
+                toast({
+                  title: err.message,
+                  status: 'error',
+                  isClosable: true
+                });
+
+                console.error(err.message);
+              });
+          }}
         />
       </Layout>
       {isOpen && (

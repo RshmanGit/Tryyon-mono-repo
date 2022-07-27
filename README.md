@@ -1469,6 +1469,12 @@ Associations **Routes**
       guestCheckout: boolean, required
       private_product: boolean, required
       marketPlace: boolean, required
+      reseller: {
+        allowed: boolean, required
+        type: string, allowed values - ('commission', 'discount'), required if allowed is true
+        discount: number, min - 0, max - 100
+        commission: number, min - 0, max - 100
+      }
       ```
     - Successful Response -
       ```
@@ -1536,6 +1542,12 @@ Associations **Routes**
       guestCheckout: boolean, optional
       private_product: boolean, optional
       marketPlace: boolean, optional
+      reseller: {
+        allowed: boolean, optional
+        type: string, allowed values - ('commission', 'discount'), optional
+        discount: number, min - 0, max - 100
+        commission: number, min - 0, max - 100
+      }
       ```
     - Successful Response -
       ```
@@ -1711,7 +1723,13 @@ Associations **Routes**
         featuredTo: date, ISO Timestamp, optional
         guestCheckout: boolean, optional
         private_product: boolean, optional
-        marketPlace: boolean, optional
+        marketPlace: boolean, optional,
+        reseller: {
+          allowed: boolean, required
+          type: string, allowed values - ('commission', 'discount'), required
+          discount: number, min - 0, max - 100
+          commission: number, min - 0, max - 100
+        }
       }
       ```
     - Successful Response -
@@ -1814,7 +1832,13 @@ Associations **Routes**
       featuredTo: date, required
       guestCheckout: boolean, required
       private_product: boolean, required
-      marketPlace: boolean, required
+      marketPlace: boolean, required,
+      reseller: {
+        allowed: boolean, required
+        type: string, allowed values - ('commission', 'discount'), required if allowed is true
+        discount: number, min - 0, max - 100
+        commission: number, min - 0, max - 100
+      }
       ```
     - Successful Response -
       ```
@@ -1881,7 +1905,13 @@ Associations **Routes**
       featuredTo: date, optional
       guestCheckout: boolean, optional
       private_product: boolean, optional
-      marketPlace: boolean, optional
+      marketPlace: boolean, optional,
+      reseller: {
+        allowed: boolean, optional
+        type: string, allowed values - ('commission', 'discount'), optional
+        discount: number, min - 0, max - 100
+        commission: number, min - 0, max - 100
+      }
       ```
     - Successful Response -
       ```
@@ -2058,7 +2088,13 @@ Associations **Routes**
         featuredTo: date, ISO Timestamp, optional
         guestCheckout: boolean, optional
         private_product: boolean, optional
-        marketPlace: boolean, optional
+        marketPlace: boolean, optional,
+        reseller: {
+          allowed: boolean, required
+          type: string, allowed values - ('commission', 'discount'), required
+          discount: number, min - 0, max - 100
+          commission: number, min - 0, max - 100
+        }
       }
       ```
     - Successful Response -
@@ -2964,6 +3000,225 @@ Associations **Routes**
           "state": "Watsonborough",
           "country": "Peru",
           "tenantId": "62b97af7190404e5c50e045d"
+        }
+      }
+      ```
+
+## Product Import routes
+
+- For admin -
+  - **/api/product_imports/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      productId: string, required
+      tenantId: string, required
+      status: boolean, required
+      override: object, default - {}
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Product Import Created",
+        "productImport": {
+          "id": "62d4fca697014ba74a22aa3b",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "productId": "62d119f9d1ec38d5d0dcbb78",
+          "status": true,
+          "override": {}
+        }
+      }
+      ```
+  - **/api/product_imports**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Query format -
+      ```
+      id: string, optional
+      tenantId: string, optional
+      productId: string, optional
+      status: boolean
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Product Imports found",
+        "productImports": [
+          {
+            "id": "62d4fc9897014ba74a22aa3a",
+            "tenantId": "62b97af7190404e5c50e045d",
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "status": true,
+            "override": {}
+          },
+          {
+            "id": "62d4fca697014ba74a22aa3b",
+            "tenantId": "62b97af7190404e5c50e045d",
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "status": true,
+            "override": {}
+          },
+          {
+            "id": "62d4fcb197014ba74a22aa3c",
+            "tenantId": "62b97af7190404e5c50e045d",
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "status": false,
+            "override": {}
+          }
+        ]
+      }
+      ```
+  - **/api/product_imports/update**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      updateData: {
+        productId: string, optional
+        tenantId: string, optional
+        status: boolean, optional
+        override: object, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Product Import updated",
+        "updatedProductImport": {
+          "id": "62d4fcb197014ba74a22aa3c",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "productId": "62d119f9d1ec38d5d0dcbb78",
+          "status": false,
+          "override": {}
+        }
+      }
+      ```
+  - **/api/product_imports/delete**
+    - Protected route - bearer token needed
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Product Import deleted",
+        "productImport": {
+          "id": "62d4fcb197014ba74a22aa3c",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "productId": "62d119f9d1ec38d5d0dcbb78",
+          "status": false,
+          "override": {}
+        }
+      }
+      ```
+- For user -
+  - **/api/product_imports/create**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      productId: string, required
+      status: boolean, required
+      override: object, default - {}
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "New Product Import Created",
+        "productImport": {
+          "id": "62d4fcb197014ba74a22aa3c",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "productId": "62d119f9d1ec38d5d0dcbb78",
+          "status": false,
+          "override": {}
+        }
+      }
+      ```
+  - **/api/product_imports**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Query format -
+      ```
+      id: string, optional
+      tenantId: string, optional
+      productId: string, optional
+      status: boolean
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Product Imports found",
+        "productImports": [
+          {
+            "id": "62d4fc9897014ba74a22aa3a",
+            "tenantId": "62b97af7190404e5c50e045d",
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "status": true,
+            "override": {}
+          },
+          {
+            "id": "62d4fca697014ba74a22aa3b",
+            "tenantId": "62b97af7190404e5c50e045d",
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "status": true,
+            "override": {}
+          },
+          {
+            "id": "62d4fcb197014ba74a22aa3c",
+            "tenantId": "62b97af7190404e5c50e045d",
+            "productId": "62d119f9d1ec38d5d0dcbb78",
+            "status": false,
+            "override": {}
+          }
+        ]
+      }
+      ```
+  - **/api/product_imports/update**
+    - Protected route - bearer token needed
+    - Accepted method - `POST`
+    - Body format -
+      ```
+      id: string, required
+      updateData: {
+        productId: string, optional
+        status: boolean, optional
+        override: object, optional
+      }
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Product Import updated",
+        "updatedProductImport": {
+          "id": "62d4fcb197014ba74a22aa3c",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "productId": "62d119f9d1ec38d5d0dcbb78",
+          "status": false,
+          "override": {}
+        }
+      }
+      ```
+  - **/api/product_imports/delete**
+    - Protected route - bearer token needed
+    - Accepted method - `DELETE`
+    - Body format -
+      ```
+      id: string, required
+      ```
+    - Successful Response -
+      ```
+      {
+        "message": "Product deleted",
+        "productImport": {
+          "id": "62d5076797014ba74a22aa3d",
+          "tenantId": "62b97af7190404e5c50e045d",
+          "productId": "62d119f9d1ec38d5d0dcbb78",
+          "status": true,
+          "override": {}
         }
       }
       ```

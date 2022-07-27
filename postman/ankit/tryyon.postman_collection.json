@@ -4131,7 +4131,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"locationIds\": [\"{{locationId}}\"],\n    \"manufacturer\": \"ABC Industries\",\n    \"countryOfOrigin\": \"India\",\n    \"trending\": {{$randomBoolean}},\n    \"featuredFrom\": \"{{$isoTimestamp}}\",\n    \"featuredTo\": \"{{$isoTimestamp}}\",\n    \"guestCheckout\": {{$randomBoolean}},\n    \"private_product\": {{$randomBoolean}},\n    \"marketPlace\": {{$randomBoolean}}\n}",
+									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"locationIds\": [\"{{locationId}}\"],\n    \"manufacturer\": \"ABC Industries\",\n    \"countryOfOrigin\": \"India\",\n    \"trending\": {{$randomBoolean}},\n    \"featuredFrom\": \"{{$isoTimestamp}}\",\n    \"featuredTo\": \"{{$isoTimestamp}}\",\n    \"guestCheckout\": {{$randomBoolean}},\n    \"private_product\": {{$randomBoolean}},\n    \"marketPlace\": {{$randomBoolean}},\n    \"reseller\": {\n        \"allowed\": true,\n        \"type\": \"commission\",\n        \"discount\": 20\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4160,7 +4160,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"locationIds\": [\"{{locationId}}\"],\n    \"manufacturer\": \"ABC Industries\",\n    \"countryOfOrigin\": \"India\",\n    \"trending\": {{$randomBoolean}},\n    \"featuredFrom\": \"{{$isoTimestamp}}\",\n    \"featuredTo\": \"{{$isoTimestamp}}\",\n    \"guestCheckout\": {{$randomBoolean}},\n    \"private_product\": {{$randomBoolean}},\n    \"marketPlace\": {{$randomBoolean}}\n}",
+											"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"supplierId\": \"{{tenantId}}\",\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"locationIds\": [\"{{locationId}}\"],\n    \"manufacturer\": \"ABC Industries\",\n    \"countryOfOrigin\": \"India\",\n    \"trending\": {{$randomBoolean}},\n    \"featuredFrom\": \"{{$isoTimestamp}}\",\n    \"featuredTo\": \"{{$isoTimestamp}}\",\n    \"guestCheckout\": {{$randomBoolean}},\n    \"private_product\": {{$randomBoolean}},\n    \"marketPlace\": {{$randomBoolean}},\n    \"reseller\": {\n        \"allowed\": true,\n        \"type\": \"discount\",\n        \"discount\": 20\n    }\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -4191,11 +4191,11 @@
 										},
 										{
 											"key": "ETag",
-											"value": "\"344-GVfQffyONmAmrG+HMcdZHDFM+vo\""
+											"value": "\"3c8-DaoRNcd3xfE4Sgm5UM3415+kBps\""
 										},
 										{
 											"key": "Content-Length",
-											"value": "836"
+											"value": "968"
 										},
 										{
 											"key": "Vary",
@@ -4203,7 +4203,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Fri, 15 Jul 2022 07:22:05 GMT"
+											"value": "Sat, 23 Jul 2022 03:56:58 GMT"
 										},
 										{
 											"key": "Connection",
@@ -4215,7 +4215,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62d1159c504963bf2f1d4c58\",\n        \"name\": \"Sleek Rubber Pizza\",\n        \"description\": \"Laborum id voluptatem repellendus itaque ipsa ipsum repellendus. Error id molestias libero tempora temporibus facere molestias. Blanditiis dolor earum magnam magnam vero enim aut et.\",\n        \"shortDescriptions\": \"Dicta exercitationem vero quae odit dolor.\",\n        \"slug\": \"esse-dolores-libero\",\n        \"quantity\": 608,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"manufacturer\": \"ABC Industries\",\n        \"locationIds\": [\n            \"62cebef175a4f7a690b8ead2\"\n        ],\n        \"countryOfOrigin\": \"India\",\n        \"trending\": false,\n        \"featuredFrom\": \"2022-07-15T07:22:03.556Z\",\n        \"featuredTo\": \"2022-07-15T07:22:03.556Z\",\n        \"guestCheckout\": false,\n        \"private_product\": true,\n        \"marketPlace\": true\n    }\n}"
+									"body": "{\n    \"message\": \"New Product Created\",\n    \"product\": {\n        \"id\": \"62db71894518ee3828c09b50\",\n        \"name\": \"Awesome Steel Shoes\",\n        \"description\": \"Voluptate explicabo et eius. Magnam veritatis et sed deleniti laborum est et. Harum nihil neque et. Nesciunt fugit non est illo est saepe veniam pariatur voluptas. Consequatur itaque similique. Iste dignissimos dolores molestiae et expedita sit numquam laudantium.\",\n        \"shortDescriptions\": \"Non inventore sed dolorem.\",\n        \"slug\": \"nisi-perspiciatis-debitis\",\n        \"quantity\": 769,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": true,\n        \"attributes\": {\n            \"size\": [\n                \"l\",\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ],\n        \"manufacturer\": \"ABC Industries\",\n        \"locationIds\": [\n            \"62d119e1d1ec38d5d0dcbb75\"\n        ],\n        \"countryOfOrigin\": \"India\",\n        \"trending\": true,\n        \"featuredFrom\": \"2022-07-23T03:56:56.259Z\",\n        \"featuredTo\": \"2022-07-23T03:56:56.259Z\",\n        \"guestCheckout\": true,\n        \"private_product\": true,\n        \"marketPlace\": false,\n        \"reseller\": {\n            \"allowed\": true,\n            \"type\": \"discount\",\n            \"discount\": 20\n        }\n    }\n}"
 								}
 							]
 						},
@@ -4279,7 +4279,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"pagination\": true,\n    \"offset\": 7,\n    \"limit\": 2,\n    \"attributes\": {\n        \"size\": \"l\",\n        \"color\": \"red\"\n    },\n    \"sortBy\": \"name\",\n    \"order\": \"asc\",\n    \"featuredTo\": \"{{$isoTimestamp}}\"\n}",
+									"raw": "{\n    \"pagination\": false,\n    \"offset\": 0,\n    \"limit\": 2,\n    \"reseller\": {\n        \"allowed\": true\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5795,7 +5795,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"]\n}",
+									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"shortDescriptions\": \"{{$randomLoremSentence}}\",\n    \"slug\": \"{{$randomLoremSlug}}\",\n    \"quantity\": {{$randomInt}},\n    \"published\": {{$randomBoolean}},\n    \"attributes\": {\n        \"size\": [\"l\", \"m\", \"s\"],\n        \"color\": [\"red\", \"blue\"]\n    },\n    \"categoryIds\": [\"{{categoryId}}\"],\n    \"locationIds\": [\"{{locationId}}\"],\n    \"manufacturer\": \"ABC Industries\",\n    \"countryOfOrigin\": \"India\",\n    \"trending\": {{$randomBoolean}},\n    \"featuredFrom\": \"{{$isoTimestamp}}\",\n    \"featuredTo\": \"{{$isoTimestamp}}\",\n    \"guestCheckout\": {{$randomBoolean}},\n    \"private_product\": {{$randomBoolean}},\n    \"marketPlace\": {{$randomBoolean}},\n    \"reseller\": {\n        \"allowed\": true,\n        \"type\": \"commission\",\n        \"discount\": 20\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -6413,6 +6413,1153 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"Product deleted\",\n    \"product\": {\n        \"id\": \"62c01203d49389ce1fc48ace\",\n        \"name\": \"Handcrafted Granite Keyboard\",\n        \"description\": \"Et magni et ipsa in maiores doloremque voluptas. Dolorem magnam voluptatum necessitatibus sint quos officia ut maxime impedit. Quod est qui. Neque laudantium ut.\",\n        \"shortDescriptions\": \"Qui et qui eveniet.\",\n        \"slug\": \"veritatis-molestiae-accusantium\",\n        \"quantity\": 725,\n        \"supplierId\": \"62b97af7190404e5c50e045d\",\n        \"published\": false,\n        \"attributes\": {\n            \"size\": [\n                \"m\",\n                \"s\"\n            ],\n            \"color\": [\n                \"red\",\n                \"blue\",\n                \"green\"\n            ]\n        },\n        \"categoryIds\": [\n            \"62c010ebd49389ce1fc48ac9\"\n        ]\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{userToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Product Imports",
+			"item": [
+				{
+					"name": "As admin",
+					"item": [
+						{
+							"name": "/api/product_imports/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Product Import Created\") { ",
+											"    tests[\"Product Import creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"productImportId\",res.productImport.id);",
+											"pm.environment.set(\"productImportProductId\",res.productImport.productId);",
+											"pm.environment.set(\"productImportTenantId\",res.productImport.tenantId);",
+											"pm.environment.set(\"productImportStatus\",res.productImport.status);",
+											"pm.environment.set(\"productImportOverride\",res.productImport.override);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"type\": \"commission\",",
+											"//     \"productId\": \"{{productId}}\",",
+											"//     \"skuIds\": [\"{{skuId}}\"],",
+											"//     \"tenantId\": \"{{tenantId}}\",",
+											"//     \"status\": {{$randomBoolean}},",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"discount\",\n    \"productId\": \"{{productId}}\",\n    \"skuIds\": [\"{{skuId}}\"],\n    \"tenantId\": \"{{tenantId}}\",\n    \"status\": {{$randomBoolean}},\n    \"override\": {\n        \"price\": 110,\n        \"sellingPrice\": 100\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"type\": \"discount\",\n    \"productId\": \"{{productId}}\",\n    \"skuIds\": [\"{{skuId}}\"],\n    \"tenantId\": \"{{tenantId}}\",\n    \"status\": {{$randomBoolean}},\n    \"override\": {\n        \"price\": 100,\n        \"sellingPrice\": \"110\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"11b-Eq2+obSkelv3xI8behtmS1vDqog\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "283"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 23 Jul 2022 04:06:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Product Import Created\",\n    \"productImport\": {\n        \"id\": \"62db73a74518ee3828c09b52\",\n        \"type\": \"discount\",\n        \"skuIds\": [\n            \"62db71af4518ee3828c09b51\"\n        ],\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62db71894518ee3828c09b50\",\n        \"status\": true,\n        \"override\": {\n            \"price\": 100,\n            \"sellingPrice\": \"110\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Imports found\") { ",
+											"    tests[\"No product import found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/?skuId={{skuId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{productImportId}}",
+											"disabled": true
+										},
+										{
+											"key": "tenantId",
+											"value": "{{productImportTenantId}}",
+											"disabled": true
+										},
+										{
+											"key": "productId",
+											"value": "{{productImportProductId}}",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "{{$randomBoolean}}",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "discount",
+											"disabled": true
+										},
+										{
+											"key": "skuId",
+											"value": "{{skuId}}"
+										}
+									]
+								},
+								"description": "Query params: paginated, count, offset"
+							},
+							"response": [
+								{
+									"name": "/api/product_imports",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												""
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{productImportId}}",
+													"disabled": true
+												},
+												{
+													"key": "tenantId",
+													"value": "{{productImportTenantId}}",
+													"disabled": true
+												},
+												{
+													"key": "productId",
+													"value": "{{productImportProductId}}",
+													"disabled": true
+												},
+												{
+													"key": "status",
+													"value": "{{$randomBoolean}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"119-I0I3NujgtbvFt602UZnv9PelMH4\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "281"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 23 Jul 2022 04:08:14 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product Imports found\",\n    \"productImports\": [\n        {\n            \"id\": \"62db73a74518ee3828c09b52\",\n            \"type\": \"discount\",\n            \"skuIds\": [\n                \"62db71af4518ee3828c09b51\"\n            ],\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62db71894518ee3828c09b50\",\n            \"status\": true,\n            \"override\": {\n                \"price\": 100,\n                \"sellingPrice\": \"110\"\n            }\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Import updated\") { ",
+											"    tests[\"Product Import not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"{{productImportId}}\",",
+											"//     \"updateData\": {",
+											"//         \"tenantId\": \"...\"",
+											"//         \"productId\": \"...\"",
+											"//         \"status\": bool",
+											"//         \"override\": {...}",
+											"//     }",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productImportId}}\",\n    \"updateData\": {\n        \"status\": false,\n        \"skus\": {\"connect\": [{\"id\": \"{{skuId}}\"}]}\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productImportId}}\",\n    \"updateData\": {\n        \"status\": false,\n        \"skus\": {\"connect\": [{\"id\": \"{{skuId}}\"}]}\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"13a-P5io+LPbHvRpri+3J6bpuzZsDiI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "314"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 23 Jul 2022 04:14:14 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product Import updated\",\n    \"updatedProductImport\": {\n        \"id\": \"62db74984518ee3828c09b57\",\n        \"type\": \"discount\",\n        \"skuIds\": [\n            \"62db74874518ee3828c09b56\",\n            \"62db749d4518ee3828c09b58\"\n        ],\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62db74814518ee3828c09b55\",\n        \"status\": false,\n        \"override\": {\n            \"price\": 100,\n            \"sellingPrice\": \"110\"\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Import deleted\") { ",
+											"    tests[\"Product Import not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productImportId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productImportId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"119-7pqdpkMO47IQ5EQD2MzM5+W1wqM\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "281"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 23 Jul 2022 04:18:57 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product Import deleted\",\n    \"productImport\": {\n        \"id\": \"62db769d4518ee3828c09b5b\",\n        \"type\": \"commission\",\n        \"skuIds\": [\n            \"62db76924518ee3828c09b5a\"\n        ],\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62db768a4518ee3828c09b59\",\n        \"status\": true,\n        \"override\": {\n            \"price\": 100,\n            \"sellingPrice\": \"110\"\n        }\n    }\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "As user",
+					"item": [
+						{
+							"name": "/api/product_imports/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"New Product Import Created\") { ",
+											"    tests[\"Product Import creation failed TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});",
+											"",
+											"pm.environment.set(\"productImportId\",res.productImport.id);",
+											"pm.environment.set(\"productImportProductId\",res.productImport.productId);",
+											"pm.environment.set(\"productImportTenantId\",res.productImport.tenantId);",
+											"pm.environment.set(\"productImportStatus\",res.productImport.status);",
+											"pm.environment.set(\"productImportOverride\",res.productImport.override);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"discount\",\n    \"productId\": \"{{productId}}\",\n    \"skuIds\": [\"{{skuId}}\"],\n    \"tenantId\": \"{{tenantId}}\",\n    \"status\": {{$randomBoolean}},\n    \"override\": {\n        \"price\": 110,\n        \"sellingPrice\": 100\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"type\": \"discount\",\n    \"productId\": \"{{productId}}\",\n    \"skuIds\": [\"{{skuId}}\"],\n    \"tenantId\": \"{{tenantId}}\",\n    \"status\": {{$randomBoolean}},\n    \"override\": {\n        \"price\": 110,\n        \"sellingPrice\": 100\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"fe-IzQkJIBq5gcHtxpHu1s3f2uEthU\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "254"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 23 Jul 2022 04:33:59 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"New Product Import Created\",\n    \"productImport\": {\n        \"id\": \"62db7a374518ee3828c09b5f\",\n        \"type\": \"commission\",\n        \"skuIds\": [\n            \"62db7a304518ee3828c09b5e\"\n        ],\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62db7a0b4518ee3828c09b5d\",\n        \"status\": false,\n        \"override\": {}\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Imports found\") { ",
+											"    tests[\"No product found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// \"count\": 10,",
+											"// \"offset\": 0,",
+											"// \"id\": \"{{productId}}\",",
+											"// \"query\": \"{{productName}}\",",
+											"// \"inStock\": {{$randomBoolean}},",
+											"// \"published\": {{$randomBoolean}},",
+											"// \"supplierId\": \"{{tenantId}}\",",
+											"// \"categoryId\": \"{{categoryId}}\",",
+											"// \"sortBy\": \"name\",",
+											"// \"order\": \"asc\",",
+											"// \"attributes\": {",
+											"//         \"size\": \"l\",",
+											"//         \"color\": \"red\"",
+											"//     },"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{productImportId}}",
+											"disabled": true
+										},
+										{
+											"key": "productId",
+											"value": "{{productImportProductId}}",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "{{$randomBoolean}}",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Query params: paginated, count, offset"
+							},
+							"response": [
+								{
+									"name": "/api/product_imports",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												""
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "{{productImportId}}",
+													"disabled": true
+												},
+												{
+													"key": "productId",
+													"value": "{{productImportProductId}}",
+													"disabled": true
+												},
+												{
+													"key": "status",
+													"value": "{{$randomBoolean}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"3a3-Uaxk86pjvZhlHukA84pxAzl5JMI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "931"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 23 Jul 2022 04:34:43 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product Imports found\",\n    \"productImports\": [\n        {\n            \"id\": \"62db73a74518ee3828c09b52\",\n            \"type\": \"discount\",\n            \"skuIds\": [\n                \"62db71af4518ee3828c09b51\"\n            ],\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62db71894518ee3828c09b50\",\n            \"status\": true,\n            \"override\": {\n                \"price\": 100,\n                \"sellingPrice\": \"110\"\n            }\n        },\n        {\n            \"id\": \"62db74984518ee3828c09b57\",\n            \"type\": \"discount\",\n            \"skuIds\": [\n                \"62db74874518ee3828c09b56\",\n                \"62db749d4518ee3828c09b58\"\n            ],\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62db74814518ee3828c09b55\",\n            \"status\": false,\n            \"override\": {\n                \"price\": 100,\n                \"sellingPrice\": \"110\"\n            }\n        },\n        {\n            \"id\": \"62db79534518ee3828c09b5c\",\n            \"type\": \"commission\",\n            \"skuIds\": [\n                \"62db76924518ee3828c09b5a\"\n            ],\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62db768a4518ee3828c09b59\",\n            \"status\": true,\n            \"override\": {}\n        },\n        {\n            \"id\": \"62db7a374518ee3828c09b5f\",\n            \"type\": \"commission\",\n            \"skuIds\": [\n                \"62db7a304518ee3828c09b5e\"\n            ],\n            \"tenantId\": \"62b97af7190404e5c50e045d\",\n            \"productId\": \"62db7a0b4518ee3828c09b5d\",\n            \"status\": false,\n            \"override\": {}\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports/update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Import updated\") { ",
+											"    tests[\"Product Import not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// {",
+											"//     \"id\": \"{{productImportId}}\",",
+											"//     \"updateData\": {",
+											"//         \"productId\": \"...\"",
+											"//         \"status\": bool",
+											"//         \"override\": {...}",
+											"//     }",
+											"// }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productImportId}}\",\n    \"updateData\": {\n        \"status\": false\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productImportId}}\",\n    \"updateData\": {\n        \"status\": false\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"101-kENAR3+v0/iADhKVEOBeIjTRYiI\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "257"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 23 Jul 2022 04:35:25 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product Import updated\",\n    \"updatedProductImport\": {\n        \"id\": \"62db7a374518ee3828c09b5f\",\n        \"type\": \"commission\",\n        \"skuIds\": [\n            \"62db7a304518ee3828c09b5e\"\n        ],\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62db7a0b4518ee3828c09b5d\",\n        \"status\": false,\n        \"override\": {}\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/product_imports/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = JSON.parse(responseBody);",
+											"if(res.message !== \"Product Import deleted\") { ",
+											"    tests[\"Product Import not found TEST FAILED\"] = res.message == null;",
+											"    return;",
+											"}",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response time is less than 2000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"{{productImportId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product_imports/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product_imports",
+										"delete"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/product_imports/delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": \"{{productImportId}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product_imports/delete",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product_imports",
+												"delete"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "\"fa-QQFEsagPmb6oxQZbisiDFHhYZZg\""
+										},
+										{
+											"key": "Content-Length",
+											"value": "250"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 23 Jul 2022 04:35:35 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product Import deleted\",\n    \"productImport\": {\n        \"id\": \"62db7a374518ee3828c09b5f\",\n        \"type\": \"commission\",\n        \"skuIds\": [\n            \"62db7a304518ee3828c09b5e\"\n        ],\n        \"tenantId\": \"62b97af7190404e5c50e045d\",\n        \"productId\": \"62db7a0b4518ee3828c09b5d\",\n        \"status\": false,\n        \"override\": {}\n    }\n}"
 								}
 							]
 						}

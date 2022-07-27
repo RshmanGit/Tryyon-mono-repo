@@ -30,7 +30,13 @@ const schema = {
       featuredTo: Joi.date().iso().optional(),
       guestCheckout: Joi.boolean().optional(),
       private_product: Joi.boolean().optional(),
-      marketPlace: Joi.boolean().optional()
+      marketPlace: Joi.boolean().optional(),
+      reseller: Joi.object({
+        allowed: Joi.boolean().required(),
+        type: Joi.string().allow('commission', 'discount').required(),
+        commission: Joi.number().optional().min(0).max(100),
+        discount: Joi.number().optional().min(0).max(100)
+      }).optional()
     })
   })
 };
