@@ -359,15 +359,7 @@ export default function UserProducts() {
             value={searchString}
             setValue={setSearchString}
             placeholder="e.g. hello isRoot:true id:62bad0b6f4b8ec8aad5ced34"
-          >
-            <Button
-              fontSize={{ sm: '14px' }}
-              colorScheme="blue"
-              onClick={() => router.push('/products/create')}
-            >
-              Create
-            </Button>
-          </SearchBar>
+          ></SearchBar>
         </Flex>
 
         <Facet
