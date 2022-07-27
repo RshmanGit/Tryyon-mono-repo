@@ -28,7 +28,7 @@ export function SidebarLinks(props) {
   const createLinks = (routes) => {
     return routes.map((route, index) => {
       return (
-        <Box>
+        <Box key={index}>
           <Link key={index} href={route.layout + route.path}>
             <a>
               {route.icon ? (
