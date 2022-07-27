@@ -95,7 +95,7 @@ export default function TableComp(props) {
   };
 
   return (
-    <Card direction="column" w="100%" px="0px" mt="24px">
+    <Card direction="column" w="100%" px="0px">
       <Flex overflowX={{ sm: 'scroll', lg: 'scroll' }}>
         <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
           <Thead>

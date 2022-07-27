@@ -1110,7 +1110,6 @@ function CreateProduct() {
                       </FormLabel>
                       <Field
                         as={Switch}
-                        type="datetime-local"
                         isRequired={true}
                         id="trending"
                         name="trending"
@@ -1133,7 +1132,6 @@ function CreateProduct() {
                       </FormLabel>
                       <Field
                         as={Switch}
-                        type="datetime-local"
                         isRequired={true}
                         id="guestCheckout"
                         name="guestCheckout"
@@ -1159,7 +1157,6 @@ function CreateProduct() {
                       </FormLabel>
                       <Field
                         as={Switch}
-                        type="datetime-local"
                         isRequired={true}
                         id="private_product"
                         name="private_product"
@@ -1182,7 +1179,6 @@ function CreateProduct() {
                       </FormLabel>
                       <Field
                         as={Switch}
-                        type="datetime-local"
                         isRequired={true}
                         id="marketPlace"
                         name="marketPlace"

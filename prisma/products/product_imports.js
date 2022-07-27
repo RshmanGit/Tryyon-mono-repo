@@ -63,7 +63,8 @@ export const searchProductImport = async ({
     !productId &&
     status === undefined &&
     !type &&
-    !skuId
+    !skuId &&
+    !ownerId
   ) {
     const productImports = await prisma.productImports.findMany({
       where: {},

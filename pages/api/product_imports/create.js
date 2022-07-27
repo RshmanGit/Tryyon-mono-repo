@@ -33,7 +33,6 @@ const handler = async (req, res) => {
       {
         verify: async () => {
           const { body } = req;
-          const { productId, tenantId, type, skuIds, override } = body;
 
           if (!req.admin) {
             const ownerId = req.user.id;
@@ -61,7 +60,7 @@ const handler = async (req, res) => {
 
             body.tenantId = tenantCheck[0].id;
           } else {
-            if (!tenantId) {
+            if (!body.tenantId) {
               throw new Error(
                 JSON.stringify({
                   errorKey: 'verify',
@@ -76,10 +75,14 @@ const handler = async (req, res) => {
             }
           }
 
+          const { productId, tenantId, type, skuIds, override } = body;
+
           const productImportCheck = await searchProductImport({
             productId,
             tenantId
           });
+
+          console.log(productId, tenantId, productImportCheck);
 
           if (productImportCheck.length != 0) {
             throw new Error(
